@@ -6,7 +6,7 @@
  */
 
 import { useParams } from "react-router";
-import { findStory, imageUrl, longStories, stories, storyPath } from "../catalog";
+import { findStory, imageUrl, longStories, modifiedDate, stories, storyPath } from "../catalog";
 import { AdSide, AdStrip } from "../components/Ads";
 import { Layout, useLang, type StoryHead } from "../components/Layout";
 import { ImageCredit, Photo, RowItem, StoryCard } from "../components/Story";
@@ -46,6 +46,8 @@ function storyHead(story: Story, lang: Lang): StoryHead {
   return {
     image,
     imageAlt: version.image.alt,
+    published: story.date,
+    modified: modifiedDate(story),
     data: {
       "@context": "https://schema.org",
       "@type": story.kind === "long" ? "Article" : "NewsArticle",
@@ -53,6 +55,7 @@ function storyHead(story: Story, lang: Lang): StoryHead {
       description: version.summary,
       image: [image],
       datePublished: story.date,
+      dateModified: modifiedDate(story),
       inLanguage: lang,
       mainEntityOfPage: `${SITE_URL}${storyPath(story, lang)}`,
       author: { "@type": "Organization", name: "Bitpulse", url: `${SITE_URL}/${lang}/about/` },

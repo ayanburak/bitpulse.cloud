@@ -30,9 +30,16 @@ interface Story {
   versions: { en: { image: { file: string } } };
 }
 
+interface SitemapEntry {
+  path: string;
+  lastmod?: string;
+  alternates: { hreflang: string; path: string }[];
+}
+
 interface RenderModule {
   stories: Story[];
   listPagePaths(): string[];
+  sitemapEntries(): SitemapEntry[];
   renderPage(path: string, assets: Assets): string;
   renderFeed(lang: string): string;
 }
@@ -80,12 +87,20 @@ async function writeImages(stories: Story[]): Promise<void> {
 }
 
 // Error pages and the search page are left out, neither is useful as a search engine result.
-function writeSitemap(paths: string[]): void {
-  const pages = paths.filter((path) => !path.endsWith("404.html") && !path.endsWith("/search/"));
-  const urls = pages.map((path) => `<url><loc>${SITE_URL}${path}</loc></url>`).join("");
+// Only story pages get a lastmod date, because no other page has a date of its own.
+function writeSitemap(entries: SitemapEntry[]): void {
+  const urls = entries
+    .map((entry) => {
+      const lastmod = entry.lastmod ? `<lastmod>${entry.lastmod}</lastmod>` : "";
+      const links = entry.alternates
+        .map((link) => `<xhtml:link rel="alternate" hreflang="${link.hreflang}" href="${SITE_URL}${link.path}"/>`)
+        .join("");
+      return `<url><loc>${SITE_URL}${entry.path}</loc>${lastmod}${links}</url>`;
+    })
+    .join("");
   writeFileSync(
     join(OUT, "sitemap.xml"),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>\n`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${urls}</urlset>\n`,
   );
   writeFileSync(join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 }
@@ -94,7 +109,7 @@ function writeSitemap(paths: string[]): void {
 
 const assets = readAssets();
 const bundle = pathToFileURL(join(".ssr", "render.js")).href;
-const { stories, listPagePaths, renderPage, renderFeed } = (await import(bundle)) as RenderModule;
+const { stories, listPagePaths, sitemapEntries, renderPage, renderFeed } = (await import(bundle)) as RenderModule;
 
 // The live site must never be built without real content.
 if (stories.length === 0) throw new Error("No stories found, refusing to build an empty site");
@@ -106,7 +121,7 @@ for (const path of paths) {
   writeFileSync(file, renderPage(path, assets));
 }
 await writeImages(stories);
-writeSitemap(paths);
+writeSitemap(sitemapEntries());
 for (const lang of ["en", "tr"]) writeFileSync(join(OUT, lang, "feed.xml"), renderFeed(lang));
 
 // The manifest and the server bundle are build tools, neither belongs on the live site.

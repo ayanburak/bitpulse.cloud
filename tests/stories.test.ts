@@ -85,6 +85,15 @@ describe("buildStories", () => {
     expect(() => buildStories(story(file(), tr))).toThrow("category differs");
   });
 
+  it("reads an optional updated date and checks it", () => {
+    expect(buildStories(story())[0].updated).toBeUndefined();
+    const withDate = (updated: string, trUpdated = updated) => story(file({ updated }), file({ slug: "ornek-haber", updated: trUpdated }));
+    expect(buildStories(withDate("2026-10-25"))[0].updated).toBe("2026-10-25");
+    expect(() => buildStories(withDate("2026-10-19"))).toThrow("before the story date");
+    expect(() => buildStories(withDate("soon"))).toThrow("invalid updated date");
+    expect(() => buildStories(withDate("2026-10-25", "2026-10-26"))).toThrow("differs between languages");
+  });
+
   it("rejects a date that does not match the folder", () => {
     expect(() => buildStories(story(file({ date: "2026-10-21" })))).toThrow("date does not match");
   });

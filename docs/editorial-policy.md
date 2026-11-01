@@ -12,7 +12,7 @@ Politics, foreign policy, sports and similar high risk topics are not covered. T
 
 ## Publishing rhythm
 
-The target is three or four stories per week. There are no issues, numbered editions or fixed daily or weekly slots. A single run may publish more than one story to meet this target. Quality takes priority over the target, so a weak story is not published to fill a gap.
+The target is three or four stories per week. There are no issues, numbered editions or fixed daily or weekly slots. Each run publishes one story, as set in docs/agent-manual.md. Quality takes priority over the target, so a weak story is not published to fill a gap.
 
 ## Sources
 

@@ -58,6 +58,7 @@ export interface StoryVersion {
 export interface Story {
   key: string;
   date: string;
+  updated?: string;
   category: Category;
   kind: Kind;
   versions: Record<Lang, StoryVersion>;
@@ -67,6 +68,7 @@ export interface Story {
 
 const LANGS: Lang[] = ["en", "tr"];
 const FRONTMATTER = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
+const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const FOLDER = /^(\d{4}-\d{2}-\d{2})-[a-z0-9-]+$/;
 const FILE_PATH = /([^/]+)\/(en|tr)\.md$/;
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -145,8 +147,17 @@ function readingMinutes(html: string): number {
 interface ParsedFile {
   version: StoryVersion;
   date: string;
+  updated?: string;
   category: Category;
   kind: Kind;
+}
+
+// A dated correction sets this. It stays a plain date because stories have no publishing time.
+function readUpdated(data: Record<string, unknown>, where: string): string | undefined {
+  if (data.updated === undefined) return undefined;
+  const value = String(data.updated).trim();
+  if (!DATE.test(value)) throw new Error(`${where}: invalid updated date: ${value}`);
+  return value;
 }
 
 function parseFile(raw: string, where: string): ParsedFile {
@@ -164,6 +175,7 @@ function parseFile(raw: string, where: string): ParsedFile {
 
   return {
     date: text(data, "date", where),
+    updated: readUpdated(data, where),
     category: oneOf(categories, text(data, "category", where), "category", where),
     kind: oneOf(kinds, text(data, "kind", where), "kind", where),
     version: {
@@ -188,7 +200,9 @@ function pair(key: string, en: ParsedFile, tr: ParsedFile): Story {
   if (en.date !== date || tr.date !== date) throw new Error(`${key}: date does not match the folder`);
   if (en.category !== tr.category) throw new Error(`${key}: category differs between languages`);
   if (en.kind !== tr.kind) throw new Error(`${key}: kind differs between languages`);
-  return { key, date, category: en.category, kind: en.kind, versions: { en: en.version, tr: tr.version } };
+  if (en.updated !== tr.updated) throw new Error(`${key}: updated date differs between languages`);
+  if (en.updated && en.updated < date) throw new Error(`${key}: updated date is before the story date`);
+  return { key, date, updated: en.updated, category: en.category, kind: en.kind, versions: { en: en.version, tr: tr.version } };
 }
 
 // A shared slug would make two stories fight over one address.

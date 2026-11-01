@@ -179,6 +179,8 @@ export function jsonForScript(data: object): string {
 export interface StoryHead {
   image: string;
   imageAlt: string;
+  published: string;
+  modified: string;
   data: object;
 }
 
@@ -190,6 +192,7 @@ interface Props {
 }
 
 // The root address counts as the shared language entry, so it is the x-default of the home page.
+// On other pages the x-default is the English version, which on a story has its own slug.
 function HeadTags({ lang, title, description, story }: { lang: Lang; title: string; description: string; story?: StoryHead }) {
   const { pathname } = useLocation();
   const url = (path: string) => `${SITE_URL}${path}`;
@@ -209,6 +212,8 @@ function HeadTags({ lang, title, description, story }: { lang: Lang; title: stri
         <>
           <meta property="og:image" content={story.image} />
           <meta property="og:image:alt" content={story.imageAlt} />
+          <meta property="article:published_time" content={story.published} />
+          <meta property="article:modified_time" content={story.modified} />
           <meta name="twitter:card" content="summary_large_image" />
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript(story.data) }} />
         </>
@@ -216,7 +221,7 @@ function HeadTags({ lang, title, description, story }: { lang: Lang; title: stri
       <link rel="canonical" href={url(pathname)} />
       <link rel="alternate" hrefLang={lang} href={url(pathname)} />
       <link rel="alternate" hrefLang={otherLang(lang)} href={url(other)} />
-      <link rel="alternate" hrefLang="x-default" href={url(isHome ? "/" : `/en/${pathname.slice(4)}`)} />
+      <link rel="alternate" hrefLang="x-default" href={url(isHome ? "/" : lang === "en" ? pathname : other)} />
       <link rel="alternate" type="application/rss+xml" title="Bitpulse" href={url(feedPath(lang))} />
     </>
   );

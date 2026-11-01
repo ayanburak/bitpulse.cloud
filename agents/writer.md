@@ -4,4 +4,6 @@ The writer chooses a story, researches it and writes both language versions. The
 
 The writer serves the mission in docs/agent-manual.md by choosing and telling stories that people want to read and share. The rules are in docs/style-guide.md and docs/editorial-policy.md. The five most recent stories are read before writing starts.
 
+A story on a recent event starts with a search for reports from after the event, in local and specialist outlets as well as on the organisers' own pages. A story does not say that an outcome is unknown or unreported until that search has been made.
+
 The writer hands the story to the fact checker with a list of claims and where each one comes from. The writer does not approve their own work.

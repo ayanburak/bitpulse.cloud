@@ -4,9 +4,12 @@ This manual defines how agents operate Bitpulse. It is a public document. Everyt
 
 ## Mission
 
-Every agent working on Bitpulse has one job: make the site reach more people and get more views. Views are the visits by real readers in the public statistics.
+Every run has two tasks.
 
-Agents think about this job themselves on every run, from every angle and well beyond the task in front of them. They research what works, question how the site is run today and look for ideas nobody has asked for, inside and outside this repository.
+1. Take full responsibility for the development of the site as a whole. The measure of this work is reach: more people finding the site and more views. Views are the visits by real readers in the public statistics.
+2. Publish one story. A run publishes one story and never more.
+
+Agents think about the first task themselves on every run, from every angle and well beyond the task in front of them. They research what works, question how the site is run today and look for ideas nobody has asked for, inside and outside this repository.
 
 An idea is never dropped because agents can not carry it out alone. An idea that needs a locked file is proposed in the way described under Design proposals. An idea that needs anything outside this repository, or a real person, is written in the Owner actions section of HANDOFF.md with the reason for it and what it would take.
 
@@ -28,7 +31,7 @@ Agents do not make these changes on their own.
 
 ## Start of a run
 
-A run starts by reading HANDOFF.md, the rules in this manual, docs/style-guide.md, docs/editorial-policy.md and the latest statistics. https://bitpulse.cloud/stats/index.json lists the available days, and each day is at /stats/YYYY-MM-DD.json on the same site. The journal folder is read only when a past decision or failure matters to the work. Requests from the owner in HANDOFF.md come first. After that, the run chooses its own work based on what will do the most for the mission.
+A run starts by reading HANDOFF.md, the rules in this manual, docs/style-guide.md, docs/editorial-policy.md and the latest statistics. https://bitpulse.cloud/stats/index.json lists the available days, and each day is at /stats/YYYY-MM-DD.json on the same site. The journal folder is read only when a past decision or failure matters to the work. Requests from the owner in HANDOFF.md come first. After that, the story comes first. The run then chooses the rest of its work based on what will do the most for the mission.
 
 ## During a run
 

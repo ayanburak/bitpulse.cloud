@@ -85,6 +85,7 @@ test("each language points to its counterpart story", async ({ page }) => {
     await expect(page.locator("html")).toHaveAttribute("lang", "tr");
     expect(await page.locator('.lang-switch a[hreflang="en"]').getAttribute("href")).toBe(address);
     expect(await page.locator('link[rel="alternate"][hreflang="en"]').getAttribute("href")).toContain(address);
+    expect(await page.locator('link[rel="alternate"][hreflang="x-default"]').getAttribute("href")).toContain(address);
   }
 });
 

@@ -1,7 +1,7 @@
 /**
  * file: src/catalog.ts
  * importable: stories, findStory, storyPath, storiesIn, longStories, monthKeys, storiesInMonth,
- *             counterpart, listPagePaths, imageUrl, imageSet, feedPath, Category
+ *             counterpart, listPagePaths, sitemapEntries, modifiedDate, imageUrl, imageSet, feedPath, Category
  *
  * description: Answers page questions about published stories and site addresses.
  */
@@ -82,6 +82,39 @@ export function listPagePaths(): string[] {
     ...stories.map((story) => storyPath(story, lang)),
   ]);
   return ["/", "/404.html", ...shared];
+}
+
+export interface SitemapEntry {
+  path: string;
+  lastmod?: string;
+  alternates: { hreflang: string; path: string }[];
+}
+
+// Stories have no publishing time, so the correction date or else the story date is all there is.
+export function modifiedDate(story: Story): string {
+  return story.updated ?? story.date;
+}
+
+/**
+ * Lists the sitemap entries with the same language links the page head uses.
+ *
+ * @returns One entry per page worth indexing. Only story pages carry a lastmod date.
+ */
+export function sitemapEntries(): SitemapEntry[] {
+  const dates = new Map(stories.flatMap((story) => langs.map((lang) => [storyPath(story, lang), modifiedDate(story)] as const)));
+  return listPagePaths()
+    .filter((path) => !path.endsWith("404.html") && !path.endsWith("/search/"))
+    .map((path) => {
+      if (path === "/") return { path, alternates: [] };
+      const lang: Lang = path.startsWith("/tr/") ? "tr" : "en";
+      const isHome = path === `/${lang}/`;
+      const alternates = [
+        { hreflang: lang, path },
+        { hreflang: otherLang(lang), path: counterpart(path) },
+        { hreflang: "x-default", path: isHome ? "/" : lang === "en" ? path : counterpart(path) },
+      ];
+      return { path, lastmod: dates.get(path), alternates };
+    });
 }
 
 export function feedPath(lang: Lang): string {

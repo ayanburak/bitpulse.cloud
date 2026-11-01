@@ -17,30 +17,33 @@ The sections are filled in as follows.
 
 ## Current state
 
-The site is live at bitpulse.cloud with five stories in English and Turkish. The latest, on Alphabet's record one-day share price fall, is on main. Link previews, structured data and RSS feeds are part of the site.
+The site is live at bitpulse.cloud with six stories in English and Turkish. The latest is on the crew leaving NASA's simulated Mars habitat. Link previews, structured data and RSS feeds are part of the site.
 
 Releases from main are switched off. A new story on main reaches readers only after a manual release, which happens after the run ends.
 
-Tests and CI pass on main. No proposal is open and no draft branch is open.
+Tests pass on main. The sitemap now has dates and language links, and the x-default link on Turkish stories points to the English story. No proposal or draft branch is open.
 
 ## Next tasks
 
-1. Publish one new story, and commit after each role on the draft branch. Stories age quickly, so pick fresh news over more follow-ups on the Alphabet fall. Record the usage of the whole story in the journal.
-2. Research what brings readers to a new site with no audience, then put each idea in a proposal or in Owner actions. The earlier runs did none of this research.
+1. Publish one new story. If its central event happened today, find a good source for the event before writing. Prefer a story with a strong Turkish angle and write the Turkish headline the way a reader would search for it. Consider one explainer with a lasting question, such as what a TPU is, linked to the news story behind it. In-body links to earlier stories need no locked file.
+2. Prepare a proposal for separate editorial policy and corrections pages in both languages, linked from the footer. They need locked files and a visible change, so the proposal needs screenshots. Publisher and bylines stay as set in docs/site-decisions.md and docs/editorial-policy.md.
 3. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
-- The cost of a whole story under the model plan is unknown, because only the final check has been measured so far.
-- Real statistics start now. The first days will be thin, so decisions still rest mostly on research and not on readers.
+- The first statistics are still empty, so decisions rest on research and not on readers. Search Console data on which language earns impressions would be the first real signal for the Turkish idea, which so far rests on inference.
+- A whole story costs about 190,000 tokens with no returns, not counting the main agent. The final check is the largest single cost.
+- Claims that Google News ignores Publisher Center submissions rest on one trade source, as Google's own page could not be opened.
+- Apple News, MSN, Reddit rules and Turkish aggregators were not confirmed by research.
 
 ## Owner actions
 
 ### Waiting for the owner
 
-- Register the site with Google Search Console and Bing Webmaster Tools and submit /sitemap.xml. Search engines find a new site sooner this way. It takes an account with each service and proof of owning the domain.
 - Decide whether Bitpulse should have social accounts for sharing new stories. A new site has no regular readers, and agents can not create accounts. It takes creating the accounts and a decision on how posts are made.
+- Consider submitting the English feed to Flipboard, which reviews publishers through its own self-service form. It takes one Flipboard account, and the evidence that it brings readers to unknown publishers is weak.
+- After about a month of real data, consider one human written post on Hacker News about the open, AI-run newsroom. Its guidelines allow occasional self-submission and reject generated text, so an agent can not write or post it.
+- Decide whether a PaktLabs logo should be added to public/ for the publisher field in structured data. No such image is in the repository.
 
 ### Requested by the owner
 
-- This run publishes one story only, so that the cost of a whole story can be measured.
