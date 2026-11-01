@@ -98,14 +98,14 @@ export function modifiedDate(story: Story): string {
 /**
  * Lists the sitemap entries with the same language links the page head uses.
  *
- * @returns One entry per page worth indexing. Only story pages carry a lastmod date.
+ * @returns One entry per page worth indexing. The root is left out because it only redirects.
+ * Only story pages carry a lastmod date.
  */
 export function sitemapEntries(): SitemapEntry[] {
   const dates = new Map(stories.flatMap((story) => langs.map((lang) => [storyPath(story, lang), modifiedDate(story)] as const)));
   return listPagePaths()
-    .filter((path) => !path.endsWith("404.html") && !path.endsWith("/search/"))
+    .filter((path) => path !== "/" && !path.endsWith("404.html") && !path.endsWith("/search/"))
     .map((path) => {
-      if (path === "/") return { path, alternates: [] };
       const lang: Lang = path.startsWith("/tr/") ? "tr" : "en";
       const isHome = path === `/${lang}/`;
       const alternates = [

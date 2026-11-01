@@ -55,6 +55,10 @@ describe("sitemapEntries", () => {
     expect(entries.some((entry) => entry.path.endsWith("/search/") || entry.path.endsWith("404.html"))).toBe(false);
   });
 
+  it("leaves out the root address, which only redirects", () => {
+    expect(entries.some((entry) => entry.path === "/")).toBe(false);
+  });
+
   it("links each story to its counterpart in the other language", () => {
     const story = stories[0];
     const entry = entries.find((item) => item.path === storyPath(story, "tr"));

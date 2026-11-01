@@ -32,6 +32,8 @@ export function Document({ lang, assets, children }: Props) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        {/* Google Search does not list SVG among its favicon formats, so the PNG goes first. */}
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
         {assets.css.map((href) => <link key={href} rel="stylesheet" href={href} />)}

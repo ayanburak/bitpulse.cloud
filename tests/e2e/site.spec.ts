@@ -89,6 +89,18 @@ test("each language points to its counterpart story", async ({ page }) => {
   }
 });
 
+test("the home pages tell search engines the site name and icon", async ({ page }) => {
+  for (const [lang, title] of [["en", "Bitpulse | Technology, Science, Games and Culture News"], ["tr", "Bitpulse | Teknoloji, Bilim, Oyun ve Kültür Haberleri"]]) {
+    await page.goto(`/${lang}/`);
+    await expect(page).toHaveTitle(title);
+    const data = JSON.parse(await page.locator('script[type="application/ld+json"]').innerHTML());
+    expect(data).toMatchObject({ "@type": "WebSite", name: "Bitpulse", url: "https://bitpulse.cloud/" });
+    const icon = await page.locator('link[rel="icon"]').first().getAttribute("href");
+    expect(icon).toBe("/favicon.png");
+    expect((await page.request.get(icon!)).headers()["content-type"]).toContain("image/png");
+  }
+});
+
 test("stories can be read with JavaScript turned off", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

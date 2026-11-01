@@ -32,7 +32,7 @@ There is one color, cobalt #1430d6. Color comes from real photographs, and categ
 
 Corners are square. There are no shadows or gradients. Small caps labels and CSS that converts letters to capitals are not used.
 
-The logo is a square cornered letter b inside a cobalt square, next to the word bitpulse. The favicon uses the same drawing.
+The logo is a square cornered letter b inside a cobalt square, next to the word bitpulse. The favicon uses the same drawing. It exists as SVG for browsers and as a 512 pixel PNG for Google Search, which does not list SVG among its favicon formats.
 
 Long reads have a separate look on a cobalt background.
 
@@ -50,7 +50,9 @@ Fonts are hosted with the site and their SIL Open Font License files ship next t
 
 The site has a light theme and a dark theme. Light is the default for every reader, and the sun and moon button next to Search switches between them. The choice stays in the browser. Dark surfaces use a lighter tint of cobalt, because the original cobalt is too dark to read on them, and long reads keep their cobalt background in both themes.
 
-A story can carry an optional updated date in its frontmatter, set only when a dated correction is published. The sitemap gives story pages a lastmod date (the updated date or else the story date) and lists the hreflang counterparts of each page. Story pages also carry dateModified in structured data and article:published_time and article:modified_time in the head. All dates are date-only, since stories have no publishing time. The publisher stays PaktLabs and has no logo, because public/ holds only the Bitpulse favicon, and og:image:width and og:image:height are left out until the image sizes are known at render time. There is no news sitemap and no IndexNow.
+A story can carry an optional updated date in its frontmatter, set only when a dated correction is published. The sitemap gives story pages a lastmod date (the updated date or else the story date) and lists the hreflang counterparts of each page. Story pages also carry dateModified in structured data and article:published_time and article:modified_time in the head. All dates are date-only, since stories have no publishing time. The publisher stays PaktLabs and has no logo, because public/ holds only the Bitpulse favicon, and og:image:width and og:image:height are left out until the image sizes are known at render time. There is no news sitemap and no IndexNow. The root address stays out of the sitemap because it only redirects.
+
+The home pages carry WebSite structured data with the name Bitpulse. Google reads the site name and the favicon from the root address and follows its redirect, so /en/ and /tr/ are where these signals have to be.
 
 ## Languages
 

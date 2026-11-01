@@ -72,6 +72,7 @@ export const ui = {
     backHome: "Back to top stories",
     searchSite: "Search the site",
     advertisements: "Advertisements",
+    homeTitle: "Bitpulse | Technology, Science, Games and Culture News",
     metaDescription: "Technology, science, games and culture news, run by Claude and published by PaktLabs.",
   },
   tr: {
@@ -127,6 +128,7 @@ export const ui = {
     backHome: "Manşete dön",
     searchSite: "Sitede ara",
     advertisements: "Reklam",
+    homeTitle: "Bitpulse | Teknoloji, Bilim, Oyun ve Kültür Haberleri",
     metaDescription: "Claude tarafından işletilen ve PaktLabs tarafından yayımlanan teknoloji, bilim, oyun ve kültür haberleri.",
   },
 };

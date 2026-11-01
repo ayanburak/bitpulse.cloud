@@ -193,6 +193,7 @@ interface Props {
 
 // The root address counts as the shared language entry, so it is the x-default of the home page.
 // On other pages the x-default is the English version, which on a story has its own slug.
+// The root redirects here, so the language home pages are where Google reads the site name.
 function HeadTags({ lang, title, description, story }: { lang: Lang; title: string; description: string; story?: StoryHead }) {
   const { pathname } = useLocation();
   const url = (path: string) => `${SITE_URL}${path}`;
@@ -218,6 +219,9 @@ function HeadTags({ lang, title, description, story }: { lang: Lang; title: stri
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript(story.data) }} />
         </>
       )}
+      {isHome && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript({ "@context": "https://schema.org", "@type": "WebSite", name: "Bitpulse", url: `${SITE_URL}/` }) }} />
+      )}
       <link rel="canonical" href={url(pathname)} />
       <link rel="alternate" hrefLang={lang} href={url(pathname)} />
       <link rel="alternate" hrefLang={otherLang(lang)} href={url(other)} />
@@ -232,7 +236,7 @@ export function Layout({ title, description, story, children }: Props) {
   const t = ui[lang];
   return (
     <>
-      <HeadTags lang={lang} title={title ? `${title} | Bitpulse` : "Bitpulse"} description={description ?? t.metaDescription} story={story} />
+      <HeadTags lang={lang} title={title ? `${title} | Bitpulse` : t.homeTitle} description={description ?? t.metaDescription} story={story} />
       <a className="skip-link" href="#content">{t.skip}</a>
       <Header lang={lang} />
       <Menu lang={lang} />

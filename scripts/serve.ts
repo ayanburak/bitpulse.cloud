@@ -24,6 +24,7 @@ const TYPES: Record<string, string> = {
   ".mjs": "text/javascript",
   ".json": "application/json",
   ".svg": "image/svg+xml",
+  ".png": "image/png",
   ".jpg": "image/jpeg",
   ".woff2": "font/woff2",
   ".wasm": "application/wasm",
