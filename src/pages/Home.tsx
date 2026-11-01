@@ -9,7 +9,7 @@
 // the page never shows half empty rows while the archive is still small. There is no most read
 // section yet because it needs real readership numbers, and invented rankings are not acceptable.
 
-import { longStories, stories, storiesIn, storyPath } from "../catalog";
+import { longStories, newsStories, stories, storiesIn, storyPath } from "../catalog";
 import { Layout, useLang } from "../components/Layout";
 import { ImageCredit, Meta, Photo, StoryCard } from "../components/Story";
 import { categoryNames, formatDate, ui, type Lang } from "../i18n";
@@ -73,7 +73,7 @@ function Feed({ lang }: { lang: Lang }) {
 }
 
 function Secondary({ lang }: { lang: Lang }) {
-  const [first, ...rest] = stories.slice(1, 1 + SECONDARY_SIZE);
+  const [first, ...rest] = newsStories().slice(1, 1 + SECONDARY_SIZE);
   if (!first) return null;
   return (
     <div className="grid secondary">
@@ -123,7 +123,7 @@ function LongRead({ lang }: { lang: Lang }) {
             <Photo story={story} lang={lang} ratio="4-5" sizes="(max-width: 680px) 100vw, 40vw" />
           </a>
           <div className="long-read__text">
-            <p className="meta"><b>{t.longRead}</b> <span>{t.minutes(version.minutes)}</span></p>
+            <p className="meta"><b>{t.explained}</b> <span>{t.minutes(version.minutes)}</span></p>
             <h2 className="wide-1" id="long-read-heading">
               <a href={storyPath(story, lang)}><span className="link-line">{version.title}</span></a>
             </h2>
@@ -142,7 +142,7 @@ function LongRead({ lang }: { lang: Lang }) {
             )}
             <div className="long-read__actions">
               <a className="button" href={storyPath(story, lang)}>{t.readStory}</a>
-              <a className="button button--outline" href={`/${lang}/archive/`}>{t.archive}</a>
+              <a className="button button--outline" href={`/${lang}/explained/`}>{t.explained}</a>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@ export function Home() {
     <Layout>
       <div className="container">
         <div className="grid lead">
-          <Lead story={stories[0]} lang={lang} />
+          <Lead story={newsStories()[0]} lang={lang} />
           <Feed lang={lang} />
         </div>
         <Secondary lang={lang} />

@@ -146,7 +146,7 @@ test("the language switch stores the reader choice", async ({ page, context }) =
 test("the page does not scroll sideways on a phone", async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 360, height: 760 } });
   const page = await context.newPage();
-  for (const address of ["/en/", storyAddresses("tr")[0], "/en/archive/", "/tr/about/", "/en/privacy/"]) {
+  for (const address of ["/en/", storyAddresses("tr")[0], "/en/archive/", "/tr/about/", "/en/privacy/", "/en/editorial-policy/", "/tr/editorial-policy/", "/en/corrections/", "/tr/corrections/"]) {
     await page.goto(address);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
     expect(overflow, address).toBeLessThanOrEqual(0);
@@ -167,7 +167,7 @@ test("the phone menu shows every link and closes again", async ({ browser }) => 
 
   await button.click();
   const links = panel.locator("a");
-  await expect(links).toHaveCount(7);
+  await expect(links).toHaveCount(await page.locator(".menu .rail ul a").count());
   for (const link of await links.all()) await expect(link).toBeInViewport();
 
   await page.keyboard.press("Escape");
@@ -209,4 +209,39 @@ test("the theme button is hidden without JavaScript", async ({ browser }) => {
   await page.goto("/en/");
   await expect(page.locator("[data-theme-toggle]")).toBeHidden();
   await context.close();
+});
+
+test("the footer links the policy and corrections pages in both languages", async ({ page }) => {
+  const expected = { en: ["Editorial policy", "Corrections"], tr: ["Yayın ilkeleri", "Düzeltmeler"] };
+  for (const lang of ["en", "tr"] as const) {
+    await page.goto(`/${lang}/`);
+    const footer = page.locator(".site-footer");
+    await expect(footer.locator(`a[href="/${lang}/editorial-policy/"]`)).toHaveText(expected[lang][0]);
+    await expect(footer.locator(`a[href="/${lang}/corrections/"]`)).toHaveText(expected[lang][1]);
+  }
+});
+
+test("the editorial policy states who writes and checks the stories", async ({ page }) => {
+  await page.goto("/en/editorial-policy/");
+  await expect(page.locator("h1")).toHaveText("Editorial policy");
+  const text = await page.locator("main").innerText();
+  expect(text).toContain("written by artificial intelligence");
+  expect(text).toContain("Claude");
+  expect(text).toContain("project owner");
+  for (const step of ["writer", "fact checker", "editor", "final checker"]) expect(text.toLowerCase()).toContain(step);
+  await expect(page.locator("main")).toContainText("info@paktlabs.com");
+  await page.locator('.lang-switch a[hreflang="tr"]').click();
+  await expect(page).toHaveURL(/\/tr\/editorial-policy\/$/);
+  await expect(page.locator("h1")).toHaveText("Yayın ilkeleri");
+});
+
+test("the corrections page lists only real corrections", async ({ page }) => {
+  for (const lang of ["en", "tr"]) {
+    await page.goto(`/${lang}/corrections/`);
+    const entries = await page.locator("[data-corrections] li").count();
+    const empty = await page.locator("[data-corrections-empty]").count();
+    expect(entries > 0 || empty === 1).toBe(true);
+    expect(entries > 0 && empty > 0).toBe(false);
+    await expect(page.locator('a[href="mailto:info@paktlabs.com"]')).toBeVisible();
+  }
 });

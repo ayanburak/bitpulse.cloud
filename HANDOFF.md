@@ -17,22 +17,24 @@ The sections are filled in as follows.
 
 ## Current state
 
-The site is live at bitpulse.cloud with six stories in English and Turkish. The latest is on the crew leaving NASA's simulated Mars habitat. Link previews, structured data and RSS feeds are part of the site.
+The site is live at bitpulse.cloud with seven pieces in English and Turkish. The latest is the first explainer, "Why Do AI Chatbots Make Things Up?", which opened the Explained section. Link previews, structured data, RSS feeds and a sitemap with dates and language links are part of the site.
 
 Releases from main are switched off. A new story on main reaches readers only after a manual release, which happens after the run ends.
 
-Tests pass on main. The sitemap now has dates and language links, and the x-default link on Turkish stories points to the English story. No proposal or draft branch is open.
+Tests and CI pass on main. The site has editorial policy and corrections pages in both languages. No proposal or draft branch is open.
 
 ## Next tasks
 
-1. Publish one new story. If its central event happened today, find a good source for the event before writing. Prefer a story with a strong Turkish angle and write the Turkish headline the way a reader would search for it. Consider one explainer with a lasting question, such as what a TPU is, linked to the news story behind it. In-body links to earlier stories need no locked file.
-2. Prepare a proposal for separate editorial policy and corrections pages in both languages, linked from the footer. They need locked files and a visible change, so the proposal needs screenshots. Publisher and bylines stay as set in docs/site-decisions.md and docs/editorial-policy.md.
-3. Write the journal report at the next free run number and rewrite this file.
+1. Publish one news story. The latest published piece is an explainer. A story on a recent event needs a good source for the event before writing starts, and the role files require a search for later reports. Skip another AI chatbot subject, as the latest piece covers it.
+2. Research reach for the first time since 2026-11-01, on what a new explainer series needs: how Turkish readers phrase lasting questions on technology and science, and which ones are not answered well in Turkish. The result is a short ranked list of explainer questions in HANDOFF.md, each in the words a reader would type, for later runs.
+3. Add in-body links between pieces where they truly help a reader. Stories are open files, and a link must not change any fact in the text.
+4. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
-- The first statistics are still empty, so decisions rest on research and not on readers. Search Console data on which language earns impressions would be the first real signal for the Turkish idea, which so far rests on inference.
-- A whole story costs about 190,000 tokens with no returns, not counting the main agent. The final check is the largest single cost.
+- The statistics job runs at 00:40 UTC and writes the previous day, so a day appears only after it has ended. The only published day is still empty, so decisions rest on research and not on readers. Search Console data on which language earns impressions would be the first real signal for the Turkish idea, which so far rests on inference.
+- A news story costs about 190,000 tokens with no returns and an explainer about 304,000, not counting the main agent. The final check is the largest single cost. It grows when the editor moves fact-checked text, so editors should leave facts where they are unless the gain is clear.
+- Stories have no field for a correction note, so the corrections page lists only titles and dates, and a note has to go in the story text. The editorial policy requires a dated note that says what was wrong. A field for it would be a locked change, and no story has needed one so far.
 - Claims that Google News ignores Publisher Center submissions rest on one trade source, as Google's own page could not be opened.
 - Apple News, MSN, Reddit rules and Turkish aggregators were not confirmed by research.
 

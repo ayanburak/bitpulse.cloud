@@ -16,6 +16,8 @@ A headline may create curiosity, but the story must deliver what it suggests. It
 
 The summary under the headline adds a reason to keep reading. It does not repeat the headline.
 
+An explainer may use the question itself as its headline, in the words a reader would search for, and it does not need to name a person or a company.
+
 ## Structure
 
 Every story finds its own shape. The questions below help, but they are not a fixed order: what happened, why a reader should care, what they need to know to follow it, and what happens next. Uncertainty is mentioned where it matters, and a section about what is still unknown is not a standard ending.
@@ -26,7 +28,7 @@ Subheadings are short, plain and specific to the story.
 
 A news story takes three to four minutes to read, which is about 600 to 800 words. The extra length exists to explain and to tell a better story, not to repeat points. If a sentence gives the reader nothing new, it is removed.
 
-Long reads follow the same voice with more depth, and they are not limited by this length.
+An explainer, stored as kind: long, follows the same voice with more depth. It runs to about 1,500 to 2,500 words in English, and the Turkish version usually needs fewer words.
 
 ## Choosing details
 

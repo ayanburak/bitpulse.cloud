@@ -11,8 +11,10 @@ import { SITE_URL } from "./config";
 import { ui } from "./i18n";
 import { Archive } from "./pages/Archive";
 import { Category } from "./pages/Category";
+import { Explained } from "./pages/Explained";
 import { Home } from "./pages/Home";
 import { About, Contact, Privacy } from "./pages/Info";
+import { Corrections, EditorialPolicy } from "./pages/Policy";
 import { Search } from "./pages/Search";
 import { StoryPage } from "./pages/StoryPage";
 
@@ -62,12 +64,15 @@ export function SiteRoutes() {
       <Route path="/:lang/" element={<Home />} />
       <Route path="/:lang/stories/:slug/" element={<StoryPage />} />
       <Route path="/:lang/category/:key/" element={<Category />} />
+      <Route path="/:lang/explained/" element={<Explained />} />
       <Route path="/:lang/archive/" element={<Archive />} />
       <Route path="/:lang/archive/:year/:month/" element={<Archive />} />
       <Route path="/:lang/search/" element={<Search />} />
       <Route path="/:lang/about/" element={<About />} />
       <Route path="/:lang/contact/" element={<Contact />} />
       <Route path="/:lang/privacy/" element={<Privacy />} />
+      <Route path="/:lang/editorial-policy/" element={<EditorialPolicy />} />
+      <Route path="/:lang/corrections/" element={<Corrections />} />
       <Route path="/:lang/404.html" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

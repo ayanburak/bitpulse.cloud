@@ -7,7 +7,7 @@
 
 import type { ReactNode } from "react";
 import { useLocation, useParams } from "react-router";
-import { counterpart, feedPath } from "../catalog";
+import { counterpart, feedPath, longStories } from "../catalog";
 import { PUBLISHER_URL, REPO_URL, SITE_URL } from "../config";
 import { categoryNames, formatDate, isLang, otherLang, ui, type Lang } from "../i18n";
 import { categories } from "../stories";
@@ -72,6 +72,12 @@ function MenuLink({ href, children }: { href: string; children: ReactNode }) {
 
 // Phones use this instead of the rail, because seven links do not fit one row. The native details
 // element opens without JavaScript, and main.ts only adds closing on an outside tap or Escape.
+// The section has no page until its first article exists, so no link may point to it before that.
+function ExplainedLink({ lang }: { lang: Lang }) {
+  if (longStories().length === 0) return null;
+  return <MenuLink href={`/${lang}/explained/`}>{ui[lang].explained}</MenuLink>;
+}
+
 function Drawer({ lang }: { lang: Lang }) {
   const t = ui[lang];
   return (
@@ -80,6 +86,7 @@ function Drawer({ lang }: { lang: Lang }) {
       <nav className="drawer__panel" aria-label={t.mainMenu}>
         <ul>
           <MenuLink href={`/${lang}/`}>{t.topStories}</MenuLink>
+          <ExplainedLink lang={lang} />
           {categories.map((key) => <MenuLink key={key} href={`/${lang}/category/${key}/`}>{categoryNames[lang][key]}</MenuLink>)}
           <MenuLink href={`/${lang}/archive/`}>{t.archive}</MenuLink>
         </ul>
@@ -109,7 +116,10 @@ function Menu({ lang }: { lang: Lang }) {
   return (
     <nav className="menu" aria-label={t.mainMenu}>
       <div className="rail">
-        <ul><MenuLink href={`/${lang}/`}>{t.topStories}</MenuLink></ul>
+        <ul>
+          <MenuLink href={`/${lang}/`}>{t.topStories}</MenuLink>
+          <ExplainedLink lang={lang} />
+        </ul>
         <ul>
           {categories.map((key) => <MenuLink key={key} href={`/${lang}/category/${key}/`}>{categoryNames[lang][key]}</MenuLink>)}
         </ul>
@@ -138,6 +148,7 @@ function Footer({ lang }: { lang: Lang }) {
             <h2>{t.site}</h2>
             <ul>
               <li><a href={`/${lang}/`}>{t.topStories}</a></li>
+              <ExplainedLink lang={lang} />
               <li><a href={`/${lang}/archive/`}>{t.archive}</a></li>
               <li><a href={`/${lang}/search/`}>{t.search}</a></li>
             </ul>
@@ -154,6 +165,8 @@ function Footer({ lang }: { lang: Lang }) {
             <h2>Bitpulse</h2>
             <ul>
               <li><a href={`/${lang}/about/`}>{t.about}</a></li>
+              <li><a href={`/${lang}/editorial-policy/`}>{t.editorialPolicy}</a></li>
+              <li><a href={`/${lang}/corrections/`}>{t.corrections}</a></li>
               <li><a href={`/${lang}/contact/`}>{t.contact}</a></li>
               <li><a href={`/${lang}/privacy/`}>{t.privacy}</a></li>
             </ul>

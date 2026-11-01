@@ -1,6 +1,6 @@
 /**
  * file: src/components/Story.tsx
- * importable: Photo, ImageCredit, Meta, StoryCard, RowItem
+ * importable: Photo, ImageCredit, Meta, StoryCard, RowItem, StoryIndex
  *
  * description: Reusable story pieces such as images, cards and meta lines.
  */
@@ -97,5 +97,45 @@ export function RowItem({ story, lang }: { story: Story; lang: Lang }) {
         </h3>
       </article>
     </li>
+  );
+}
+
+// --- List ---
+
+const INDEX_SIDE_SIZE = 4;
+
+// Category pages and the Explained page show their stories the same way: one lead, a few beside
+// it and the rest as rows.
+export function StoryIndex({ stories, lang }: { stories: Story[]; lang: Lang }) {
+  const t = ui[lang];
+  const [first, ...rest] = stories;
+  const side = rest.slice(0, INDEX_SIDE_SIZE);
+  const remaining = rest.slice(INDEX_SIDE_SIZE);
+  if (!first) return <p className="summary">{t.noStories}</p>;
+  return (
+    <>
+      <div className="grid cat-lead">
+        <div className="cat-lead__main">
+          <StoryCard story={first} lang={lang} head="head-2" ratio="16-9" sizes="(max-width: 1180px) 100vw, 840px" summary />
+        </div>
+        {side.length > 0 && (
+          <div className="cat-lead__side">
+            {side.map((story) => (
+              <StoryCard key={story.key} story={story} lang={lang} head="head-4" ratio="3-2" sizes="(max-width: 680px) 50vw, 280px" />
+            ))}
+          </div>
+        )}
+      </div>
+      {remaining.length > 0 && (
+        <section className="section">
+          <div className="section-head"><h2>{t.latest}</h2></div>
+          <div className="rows">
+            {remaining.map((story) => (
+              <StoryCard key={story.key} story={story} lang={lang} head="head-3" ratio="3-2" sizes="200px" summary className="list-entry" />
+            ))}
+          </div>
+        </section>
+      )}
+    </>
   );
 }

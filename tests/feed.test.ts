@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { modifiedDate, sitemapEntries, stories, storyPath } from "../src/catalog";
+import { correctedStories, counterpart, listPagePaths, longStories, modifiedDate, sitemapEntries, stories, storyPath } from "../src/catalog";
 import { jsonForScript } from "../src/components/Layout";
 import { escapeXml, renderFeed } from "../src/feed";
 
@@ -37,6 +37,34 @@ describe("renderFeed", () => {
 describe("jsonForScript", () => {
   it("can not close the script tag it sits in", () => {
     expect(jsonForScript({ headline: "</script><b>" })).not.toContain("<");
+  });
+});
+
+describe("listPagePaths", () => {
+  it("builds the explainer list only when an explainer exists", () => {
+    expect(listPagePaths().includes("/tr/explained/")).toBe(longStories().length > 0);
+  });
+});
+
+describe("policy pages", () => {
+  it("builds the editorial policy and corrections pages in both languages", () => {
+    const paths = listPagePaths();
+    for (const lang of ["en", "tr"]) {
+      expect(paths).toContain(`/${lang}/editorial-policy/`);
+      expect(paths).toContain(`/${lang}/corrections/`);
+    }
+  });
+
+  it("lists only stories with an updated date, newest correction first", () => {
+    const corrected = correctedStories();
+    expect(corrected.every((story) => story.updated !== undefined)).toBe(true);
+    expect(corrected.map((story) => story.updated)).toEqual([...corrected.map((story) => story.updated)].sort().reverse());
+    expect(corrected.length).toBe(stories.filter((story) => story.updated).length);
+  });
+
+  it("links the pages with their counterparts and puts them in the sitemap", () => {
+    expect(counterpart("/tr/corrections/")).toBe("/en/corrections/");
+    expect(sitemapEntries().some((entry) => entry.path === "/tr/editorial-policy/")).toBe(true);
   });
 });
 

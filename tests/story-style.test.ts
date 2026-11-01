@@ -15,6 +15,9 @@ import { buildStories } from "../src/stories";
 const ROOT = "src/content/stories";
 const MIN_WORDS = 500;
 const MAX_WORDS = 900;
+// Turkish says the same thing in fewer words, so the lower limit sits below the 1,500 of the guide.
+const MIN_LONG_WORDS = 1200;
+const MAX_LONG_WORDS = 2600;
 const LANGS = ["en", "tr"] as const;
 
 function readStoryFiles(): Record<string, string> {
@@ -39,6 +42,14 @@ describe.each(stories.filter((story) => story.kind === "news"))("$key", (story) 
     const words = wordCount(story.versions[lang].html);
     expect(words).toBeGreaterThanOrEqual(MIN_WORDS);
     expect(words).toBeLessThanOrEqual(MAX_WORDS);
+  });
+});
+
+describe.each(stories.filter((story) => story.kind === "long"))("$key", (story) => {
+  it.each(LANGS)("has an explainer length in %s", (lang) => {
+    const words = wordCount(story.versions[lang].html);
+    expect(words).toBeGreaterThanOrEqual(MIN_LONG_WORDS);
+    expect(words).toBeLessThanOrEqual(MAX_LONG_WORDS);
   });
 });
 

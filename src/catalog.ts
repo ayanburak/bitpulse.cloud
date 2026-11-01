@@ -1,6 +1,6 @@
 /**
  * file: src/catalog.ts
- * importable: stories, findStory, storyPath, storiesIn, longStories, monthKeys, storiesInMonth,
+ * importable: stories, findStory, storyPath, storiesIn, correctedStories, longStories, newsStories, monthKeys, storiesInMonth,
  *             counterpart, listPagePaths, sitemapEntries, modifiedDate, imageUrl, imageSet, feedPath, Category
  *
  * description: Answers page questions about published stories and site addresses.
@@ -30,6 +30,17 @@ export function storiesIn(category: Category): Story[] {
 
 export function longStories(): Story[] {
   return stories.filter((story) => story.kind === "long");
+}
+
+export function newsStories(): Story[] {
+  return stories.filter((story) => story.kind === "news");
+}
+
+// Only stories with a dated correction are listed, the most recently corrected first.
+export function correctedStories(): Story[] {
+  return stories
+    .filter((story) => story.updated !== undefined)
+    .sort((a, b) => (b.updated as string).localeCompare(a.updated as string));
 }
 
 // --- Months ---
@@ -72,10 +83,13 @@ export function listPagePaths(): string[] {
   const shared = langs.flatMap((lang) => [
     `/${lang}/`,
     `/${lang}/archive/`,
+    ...(longStories().length > 0 ? [`/${lang}/explained/`] : []),
     `/${lang}/search/`,
     `/${lang}/about/`,
     `/${lang}/contact/`,
     `/${lang}/privacy/`,
+    `/${lang}/editorial-policy/`,
+    `/${lang}/corrections/`,
     `/${lang}/404.html`,
     ...categories.map((category) => `/${lang}/category/${category}/`),
     ...monthKeys().map((month) => `/${lang}/archive/${month.replace("-", "/")}/`),

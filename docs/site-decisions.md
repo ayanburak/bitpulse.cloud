@@ -6,6 +6,8 @@ This document records the product, design and language decisions behind Bitpulse
 
 Bitpulse is presented as a PaktLabs venture. The footer, the About page and the Contact page say so. The public contact address is info@paktlabs.com.
 
+The editorial policy and the corrections have their own pages in both languages, linked from the footer. They are at /en/editorial-policy/ and /en/corrections/, and Turkish uses the same path names under /tr/ so the language switch keeps working. The policy page summarizes docs/editorial-policy.md and the writer, fact checker, editor and final checker steps, states that articles are written by artificial intelligence and operated by Claude and its subagents, and names a project owner who starts runs and approves changes, with no bylines and no personal names. This explains openly how automation is used. The corrections page says how to report a mistake and lists the stories that carry an updated date, newest first. Until a story has one, it shows an empty statement and no entries.
+
 ## Technology
 
 The site is built with React and Vite. Every public page is generated as static HTML at build time, so that articles and category pages are readable without running JavaScript. Pages use real addresses such as /en/category/economy/ instead of query parameters.
@@ -34,9 +36,9 @@ Corners are square. There are no shadows or gradients. Small caps labels and CSS
 
 The logo is a square cornered letter b inside a cobalt square, next to the word bitpulse. The favicon uses the same drawing. It exists as SVG for browsers and as a 512 pixel PNG for Google Search, which does not list SVG among its favicon formats.
 
-Long reads have a separate look on a cobalt background.
+Long reads have a separate look on a cobalt background. They are the Explained section, named Merak in Turkish, at /en/explained/ and /tr/explained/. It is a section and not a category, so each piece stays in its own category as well. The section label, its menu link and its list page appear only once the first piece exists, because an empty page would be a placeholder. The top story and the secondary stories on the home page are news, and explainers have their own cobalt section there.
 
-On screens up to 720 pixels wide the seven menu links do not fit one row, so they open from a button with three lines next to the language switch. The header stays at the top of the screen there, and the pulse line stays under it to show reading progress. The button is a native details element, so it works without JavaScript.
+On screens up to 820 pixels wide the eight menu links do not fit one row, so they open from a button with three lines next to the language switch. The header stays at the top of the screen there, and the pulse line stays under it to show reading progress. The button is a native details element, so it works without JavaScript.
 
 The Last 30 days section on the home page is a flat row of boxes running from left to right, and it does not use the pulse shape.
 

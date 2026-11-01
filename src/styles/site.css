@@ -664,10 +664,10 @@ a:hover .photo img { transform: scale(1.015); }
   .info-page__main, .info-page__main--form, .contact-side { grid-column: 1 / -1; }
 }
 
-/* The English rail needs 710 pixels, so the drawer takes over just above that. The header sticks
+/* The English rail needs 815 pixels, so the drawer takes over just above that. The header sticks
    here because it holds the menu button. The rail keeps only the pulse line, which still shows
    reading progress on story pages. */
-@media (max-width: 720px) {
+@media (max-width: 820px) {
   :root { --menu-height: 68px; }
   .site-header { position: sticky; top: 0; z-index: 30; }
   .site-header__inner { gap: 8px; height: 58px; }

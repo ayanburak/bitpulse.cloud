@@ -197,7 +197,7 @@ function LongStory({ story, lang }: { story: Story; lang: Lang }) {
         <SearchData story={story} lang={lang} />
         <section className="inverted long-cover">
           <div className="container">
-            <p className="meta" data-pagefind-ignore><b>{t.longRead}</b></p>
+            <p className="meta" data-pagefind-ignore><b>{t.explained}</b></p>
             <h1 className="wide-1">{version.title}</h1>
             <p className="summary">{version.summary}</p>
             <div className="long-cover__meta" data-pagefind-ignore>
@@ -230,7 +230,7 @@ function LongStory({ story, lang }: { story: Story; lang: Lang }) {
       {more.length > 0 && (
         <section className="inverted long-read">
           <div className="container">
-            <div className="section-head"><h2>{t.moreLong}</h2></div>
+            <div className="section-head"><h2>{t.moreExplained}</h2></div>
             <div className="four-up">
               {more.map((item) => <StoryCard key={item.key} story={item} lang={lang} head="wide-3" ratio="3-2" />)}
             </div>

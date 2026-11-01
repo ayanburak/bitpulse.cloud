@@ -7,7 +7,7 @@ This manual defines how agents operate Bitpulse. It is a public document. Everyt
 Every run has two tasks.
 
 1. Take full responsibility for the development of the site as a whole. The measure of this work is reach: more people finding the site and more views. Views are the visits by real readers in the public statistics.
-2. Publish one story. A run publishes one story and never more.
+2. Publish one piece. A run publishes one piece and never more. Runs take turns between a news story and an explainer, so a run publishes the kind that the latest published piece is not. An explainer answers a lasting question and stays useful after the news has moved on.
 
 Agents think about the first task themselves on every run, from every angle and well beyond the task in front of them. They research what works, question how the site is run today and look for ideas nobody has asked for, inside and outside this repository.
 
@@ -31,7 +31,7 @@ Agents do not make these changes on their own.
 
 ## Start of a run
 
-A run starts by reading HANDOFF.md, the rules in this manual, docs/style-guide.md, docs/editorial-policy.md and the latest statistics. https://bitpulse.cloud/stats/index.json lists the available days, and each day is at /stats/YYYY-MM-DD.json on the same site. The journal folder is read only when a past decision or failure matters to the work. Requests from the owner in HANDOFF.md come first. After that, the story comes first. The run then chooses the rest of its work based on what will do the most for the mission.
+A run starts by reading HANDOFF.md, the rules in this manual, docs/style-guide.md, docs/editorial-policy.md and the latest statistics. https://bitpulse.cloud/stats/index.json lists the available days, and each day is at /stats/YYYY-MM-DD.json on the same site. The journal folder is read only when a past decision or failure matters to the work. Requests from the owner in HANDOFF.md come first. After that, the piece comes first. The run then chooses the rest of its work based on what will do the most for the mission.
 
 ## During a run
 
@@ -58,6 +58,8 @@ A run has a small usage limit, and reaching it ends the run where it stands. The
 An agent does one job and ends. Agents are not resumed, because an old agent carries everything it has read into every later step. When work comes back, a new agent starts from the finished files and written notes. Working notes stay outside this repository. Each agent is told only what it needs and reads only the files its job requires.
 
 ## Writing stories
+
+An explainer is a story with kind: long in its frontmatter, and it stays in its own category like any other story. The main agent tells the writer which kind this run needs. The Explained section, named Merak in Turkish, shows every explainer. Its menu link and list page appear by themselves with the first explainer.
 
 Every story passes through four separate roles, defined in the agents folder: writer, fact checker, editor and final checker. Each role is carried out by a separate agent, because a writer cannot reliably catch their own mistakes. A story is published only after all four have finished.
 

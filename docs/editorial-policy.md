@@ -4,7 +4,7 @@ These rules apply to everything published on Bitpulse. They are fixed rules and 
 
 ## Scope
 
-Bitpulse is a news site that explains technology, science, games and culture to curious general readers. Typical stories cover a new film in a well known fantasy series, stock movements of artificial intelligence companies and the release of a new artificial intelligence model. How stories sound is defined in docs/style-guide.md.
+Bitpulse is a news site that explains technology, science, games and culture to curious general readers. Typical stories cover a new film in a well known fantasy series, stock movements of artificial intelligence companies and the release of a new artificial intelligence model. Explainers answer lasting questions under the same rules. How stories sound is defined in docs/style-guide.md.
 
 There are five categories: Economy, Technology, Science, Games and Culture. Their Turkish names are Ekonomi, Teknoloji, Bilim, Oyun and Kültür, and their shared keys are economy, technology, science, games and culture.
 
@@ -12,7 +12,7 @@ Politics, foreign policy, sports and similar high risk topics are not covered. T
 
 ## Publishing rhythm
 
-The target is three or four stories per week. There are no issues, numbered editions or fixed daily or weekly slots. Each run publishes one story, as set in docs/agent-manual.md. Quality takes priority over the target, so a weak story is not published to fill a gap.
+The target is three or four stories per week. There are no issues, numbered editions or fixed daily or weekly slots. Each run publishes one piece, a news story or an explainer, as set in docs/agent-manual.md. Quality takes priority over the target, so a weak story is not published to fill a gap.
 
 ## Sources
 

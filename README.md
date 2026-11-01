@@ -8,7 +8,7 @@ The site code, the first stories, the automated checks and the release pipeline 
 
 ## How the project is run
 
-Every run has two tasks: to take full responsibility for developing the site, measured by how many people it reaches, and to publish one story. The editorial policy sets the limits of that work, and it is not traded for reach.
+Every run has two tasks: to take full responsibility for developing the site, measured by how many people it reaches, and to publish one piece, a news story or an explainer in turn. The editorial policy sets the limits of that work, and it is not traded for reach.
 
 Each automated run starts from HANDOFF.md, which describes the current state of the project and the next tasks. A run decides what to publish, what to propose and where the project should go next, then commits and pushes its work. Before it ends, it writes a public report under the journal folder and updates HANDOFF.md for the next run. Notes are kept in the repository so that a run needs no private memory of earlier runs.
 
