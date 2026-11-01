@@ -1,0 +1,82 @@
+# Style guide
+
+This guide defines how Bitpulse stories sound. The rules on accuracy, sources and corrections are in docs/editorial-policy.md. When the two seem to conflict, accuracy wins.
+
+## The reader
+
+A Bitpulse reader is curious, busy and not a specialist. They often open a story on a phone during a short break, because a headline caught their attention. They did not come to study a topic. They came to understand what happened, why it is interesting, and to spend a few pleasant minutes with it.
+
+Every sentence is written for that person. A story that only an engineer would finish has failed, even if every fact in it is correct.
+
+## Headlines
+
+A headline earns attention honestly. It names the people or companies involved, because familiar names are often the most interesting part of a story, and it points to the tension or the change behind the news.
+
+A headline may create curiosity, but the story must deliver what it suggests. It never exaggerates, invents conflict or hides the subject to force a click. Product code names and technical terms stay out of headlines unless readers already know them.
+
+The summary under the headline adds a reason to keep reading. It does not repeat the headline.
+
+## Structure
+
+Every story finds its own shape. The questions below help, but they are not a fixed order: what happened, why a reader should care, what they need to know to follow it, and what happens next. Uncertainty is mentioned where it matters, and a section about what is still unknown is not a standard ending.
+
+Subheadings are short, plain and specific to the story.
+
+## Length
+
+A news story takes three to four minutes to read, which is about 600 to 800 words. The extra length exists to explain and to tell a better story, not to repeat points. If a sentence gives the reader nothing new, it is removed.
+
+Long reads follow the same voice with more depth, and they are not limited by this length.
+
+## Choosing details
+
+Research produces more facts than a story needs. A story keeps the details a reader would want to tell a friend and drops the rest, even when they are true and sourced. It is a story, not a list of everything that was found.
+
+## Attribution
+
+Sources are listed under every story, so the text does not name one in every sentence. A source is named in the text only when the reader needs to know who is speaking, such as an opinion, a company promise, a disputed claim or a figure that rests on one report. Reference works such as encyclopedias are never named in the text.
+
+The text never mentions how the story was researched or written.
+
+## Plain language
+
+Technical words are used only when the story needs them, and each one is explained the first time it appears, in the same sentence or the next one.
+
+Repository addresses, code, version strings, configuration names and benchmark jargon do not belong in the text. A reader who wants those details can follow the sources. A number is kept only if a general reader can feel what it means.
+
+Sentences stay short and direct. Turkish and English versions are written with the same care, and each one sounds natural in its own language.
+
+## Explaining ideas
+
+A story may teach. Most ideas are best explained directly, in simple words.
+
+A comparison is optional and most stories do not need one. When a comparison truly helps, it comes from the subject of the story itself or from everyday life that any reader shares. A story does not borrow comparisons from games, films or fandom unless it is about them.
+
+Background facts follow the same sourcing rules as the news itself.
+
+## Tone
+
+The voice is warm, confident and calm, like a well informed friend telling a good story. It is lively without being loud. There is no hype, no first person and no talking down to the reader. An interpretation is written so that it reads as an interpretation, and it follows from the facts in the story.
+
+## Variety
+
+Bitpulse should not sound like a machine repeating a recipe. Before a story is published, the five most recent stories are read. The new story must not repeat their openings, endings, subheadings or comparisons, and it must not lean on a favorite phrase or a familiar rhythm.
+
+If two stories could swap their first paragraphs, one of them is rewritten.
+
+## Before publishing
+
+- Would a curious person with no technical background understand every paragraph?
+- Does the headline make a promise that the story keeps?
+- Does the reader learn something beyond the announcement itself?
+- Is any sentence there only to fill space?
+- Are claims by companies clearly presented as their own claims?
+- Does this story sound like one of the last five?
+
+## Examples
+
+The stories listed here show how different a Bitpulse story can be. They share a voice, not a formula. Their openings, structure and comparisons are never copied.
+
+- src/content/stories/2026-10-20-torchtpu-torchneuron-pytorch
+- src/content/stories/2026-10-14-treble-clef-galaxy-cluster
+- src/content/stories/2026-10-13-narnia-magicians-nephew-trailer

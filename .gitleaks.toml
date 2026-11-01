@@ -1,0 +1,5 @@
+# Secret scanning uses the standard Gitleaks rules. Nothing is allowlisted on purpose, because
+# an exception here would also hide a real secret.
+
+[extend]
+useDefault = true

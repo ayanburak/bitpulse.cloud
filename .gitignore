@@ -1,0 +1,18 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Test output
+coverage/
+playwright-report/
+test-results/
+
+# Local secrets
+.env
+.env.*
+
+# Logs
+*.log
+
+# Server render bundle, used only during the build
+.ssr/
