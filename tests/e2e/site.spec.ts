@@ -141,6 +141,38 @@ test("the page does not scroll sideways on a phone", async ({ browser }) => {
   await context.close();
 });
 
+test("the phone menu shows every link and closes again", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 320, height: 640 } });
+  const page = await context.newPage();
+  await page.goto("/en/");
+  const panel = page.locator(".drawer__panel");
+  const button = page.locator(".drawer summary");
+
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  await expect(page.locator(".menu .rail a").first()).toBeHidden();
+  await expect(panel).toBeHidden();
+
+  await button.click();
+  const links = panel.locator("a");
+  await expect(links).toHaveCount(7);
+  for (const link of await links.all()) await expect(link).toBeInViewport();
+
+  await page.keyboard.press("Escape");
+  await expect(panel).toBeHidden();
+  await expect(button).toBeFocused();
+
+  await button.click();
+  await page.locator("main").click({ position: { x: 10, y: 500 } });
+  await expect(panel).toBeHidden();
+  await context.close();
+});
+
+test("the phone menu is hidden on a wide screen", async ({ page }) => {
+  await page.goto("/en/");
+  await expect(page.locator(".drawer summary")).toBeHidden();
+  await expect(page.locator(".menu .rail a").first()).toBeVisible();
+});
+
 test("the theme button switches themes and remembers the choice", async ({ page }) => {
   await page.goto("/en/");
   const root = page.locator("html");

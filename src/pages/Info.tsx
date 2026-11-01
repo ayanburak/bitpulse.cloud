@@ -5,8 +5,9 @@
  * description: The about, contact and privacy pages in both languages.
  */
 
-// XXX: The privacy text describes what the site does today. It has to change before advertising
-// or any form goes live, and the retention period has to follow the server log settings.
+// XXX: The privacy text has to change before any form goes live, and the retention period has to
+// follow the server log settings. The advertising section is written to stay true both before
+// and after ads start, so turning them on does not need a new text.
 
 import { CONTACT_EMAIL, PUBLISHER_URL, REPO_URL } from "../config";
 import { Layout, useLang } from "../components/Layout";
@@ -15,6 +16,7 @@ import { formatDate, ui } from "../i18n";
 // --- Constants ---
 
 const PRIVACY_UPDATED = "2026-11-01";
+const LINK = /(https:\/\/\S+)/;
 
 // --- About ---
 
@@ -156,7 +158,7 @@ const PRIVACY = {
     updated: "Last updated",
     sections: [
       ["Information we collect", [
-        "Bitpulse has no accounts, forms or newsletter, and it runs no analytics or tracking scripts.",
+        "Bitpulse has no accounts, forms or newsletter, and it runs no analytics scripts of its own.",
         "Like most web servers, the server keeps technical access logs. A log line holds the IP address, the time, the page requested, the referring address and the browser description.",
       ]],
       ["How we use information", [
@@ -164,8 +166,14 @@ const PRIVACY = {
         "Those statistics are aggregated counts such as page views per day. They contain no IP addresses, and they are published in the project's public repository.",
       ]],
       ["Cookies", [
-        "The only cookie is bp_lang. It is set when a reader uses the language switch, stores the chosen language for one year and is used to open the site in that language.",
+        "The site's own cookie is bp_lang. It is set when a reader uses the language switch, stores the chosen language for one year and is used to open the site in that language.",
         "The chosen color theme is kept in your browser and is never sent to the server.",
+      ]],
+      ["Advertising", [
+        "Bitpulse may show ads from Google AdSense on article pages. The home page shows no ads.",
+        "When ads are shown, third party vendors, including Google, use cookies to serve ads based on a reader's prior visits to this site and to other sites. Google's use of advertising cookies lets it and its partners serve ads based on those visits.",
+        "Readers can opt out of personalized advertising at https://adssettings.google.com and can opt out of some third party vendors at https://www.aboutads.info. Google explains how it uses information from sites that show its ads at https://policies.google.com/technologies/partner-sites.",
+        "Readers in the European Economic Area, the United Kingdom and Switzerland are asked for their consent through a Google certified tool before personalized ads are shown.",
       ]],
       ["Retention", [
         "Access logs are deleted after about fourteen days. Aggregated statistics contain no personal data and are kept.",
@@ -179,7 +187,7 @@ const PRIVACY = {
     updated: "Son güncelleme",
     sections: [
       ["Toplanan bilgiler", [
-        "Bitpulse'ta üyelik, form ya da bülten yoktur, sitede analiz veya takip script'i çalışmaz.",
+        "Bitpulse'ta üyelik, form ya da bülten yoktur, sitenin kendine ait bir analiz script'i çalışmaz.",
         "Çoğu web sunucusu gibi bu sunucu da teknik erişim kayıtları tutar. Bir kayıt satırında IP adresi, zaman, istenen sayfa, gelinen adres ve tarayıcı bilgisi bulunur.",
       ]],
       ["Bilgilerin kullanımı", [
@@ -187,8 +195,14 @@ const PRIVACY = {
         "Bu istatistikler günlük sayfa görüntüleme gibi toplu sayılardır. IP adresi içermez ve projenin herkese açık deposunda yayımlanır.",
       ]],
       ["Çerezler", [
-        "Sitedeki tek çerez bp_lang'dir. Okur dil düğmesini kullandığında yazılır, seçilen dili bir yıl saklar ve siteyi o dilde açmak için kullanılır.",
+        "Sitenin kendi çerezi bp_lang'dir. Okur dil düğmesini kullandığında yazılır, seçilen dili bir yıl saklar ve siteyi o dilde açmak için kullanılır.",
         "Seçilen renk teması tarayıcınızda tutulur, sunucuya hiç gönderilmez.",
+      ]],
+      ["Reklam", [
+        "Bitpulse, haber sayfalarında Google AdSense reklamları gösterebilir. Ana sayfada reklam gösterilmez.",
+        "Reklam gösterildiğinde Google dahil üçüncü taraf sağlayıcılar, okurun bu siteye ve başka sitelere önceki ziyaretlerine göre reklam sunmak için çerez kullanır. Google'ın reklam çerezleri, Google'ın ve iş ortaklarının bu ziyaretlere göre reklam sunmasını sağlar.",
+        "Okurlar kişiselleştirilmiş reklamları https://adssettings.google.com adresinden, bazı üçüncü taraf sağlayıcıları https://www.aboutads.info adresinden kapatabilir. Google, reklamlarını gösteren sitelerden gelen bilgileri nasıl kullandığını https://policies.google.com/technologies/partner-sites adresinde anlatır.",
+        "Avrupa Ekonomik Alanı, Birleşik Krallık ve İsviçre'deki okurlara, kişiselleştirilmiş reklam gösterilmeden önce Google sertifikalı bir araçla onayları sorulur.",
       ]],
       ["Saklama süresi", [
         "Erişim kayıtları yaklaşık on dört gün sonra silinir. Toplu istatistikler kişisel veri içermez ve saklanır.",
@@ -199,6 +213,11 @@ const PRIVACY = {
     ],
   },
 } as const;
+
+// The texts are plain strings, so a web address inside one becomes a link only at this point.
+function withLinks(paragraph: string) {
+  return paragraph.split(LINK).map((part) => (LINK.test(part) ? <a key={part} href={part}>{part}</a> : part));
+}
 
 export function Privacy() {
   const lang = useLang();
@@ -223,7 +242,7 @@ export function Privacy() {
             <div className="prose prose--narrow">
               {copy.sections.flatMap(([heading, paragraphs], index) => [
                 <h2 key={heading} id={`part-${index}`}>{heading}</h2>,
-                ...paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>),
+                ...paragraphs.map((paragraph) => <p key={paragraph}>{withLinks(paragraph)}</p>),
               ])}
             </div>
           </div>

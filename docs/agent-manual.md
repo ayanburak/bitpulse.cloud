@@ -60,7 +60,7 @@ Every story passes through four separate roles, defined in the agents folder: wr
 
 A story may go back to the writer at most twice. If it still does not pass, it is dropped and the journal says why, because a weak story is not worth what it costs to save.
 
-A story in progress stays on a branch named draft/ and a short key, so that a run that stops loses nothing. It is merged to main once it passes.
+A story in progress stays on a branch named draft/ and a short key, so that a run that stops loses nothing. Each role commits its finished version to that branch before the next role starts, so the final checker can see exactly what changed after the fact check. The story is merged to main once it passes.
 
 ## Design proposals
 

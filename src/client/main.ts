@@ -66,7 +66,8 @@ function startRail(rail: HTMLElement): void {
   const rest = () => {
     if (reading) return trackReading(rail, reading);
     const active = rail.querySelector<HTMLElement>("a[aria-current]");
-    if (active) pointPulse(rail, active);
+    // Phones hide the rail links, and a hidden link has no width to rise over.
+    if (active?.offsetWidth) pointPulse(rail, active);
     else rail.style.removeProperty("--y");
   };
 
@@ -103,6 +104,23 @@ function startRail(rail: HTMLElement): void {
   if (active && box && box.scrollWidth > box.clientWidth) {
     box.scrollLeft = active.offsetLeft - (box.clientWidth - active.offsetWidth) / 2;
   }
+}
+
+// --- Phone Menu ---
+
+// The details element opens and closes by itself, so this only adds the two ways of closing that
+// readers expect from a menu. Focus returns to the button, or Escape would strand keyboard users.
+function startDrawer(): void {
+  const drawer = document.querySelector<HTMLDetailsElement>("[data-drawer]");
+  if (!drawer) return;
+  document.addEventListener("click", (event) => {
+    if (!drawer.contains(event.target as Node)) drawer.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !drawer.open) return;
+    drawer.open = false;
+    drawer.querySelector("summary")?.focus();
+  });
 }
 
 // --- Language ---
@@ -182,6 +200,7 @@ function startContents(): void {
 
 showToday();
 document.querySelectorAll<HTMLElement>(".rail").forEach(startRail);
+startDrawer();
 startLanguageSwitch();
 startThemeToggle();
 startCopyButtons();

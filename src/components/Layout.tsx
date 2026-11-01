@@ -7,7 +7,7 @@
 
 import type { ReactNode } from "react";
 import { useLocation, useParams } from "react-router";
-import { counterpart } from "../catalog";
+import { counterpart, feedPath } from "../catalog";
 import { PUBLISHER_URL, REPO_URL, SITE_URL } from "../config";
 import { categoryNames, formatDate, isLang, otherLang, ui, type Lang } from "../i18n";
 import { categories } from "../stories";
@@ -64,6 +64,30 @@ function ThemeToggle({ lang }: { lang: Lang }) {
   );
 }
 
+// Both menus share this link, so the current page is marked the same way in each.
+function MenuLink({ href, children }: { href: string; children: ReactNode }) {
+  const { pathname } = useLocation();
+  return <li><a href={href} aria-current={pathname === href ? "page" : undefined}>{children}</a></li>;
+}
+
+// Phones use this instead of the rail, because seven links do not fit one row. The native details
+// element opens without JavaScript, and main.ts only adds closing on an outside tap or Escape.
+function Drawer({ lang }: { lang: Lang }) {
+  const t = ui[lang];
+  return (
+    <details className="drawer" data-drawer>
+      <summary aria-label={t.mainMenu}><i></i><i></i><i></i></summary>
+      <nav className="drawer__panel" aria-label={t.mainMenu}>
+        <ul>
+          <MenuLink href={`/${lang}/`}>{t.topStories}</MenuLink>
+          {categories.map((key) => <MenuLink key={key} href={`/${lang}/category/${key}/`}>{categoryNames[lang][key]}</MenuLink>)}
+          <MenuLink href={`/${lang}/archive/`}>{t.archive}</MenuLink>
+        </ul>
+      </nav>
+    </details>
+  );
+}
+
 function Header({ lang }: { lang: Lang }) {
   const t = ui[lang];
   return (
@@ -74,6 +98,7 @@ function Header({ lang }: { lang: Lang }) {
         <a className="site-header__link" href={`/${lang}/search/`}>{t.search}</a>
         <ThemeToggle lang={lang} />
         <LangSwitch lang={lang} />
+        <Drawer lang={lang} />
       </div>
     </header>
   );
@@ -81,21 +106,14 @@ function Header({ lang }: { lang: Lang }) {
 
 function Menu({ lang }: { lang: Lang }) {
   const t = ui[lang];
-  const { pathname } = useLocation();
-  const current = (href: string) => (pathname === href ? "page" : undefined);
-  const home = `/${lang}/`;
-  const archive = `/${lang}/archive/`;
   return (
     <nav className="menu" aria-label={t.mainMenu}>
       <div className="rail">
-        <ul><li><a href={home} aria-current={current(home)}>{t.topStories}</a></li></ul>
+        <ul><MenuLink href={`/${lang}/`}>{t.topStories}</MenuLink></ul>
         <ul>
-          {categories.map((key) => {
-            const href = `/${lang}/category/${key}/`;
-            return <li key={key}><a href={href} aria-current={current(href)}>{categoryNames[lang][key]}</a></li>;
-          })}
+          {categories.map((key) => <MenuLink key={key} href={`/${lang}/category/${key}/`}>{categoryNames[lang][key]}</MenuLink>)}
         </ul>
-        <ul><li><a href={archive} aria-current={current(archive)}>{t.archive}</a></li></ul>
+        <ul><MenuLink href={`/${lang}/archive/`}>{t.archive}</MenuLink></ul>
         <i className="pulse" aria-hidden="true"><b></b></i>
       </div>
     </nav>
@@ -152,14 +170,27 @@ function Footer({ lang }: { lang: Lang }) {
 
 // --- Layout ---
 
+// A story title can hold any text, and an unescaped closing tag would end the script early.
+export function jsonForScript(data: object): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
+// A story passes its image and structured data, and every other page shares as a plain website.
+export interface StoryHead {
+  image: string;
+  imageAlt: string;
+  data: object;
+}
+
 interface Props {
   title?: string;
   description?: string;
+  story?: StoryHead;
   children: ReactNode;
 }
 
 // The root address counts as the shared language entry, so it is the x-default of the home page.
-function HeadTags({ lang, title, description }: { lang: Lang; title: string; description: string }) {
+function HeadTags({ lang, title, description, story }: { lang: Lang; title: string; description: string; story?: StoryHead }) {
   const { pathname } = useLocation();
   const url = (path: string) => `${SITE_URL}${path}`;
   const other = counterpart(pathname);
@@ -168,24 +199,35 @@ function HeadTags({ lang, title, description }: { lang: Lang; title: string; des
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="robots" content="max-image-preview:large" />
+      <meta property="og:type" content={story ? "article" : "website"} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url(pathname)} />
       <meta property="og:site_name" content="Bitpulse" />
+      {story && (
+        <>
+          <meta property="og:image" content={story.image} />
+          <meta property="og:image:alt" content={story.imageAlt} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript(story.data) }} />
+        </>
+      )}
       <link rel="canonical" href={url(pathname)} />
       <link rel="alternate" hrefLang={lang} href={url(pathname)} />
       <link rel="alternate" hrefLang={otherLang(lang)} href={url(other)} />
       <link rel="alternate" hrefLang="x-default" href={url(isHome ? "/" : `/en/${pathname.slice(4)}`)} />
+      <link rel="alternate" type="application/rss+xml" title="Bitpulse" href={url(feedPath(lang))} />
     </>
   );
 }
 
-export function Layout({ title, description, children }: Props) {
+export function Layout({ title, description, story, children }: Props) {
   const lang = useLang();
   const t = ui[lang];
   return (
     <>
-      <HeadTags lang={lang} title={title ? `${title} | Bitpulse` : "Bitpulse"} description={description ?? t.metaDescription} />
+      <HeadTags lang={lang} title={title ? `${title} | Bitpulse` : "Bitpulse"} description={description ?? t.metaDescription} story={story} />
       <a className="skip-link" href="#content">{t.skip}</a>
       <Header lang={lang} />
       <Menu lang={lang} />

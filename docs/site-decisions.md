@@ -14,6 +14,8 @@ Search runs in the browser against an index generated at build time, so it needs
 
 React runs only during the build. Readers receive static HTML and a small script, which keeps pages fast and leaves no client side application to load.
 
+Each language has an RSS feed at /en/feed.xml and /tr/feed.xml with the newest stories. Feed readers find it through a link in the page head, so it adds nothing visible to a page. Story pages also carry an image for link previews and NewsArticle structured data, with the site as the author because articles have no personal bylines.
+
 Home page sections appear only when there are enough stories to fill them. There is no most read list until real readership numbers exist, because an invented ranking would mislead readers.
 
 ## Launch scope
@@ -33,6 +35,8 @@ Corners are square. There are no shadows or gradients. Small caps labels and CSS
 The logo is a square cornered letter b inside a cobalt square, next to the word bitpulse. The favicon uses the same drawing.
 
 Long reads have a separate look on a cobalt background.
+
+On screens up to 720 pixels wide the seven menu links do not fit one row, so they open from a button with three lines next to the language switch. The header stays at the top of the screen there, and the pulse line stays under it to show reading progress. The button is a native details element, so it works without JavaScript.
 
 The Last 30 days section on the home page is a flat row of boxes running from left to right, and it does not use the pulse shape.
 

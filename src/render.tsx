@@ -1,6 +1,6 @@
 /**
  * file: src/render.tsx
- * importable: renderPage, listPagePaths, stories
+ * importable: renderPage, renderFeed, listPagePaths, stories
  *
  * Runs at build time and on the dev server, never in the browser. renderPage turns one
  * address from listPagePaths into a complete HTML document.
@@ -12,9 +12,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { StaticRouter } from "react-router";
 import { listPagePaths, stories } from "./catalog";
 import { Document, type Assets } from "./Document";
+import { renderFeed } from "./feed";
 import { SiteRoutes } from "./routes";
 
-export { listPagePaths, stories };
+export { listPagePaths, renderFeed, stories };
 export type { Assets };
 
 // The markup carries no React attributes because nothing hydrates it in the browser.

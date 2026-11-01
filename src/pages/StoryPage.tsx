@@ -6,11 +6,11 @@
  */
 
 import { useParams } from "react-router";
-import { findStory, longStories, stories, storyPath } from "../catalog";
+import { findStory, imageUrl, longStories, stories, storyPath } from "../catalog";
 import { AdSide, AdStrip } from "../components/Ads";
-import { Layout, useLang } from "../components/Layout";
+import { Layout, useLang, type StoryHead } from "../components/Layout";
 import { ImageCredit, Photo, RowItem, StoryCard } from "../components/Story";
-import { ADS_ENABLED, SITE_URL } from "../config";
+import { ADS_ENABLED, PUBLISHER_URL, SITE_URL } from "../config";
 import { categoryNames, formatDate, ui, type Lang } from "../i18n";
 import type { Story } from "../stories";
 
@@ -18,6 +18,10 @@ import type { Story } from "../stories";
 
 const RELATED_SIZE = 4;
 const NEXT_SIZE = 4;
+
+// Google asks for at least 1200 pixels for large previews, and the 1280 copy meets that at a
+// fraction of the size of the 2000 copy.
+const SHARE_IMAGE_WIDTH = 1280;
 
 // --- Helpers ---
 
@@ -33,6 +37,28 @@ function splitBody(html: string): [string, string] {
 function otherStories(story: Story): Story[] {
   const others = stories.filter((item) => item.key !== story.key);
   return [...others.filter((item) => item.category === story.category), ...others.filter((item) => item.category !== story.category)];
+}
+
+// The author is the site itself, because the editorial policy allows no personal bylines.
+function storyHead(story: Story, lang: Lang): StoryHead {
+  const version = story.versions[lang];
+  const image = `${SITE_URL}${imageUrl(story, SHARE_IMAGE_WIDTH)}`;
+  return {
+    image,
+    imageAlt: version.image.alt,
+    data: {
+      "@context": "https://schema.org",
+      "@type": story.kind === "long" ? "Article" : "NewsArticle",
+      headline: version.title,
+      description: version.summary,
+      image: [image],
+      datePublished: story.date,
+      inLanguage: lang,
+      mainEntityOfPage: `${SITE_URL}${storyPath(story, lang)}`,
+      author: { "@type": "Organization", name: "Bitpulse", url: `${SITE_URL}/${lang}/about/` },
+      publisher: { "@type": "Organization", name: "PaktLabs", url: PUBLISHER_URL },
+    },
+  };
 }
 
 // --- Shared Parts ---
@@ -222,7 +248,7 @@ export function StoryPage() {
   const version = story.versions[lang];
   const Article = story.kind === "long" ? LongStory : NewsStory;
   return (
-    <Layout title={version.title} description={version.summary}>
+    <Layout title={version.title} description={version.summary} story={storyHead(story, lang)}>
       <Article story={story} lang={lang} />
     </Layout>
   );

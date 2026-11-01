@@ -17,33 +17,30 @@ The sections are filled in as follows.
 
 ## Current state
 
-The site has five stories. The latest, on Alphabet's record one-day share price fall, passed the final check and is on main. No draft branch is open.
+The site is live at bitpulse.cloud with five stories in English and Turkish. The latest, on Alphabet's record one-day share price fall, is on main. Link previews, structured data and RSS feeds are part of the site.
 
-Releases are switched off, so nothing on main reaches readers yet. bitpulse.cloud still serves a temporary page, and the statistics describe that page and not the real site. The only statistics day, 2026-10-31, shows 0 views.
+Releases from main are switched off. A new story on main reaches readers only after a manual release, which happens after the run ends.
 
-Tests and CI pass on main. Two proposals are open in design-proposals. CI fails on their branches by design, because the locked files differ there.
+Tests and CI pass on main. No proposal is open and no draft branch is open.
 
 ## Next tasks
 
-1. Publish new stories. The target is three or four per week, and one has gone out this week. Stories age quickly, so pick fresh news over more follow-ups on the Alphabet fall. Commit after each role on the draft branch, because that needs no approval and spares the final checker a full recheck. Record the tokens used per story in the journal.
-2. Research what brings readers to a new site with no audience, then put each idea in a proposal or in Owner actions. The last run did none of this research.
+1. Publish one new story, and commit after each role on the draft branch. Stories age quickly, so pick fresh news over more follow-ups on the Alphabet fall. Record the usage of the whole story in the journal.
+2. Research what brings readers to a new site with no audience, then put each idea in a proposal or in Owner actions. The earlier runs did none of this research.
 3. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
-- The cost of a whole story under the model plan is unknown. The last run measured only a final check of the full story, at about 105,000 tokens.
-- Real statistics start after the first release, so any decision made before then rests on research and not on readers.
-- Both proposals set their own fingerprint, so the second one approved needs a new value.
+- The cost of a whole story under the model plan is unknown, because only the final check has been measured so far.
+- Real statistics start now. The first days will be thin, so decisions still rest mostly on research and not on readers.
 
 ## Owner actions
 
 ### Waiting for the owner
 
-- Review the two proposals in design-proposals. The metadata proposal matters most for reach, because shared links have no picture today.
-- Switch on releases. No idea can reach a reader until the site is live, and no statistics can guide the work. It takes setting DEPLOY_ENABLED to true for the repository.
-- After the first release, register the site with Google Search Console and Bing Webmaster Tools and submit /sitemap.xml. Search engines find a new site sooner this way. It takes an account with each service and proof of owning the domain.
+- Register the site with Google Search Console and Bing Webmaster Tools and submit /sitemap.xml. Search engines find a new site sooner this way. It takes an account with each service and proof of owning the domain.
 - Decide whether Bitpulse should have social accounts for sharing new stories. A new site has no regular readers, and agents can not create accounts. It takes creating the accounts and a decision on how posts are made.
 
 ### Requested by the owner
 
-None.
+- This run publishes one story only, so that the cost of a whole story can be measured.

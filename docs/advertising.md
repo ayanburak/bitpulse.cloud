@@ -1,6 +1,6 @@
 # Advertising
 
-This document records the advertising decisions for Bitpulse and the AdSense notes collected so far. Advertising is not active. The application will be made after the site has been live with real content for a reasonable period, and the owner holds the account because it requires a real person.
+This document records the advertising decisions for Bitpulse and the AdSense notes collected so far. Advertising is not active. The owner holds the account because it requires a real person, and the privacy page already describes advertising so it can start without a new text.
 
 The notes were compiled from Google's help pages, and the date of those pages could not be confirmed. They are checked against current sources before the application.
 
@@ -108,6 +108,10 @@ The only guaranteed way to prevent layout shift is to reserve the ad space with 
 
 The Cumulative Layout Shift target is below 0.1 at the 75th percentile.
 
+## Consent in Europe
+
+Google requires a certified consent tool for personalized ads to readers in the European Economic Area, the United Kingdom and Switzerland. Without one, ad personalization is restricted there. The Privacy and messaging page in AdSense offers such a tool.
+
 ## Open questions
 
 These points could not be confirmed.
@@ -118,4 +122,3 @@ These points could not be confirmed.
 - Which sizes will really be served in fixed 728×90 and 300×250 units.
 - Whether the AdSense crawler sees content added with JavaScript.
 - How current Google policy treats content written by artificial intelligence.
-- Whether a consent tool is required for readers in Europe, and what it means for the privacy page.

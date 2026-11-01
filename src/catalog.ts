@@ -1,7 +1,7 @@
 /**
  * file: src/catalog.ts
  * importable: stories, findStory, storyPath, storiesIn, longStories, monthKeys, storiesInMonth,
- *             counterpart, listPagePaths, imageUrl, imageSet, Category
+ *             counterpart, listPagePaths, imageUrl, imageSet, feedPath, Category
  *
  * description: Answers page questions about published stories and site addresses.
  */
@@ -82,6 +82,10 @@ export function listPagePaths(): string[] {
     ...stories.map((story) => storyPath(story, lang)),
   ]);
   return ["/", "/404.html", ...shared];
+}
+
+export function feedPath(lang: Lang): string {
+  return `/${lang}/feed.xml`;
 }
 
 // --- Images ---

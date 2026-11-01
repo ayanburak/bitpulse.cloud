@@ -5,7 +5,7 @@
  * Expects the client build in dist and the server bundle in .ssr. Both come from the
  * earlier steps of npm run build.
  *
- * description: Writes every page, resized story image, the sitemap and robots.txt into dist.
+ * description: Writes every page, resized story image, feed, the sitemap and robots.txt into dist.
  */
 
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -34,6 +34,7 @@ interface RenderModule {
   stories: Story[];
   listPagePaths(): string[];
   renderPage(path: string, assets: Assets): string;
+  renderFeed(lang: string): string;
 }
 
 // --- Constants ---
@@ -93,7 +94,7 @@ function writeSitemap(paths: string[]): void {
 
 const assets = readAssets();
 const bundle = pathToFileURL(join(".ssr", "render.js")).href;
-const { stories, listPagePaths, renderPage } = (await import(bundle)) as RenderModule;
+const { stories, listPagePaths, renderPage, renderFeed } = (await import(bundle)) as RenderModule;
 
 // The live site must never be built without real content.
 if (stories.length === 0) throw new Error("No stories found, refusing to build an empty site");
@@ -106,6 +107,7 @@ for (const path of paths) {
 }
 await writeImages(stories);
 writeSitemap(paths);
+for (const lang of ["en", "tr"]) writeFileSync(join(OUT, lang, "feed.xml"), renderFeed(lang));
 
 // The manifest and the server bundle are build tools, neither belongs on the live site.
 rmSync(join(OUT, ".vite"), { recursive: true });

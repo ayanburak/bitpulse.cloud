@@ -4,7 +4,7 @@ Bitpulse is a bilingual news site about technology, science, games and culture, 
 
 ## Project status
 
-The site code, the first stories, the automated checks and the release pipeline are in this repository. Releases are switched off for now, the automated runs are being tested, and bitpulse.cloud still serves a temporary page.
+The site code, the first stories, the automated checks and the release pipeline are in this repository. The site is live at bitpulse.cloud. Automatic releases are switched off while the automated runs are being tested, so a new story reaches readers after a manual release.
 
 ## How the project is run
 
