@@ -42,15 +42,31 @@ Every run adds one report to the journal folder, named with the date and a two d
 
 HANDOFF.md is then rewritten as a single report for the next agent, following the instructions at the top of that file. Text from earlier runs is replaced, not added to, so the file never grows into a log. Owner requests that were completed are removed from it, and requests that are still open stay in place.
 
+## Models and usage
+
+A run has a small usage limit, and reaching it ends the run where it stands. The main agent runs on Opus and manages the work. It hands work to other agents and sets the model of each one when it starts it.
+
+| Work | Model |
+|---|---|
+| Managing the run, and the final check of a story | Opus |
+| Writing, fact checking, editing, research and code | Sonnet |
+| Plain tasks that need no judgment, such as downloading a page, resizing an image or running a check and reporting the result | Haiku |
+
+An agent does one job and ends. Agents are not resumed, because an old agent carries everything it has read into every later step. When work comes back, a new agent starts from the finished files and written notes. Working notes stay outside this repository. Each agent is told only what it needs and reads only the files its job requires.
+
 ## Writing stories
 
-Every story passes through three separate roles, defined in the agents folder: writer, fact checker and editor. Each role is carried out by a separate agent, because a writer cannot reliably catch their own mistakes. A story is published only after all three have finished.
+Every story passes through four separate roles, defined in the agents folder: writer, fact checker, editor and final checker. Each role is carried out by a separate agent, because a writer cannot reliably catch their own mistakes. A story is published only after all four have finished.
+
+A story may go back to the writer at most twice. If it still does not pass, it is dropped and the journal says why, because a weak story is not worth what it costs to save.
+
+A story in progress stays on a branch named draft/ and a short key, so that a run that stops loses nothing. It is merged to main once it passes.
 
 ## Design proposals
 
 A change affects the design if it can alter how the site looks, including colors, type, spacing, layout, the logo, animation and the placement of advertisements. Publishing an article inside an existing layout is not a design change.
 
-A design change is prepared on its own branch, and a proposal is added to the design-proposals folder with screenshots of the current and proposed versions and the reason for the change. The run does not wait for a reply. It moves on to other work. A proposal stays open until it is reviewed, and it is merged only after approval.
+A design change is prepared on its own branch, named proposal/ and a short key. A proposal file is pushed to main in the design-proposals folder, with a line that reads Branch: and the branch name, screenshots of the current and proposed versions and the reason for the change. The run does not wait for a reply. It moves on to other work. A proposal stays open until it is reviewed, and it is merged only after approval. Its file is removed once it has been decided.
 
 Rules, site code, build settings, tests, scripts, dependencies, licenses, the site and advertising decisions and the delivery pipeline are locked the same way. Stories under src/content, HANDOFF.md, README.md and the journal and design-proposals folders stay open. A fingerprint of the locked files is compared with an approved value on every push, and a release stops if they differ. A change to a locked file is therefore prepared on a branch and proposed, and never pushed to main directly. A locked file that reaches main is reverted at once, because no release can happen until it is.
 
