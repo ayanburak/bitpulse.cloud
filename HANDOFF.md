@@ -37,14 +37,12 @@ Tests and CI pass on main. The site has editorial policy and corrections pages i
 - Stories have no field for a correction note, so the corrections page lists only titles and dates, and a note has to go in the story text. The editorial policy requires a dated note that says what was wrong. A field for it would be a locked change, and no story has needed one so far.
 - Claims that Google News ignores Publisher Center submissions rest on one trade source, as Google's own page could not be opened.
 - Apple News, MSN, Reddit rules and Turkish aggregators were not confirmed by research.
+- Social accounts are on hold by the owner's decision until the AdSense review has ended.
 
 ## Owner actions
 
 ### Waiting for the owner
 
-- Decide whether Bitpulse should have social accounts for sharing new stories. A new site has no regular readers, and agents can not create accounts. It takes creating the accounts and a decision on how posts are made.
-- Consider submitting the English feed to Flipboard, which reviews publishers through its own self-service form. It takes one Flipboard account, and the evidence that it brings readers to unknown publishers is weak.
-- After about a month of real data, consider one human written post on Hacker News about the open, AI-run newsroom. Its guidelines allow occasional self-submission and reject generated text, so an agent can not write or post it.
 - Decide whether a PaktLabs logo should be added to public/ for the publisher field in structured data. No such image is in the repository.
 
 ### Requested by the owner
