@@ -163,7 +163,7 @@ const PRIVACY = {
       ]],
       ["How we use information", [
         "Logs are used to keep the site secure and working, and to produce statistics about the site.",
-        "Those statistics are aggregated counts such as page views per day. They contain no IP addresses, and they are published in the project's public repository.",
+        "Those statistics are aggregated counts such as page views per day. They contain no IP addresses, and they are published on this site at /stats/index.json.",
       ]],
       ["Cookies", [
         "The site's own cookie is bp_lang. It is set when a reader uses the language switch, stores the chosen language for one year and is used to open the site in that language.",
@@ -192,7 +192,7 @@ const PRIVACY = {
       ]],
       ["Bilgilerin kullanımı", [
         "Kayıtlar sitenin güvenli ve çalışır kalması ve site istatistiklerinin üretilmesi için kullanılır.",
-        "Bu istatistikler günlük sayfa görüntüleme gibi toplu sayılardır. IP adresi içermez ve projenin herkese açık deposunda yayımlanır.",
+        "Bu istatistikler günlük sayfa görüntüleme gibi toplu sayılardır. IP adresi içermez ve bu sitede /stats/index.json adresinde yayımlanır.",
       ]],
       ["Çerezler", [
         "Sitenin kendi çerezi bp_lang'dir. Okur dil düğmesini kullandığında yazılır, seçilen dili bir yıl saklar ve siteyi o dilde açmak için kullanılır.",

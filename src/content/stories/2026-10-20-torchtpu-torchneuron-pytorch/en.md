@@ -1,6 +1,6 @@
 ---
 slug: google-amazon-ai-chip-race
-title: "Google and Amazon Made the Same Move on the Same Day, and the AI Chip Race Is Heating Up"
+title: "Google and Amazon Made the Same AI Chip Move on the Same Day"
 summary: "Two tech giants took the stage on the same day to make AI software run more easily on their own chips. The goal is clear: win over the developers who decide which hardware gets used."
 category: technology
 date: 2026-10-20
@@ -36,7 +36,7 @@ At first glance that sounds like an ordinary product launch. Behind it sits one 
 
 Google has used its own AI chip, the TPU, in its data centers since 2015 and introduced it to the world in May 2016. Amazon built on the expertise of Annapurna Labs, a chip company it bought in 2015, and announced its Trainium AI chip in December 2020.
 
-It is no surprise that these companies want their own hardware. AI infrastructure is among their largest investments, and a company that designs its own chips can shape them around its own needs.
+It is no surprise that these companies want their own hardware. AI infrastructure is among their [largest investments](/en/stories/alphabet-worst-day-google-cloud-search/), and a company that designs its own chips can shape them around its own needs.
 
 But a powerful chip is only half of the story. If developers do not use it, even the best hardware stays on the shelf.
 

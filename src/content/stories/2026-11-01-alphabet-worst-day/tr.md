@@ -1,6 +1,6 @@
 ---
 slug: alphabet-tarihinin-en-kotu-gunu-google-bulut-arama
-title: "Google'ın Bulut Geliri İkiye Katlandı, Alphabet Yine de Borsadaki En Kötü Gününü Yaşadı"
+title: "Google'ın Bulut Geliri İkiye Katlandı, Alphabet En Kötü Borsa Gününü Yaşadı"
 summary: "Alphabet'e göre aramalar son beş yılın en hızlı artışını yaşıyor, ama aramadan gelen para aynı hızda büyümüyor. Nakit açığı da analistlerin beklediğinden çok daha büyük çıkınca bir günde yarım trilyon dolara yakın değer silindi."
 category: economy
 date: 2026-11-01
@@ -62,7 +62,7 @@ Google'ın planı, yapay zekâ sonuçlarında daha çok reklam satmak. AI Mode'd
 
 Serbest nakit akışı, bir işin ürettiği nakitten bina ve ekipman harcamaları çıktıktan sonra kalan paradır. Alphabet'te bu rakam eksi 9,1 milyar dolar oldu, yani giren nakitten fazlası çıktı. Analistler eksi 2,7 milyar dolar bekliyordu, bir yıl önce ise artı 24,5 milyar dolardı. Bina ve ekipman faturasının kendisi tahminin altında kaldı, dolayısıyla sürpriz nakitteydi.
 
-Finans yöneticisi Anat Ashkenazi tek nedenin veri merkezleri olmadığını söyledi. Avrupa Komisyonu'nun 2018'de verdiği ceza için 5,2 milyar dolar ödendi, müşterilere teslim edilecek yapay zekâ çip sistemleri de önceden üretilip stoklandı.
+Finans yöneticisi Anat Ashkenazi tek nedenin veri merkezleri olmadığını söyledi. Avrupa Komisyonu'nun 2018'de verdiği ceza için 5,2 milyar dolar ödendi, müşterilere teslim edilecek [yapay zekâ çip sistemleri](/tr/stories/google-amazon-yapay-zeka-cip-yarisi/) de önceden üretilip stoklandı.
 
 Alphabet ayrıca gelecekteki alımlar, kiralamalar ve diğer yükümlülükler için bir trilyon dolardan fazla taahhütte bulundu. Şirket bunun üst sınır olduğunu vurguluyor. Ashkenazi 2027'de bina ve ekipman faturasının ciddi biçimde artmasını bekliyor. CNBC, bu yıl yaklaşık 200 milyar dolar olacak rakamın 300 milyar doları aşmasının beklendiğini yazıyor.
 

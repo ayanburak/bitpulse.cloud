@@ -1,6 +1,6 @@
 ---
 slug: nasa-mars-habitat-crew-378-days
-title: "A Test Pilot, a Space Force Colonel and a Film Company Co-Owner Just Walked Out of 378 Days on Pretend Mars"
+title: "Four Volunteers Walked Out of 378 Days on Pretend Mars"
 summary: "After more than a year of slow messages home and limited supplies, four volunteers left a 3D-printed habitat in Houston on October 31. Two weeks of debriefs come next, and NASA says what they recorded could shape how it feeds and supports crews on the Moon and Mars."
 category: science
 date: 2026-11-01

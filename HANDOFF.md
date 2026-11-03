@@ -17,37 +17,44 @@ The sections are filled in as follows.
 
 ## Current state
 
-The site is live at bitpulse.cloud with eight pieces in English and Turkish. The latest is a news story in culture, on the first century tomb found inside the ancient theater at Gölyazı, Bursa (src/content/stories/2026-11-03-apollonia-theater-tomb). The one explainer so far, "Why Do AI Chatbots Make Things Up?", opened the Explained section. Link previews, structured data, RSS feeds, a sitemap with dates and language links, and editorial policy and corrections pages in both languages are part of the site.
+The site is live at bitpulse.cloud with nine pieces in English and Turkish. The latest is the explainer "Will Quantum Computers Break Encryption?" in technology (src/content/stories/2026-11-04-quantum-computers-encryption), the second explainer after "Why Do AI Chatbots Make Things Up?". Before it came a news story on the tomb in the ancient theater at Gölyazı, Bursa.
 
-Releases from main are switched off. A new piece on main reaches readers only after a manual release, which happens after the run ends.
+On 2026-11-04 the headlines of seven published stories were shortened in both languages, after research on headline length. The run report journal/2026-11-04-01.md lists them. The headline rule was approved and is in docs/style-guide.md. Every shortened headline is checked against its story, because a research draft got the Mars crew count wrong.
 
-Tests and CI pass on main. No draft branch is open. One proposal is open, design-proposals/2026-11-03-reader-statistics.md, which is a decision proposal with no branch yet.
+The Alphabet story and the AI chip race story link to each other in the text. The other stories have no real neighbour yet.
+
+Releases from main are switched off. The explainer and the new headlines reach readers only after a manual release, which happens after the run ends.
+
+Tests and CI pass on main. No draft branch is open. No proposal is open.
 
 ## Next tasks
 
-1. Publish one explainer, because the latest published piece is a news story. Choose a lasting technology or science question in the words a Turkish reader would type, and do not repeat the AI chatbot subject. If task 2 below has been done by then, take the top question from its list.
-2. Research explainer questions for reach. This task has now been carried over twice. Find how Turkish readers phrase lasting questions on technology and science and which of those are not answered well in Turkish. Write a short ranked list into this file, each question in a reader's own words. If usage is short, do it before the explainer's writer starts, so the explainer can use it.
-3. Add in-body links between pieces where they truly help a reader. Stories are open files, and a link must not change any fact in the text.
-4. Write the journal report at the next free run number and rewrite this file.
+1. Publish one news story, because the latest published piece is an explainer. Choose a recent event in a category other than technology and culture if a strong one exists. Its headline follows docs/style-guide.md.
+2. Check whether 2026-11-03 and later days have appeared in /stats/index.json, and record what they show after the release.
+3. Explainer candidates for later runs, ranked by a research agent on 2026-11-04. The evidence of demand is indirect, because Google Trends, Reddit and Quora could not be opened.
+   1. "Why is RAM so expensive right now and when will prices come down?" This is timely, but it dates quickly. Use Micron and SK Hynix filings.
+   2. "How much energy and water does one AI prompt actually use?" Published figures differ by orders of magnitude. It touches AI, so do not run it right after an AI piece.
+   3. "What happens to my passkeys if I lose my phone?" Use FIDO Alliance and WebAuthn sources, not vendor blogs.
+   4. "When will solid-state batteries actually be in cars?" Separate semi-solid batteries from all solid-state ones, and use filings and papers.
+   5. "How does the Rubin Observatory help find dark matter?" This one has the weakest evidence of demand.
+4. When a new story has a real connection to an earlier one, add an in-body link in both languages, wrapping existing words and changing no fact.
+5. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
-- The statistics job runs at 00:40 UTC and writes the previous day. The bot filter was corrected on 2026-11-03. The published days include the owner's own devices and privately shared links, so they do not show reach. The job can only separate visitors by the browser name they send.
-- About 41 not found responses a day appear in the statistics, and their paths are not published. A log check on 2026-11-03 found that 36 of the 41 on 2026-11-02 were Let's Encrypt validation requests and 3 were probes for wp-login.php, so that day points to no broken links.
-- The privacy page says the aggregated statistics are published in the project's public repository. They are published at bitpulse.cloud/stats. The text is in site code, which is locked, and the statistics proposal includes the fix.
-- The Turkish length test sets a minimum of 500 words. It leaves editors no room to cut a short Turkish news story, which pushes writers to pad. Changing it would be a locked change and has not been proposed.
-- Measured costs, not counting the main agent: about 172,000 tokens for a news story with no returns, and about 304,000 for an explainer. Editors who leave fact-checked text in place keep the final check cheaper.
+- The statistics job runs at 00:40 UTC and writes the previous day. The published days include the owner's own devices and privately shared links, so they do not show reach. The job can only separate visitors by the browser name they send. On 2026-11-04 the index listed days only up to 2026-11-02.
+- More detailed reader statistics and a consent notice wait until the AdSense review has ended, by the owner's decision.
+- Search Console showed 26 impressions and 3 clicks for 2026-10-26 to 2026-11-01, all on the root address. The effect of the shorter headlines can be read there per page after a release.
+- The headline limits are not enforced by a test. A test would be a separate locked change.
+- The Turkish length test sets a minimum of 500 words for a news story. It leaves editors no room to cut a short Turkish story, which pushes writers to pad. Changing it would be a locked change and has not been proposed.
+- Measured costs, not counting the main agent: about 172,000 tokens for a news story with no returns, and about 225,000 for an explainer whose question was researched in advance.
 - Stories have no field for a correction note, so the corrections page lists only titles and dates, and a note has to go in the story text.
-- Claims that Google News ignores Publisher Center submissions rest on one trade source.
-- Apple News, MSN, Reddit rules and Turkish aggregators were not confirmed by research.
-- Social accounts are on hold by the owner's decision until the AdSense review has ended.
+- Claims that Google News ignores Publisher Center submissions rest on one trade source. Apple News, MSN and Reddit rules were not confirmed by research.
+- Social accounts are on hold by the owner's decision until the AdSense review has ended. The owner does not plan to post stories in outside communities for now.
 
 ## Owner actions
 
 ### Waiting for the owner
 
-- Decide on design-proposals/2026-11-03-reader-statistics.md. Its first steps need no notice and no consent from readers. One was a better bot filter in the server's log job, which is done. The other is verifying the site in Google Search Console, which would show which language earns impressions, the first real test of the Turkish idea. The deeper statistics after an Accept choice need a decision on the consent tool, retention periods for the privacy text and server work. The full list is in the proposal.
-- Add the most requested not found paths to the daily statistics, with query strings removed, so agents can find broken links and old addresses. This is server work.
 
 ### Requested by the owner
-

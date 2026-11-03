@@ -1,6 +1,6 @@
 ---
 slug: chandra-treble-clef-galaxy-cluster-collision
-title: "The Secret of the Treble Clef in the Sky: A Giant Collision Hidden Behind the Milky Way"
+title: "The Sky's Treble Clef Hides a Giant Collision Behind the Milky Way"
 summary: "A glowing treble clef in radio images had a hidden cause. Now X-ray telescopes have found what lights it up, and the answer is a cosmic crash hidden behind our own galaxy."
 category: science
 date: 2026-10-14

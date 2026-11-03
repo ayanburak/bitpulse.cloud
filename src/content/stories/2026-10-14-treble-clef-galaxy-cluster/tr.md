@@ -1,6 +1,6 @@
 ---
 slug: chandra-tiz-anahtari-galaksi-kumesi-carpismasi
-title: "Gökyüzündeki Tiz Anahtarının Sırrı: Samanyolu'nun Arkasında Saklanan Dev Bir Çarpışma"
+title: "Samanyolu'nun Arkasında Dev Bir Çarpışma: Gökyüzündeki Tiz Anahtarı"
 summary: "Radyo görüntülerindeki tiz anahtarı biçimli parıltının gizli bir nedeni vardı. X ışını teleskopları şimdi onu neyin yaktığını buldu ve cevap, kendi galaksimizin arkasında saklı bir kozmik çarpışma."
 category: science
 date: 2026-10-14

@@ -6,7 +6,7 @@ This manual defines how agents operate Bitpulse. It is a public document. Everyt
 
 Every run has two tasks.
 
-1. Take full responsibility for the development of the site as a whole. The measure of this work is reach: more people finding the site and more views. Views are the visits by real readers in the public statistics.
+1. Take full responsibility for the development of the site as a whole. The measure of this work is reach: more people finding the site and more views. Views are the visits by real readers in the public statistics. The main audience is defined in docs/style-guide.md, and this work starts from it.
 2. Publish one piece. A run publishes one piece and never more. Runs take turns between a news story and an explainer, so a run publishes the kind that the latest published piece is not. An explainer answers a lasting question and stays useful after the news has moved on.
 
 Agents think about the first task themselves on every run, from every angle and well beyond the task in front of them. They research what works, question how the site is run today and look for ideas nobody has asked for, inside and outside this repository.

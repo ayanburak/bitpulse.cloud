@@ -1,6 +1,6 @@
 ---
 slug: alphabet-worst-day-google-cloud-search
-title: "Google's Cloud Sales Doubled, Yet Alphabet Had Its Worst Stock Market Day Ever"
+title: "Google's Cloud Sales Doubled, Yet Alphabet Had Its Worst Stock Day"
 summary: "Alphabet says searches are growing at their fastest pace in five years, but the money from them is not. Add a cash shortfall far bigger than analysts expected, and investors erased close to half a trillion dollars in one day."
 category: economy
 date: 2026-11-01
@@ -62,7 +62,7 @@ Google's plan is to sell more ads in its AI results. It is taking them to AI Mod
 
 Free cash flow is the cash a business generates minus what it pays for buildings and equipment. Alphabet's was minus $9.1 billion, so more cash went out than came in. Analysts had expected minus $2.7 billion, and a year earlier it was plus $24.5 billion. The building and equipment bill itself was below forecast, so the surprise lay in the cash.
 
-Finance chief Anat Ashkenazi pointed to more than data centers: a $5.2 billion payment for a 2018 European Commission fine, and AI chip systems built and stored before being delivered to customers.
+Finance chief Anat Ashkenazi pointed to more than data centers: a $5.2 billion payment for a 2018 European Commission fine, and [AI chip systems](/en/stories/google-amazon-ai-chip-race/) built and stored before being delivered to customers.
 
 Alphabet has also signed up for more than $1 trillion in future purchases, leases and other obligations, though it stresses that is a maximum. Ashkenazi expects the building and equipment bill to rise significantly in 2027. CNBC puts the expected figure above $300 billion, up from about $200 billion this year.
 

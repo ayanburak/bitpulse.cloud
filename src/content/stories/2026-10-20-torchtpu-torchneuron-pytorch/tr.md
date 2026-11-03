@@ -1,6 +1,6 @@
 ---
 slug: google-amazon-yapay-zeka-cip-yarisi
-title: "Google ve Amazon Aynı Gün Aynı Hamleyi Yaptı: Yapay Zekâ Çip Yarışı Kızışıyor"
+title: "Google ve Amazon Aynı Gün Aynı Hamleyi Yaptı: Çip Yarışı Kızışıyor"
 summary: "İki teknoloji devi, yapay zekâ yazılımlarının kendi çiplerinde daha kolay çalışması için aynı gün sahneye çıktı. Hedef belli: geliştiricileri, yani yapay zekâ dünyasının en değerli müşterilerini kendi tarafına çekmek."
 category: technology
 date: 2026-10-20
@@ -36,7 +36,7 @@ Bu cümle ilk bakışta sıradan bir ürün tanıtımı gibi görünebilir. Ama 
 
 Google, kendi yapay zekâ çipi TPU'yu 2015'ten beri veri merkezlerinde kullanıyor ve Mayıs 2016'da dünyaya tanıttı. Amazon ise 2015'te satın aldığı çip şirketi Annapurna Labs'in birikimiyle ilerledi ve Aralık 2020'de Trainium adlı yapay zekâ çipini duyurdu.
 
-Bir şirketin kendi çipini üretmek istemesi şaşırtıcı değil. Yapay zekâ altyapısı bu şirketlerin en büyük yatırımlarından biri. Donanımı kendi tasarlayan şirket, ürünü kendi ihtiyacına göre şekillendirebilir.
+Bir şirketin kendi çipini üretmek istemesi şaşırtıcı değil. Yapay zekâ altyapısı bu şirketlerin [en büyük yatırımlarından biri](/tr/stories/alphabet-tarihinin-en-kotu-gunu-google-bulut-arama/). Donanımı kendi tasarlayan şirket, ürünü kendi ihtiyacına göre şekillendirebilir.
 
 Ama güçlü bir çip üretmek hikâyenin yalnızca yarısı. Geliştiriciler o çipi kullanmıyorsa, en iyi donanım bile rafta kalır.
 

@@ -1,6 +1,6 @@
 ---
 slug: nasa-mars-habitat-ekibi-378-gun
-title: "Test Pilotu, Uzay Kuvvetleri Albayı ve Film Şirketi Ortağı NASA'nın 378 Günlük Mars Simülasyonundan Çıktı"
+title: "Dört Gönüllü NASA'nın 378 Günlük Mars Simülasyonundan Çıktı"
 summary: "Geç ulaşan mesajlar ve sınırlı malzemeyle geçen bir yılın ardından dört gönüllü 31 Ekim'de Houston'daki 3 boyutlu yazıcıyla basılmış habitattan çıktı. Sırada iki haftalık değerlendirmeler var. NASA, kaydedilenlerin Ay ve Mars ekiplerinin beslenmesini ve desteğini şekillendirebileceğini söylüyor."
 category: science
 date: 2026-11-01

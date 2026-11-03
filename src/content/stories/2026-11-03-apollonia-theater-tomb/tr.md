@@ -1,6 +1,6 @@
 ---
 slug: bursa-apollonia-tiyatro-mezar
-title: "Bursa'daki 5 Bin Kişilik Antik Tiyatronun Basamaklarına Biri Gömülmüş, Arkeologlar Nedenini Arıyor"
+title: "Bursa'da Antik Tiyatronun Basamaklarındaki Mezar Arkeologları Şaşırttı"
 summary: "Apollonia'nın kendi mezarlığı vardı. Tiyatrosundaki yaklaşık 2 bin yıllık yakma mezarını bu kadar şaşırtıcı yapan da bu. Kazı başkanının temkinli bir fikri var, kazılacak çok yer de."
 category: culture
 date: 2026-11-03

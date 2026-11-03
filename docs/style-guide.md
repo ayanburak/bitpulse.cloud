@@ -4,6 +4,8 @@ This guide defines how Bitpulse stories sound. The rules on accuracy, sources an
 
 ## The reader
 
+The main audience is English speakers around the world. Stories are chosen and written for them first, and each language edition gives its readers the same stories with the same care.
+
 A Bitpulse reader is curious, busy and not a specialist. They often open a story on a phone during a short break, because a headline caught their attention. They did not come to study a topic. They came to understand what happened, why it is interesting, and to spend a few pleasant minutes with it.
 
 Every sentence is written for that person. A story that only an engineer would finish has failed, even if every fact in it is correct.
@@ -13,6 +15,8 @@ Every sentence is written for that person. A story that only an engineer would f
 A headline earns attention honestly. It names the people or companies involved, because familiar names are often the most interesting part of a story, and it points to the tension or the change behind the news.
 
 A headline may create curiosity, but the story must deliver what it suggests. It never exaggerates, invents conflict or hides the subject to force a click. Product code names and technical terms stay out of headlines unless readers already know them.
+
+A headline is short enough to be read whole where it is shown, in search results and link previews as well as on a phone. An English headline aims for 50 to 65 characters and never exceeds 70. A Turkish headline aims for 55 to 70 and never exceeds 75, because Turkish words are longer. It is one clause, with at most one comma or colon, and it does not join two separate points with "and". The most important name comes in the first few words, and the headline makes sense without the story beside it. A shorter headline drops detail, never honesty, and the summary carries what it leaves out.
 
 The summary under the headline adds a reason to keep reading. It does not repeat the headline.
 

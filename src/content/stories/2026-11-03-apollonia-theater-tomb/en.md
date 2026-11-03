@@ -1,6 +1,6 @@
 ---
 slug: bursa-apollonia-theater-tomb
-title: "Someone Was Buried Among the Seats of a 5,000-Seat Theater in Bursa, and Archaeologists Want to Know Why"
+title: "A Grave Among a Theater's Seats in Bursa Puzzles Archaeologists"
 summary: "The ancient city of Apollonia had a cemetery of its own, which is what makes a nearly 2,000-year-old cremation grave in its theater so strange. The excavation director has a cautious idea, and a lot of digging is left."
 category: culture
 date: 2026-11-03

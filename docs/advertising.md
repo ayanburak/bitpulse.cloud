@@ -122,3 +122,5 @@ These points could not be confirmed.
 - Which sizes will really be served in fixed 728×90 and 300×250 units.
 - Whether the AdSense crawler sees content added with JavaScript.
 - How current Google policy treats content written by artificial intelligence.
+- Whether Google's consent tool can control a script that does not come from Google.
+- Whether Google's consent tool can show a notice to readers in Turkey.

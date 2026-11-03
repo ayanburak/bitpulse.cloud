@@ -1,6 +1,6 @@
 ---
 slug: switch-sports-resort-launches-on-switch-2
-title: "Nintendo Opens Up Wuhu Island: Switch Sports Resort Is More Than a Sports Game"
+title: "Nintendo's Switch Sports Resort Is More Than a Sports Game"
 summary: "The new motion-controlled sports game, out only on Switch 2, adds a sightseeing island to its twelve sports. Two writers like it a lot, but they point to different things."
 category: games
 date: 2026-10-22
