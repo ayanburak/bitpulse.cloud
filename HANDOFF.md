@@ -17,25 +17,28 @@ The sections are filled in as follows.
 
 ## Current state
 
-The site is live at bitpulse.cloud with seven pieces in English and Turkish. The latest is the first explainer, "Why Do AI Chatbots Make Things Up?", which opened the Explained section. Link previews, structured data, RSS feeds and a sitemap with dates and language links are part of the site.
+The site is live at bitpulse.cloud with eight pieces in English and Turkish. The latest is a news story in culture, on the first century tomb found inside the ancient theater at Gölyazı, Bursa (src/content/stories/2026-11-03-apollonia-theater-tomb). The one explainer so far, "Why Do AI Chatbots Make Things Up?", opened the Explained section. Link previews, structured data, RSS feeds, a sitemap with dates and language links, and editorial policy and corrections pages in both languages are part of the site.
 
-Releases from main are switched off. A new story on main reaches readers only after a manual release, which happens after the run ends.
+Releases from main are switched off. A new piece on main reaches readers only after a manual release, which happens after the run ends.
 
-Tests and CI pass on main. The site has editorial policy and corrections pages in both languages. No proposal or draft branch is open.
+Tests and CI pass on main. No draft branch is open. One proposal is open, design-proposals/2026-11-03-reader-statistics.md, which is a decision proposal with no branch yet.
 
 ## Next tasks
 
-1. Publish one news story. The latest published piece is an explainer. A story on a recent event needs a good source for the event before writing starts, and the role files require a search for later reports. Skip another AI chatbot subject, as the latest piece covers it.
-2. Research reach for the first time since 2026-11-01, on what a new explainer series needs: how Turkish readers phrase lasting questions on technology and science, and which ones are not answered well in Turkish. The result is a short ranked list of explainer questions in HANDOFF.md, each in the words a reader would type, for later runs.
+1. Publish one explainer, because the latest published piece is a news story. Choose a lasting technology or science question in the words a Turkish reader would type, and do not repeat the AI chatbot subject. If task 2 below has been done by then, take the top question from its list.
+2. Research explainer questions for reach. This task has now been carried over twice. Find how Turkish readers phrase lasting questions on technology and science and which of those are not answered well in Turkish. Write a short ranked list into this file, each question in a reader's own words. If usage is short, do it before the explainer's writer starts, so the explainer can use it.
 3. Add in-body links between pieces where they truly help a reader. Stories are open files, and a link must not change any fact in the text.
 4. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
-- The statistics job runs at 00:40 UTC and writes the previous day, so a day appears only after it has ended. The only published day is still empty, so decisions rest on research and not on readers. Search Console data on which language earns impressions would be the first real signal for the Turkish idea, which so far rests on inference.
-- A news story costs about 190,000 tokens with no returns and an explainer about 304,000, not counting the main agent. The final check is the largest single cost. It grows when the editor moves fact-checked text, so editors should leave facts where they are unless the gain is clear.
-- Stories have no field for a correction note, so the corrections page lists only titles and dates, and a note has to go in the story text. The editorial policy requires a dated note that says what was wrong. A field for it would be a locked change, and no story has needed one so far.
-- Claims that Google News ignores Publisher Center submissions rest on one trade source, as Google's own page could not be opened.
+- The statistics job runs at 00:40 UTC and writes the previous day. The bot filter was corrected on 2026-11-03. The published days include the owner's own devices and privately shared links, so they do not show reach. The job can only separate visitors by the browser name they send.
+- About 41 not found responses a day appear in the statistics, and their paths are not published. A log check on 2026-11-03 found that 36 of the 41 on 2026-11-02 were Let's Encrypt validation requests and 3 were probes for wp-login.php, so that day points to no broken links.
+- The privacy page says the aggregated statistics are published in the project's public repository. They are published at bitpulse.cloud/stats. The text is in site code, which is locked, and the statistics proposal includes the fix.
+- The Turkish length test sets a minimum of 500 words. It leaves editors no room to cut a short Turkish news story, which pushes writers to pad. Changing it would be a locked change and has not been proposed.
+- Measured costs, not counting the main agent: about 172,000 tokens for a news story with no returns, and about 304,000 for an explainer. Editors who leave fact-checked text in place keep the final check cheaper.
+- Stories have no field for a correction note, so the corrections page lists only titles and dates, and a note has to go in the story text.
+- Claims that Google News ignores Publisher Center submissions rest on one trade source.
 - Apple News, MSN, Reddit rules and Turkish aggregators were not confirmed by research.
 - Social accounts are on hold by the owner's decision until the AdSense review has ended.
 
@@ -43,7 +46,8 @@ Tests and CI pass on main. The site has editorial policy and corrections pages i
 
 ### Waiting for the owner
 
-- Decide whether a PaktLabs logo should be added to public/ for the publisher field in structured data. No such image is in the repository.
+- Decide on design-proposals/2026-11-03-reader-statistics.md. Its first steps need no notice and no consent from readers. One was a better bot filter in the server's log job, which is done. The other is verifying the site in Google Search Console, which would show which language earns impressions, the first real test of the Turkish idea. The deeper statistics after an Accept choice need a decision on the consent tool, retention periods for the privacy text and server work. The full list is in the proposal.
+- Add the most requested not found paths to the daily statistics, with query strings removed, so agents can find broken links and old addresses. This is server work.
 
 ### Requested by the owner
 
