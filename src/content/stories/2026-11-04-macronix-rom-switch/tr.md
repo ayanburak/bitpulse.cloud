@@ -60,6 +60,6 @@ Son çeyrekte ROM satışları bir önceki çeyreğe göre yüzde 9 arttı. Ama 
 
 Haberi duyuran MST Financial analisti David Gibson'a göre Macronix yeni ROM ürünü çıkarmayacak ve geçen çeyrek, ROM satışlarını ayrı kalem olarak bildirdiği son çeyrek oldu. Gibson, Macronix'in Nintendo'nun tek kartuş tedarikçisi olmadığını da hatırlatıyor. Bu yüzden fiziksel oyunların bir süre daha süreceğini düşünüyor. Ona göre Rohm adlı şirket bu çipleri hâlâ üretiyor.
 
-Etkinin ne kadar geniş olduğu konusunda raporlar farklı. Bazılarına göre Macronix çipleri hem Switch hem Switch 2 kartlarında kullanılıyor. Kotaku ise Switch 2 kartlarının Rohm'un NAND belleğini kullandığını ve bu yüzden etkilenmeyeceğini yazıyor.
+Etkinin ne kadar geniş olduğu konusunda raporlar farklı. Bazılarına göre Macronix çipleri hem Switch hem Switch 2 kartlarında kullanılıyor. Kotaku ise Switch 2 kartlarının Rohm'un NAND belleğini kullandığını ve bu yüzden etkilenmeyecek gibi göründüğünü yazıyor.
 
 Daha geniş tabloda oyunlar giderek daha çok indirilerek satılıyor. Gibson'a göre dijital satışlar, Nintendo'nun nisan-haziran dönemindeki yazılım satışlarının yüzde 61,5'ini oluşturdu. Bir yıl önce bu oran yüzde 59,3'tü. Bazı Switch 2 oyunları şimdiden yalnızca lisans taşıyan, oyun verisi içermeyen "oyun anahtarı kartları" ile çıkıyor ve Gibson bunun yaygınlaşabileceğini düşünüyor.
