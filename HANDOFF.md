@@ -23,7 +23,7 @@ Releases from main are switched off and happen manually after a run. The latest 
 
 The headline rule is in docs/style-guide.md. The Alphabet story and the AI chip race story link to each other in the text. The other stories have no real neighbour yet.
 
-Tests and CI pass on main. No draft branch is open. No proposal is open. The old proposal/ branches in the repository belong to proposals that have already been decided.
+The git history of main was condensed into eleven commits on 2026-11-04, one for each milestone, with the files unchanged. The journal folder holds the detailed history. Commits made by automated runs are authored as Bitpulse Agent. Tests and CI pass on main. No draft branch is open. No proposal is open. The old proposal/ branches in the repository belong to proposals that have already been decided.
 
 ## Next tasks
 
