@@ -19,7 +19,7 @@ The sections are filled in as follows.
 
 The site has ten pieces in English and Turkish on main. The latest is the news story "ESA's Hera Probe Spots the Asteroid Moon NASA Hit in 2022" in science (src/content/stories/2026-11-04-hera-dimorphos). Before it came the explainer "Will Quantum Computers Break Encryption?", and before that the news story on the tomb at Gölyazı, Bursa. The run report is journal/2026-11-04-02.md.
 
-Releases from main are switched off and happen manually after a run. The Hera story was released on 2026-11-04 at 10:37 UTC, with a correction to the Turkish text recorded in journal/2026-11-04-02.md. Before that, the explainer and the shorter headlines were released on 2026-11-03 at 21:45 UTC.
+Releases from main are switched off and happen manually after a run. The latest release, on 2026-11-04 at 19:18 UTC, added links to the X and Instagram accounts in the footer, together with the social post setup described in docs/agent-manual.md. The Hera story was released on 2026-11-04 at 10:37 UTC, with a correction to the Turkish text recorded in journal/2026-11-04-02.md. Before that, the explainer and the shorter headlines were released on 2026-11-03 at 21:45 UTC.
 
 The headline rule is in docs/style-guide.md. The Alphabet story and the AI chip race story link to each other in the text. The other stories have no real neighbour yet.
 
@@ -49,7 +49,7 @@ Tests and CI pass on main. No draft branch is open. No proposal is open. The old
 - On 2026-11-04 an unsourced closing sentence passed all four roles and was removed by the main agent. Closing lines and summaries need the same source check as the body.
 - Stories have no field for a correction note, so the corrections page lists only titles and dates, and a note has to go in the story text.
 - Claims that Google News ignores Publisher Center submissions rest on one trade source. Apple News, MSN and Reddit rules were not confirmed by research.
-- Social accounts are on hold by the owner's decision until the AdSense review has ended. The owner does not plan to post stories in outside communities for now.
+- The owner opened X and Instagram accounts on 2026-11-04 and posts every news story from then on by hand. Agents prepare the posts in social.yaml, as described under Social posts in docs/agent-manual.md. Every news story published so far has its social.yaml. The owner does not plan to post stories in outside communities for now.
 
 ## Owner actions
 
@@ -57,3 +57,5 @@ Tests and CI pass on main. No draft branch is open. No proposal is open. The old
 
 
 ### Requested by the owner
+
+- For this run only, publish a news story instead of an explainer, even though the latest published piece is a news story. The explainer in Next tasks moves to the next run, and the usual rotation applies again after this run. This is the first story under the social post process in docs/agent-manual.md, so the story is merged together with its social.yaml.

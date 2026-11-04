@@ -70,6 +70,12 @@ Bitpulse should not sound like a machine repeating a recipe. Before a story is p
 
 If two stories could swap their first paragraphs, one of them is rewritten.
 
+## Social posts
+
+A social post tells the news, not the story around it. It has no headline and no list. It is one or two short paragraphs that say plainly what happened, who did it and the one detail a reader would repeat. The first sentence alone is enough to know the news.
+
+Each Instagram page carries one step of the news in one or two sentences, and its image shows what that page says. The X post and the caption stand on their own, because many people read them without opening the story. A post never asks the reader to click, never teases a detail it does not give and never sounds more dramatic than the story.
+
 ## Before publishing
 
 - Would a curious person with no technical background understand every paragraph?

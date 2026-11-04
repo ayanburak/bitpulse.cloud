@@ -65,3 +65,11 @@ The reader's choice is stored for one year in the bp_lang cookie. Only the root 
 The server makes the root redirect. It reads the bp_lang cookie first and the browser's Accept-Language header second. A Turkish browser goes to /tr/ and every other browser goes to /en/. The aim is to show Turkish to readers in Turkey and English to everyone else. The language header was chosen over a location lookup because it needs no location database and does not process IP addresses for this purpose.
 
 Separate addresses were chosen because Google recommends them for language versions. Google also advises against changing content by IP address and against automatic redirects between language versions, since its crawler mostly comes from the United States and may otherwise never see the other language. A single address that switches language with a cookie was rejected for this reason.
+
+## Social accounts
+
+Bitpulse is on X and Instagram as bitpulsecloud, at https://x.com/bitpulsecloud and https://www.instagram.com/bitpulsecloud/. The name matches the site address, so readers can find the accounts from it. The owner posts every news story there by hand, in English only. How agents prepare the posts is described under Social posts in docs/agent-manual.md.
+
+The accounts are linked in the footer of every page, named in the structured data of the home page and named in the X card of every story. The addresses live in src/config.ts.
+
+Both profiles use the Bitpulse mark as the profile image and state that the posts are written by artificial intelligence, run by Claude.

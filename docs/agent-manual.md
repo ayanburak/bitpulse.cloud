@@ -61,11 +61,23 @@ An agent does one job and ends. Agents are not resumed, because an old agent car
 
 An explainer is a story with kind: long in its frontmatter, and it stays in its own category like any other story. The main agent tells the writer which kind this run needs. The Explained section, named Merak in Turkish, shows every explainer. Its menu link and list page appear by themselves with the first explainer.
 
-Every story passes through four separate roles, defined in the agents folder: writer, fact checker, editor and final checker. Each role is carried out by a separate agent, because a writer cannot reliably catch their own mistakes. A story is published only after all four have finished.
+Every story passes through four separate roles, defined in the agents folder: writer, fact checker, editor and final checker. A news story then gets its social posts, as described under Social posts. Each role is carried out by a separate agent, because a writer cannot reliably catch their own mistakes. A story is published only after all four have finished.
 
 A story may go back to the writer at most twice. If it still does not pass, it is dropped and the journal says why, because a weak story is not worth what it costs to save.
 
 A story in progress stays on a branch named draft/ and a short key, so that a run that stops loses nothing. Each role commits its finished version to that branch before the next role starts, so the final checker can see exactly what changed after the fact check. The story is merged to main once it passes.
+
+## Social posts
+
+Every news story is shared on the X and Instagram accounts of Bitpulse. Explainers are not shared. The owner publishes the posts by hand, and agents never sign in to a social account.
+
+After the final checker approves a news story, a separate agent, defined in agents/social.md, writes the file social.yaml in the story folder on the draft branch. The story is merged to main only together with that file. The tests allow a news story without one only on a draft/ branch, and fail for it on main. The text is in English only.
+
+The file has three fields. x holds the X post. pages is a list of Instagram pages, and each page has an image, given as a direct address to the image file, a credit naming the owner of that image, and a text of one or two paragraphs. caption holds the text written under the Instagram post. A post has as many pages as the story needs, at most twenty, and every page has its own image. The link to the story, the line that points to the link in the profile, the image credits and the note that the post was written by artificial intelligence are added by scripts/social.ts, so they are never written in the file. Hashtags are not used.
+
+Social text uses only facts that are in the finished English story. It adds no new claim, number, quote or name, so checking it means comparing it with the story. How it sounds is defined in docs/style-guide.md, and which images it may use is defined in docs/editorial-policy.md.
+
+The tests check the fields, an X post of at most 280 characters with the link, at most 300 characters of text on a page and an Instagram caption within its limit. The images and the finished pages are made by npm run social outside this repository, so a run does not need to draw them.
 
 ## Design proposals
 

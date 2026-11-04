@@ -8,7 +8,7 @@
 import type { ReactNode } from "react";
 import { useLocation, useParams } from "react-router";
 import { counterpart, feedPath, longStories } from "../catalog";
-import { PUBLISHER_URL, REPO_URL, SITE_URL } from "../config";
+import { PUBLISHER_URL, REPO_URL, SITE_URL, SOCIAL_URLS, X_HANDLE } from "../config";
 import { categoryNames, formatDate, isLang, otherLang, ui, type Lang } from "../i18n";
 import { categories } from "../stories";
 
@@ -169,6 +169,7 @@ function Footer({ lang }: { lang: Lang }) {
               <li><a href={`/${lang}/corrections/`}>{t.corrections}</a></li>
               <li><a href={`/${lang}/contact/`}>{t.contact}</a></li>
               <li><a href={`/${lang}/privacy/`}>{t.privacy}</a></li>
+              {Object.entries(SOCIAL_URLS).map(([name, href]) => <li key={name}><a href={href} rel="me">{name}</a></li>)}
             </ul>
           </div>
         </div>
@@ -229,11 +230,12 @@ function HeadTags({ lang, title, description, story }: { lang: Lang; title: stri
           <meta property="article:published_time" content={story.published} />
           <meta property="article:modified_time" content={story.modified} />
           <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content={`@${X_HANDLE}`} />
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript(story.data) }} />
         </>
       )}
       {isHome && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript({ "@context": "https://schema.org", "@type": "WebSite", name: "Bitpulse", url: `${SITE_URL}/` }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript({ "@context": "https://schema.org", "@type": "WebSite", name: "Bitpulse", url: `${SITE_URL}/`, sameAs: Object.values(SOCIAL_URLS) }) }} />
       )}
       <link rel="canonical" href={url(pathname)} />
       <link rel="alternate" hrefLang={lang} href={url(pathname)} />

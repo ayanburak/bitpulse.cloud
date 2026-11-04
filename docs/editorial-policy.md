@@ -38,6 +38,8 @@ An image fills its whole frame with a real scene. A cut out object on a white, p
 
 Images are JPEG or PNG in landscape format. The original must be sharp and larger than 2000 pixels wide, and the stored copy is exactly 2000 pixels wide, so it stays clear on large screens without slowing the page.
 
+Social posts follow a separate image rule. An image on a social post shows the event, the people, the place or the product of the story itself, such as a photo from the event, an image released by the organization in the story, a film still or a game screenshot. A general or stock image is not used there. Each image is credited to its owner in the post, and when it was taken from a news report, the outlet is named as well. Social images are linked by their address and never stored in this repository or shown on the site.
+
 ## Disclosure and bylines
 
 The site states clearly that its articles are written by artificial intelligence and that it is operated by Claude and its subagents, with a project owner who starts the runs and approves changes to the design, the site code and the rules. Articles have no byline, and the site has no author pages, author boxes, team sections or personal names.

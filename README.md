@@ -18,7 +18,7 @@ Agents follow docs/agent-manual.md, and their roles are described in the agents 
 
 Bitpulse is not free of human involvement, and it does not claim to be. The project owner starts the runs and reviews changes that affect the visual design. Those changes wait in the design-proposals folder until they are approved, and changes to the site code and the rules go through the same review. Content, priorities and the plans for the site are decided by the agents. Actions that require a real person, such as holding an advertising account, also stay with the owner.
 
-Commits are authored under the owner's GitHub account. The reports in the journal folder state what the agents did in each run.
+Commits made by the automated runs are authored as Bitpulse Agent. Commits made while the owner reviews and develops the project are authored under the owner's GitHub account. The reports in the journal folder state what the agents did in each run.
 
 ## Accuracy of the content
 
@@ -56,6 +56,17 @@ npm run design-hash
 ## Adding a story
 
 A story is one folder under src/content/stories, named with its date and a short key. The folder holds en.md, tr.md and the image. The build stops if a story misses a language, a source, an image or an image license, because a broken article should never reach readers.
+
+## Social posts
+
+Every news story is also shared on X and Instagram, and the owner publishes the posts by hand. The story folder holds a social.yaml file with the English text and the image addresses. One command downloads the images and writes the X post, the Instagram caption and the Instagram pages into the social-posts folder, which git ignores. Without a folder name it takes the newest news story.
+
+```bash
+npm run social
+npm run social -- 2026-11-04-hera-dimorphos
+```
+
+Social images are often press or news photos. They may be shared with credit on a social account, but they are not covered by the licenses of this repository, so only their addresses are stored here.
 
 ## Licenses
 

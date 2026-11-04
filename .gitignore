@@ -16,3 +16,6 @@ test-results/
 
 # Server render bundle, used only during the build
 .ssr/
+
+# Social posts, made again from the stories with npm run social
+social-posts/
