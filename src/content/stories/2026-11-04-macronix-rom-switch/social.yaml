@@ -1,0 +1,27 @@
+x: |
+  Macronix, the main maker of ROM chips for Nintendo Switch game cards, is phasing out that business, its chairman told investors.
+
+  ROM was 5% of its revenue last quarter, down from about 29% two years earlier. It posted its best quarter ever.
+pages:
+  - image: https://img.taipeitimes.com/images/2026/10/29/p09-261029-005.jpg
+    credit: Macronix via Taipei Times
+    text: |
+      Macronix, the main supplier of ROM chips for Nintendo Switch game cards, is gradually phasing out those chips. Its chairman, Miin Wu, told investors.
+  - image: https://upload.wikimedia.org/wikipedia/commons/c/cd/%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%AB%E3%83%BC%E3%83%89%E3%81%AE%E4%B8%AD%E8%BA%AB.jpg
+    credit: Skyjaython, CC BY-SA 4.0
+    text: |
+      ROM chips hold a cartridge's game. Macronix, a chipmaker in Taiwan, has sold them mainly to Nintendo.
+  - image: https://img.technews.tw/wp-content/uploads/2025/12/01201931/Macronix-Chairman-1.jpg
+    credit: TechNews
+    text: |
+      It is not leaving because it is struggling. Macronix reported a record net profit of NT$10.95 billion, about US$338 million, for the three months to September.
+  - image: https://kotaku.com/app/uploads/2025/09/New-Project-9.jpg
+    credit: Kotaku
+    text: |
+      ROM made up 5% of its revenue last quarter, against about 29% in the same quarter of 2024. NAND and NOR memory chips now carry the company, driven by demand from AI data centers.
+  - image: https://static.beebom.com/wp-content/uploads/2026/11/nintendo-chipmaker-macronix-exits-rom-business-featured-image.jpg
+    credit: Beebom
+    text: |
+      One analyst says physical games will likely carry on, because Macronix is not Nintendo's only supplier. He also says game-key cards, which carry only a license, could become more common.
+caption: |
+  Macronix, the main supplier of ROM chips for Nintendo Switch game cards, is gradually phasing out that business, its chairman Miin Wu told investors. It is not struggling: it reported a record net profit of about US$338 million for the three months to September. ROM was 5% of its revenue, down from about 29% in the same quarter of 2024, while NAND and NOR memory for AI data centers now carry the company. An analyst says Macronix is not Nintendo's only cartridge supplier, so physical games will likely continue for some time.
