@@ -38,11 +38,11 @@ Haberi ilginç yapan, zamanlaması. Macronix zorda olduğu için çekilmiyor. Ta
 
 ## En iyi çeyrek, küçülen ROM payı
 
-Macronix, eylül ayında biten üç ayda 10,95 milyar Tayvan doları, yani yaklaşık 338 milyon ABD doları net kâr açıkladı. Bu bir rekor. Bir yıl önce aynı dönemde 862 milyon Tayvan doları zarar etmişti. Brüt kâr marjı, yani satıştan çipin üretim maliyeti düşüldükten sonra kalan pay, yüzde 13,5'ten yüzde 70,5'e çıktı.
+Macronix, eylül ayında biten üç ayda 10,95 milyar Tayvan doları, yani yaklaşık 338 milyon ABD doları net kâr açıkladı. Bu bir rekor. Brüt kâr marjı, yani satıştan çipin üretim maliyeti düşüldükten sonra kalan pay, yüzde 13,5'ten yüzde 70,5'e çıktı.
 
 ROM, o çeyrekte gelirin yalnızca yüzde 5'ini oluşturdu. 2024'ün aynı çeyreğinde bu oran yaklaşık yüzde 29'du. Şirketi şimdi iki başka bellek türü taşıyor. Ağırlıklı olarak haberleşme ve tüketici elektroniğine satılan NAND gelirin yüzde 47'sini, NOR ise yüzde 46'sını oluşturuyor. NAND geliri bir yılda yüzde 768, NOR geliri yüzde 158 arttı. NOR'daki artışın arkasında yapay zekâ veri merkezlerinin talebi var.
 
-Wu, müşterilerin veri merkezleri için daha fazla NOR çipi istediğini söyledi. Macronix'in üretim kapasitesini NAND'a ayırdığını da belirtti ve NAND'ı, şirketin uzun vadeli büyümesini sürükleyecek yüksek büyümeli bir alan olarak tanımladı.
+Wu, veri merkezlerinde kullanılan NOR çiplerine talebin çok güçlü olduğunu söyledi. Macronix'in üretim kapasitesini NAND'a ayırdığını da belirtti ve NAND'ı, şirketin uzun vadeli büyümesini sürükleyecek yüksek büyümeli bir alan olarak tanımladı.
 
 ## Fabrika kapasitesi sınırlı
 
@@ -62,4 +62,4 @@ Haberi duyuran MST Financial analisti David Gibson'a göre Macronix yeni ROM ür
 
 Etkinin ne kadar geniş olduğu konusunda raporlar farklı. Bazılarına göre Macronix çipleri hem Switch hem Switch 2 kartlarında kullanılıyor. Kotaku ise Switch 2 kartlarının Rohm'un NAND belleğini kullandığını ve bu yüzden etkilenmeyeceğini yazıyor.
 
-Daha geniş tabloda oyunlar giderek daha çok indirilerek satılıyor. Gibson'a göre dijital satışlar, Nintendo'nun nisan-haziran dönemindeki yazılım satışlarının yüzde 61,5'ini oluşturdu. Bir yıl önce bu oran yüzde 59,3'tü. Bazı Switch 2 oyunları şimdiden yalnızca lisans taşıyan, oyun verisi içermeyen "oyun anahtarı kartları" ile çıkıyor ve Gibson bunun yaygınlaşabileceğini düşünüyor. Nintendo'nun Latin Amerika başkan yardımcısının ise şirketin fiziksel oyunlardan vazgeçme planı olmadığını söylediği bildirildi.
+Daha geniş tabloda oyunlar giderek daha çok indirilerek satılıyor. Gibson'a göre dijital satışlar, Nintendo'nun nisan-haziran dönemindeki yazılım satışlarının yüzde 61,5'ini oluşturdu. Bir yıl önce bu oran yüzde 59,3'tü. Bazı Switch 2 oyunları şimdiden yalnızca lisans taşıyan, oyun verisi içermeyen "oyun anahtarı kartları" ile çıkıyor ve Gibson bunun yaygınlaşabileceğini düşünüyor. Beebom, Nintendo'nun Latin Amerika başkan yardımcısının yakın zamanda şirketin fiziksel oyunlardan vazgeçme planı olmadığını söylediğini yazıyor. Bu iddiayı başka bir kaynakta doğrulayamadık.

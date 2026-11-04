@@ -38,11 +38,11 @@ The timing is what makes the story. Macronix is not leaving because it is strugg
 
 ## The best quarter, with a smaller ROM share
 
-For the three months to September, Macronix reported a record net profit of NT$10.95 billion, about US$338 million. A year earlier it had lost NT$862 million. Its gross margin, the share of sales left after the cost of making its chips, reached 70.5%, up from 13.5% a year before.
+For the three months to September, Macronix reported a record net profit of NT$10.95 billion, about US$338 million. Its gross margin, the share of sales left after the cost of making its chips, reached 70.5%, up from 13.5% a year before.
 
 ROM made up just 5% of its revenue in that quarter. In the same quarter of 2024, it was about 29%. Two other kinds of memory chips now carry the company: NAND, sold mostly into communications and consumer electronics, made up 47% of revenue, and NOR made up 46%. NAND revenue was up 768% on the year and NOR revenue up 158%, with the NOR increase driven by demand from AI data centers.
 
-Wu said customers are pressing the company for more NOR chips for data centers. He also said Macronix is "allocating capacity to NAND, a high-growth segment that will drive Macronix's long-term expansion."
+Wu said demand for NOR chips used in data centers is very robust. He also said Macronix is "allocating capacity to NAND, a high-growth segment that will drive Macronix's long-term expansion."
 
 ## Why a factory choice matters
 
@@ -62,4 +62,4 @@ David Gibson, an analyst at MST Financial who flagged the news, says Macronix wi
 
 Reports disagree on how far this reaches. Some say Macronix's chips are used in both Switch and Switch 2 cards. Kotaku reports that Switch 2 cards use NAND memory from Rohm and so seem unaffected.
 
-The wider picture is that more games are sold as downloads. Gibson notes that digital sales made up 61.5% of Nintendo's software sales from April to June, up from 59.3% a year earlier. Some Switch 2 games already ship on "game-key cards", which carry only a license and no game data, and Gibson suggests this could become more common. Nintendo's Latin American vice president has reportedly said the company has no plans to abandon physical games.
+The wider picture is that more games are sold as downloads. Gibson notes that digital sales made up 61.5% of Nintendo's software sales from April to June, up from 59.3% a year earlier. Some Switch 2 games already ship on "game-key cards", which carry only a license and no game data, and Gibson suggests this could become more common. Beebom reports that Nintendo's Latin American vice president recently said the company has no plans to abandon physical games, a claim we could not confirm elsewhere.
