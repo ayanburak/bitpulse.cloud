@@ -1,7 +1,7 @@
 ---
 slug: macronix-phases-out-rom-switch-cartridges
 title: "Nintendo Switch Cartridge Chips Lose a Maker to the AI Boom"
-summary: "Two years ago, ROM chips, mostly bought by Nintendo, brought Macronix about 29% of its revenue. Now they bring 5%, and memory for data centers has delivered the best quarter in the company's history."
+summary: "Two years ago, the chips that store Switch games, mostly bought by Nintendo, brought Macronix about 29% of its revenue. Now they bring 5%, and memory for data centers has delivered the best quarter in the company's history."
 category: games
 date: 2026-11-04
 kind: news
@@ -36,11 +36,11 @@ The main supplier of ROM chips for Nintendo Switch game cards is getting out of 
 
 The timing is what makes the story. Macronix is not leaving because it is struggling. It reported the best quarter in its history.
 
-## The best quarter, with a smaller ROM share
+## A record quarter and a shrinking ROM
 
 For the three months to September, Macronix reported a record net profit of NT$10.95 billion, about US$338 million. Its gross margin, the share of sales left after the cost of making its chips, reached 70.5%, up from 13.5% a year before.
 
-ROM made up just 5% of its revenue in that quarter. In the same quarter of 2024, it was about 29%. Two other kinds of memory chips now carry the company: NAND, sold mostly into communications and consumer electronics, made up 47% of revenue, and NOR made up 46%. NAND revenue was up 768% on the year and NOR revenue up 158%, with the NOR increase driven by demand from AI data centers.
+ROM made up just 5% of its revenue in that quarter. In the same quarter of 2024, it was about 29%. Two other kinds of memory chips, called NAND and NOR, now carry the company. NAND is sold mostly into communications and consumer electronics. Its revenue was up 768% on the year, and NOR revenue was up 158%, driven by demand from AI data centers.
 
 Wu said demand for NOR chips used in data centers is very robust. He also said Macronix is "allocating capacity to NAND, a high-growth segment that will drive Macronix's long-term expansion."
 
@@ -62,4 +62,6 @@ David Gibson, an analyst at MST Financial who flagged the news, says Macronix wi
 
 Reports disagree on how far this reaches. Some say Macronix's chips are used in both Switch and Switch 2 cards. Kotaku reports that Switch 2 cards use NAND memory from Rohm and so seem unaffected.
 
-The wider picture is that more games are sold as downloads. Gibson notes that digital sales made up 61.5% of Nintendo's software sales from April to June, up from 59.3% a year earlier. Some Switch 2 games already ship on "game-key cards", which carry only a license and no game data, and Gibson suggests this could become more common. Beebom reports that Nintendo's Latin American vice president recently said the company has no plans to abandon physical games, a claim we could not confirm elsewhere.
+Beebom reports that Nintendo's Latin American vice president recently said the company has no plans to abandon physical games, a claim that rests on that one report.
+
+The wider picture is that more games are sold as downloads. Gibson notes that digital sales made up 61.5% of Nintendo's software sales from April to June, up from 59.3% a year earlier. Some Switch 2 games already ship on "game-key cards", which carry only a license and no game data, and Gibson suggests this could become more common.
