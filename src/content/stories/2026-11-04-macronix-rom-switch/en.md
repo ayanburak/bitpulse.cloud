@@ -48,7 +48,7 @@ Wu said demand for NOR chips used in data centers is very robust. He also said M
 
 Chip factories cannot simply grow on demand. Wu said semiconductor capacity is limited and that any new equipment takes at least a year to arrive after it is ordered. Macronix expects most of its short-term growth to come from higher prices, not from making more, and it expects prices to keep rising this quarter because of tight supply and strong demand for AI memory.
 
-Read that way, the decision looks like a choice about where scarce production goes, though Macronix has not put it in exactly those words. A factory line making low-priced chips for game cards is a line not making chips that data centers want.
+Read that way, the decision looks like a choice about where scarce production goes, though Macronix has not put it in exactly those words. A factory line making chips for game cards is a line not making chips that data centers want.
 
 ## A business that had been fading
 
@@ -61,7 +61,5 @@ Last quarter, ROM sales did rise 9% from the one before. They were still 39% low
 David Gibson, an analyst at MST Financial who flagged the news, says Macronix will launch no new ROM products and that last quarter was the final one in which it reports ROM sales separately. He also points out that Macronix is not Nintendo's only cartridge supplier, so physical games will likely carry on for some time. The company Rohm still makes these chips, he says.
 
 Reports disagree on how far this reaches. Some say Macronix's chips are used in both Switch and Switch 2 cards. Kotaku reports that Switch 2 cards use NAND memory from Rohm and so seem unaffected.
-
-Beebom reports that Nintendo's Latin American vice president recently said the company has no plans to abandon physical games, a claim that rests on that one report.
 
 The wider picture is that more games are sold as downloads. Gibson notes that digital sales made up 61.5% of Nintendo's software sales from April to June, up from 59.3% a year earlier. Some Switch 2 games already ship on "game-key cards", which carry only a license and no game data, and Gibson suggests this could become more common.

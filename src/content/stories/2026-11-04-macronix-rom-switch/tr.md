@@ -48,7 +48,7 @@ Wu, veri merkezlerinde kullanılan NOR çiplerine talebin çok güçlü olduğun
 
 Çip fabrikaları talebe göre hemen büyüyemez. Wu'ya göre yarı iletken kapasitesi sınırlı ve yeni bir makinenin siparişten teslimata ulaşması en az bir yıl sürüyor. Macronix kısa vadeli büyümesinin çoğunu daha çok üretimden değil, fiyat artışlarından bekliyor. Arz sıkışıklığı ve yapay zekâ belleğine gelen yoğun talep yüzünden fiyatların bu çeyrekte de yükselmeye devam edeceğini öngörüyor.
 
-Bu bakışla karar, kıt üretim kapasitesinin nereye gideceğine dair bir tercih gibi görünüyor. Macronix bunu tam olarak bu sözlerle söylemedi. Yine de oyun kartları için düşük fiyatlı çip üreten bir hat, veri merkezlerinin istediği çipleri üretmeyen bir hat demek.
+Bu bakışla karar, kıt üretim kapasitesinin nereye gideceğine dair bir tercih gibi görünüyor. Macronix bunu tam olarak bu sözlerle söylemedi. Yine de oyun kartları için çip üreten bir hat, veri merkezlerinin istediği çipleri üretmeyen bir hat demek.
 
 ## Zaten gerilemekte olan bir iş
 
@@ -61,7 +61,5 @@ Son çeyrekte ROM satışları bir önceki çeyreğe göre yüzde 9 arttı. Ama 
 Haberi duyuran MST Financial analisti David Gibson'a göre Macronix yeni ROM ürünü çıkarmayacak ve geçen çeyrek, ROM satışlarını ayrı kalem olarak bildirdiği son çeyrek oldu. Gibson, Macronix'in Nintendo'nun tek kartuş tedarikçisi olmadığını da hatırlatıyor. Bu yüzden fiziksel oyunların bir süre daha süreceğini düşünüyor. Ona göre Rohm adlı şirket bu çipleri hâlâ üretiyor.
 
 Etkinin ne kadar geniş olduğu konusunda raporlar farklı. Bazılarına göre Macronix çipleri hem Switch hem Switch 2 kartlarında kullanılıyor. Kotaku ise Switch 2 kartlarının Rohm'un NAND belleğini kullandığını ve bu yüzden etkilenmeyeceğini yazıyor.
-
-Beebom, Nintendo'nun Latin Amerika başkan yardımcısının yakın zamanda şirketin fiziksel oyunlardan vazgeçme planı olmadığını söylediğini yazıyor. Bu iddia yalnızca bu habere dayanıyor.
 
 Daha geniş tabloda oyunlar giderek daha çok indirilerek satılıyor. Gibson'a göre dijital satışlar, Nintendo'nun nisan-haziran dönemindeki yazılım satışlarının yüzde 61,5'ini oluşturdu. Bir yıl önce bu oran yüzde 59,3'tü. Bazı Switch 2 oyunları şimdiden yalnızca lisans taşıyan, oyun verisi içermeyen "oyun anahtarı kartları" ile çıkıyor ve Gibson bunun yaygınlaşabileceğini düşünüyor.
