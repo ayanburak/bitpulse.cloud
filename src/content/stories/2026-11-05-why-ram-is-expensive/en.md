@@ -1,7 +1,7 @@
 ---
 slug: why-is-ram-so-expensive
-title: "Why Is RAM So Expensive While AI Data Centers Buy the Chips?"
-summary: "Memory makers are earning more than ever. One kind of chip built for AI is crowding out the memory in laptops and phones, and the companies that sell it expect the shortage to last for years."
+title: "Why AI Data Centers Are Making Your RAM So Expensive"
+summary: "Memory makers are earning more than ever. One kind of chip built for AI is crowding out the memory in laptops and phones, and SK hynix, one of its biggest makers, expects demand to outrun supply through 2030."
 category: economy
 date: 2026-11-05
 kind: long
@@ -80,7 +80,7 @@ Buyers are feeling it. TrendForce says higher component costs are weighing on no
 
 ## Who has already bought the future
 
-A second reason prices can stay high is that much of the supply is spoken for. SK hynix says it has signed long-term supply agreements with 14 major customers, including large cloud companies. TrendForce notes that this is up from 10 in the second quarter. These agreements typically run five years. It says the volume secured so far equals more than half of its total production capacity for 2027 and 2028, with prices set within agreed ranges.
+A second reason prices can stay high is that much of the supply is spoken for. SK hynix says it has signed long-term supply agreements with 14 major customers, including large cloud companies. TrendForce notes that this is up from 10 in the second quarter. These agreements typically run five years. SK hynix says the volume secured so far equals more than half of its total production capacity for 2027 and 2028, with prices set within agreed ranges.
 
 TrendForce says these agreements are shrinking the supply left for open negotiation. It also notes the other side of these contracts: some agreements signed since the second quarter include price ceilings, and some suppliers' increases are expected to lag the market average because of how their contracts work.
 
@@ -98,12 +98,12 @@ The pace of price rises is already slowing. TrendForce's reasons are a higher st
 
 A few things could shift the balance, and none of them is certain.
 
-Suppliers can move production between HBM and ordinary DRAM. TrendForce notes that in the first quarter of this year, HBM earned less per wafer than a common type of server memory module, because HBM prices are set annually and had not kept up with quick rises in ordinary prices. A Korean press report relayed by TrendForce says SK hynix expects the profit gap between HBM and conventional DRAM to narrow significantly. If making ordinary memory pays as well as HBM, makers have less reason to favour one over the other.
+Suppliers can move production between HBM and ordinary DRAM. TrendForce notes that in the first quarter of this year, HBM earned less per wafer than a common type of server memory module, because HBM prices are set annually and had not kept up with quick rises in ordinary prices. The Korean outlet iNews24, as relayed by TrendForce, reports that SK hynix expects the profit gap between HBM and conventional DRAM to narrow significantly. If making ordinary memory pays as well as HBM, makers have less reason to favour one over the other.
 
-Demand could soften. TrendForce says high memory costs may lead cloud companies to cut the memory in each system or turn to other designs. TrendForce's October report also names the Chinese maker CXMT, which is working on a new memory design. Citing Korean press, it says this has not yet significantly affected spot prices, the prices paid for immediate delivery, and that full commercial production is generally expected only after 2028.
+Demand could soften. TrendForce says high memory costs may lead cloud companies to cut the memory in each system or turn to other designs. TrendForce's October report also names the Chinese maker CXMT, which is working on a new memory design. Citing the Korean outlet MoneyToday, it says this has not yet significantly affected spot prices, the prices paid for immediate delivery. The report adds that full commercial production is generally expected only after 2028.
 
 And forecasts can be wrong. TrendForce has revised its fourth-quarter outlook upward before. Micron's own guidance, a revenue forecast of about $61.5 billion for its next quarter, is the company's own expectation, not a certainty.
 
 ## Waiting in line
 
-The memory in a phone or a laptop is, in effect, in a queue behind the memory in an AI server, because the same factories supply both and the AI side pays more. The makers say this will last for years. Analysts see price rises easing, in a market that stays short of supply.
+The memory in a phone or a laptop is, in effect, in a queue behind the memory in an AI server, because the same factories supply both and the AI side pays more. SK hynix expects demand to exceed supply through 2030, and Samsung expects supply to get tighter next year. TrendForce sees price rises easing, in a market that stays short of supply.
