@@ -46,7 +46,7 @@ Wu, veri merkezlerinde kullanılan NOR çiplerine talebin çok güçlü olduğun
 
 ## Fabrika kapasitesi sınırlı
 
-Çip fabrikaları talebe göre hemen büyüyemez. Wu'ya göre yarı iletken kapasitesi sınırlı ve yeni bir makinenin siparişten teslimata ulaşması en az bir yıl sürüyor. Macronix kısa vadeli büyümesinin çoğunu daha çok üretimden değil, fiyat artışlarından bekliyor. Arz sıkışıklığı ve yapay zekâ belleğine gelen yoğun talep yüzünden fiyatların bu çeyrekte de yükselmeye devam edeceğini öngörüyor.
+Çip fabrikaları talebe göre hemen büyüyemez. Wu'ya göre yarı iletken kapasitesi sınırlı ve yeni bir makinenin siparişten teslimata ulaşması en az bir yıl sürüyor. Macronix kısa vadeli büyümesinin çoğunu daha çok üretimden değil, fiyat artışlarından bekliyor. [Arz sıkışıklığı ve yapay zekâ belleğine gelen yoğun talep](/tr/stories/ram-neden-bu-kadar-pahali/) yüzünden fiyatların bu çeyrekte de yükselmeye devam edeceğini öngörüyor.
 
 Bu bakışla karar, kıt üretim kapasitesinin nereye gideceğine dair bir tercih gibi görünüyor. Macronix bunu tam olarak bu sözlerle söylemedi. Yine de oyun kartları için çip üreten bir hat, veri merkezlerinin istediği çipleri üretmeyen bir hat demek.
 

@@ -46,7 +46,7 @@ Wu said demand for NOR chips used in data centers is very robust. He also said M
 
 ## Why a factory choice matters
 
-Chip factories cannot simply grow on demand. Wu said semiconductor capacity is limited and that any new equipment takes at least a year to arrive after it is ordered. Macronix expects most of its short-term growth to come from higher prices, not from making more, and it expects prices to keep rising this quarter because of tight supply and strong demand for AI memory.
+Chip factories cannot simply grow on demand. Wu said semiconductor capacity is limited and that any new equipment takes at least a year to arrive after it is ordered. Macronix expects most of its short-term growth to come from higher prices, not from making more, and it expects prices to keep rising this quarter because of [tight supply and strong demand for AI memory](/en/stories/why-is-ram-so-expensive/).
 
 Read that way, the decision looks like a choice about where scarce production goes, though Macronix has not put it in exactly those words. A factory line making chips for game cards is a line not making chips that data centers want.
 
