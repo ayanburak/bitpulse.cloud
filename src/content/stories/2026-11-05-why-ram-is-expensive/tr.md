@@ -68,7 +68,7 @@ Mesele, üretim gücünün nereye yöneldiği de. TrendForce'a göre tedarikçil
 
 Bu tercih şirket kararlarında görülüyor. Micron 2025 aralık ayında, tüketici markası mağazalarda, çevrimiçi satıcılarda ve distribütörlerde satılan Crucial işinden çıkacağını duyurdu. Baş iş sorumlusu Sumit Sadana, amacın "daha büyük, stratejik müşterilerimiz için arzı ve desteği iyileştirmek" olduğunu söyledi. Açıklama, yapay zekâ veri merkezlerinden gelen bellek ve depolama talebindeki sıçramaya işaret ediyordu.
 
-Bu tercih yalnızca büyük isimlerle sınırlı değil. Tayvanlı çip üreticisi Macronix, [Nintendo Switch oyunlarını](/tr/stories/macronix-rom-switch-kartuslari/) tutan ROM çiplerini kademeli olarak bıraktığını ve kapasiteyi daha hızlı büyüyen bir bellek türü olan NAND'e verdiğini açıkladı. Bu çipler DRAM değil, ama örnek benzer: sınırlı sayıda fabrika hattı ve yapay zekâ ile ilgili bellek için daha fazla ödeyen müşteriler.
+Bu tercih yalnızca büyük isimlerle sınırlı değil. Tayvanlı çip üreticisi Macronix, [Nintendo Switch oyunlarını](/tr/stories/macronix-rom-switch-kartuslari/) tutan ROM çiplerini kademeli olarak bıraktığını ve kapasiteyi daha hızlı büyüyen bir bellek türü olan NAND'e verdiğini açıkladı. Bu çipler DRAM değil, ama örnek benzer: fabrika hatları sınırlı ve üretici onları en hızlı büyüyen belleğe ayırıyor.
 
 ## Yüksek fiyatlar neye benziyor
 

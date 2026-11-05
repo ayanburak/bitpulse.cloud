@@ -68,7 +68,7 @@ It is also a question of where the effort goes. TrendForce says suppliers are pu
 
 The choice shows in company decisions. In December 2025 Micron announced it would leave its Crucial consumer business, the consumer brand sold through shops, online retailers and distributors. Sumit Sadana, its chief business officer, said the aim was "to improve supply and support for our larger, strategic customers in faster-growing segments." The release cited a surge in demand for memory and storage from AI data centers.
 
-The choice is not limited to the biggest names. Macronix, a Taiwanese chipmaker, said it is phasing out the ROM chips that hold [Nintendo Switch games](/en/stories/macronix-phases-out-rom-switch-cartridges/) and giving capacity to NAND, a faster-growing kind of memory. Those chips are not DRAM, but the pattern is similar: a limited number of factory lines, and customers who pay more for AI-related memory.
+The choice is not limited to the biggest names. Macronix, a Taiwanese chipmaker, said it is phasing out the ROM chips that hold [Nintendo Switch games](/en/stories/macronix-phases-out-rom-switch-cartridges/) and giving capacity to NAND, a faster-growing kind of memory. Those chips are not DRAM, but the pattern is similar: factory lines are limited, and a maker gives them to the memory that is growing fastest.
 
 ## What higher prices look like
 
