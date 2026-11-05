@@ -28,9 +28,9 @@ sources:
     url: https://trendforce.com/research/download/RP260923EN
   - name: "Wikimedia Commons: Çift işlemci soketli sunucuda AMD Epyc 9754 (dosya açıklaması)"
     url: https://commons.wikimedia.org/wiki/File:AMD_Epyc_9754_in_Dual-CPU-Socket-Serversystem_(%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan)_07.png
-  - name: "Vikipedi: Dinamik rastgele erişimli bellek (DRAM)"
+  - name: "Wikipedia (İngilizce): Dynamic random-access memory"
     url: https://en.wikipedia.org/wiki/Dynamic_random-access_memory
-  - name: "Vikipedi: Yüksek bant genişlikli bellek (HBM)"
+  - name: "Wikipedia (İngilizce): High Bandwidth Memory"
     url: https://en.wikipedia.org/wiki/High_Bandwidth_Memory
 image:
   file: image.jpg
@@ -40,7 +40,7 @@ image:
   licenseUrl: https://creativecommons.org/licenses/by/3.0/
   source: https://commons.wikimedia.org/wiki/File:AMD_Epyc_9754_in_Dual-CPU-Socket-Serversystem_(%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan)_07.png
 ---
-Bir yıl önce Amerikalı bellek üreticisi Micron, bir çeyrekte yaklaşık 11,3 milyar dolarlık çip sattı. Son çeyrekte sattığı tutar 54,2 milyar dolar oldu. Brüt kâr marjı, yani satış gelirinden çipleri üretme maliyeti düştükten sonra kalan pay, aynı sürede yüzde 44,7'den yüzde 86,8'e çıktı. Bir çip üreticisi için bu olağanüstü bir değişim.
+Bir yıl önce merkezi Boise, Idaho'da bulunan bellek üreticisi Micron, bir çeyrekte yaklaşık 11,3 milyar dolarlık çip sattı. Son çeyrekte sattığı tutar 54,2 milyar dolar oldu. Brüt kâr marjı, yani satış gelirinden çipleri üretme maliyeti düştükten sonra kalan pay, aynı sürede yüzde 44,7'den yüzde 86,8'e çıktı. Bir çip üreticisi için bu olağanüstü bir değişim.
 
 Aynı patlama dizüstü bilgisayarların, telefonların ve bellek kartlarının fiyat etiketlerinde de görülüyor. "RAM neden bu kadar pahalı?" sorusunun kısa yanıtı şu: Belleği üretenler, sizden daha iyi bir müşteri buldu. Uzun yanıt, bu müşteriyle rekabet etmenin neden bu kadar zor olduğunu ve belleği satan hiç kimsenin yakın zamanda bir rahatlama vaat etmediğini anlatıyor.
 
@@ -56,7 +56,7 @@ Yapay zekâ ise HBM adlı özel bir türe talep yarattı. HBM, "yüksek bant gen
 
 ## Bir yapay zekâ çipi ne kadar bellek ister
 
-Bir yapay zekâ hızlandırıcısı çok miktarda HBM taşır. Bellek piyasasını izleyen TrendForce'a göre bu yıl özel yapay zekâ çiplerindeki yükseltmeler, çip başına HBM miktarını 96 veya 192 gigabayttan 216 veya 288'e çıkarıyor. Şirket, gelecek yıl Nvidia'nın Rubin Ultra işlemcisinin işlemci başına 384 gigabayta ulaşmasını bekliyor. Karşılaştırma için: Bu sayfanın başındaki fotoğraftaki çift işlemcili sunucunun tamamı, 24 yuvada 768 gigabayt sıradan bellek taşıyor.
+Bir yapay zekâ hızlandırıcısı çok miktarda HBM taşır. Bellek piyasasını izleyen TrendForce'a göre bu yıl özel yapay zekâ çiplerindeki yükseltmeler, çip başına HBM miktarını 96 veya 192 gigabayttan 216 veya 288'e çıkarıyor. Şirket, gelecek yıl Nvidia'nın Rubin Ultra işlemcisinin işlemci başına 384 gigabayta ulaşmasını bekliyor. Karşılaştırma için: Bu sayfanın başındaki fotoğraftaki çift işlemcili sunucunun tamamı, 24 yuvada 768 GiB (yaklaşık 825 gigabayt) sıradan bellek taşıyor.
 
 Sıradan sunucu belleğine de talep var. TrendForce, sunucu işlemcilerinin daha bol bulunmasının bulut şirketlerinin, kendi deyimiyle "ajan tabanlı yapay zekâ" için, yani görevleri kendi başına yürüten yapay zekâ sistemleri için aldığı bellek miktarını artırdığını bildiriyor. Harcamalar da çok büyük. TrendForce'un tahminine göre büyük bulut şirketlerinin yatırım harcamalarının bu yıl yüzde 47'si, gelecek yıl yüzde 68'i DRAM ve NAND flaşa gidecek. NAND, katı hal disklerinin arkasındaki çip türü.
 
@@ -64,23 +64,23 @@ Sıradan sunucu belleğine de talep var. TrendForce, sunucu işlemcilerinin daha
 
 Daha fazla HBM üreten bir fabrikada geri kalan her şeye daha az yer kalır. TrendForce'un tahminine göre en büyük üç tedarikçinin DRAM plakalarının bu yıl sonunda yaklaşık yüzde 22'si HBM'ye gidiyor, 2027 sonunda bu oran yaklaşık yüzde 30'a çıkacak. Oysa HBM, bit olarak ölçülen bu yılki bellek üretiminin yalnızca yaklaşık yüzde 9'u, 2027'de ise yaklaşık yüzde 13'ü. Yani HBM'ye ayrılan plaka, sıradan çiplere ayrılan plakadan çok daha az bellek veriyor. TrendForce, sonraki HBM kuşaklarında çiplerin büyümesine dikkat çekiyor ve geleneksel DRAM'in kapasiteden dışlanmasının yoğunlaşmasını bekliyor.
 
-Mesele, üretim gücünün nereye yöneldiği de. TrendForce'a göre tedarikçiler en gelişmiş üretim hatlarını sunucu ürünlerine yöneltiyor ve bu, piyasayı arz yetersizliğinde tutuyor. Kapasite sunuculara kaydığı için telefonlara ayrılan mobil DRAM payları dar, grafik belleği de aynı şekilde sınırlanıyor.
+Mesele, üretim gücünün nereye yöneldiği de. TrendForce'a göre tedarikçiler en gelişmiş üretim hatlarını sunucu ürünlerine yöneltiyor ve bu, piyasayı arz yetersizliğinde tutuyor. Kapasite sunuculara kaydığı için telefonlara ayrılan mobil DRAM payları dar, tedarikçiler eski bir grafik belleği türü olan GDDR6 üretimini kısıyor.
 
-Bu tercih şirket kararlarında görülüyor. Micron aralık ayında, mağazalarda bellek kartı ve disk satan Crucial tüketici işinden çıkacağını duyurdu. Baş iş sorumlusu Sumit Sadana, amacın "daha büyük, stratejik müşterilerimiz için arzı ve desteği iyileştirmek" olduğunu söyledi. Açıklama, yapay zekâ veri merkezlerinden gelen bellek ve depolama talebindeki sıçramaya işaret ediyordu.
+Bu tercih şirket kararlarında görülüyor. Micron 2025 aralık ayında, tüketici markası mağazalarda, çevrimiçi satıcılarda ve distribütörlerde satılan Crucial işinden çıkacağını duyurdu. Baş iş sorumlusu Sumit Sadana, amacın "daha büyük, stratejik müşterilerimiz için arzı ve desteği iyileştirmek" olduğunu söyledi. Açıklama, yapay zekâ veri merkezlerinden gelen bellek ve depolama talebindeki sıçramaya işaret ediyordu.
 
 Bu tercih yalnızca büyük isimlerle sınırlı değil. Tayvanlı çip üreticisi Macronix, [Nintendo Switch oyunlarını](/tr/stories/macronix-rom-switch-kartuslari/) tutan ROM çiplerini kademeli olarak bıraktığını ve kapasiteyi daha hızlı büyüyen bir bellek türü olan NAND'e verdiğini açıkladı. Bu çipler DRAM değil, ama örnek benzer: sınırlı sayıda fabrika hattı ve yapay zekâ ile ilgili bellek için daha fazla ödeyen müşteriler.
 
 ## Yüksek fiyatlar neye benziyor
 
-TrendForce, büyük alıcıların, örneğin bilgisayar üreticilerinin tedarikçilerle üzerinde anlaştığı sözleşme fiyatlarını izliyor. Bu maliyetler, insanların satın aldığı cihazlara yansıyor. TrendForce'a göre DRAM sözleşme fiyatları bu yılın ikinci çeyreğinde yaklaşık yüzde 80, üçüncü çeyreğinde yaklaşık yüzde 40 arttı. Dördüncü çeyrek için daha küçük bir artış öngörüyor, ancak rakamlar ölçüye göre değişiyor. 30 Eylül tarihli bir açıklama, günlük cihazlarda kullanılan geleneksel DRAM için yüzde 10 ila 15 artış öngördü. 20 Ekim tarihli bir rapor ise dördüncü çeyrekteki genel artışı yaklaşık yüzde 20 olarak verdi.
+TrendForce, büyük alıcıların, örneğin bilgisayar üreticilerinin tedarikçilerle üzerinde anlaştığı sözleşme fiyatlarını izliyor. Bu maliyetler, insanların satın aldığı cihazlara yansıyor. Kore ve Tayvan basınına dayanan 20 Ekim tarihli bir TrendForce haberine göre DRAM sözleşme fiyatları bu yılın ikinci çeyreğinde yaklaşık yüzde 80, üçüncü çeyreğinde yaklaşık yüzde 40 arttı. TrendForce dördüncü çeyrek için daha küçük bir artış bekliyor, ancak rakamlar ölçüye göre değişiyor. 30 Eylül tarihli bir açıklama, günlük cihazlarda kullanılan geleneksel DRAM için yüzde 10 ila 15 artış öngördü. 20 Ekim tarihli haber ise dördüncü çeyrekteki genel artışı yaklaşık yüzde 20 olarak verdi.
 
-Üreticilerin kendi sonuçları da aynı hikâyeyi anlatıyor. Güney Koreli üretici SK hynix, üçüncü çeyrekte ortalama DRAM satış fiyatının yüzde 20'lerin sonunda bir oranda arttığını, sevkiyatların ise yaklaşık yüzde 10 yükseldiğini bildirdi. Bu bilgi, TrendForce'un aktardığı Kore basınından geliyor. Aynı haberlere göre Samsung'un bellek biriminden bir yönetici de DRAM fiyatlarının yaklaşık yüzde 20 arttığını, sevkiyatların ise yalnızca birkaç puan yükseldiğini söyledi. Fiyatlar satılan miktardan çok daha hızlı yükseliyor ve bir arz kıtlığı tam olarak böyle görünür.
+Üreticilerin kendi sonuçları da aynı hikâyeyi anlatıyor. Güney Koreli üretici SK hynix'in ortalama DRAM satış fiyatı, TrendForce'un aktardığı Yonhap Infomax haberine göre üçüncü çeyrekte yüzde 20'lerin sonunda bir oranda arttı, sevkiyatlar ise yaklaşık yüzde 10 yükseldi. Samsung'un bellek biriminden yönetici Kim Jae-june, TrendForce'un aktardığı News 1 haberine göre DRAM fiyatlarının yaklaşık yüzde 20 arttığını, sevkiyatların ise yalnızca yüzde bir ile orta tek haneli bir oranda yükseldiğini söyledi. Fiyatlar satılan miktardan çok daha hızlı yükseliyor.
 
 Alıcılar bunu hissediyor. TrendForce'a göre yüksek bileşen maliyetleri dizüstü bilgisayar satışlarını zorluyor, artan maliyetler ve tükenen düşük maliyetli bellek stokları akıllı telefon üretimini kısıyor, bilgisayar markaları da maliyeti düşürmek için makinelerindeki depolamayı küçültüyor. Televizyonların, set üstü cihazların ve giyilebilir cihazların da yüksek maliyetleri sindirecek payı az.
 
 ## Geleceği kim şimdiden satın aldı
 
-Fiyatların yüksek kalabilmesinin ikinci nedeni, arzın büyük bölümünün çoktan ayrılmış olması. SK hynix, aralarında büyük bulut şirketlerinin de bulunduğu 14 büyük müşteriyle uzun vadeli tedarik anlaşması imzaladığını söylüyor. Bu sayı önceki çeyrekte 10'du. Anlaşmalar genellikle beş yıl sürüyor. Şirkete göre bugüne kadar güvence altına alınan hacim, 2027 ve 2028 için toplam üretim kapasitesinin yarısından fazlasına denk geliyor ve fiyatlar kararlaştırılan aralıklar içinde belirleniyor. Samsung'un haberlere göre 10 büyük müşteriyle bu tür anlaşmaları var ve 10 müşteriyle daha görüşüyor.
+Fiyatların yüksek kalabilmesinin ikinci nedeni, arzın büyük bölümünün çoktan ayrılmış olması. SK hynix, aralarında büyük bulut şirketlerinin de bulunduğu 14 büyük müşteriyle uzun vadeli tedarik anlaşması imzaladığını söylüyor. TrendForce'a göre bu sayı ikinci çeyrekte 10'du. Anlaşmalar genellikle beş yıl sürüyor. Şirkete göre bugüne kadar güvence altına alınan hacim, 2027 ve 2028 için toplam üretim kapasitesinin yarısından fazlasına denk geliyor ve fiyatlar kararlaştırılan aralıklar içinde belirleniyor. Samsung'un haberlere göre 10 büyük müşteriyle bu tür anlaşmaları var ve 10 müşteriyle daha görüşüyor; bu bilgi, TrendForce'un aktardığı Aju Business Daily haberine dayanıyor.
 
 TrendForce, bu anlaşmaların açık piyasada pazarlığa kalan arzı daralttığını söylüyor. Aynı zamanda madalyonun öbür yüzüne de dikkat çekiyor: İkinci çeyrekten bu yana imzalanan bazı anlaşmalarda fiyat tavanı var ve sözleşme mekanizmaları yüzünden bazı tedarikçilerin zamlarının piyasa ortalamasının gerisinde kalması bekleniyor.
 
@@ -88,7 +88,7 @@ TrendForce, bu anlaşmaların açık piyasada pazarlığa kalan arzı daralttı�
 
 Bunu kimse bilmiyor ve tahminlerin çoğunu belleği satan şirketler veriyor. İşte onların ve TrendForce'un söyledikleri.
 
-SK hynix sonuç açıklamasında, talebin arzı aştığı yapının 2030'a kadar süreceğini beklediğini söyledi. Şirket, en yeni çip süreçlerinin teknik zorluğuna ve yeni fabrikaların uzun kurulum sürelerine işaret ediyor. Kore basını, şirketin DRAM ve HBM üretimini fiilen 2029'a kadar satılmış saydığını bildirdi. Reuters'a göre Samsung 2027'de çip arzının daha da sıkışmasını bekliyor. Her iki şirket de satıcı olarak konuşuyor.
+SK hynix sonuç açıklamasında, talebin arzı aştığı yapının 2030'a kadar süreceğini beklediğini söyledi. Şirket, en yeni çip süreçlerinin teknik zorluğuna ve yeni fabrikaların uzun kurulum sürelerine işaret ediyor. TrendForce'un aktardığına göre Koreli Chosun Biz, şirketin DRAM ve HBM üretiminin fiilen 2029'a kadar satıldığını bildirdi. TrendForce'un aktardığı Reuters haberine göre Samsung 2027'de çip arzının daha da sıkışmasını bekliyor. Her iki şirket de satıcı olarak konuşuyor.
 
 Yeni arz geliyor, ama yavaş. SK hynix, M15X adlı tesisin yıl sonuna kadar tam kapasiteye ulaşacağını, Yongin sahasının ilk aşamasının da gelecek yıl tam işletmeye gireceğini söylüyor. TrendForce, sunucu DRAM'i ile HBM'nin birleşik bit arzının 2027'de yüzde 27 artmasını bekliyor, bu artışta o yılın ikinci yarısında devreye girecek yeni fabrika kapasitesi de rol oynuyor. Ancak kapasite sunuculara kaydığı için 2027'de PC belleği arzının düşebileceği uyarısını da yapıyor. Kuruluşa göre bilgisayar üreticileri, sıkıntı bekledikleri için hâlâ agresif biçimde alım yapıyor.
 
@@ -98,11 +98,11 @@ Fiyat artışlarının hızı şimdiden yavaşlıyor. TrendForce'un gerekçeleri
 
 Birkaç şey dengeyi kaydırabilir, ama hiçbiri kesin değil.
 
-Tedarikçiler üretimi HBM ile sıradan DRAM arasında kaydırabilir. TrendForce, bu yılın ilk çeyreğinde HBM'nin plaka başına, yaygın bir sunucu bellek modülünden daha az kazandırdığını belirtiyor, çünkü HBM fiyatları yıllık belirleniyor ve sıradan fiyatlardaki hızlı artışları yakalayamamıştı. SK hynix, HBM ile geleneksel DRAM arasındaki kâr farkının belirgin biçimde daralmasını bekliyor. Sıradan bellek üretmek HBM kadar kazandırırsa, üreticilerin birini öbürüne tercih etmek için daha az nedeni olur.
+Tedarikçiler üretimi HBM ile sıradan DRAM arasında kaydırabilir. TrendForce, bu yılın ilk çeyreğinde HBM'nin plaka başına, yaygın bir sunucu bellek modülünden daha az kazandırdığını belirtiyor, çünkü HBM fiyatları yıllık belirleniyor ve sıradan fiyatlardaki hızlı artışları yakalayamamıştı. TrendForce'un aktardığına göre Koreli iNews24, SK hynix'in HBM ile geleneksel DRAM arasındaki kâr farkının belirgin biçimde daralmasını beklediğini bildiriyor. Sıradan bellek üretmek HBM kadar kazandırırsa, üreticilerin birini öbürüne tercih etmek için daha az nedeni olur.
 
-Talep yumuşayabilir. TrendForce'a göre yüksek bellek maliyetleri bulut şirketlerini sistem başına bellek miktarını azaltmaya ya da başka tasarımlara yönlendirebilir. Ekim raporu ayrıca, yeni bir bellek tasarımı üzerinde çalışan Çinli üretici CXMT'yi anıyor. Rapora göre bunun spot fiyatlara henüz etkisi olmadı ve tam ticari üretimin genel olarak 2028'den sonra beklendiği belirtiliyor.
+Talep yumuşayabilir. TrendForce'a göre yüksek bellek maliyetleri bulut şirketlerini sistem başına bellek miktarını azaltmaya ya da başka tasarımlara yönlendirebilir. Ekim raporu ayrıca, yeni bir bellek tasarımı üzerinde çalışan Çinli üretici CXMT'yi anıyor. Rapor, Koreli MoneyToday'e dayanarak bunun spot fiyatlara henüz belirgin bir etkisi olmadığını, tam ticari üretimin ise genel olarak 2028'den sonra beklendiğini belirtiyor.
 
-Tahminler de yanılabilir. TrendForce dördüncü çeyrek beklentisini daha önce yukarı yönde revize etti. Micron'un bir sonraki çeyrek için yaklaşık 61,5 milyar dolarlık gelir öngörüsü de güçlü talebin süreceğini varsayıyor. Bu, kesinlik değil, şirketin beklentisi.
+Tahminler de yanılabilir. TrendForce dördüncü çeyrek beklentisini daha önce yukarı yönde revize etti. Micron'un bir sonraki çeyrek için yaklaşık 61,5 milyar dolarlık gelir öngörüsü de şirketin kendi beklentisi, kesinlik değil.
 
 ## Geriye ne kalıyor
 

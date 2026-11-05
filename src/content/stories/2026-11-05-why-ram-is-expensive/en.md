@@ -40,7 +40,7 @@ image:
   licenseUrl: https://creativecommons.org/licenses/by/3.0/
   source: https://commons.wikimedia.org/wiki/File:AMD_Epyc_9754_in_Dual-CPU-Socket-Serversystem_(%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan)_07.png
 ---
-A year ago, the American memory maker Micron sold about $11.3 billion worth of chips in a quarter. In its latest quarter it sold $54.2 billion. Its gross margin, the share of sales left after the cost of making the chips, went from 44.7% to 86.8% over the same year. For a chipmaker, that is an extraordinary change.
+A year ago, Micron, a memory maker based in Boise, Idaho, sold about $11.3 billion worth of chips in a quarter. In its latest quarter it sold $54.2 billion. Its gross margin, the share of sales left after the cost of making the chips, went from 44.7% to 86.8% over the same year. For a chipmaker, that is an extraordinary change.
 
 The same boom is in the price tags on laptops, phones and memory sticks. The short answer to "why is RAM so expensive" is that the companies that make it have found a better customer than you. The longer answer explains why that customer is so hard to compete with, and why nobody who sells memory is promising relief soon.
 
@@ -56,7 +56,7 @@ The two products are made in the same kind of factory, from the same kind of sil
 
 ## How much memory an AI chip wants
 
-An AI accelerator carries a lot of HBM. TrendForce, a firm that tracks the memory market, says upgrades to custom AI chips this year raise the HBM per chip from 96 or 192 gigabytes to 216 or 288. For next year it expects Nvidia's Rubin Ultra to reach 384 gigabytes per processor. For comparison, a whole dual-processor server in the photo at the top holds 768 gigabytes of ordinary memory in 24 slots.
+An AI accelerator carries a lot of HBM. TrendForce, a firm that tracks the memory market, says upgrades to custom AI chips this year raise the HBM per chip from 96 or 192 gigabytes to 216 or 288. For next year it expects Nvidia's Rubin Ultra to reach 384 gigabytes per processor. For comparison, a whole dual-processor server in the photo at the top holds 768 GiB (about 825 gigabytes) of ordinary memory in 24 slots.
 
 Ordinary server memory is in demand too. TrendForce reports that better supplies of server processors are lifting purchases by cloud companies for memory that supports what it calls agentic AI, meaning AI systems that carry out tasks on their own. And the spending is huge. TrendForce estimates that DRAM and NAND flash, the chips behind solid-state drives, will make up 47% of the capital spending of the major cloud companies this year and 68% next year.
 
@@ -64,23 +64,23 @@ Ordinary server memory is in demand too. TrendForce reports that better supplies
 
 A factory that makes more HBM has less room for everything else. TrendForce estimates that HBM takes about 22% of the DRAM wafers fed into production by the three largest suppliers at the end of this year, rising to about 30% at the end of 2027. Yet HBM is only about 9% of the memory produced this year, measured in bits, and about 13% in 2027. So a wafer given to HBM yields far less memory than one given to ordinary chips. TrendForce points to larger chips in later HBM generations and expects the crowding-out of conventional DRAM to intensify.
 
-It is also a question of where the effort goes. TrendForce says suppliers are putting their most advanced production lines toward server products, and that this keeps the market undersupplied. Mobile DRAM allocations for phones are tight as capacity moves to servers, and graphics memory is being limited the same way.
+It is also a question of where the effort goes. TrendForce says suppliers are putting their most advanced production lines toward server products, and that this keeps the market undersupplied. Mobile DRAM allocations for phones are tight as capacity moves to servers, and suppliers are scaling back an older graphics memory type, GDDR6.
 
-The choice shows in company decisions. In December Micron announced it would leave its Crucial consumer business, the brand that sold memory sticks and drives in shops. Sumit Sadana, its chief business officer, said the aim was "to improve supply and support for our larger, strategic customers in faster-growing segments." The release cited a surge in demand for memory and storage from AI data centers.
+The choice shows in company decisions. In December 2025 Micron announced it would leave its Crucial consumer business, the consumer brand sold through shops, online retailers and distributors. Sumit Sadana, its chief business officer, said the aim was "to improve supply and support for our larger, strategic customers in faster-growing segments." The release cited a surge in demand for memory and storage from AI data centers.
 
 The choice is not limited to the biggest names. Macronix, a Taiwanese chipmaker, said it is phasing out the ROM chips that hold [Nintendo Switch games](/en/stories/macronix-phases-out-rom-switch-cartridges/) and giving capacity to NAND, a faster-growing kind of memory. Those chips are not DRAM, but the pattern is similar: a limited number of factory lines, and customers who pay more for AI-related memory.
 
 ## What higher prices look like
 
-TrendForce tracks contract prices, the prices that large buyers such as PC makers agree with suppliers. Those costs feed into the devices people buy. According to TrendForce, DRAM contract prices rose about 80% in the second quarter of this year and about 40% in the third. It forecasts a smaller rise in the fourth quarter, though its figures differ by measure. A release on 30 September projected 10% to 15% for conventional DRAM, the kind used in everyday devices. A 20 October report put the overall fourth-quarter rise at about 20%.
+TrendForce tracks contract prices, the prices that large buyers such as PC makers agree with suppliers. Those costs feed into the devices people buy. A TrendForce news report of 20 October, drawing on Korean and Taiwanese press, says DRAM contract prices rose about 80% in the second quarter of this year and about 40% in the third. TrendForce expects a smaller rise in the fourth quarter, though its figures differ by measure. A release on 30 September projected 10% to 15% for conventional DRAM, the kind used in everyday devices. The 20 October report put the overall fourth-quarter rise at about 20%.
 
-The makers' own results tell the same story. SK hynix, a South Korean maker, said its average DRAM selling price rose by a high-20s percentage in the third quarter, with shipments up about 10%, according to Korean press reports relayed by TrendForce. An executive of Samsung's memory business said its DRAM prices rose about 20%, with shipments up only a few percent, according to the same coverage. Prices are climbing much faster than the quantity sold, which is what a shortage looks like.
+The makers' own results tell the same story. SK hynix, a South Korean maker, saw its average DRAM selling price rise by a high-20s percentage in the third quarter, with shipments up about 10%, according to Yonhap Infomax as relayed by TrendForce. Kim Jae-june, an executive of Samsung's memory business, said its DRAM prices rose about 20%, with shipments up only a low to mid single-digit percentage, according to News 1 as relayed by TrendForce. Prices are climbing much faster than the quantity sold.
 
 Buyers are feeling it. TrendForce says higher component costs are weighing on notebook sales, that rising costs and exhausted stocks of low-cost memory are cutting smartphone production, and that PC brands are shrinking the storage in their machines to save money. Televisions, set-top boxes and wearables, it adds, have little room to absorb higher costs.
 
 ## Who has already bought the future
 
-A second reason prices can stay high is that much of the supply is spoken for. SK hynix says it has signed long-term supply agreements with 14 major customers, including large cloud companies, up from 10 in the previous quarter. These agreements typically run five years. It says the volume secured so far equals more than half of its total production capacity for 2027 and 2028, with prices set within agreed ranges. Samsung reportedly has such agreements with 10 major customers and is negotiating with 10 more.
+A second reason prices can stay high is that much of the supply is spoken for. SK hynix says it has signed long-term supply agreements with 14 major customers, including large cloud companies. TrendForce notes that this is up from 10 in the second quarter. These agreements typically run five years. It says the volume secured so far equals more than half of its total production capacity for 2027 and 2028, with prices set within agreed ranges. Samsung reportedly has such agreements with 10 major customers and is negotiating with 10 more, according to Aju Business Daily as relayed by TrendForce.
 
 TrendForce says these agreements are shrinking the supply left for open negotiation. It also notes the other side of these contracts: some agreements signed since the second quarter include price ceilings, and some suppliers' increases are expected to lag the market average because of how their contracts work.
 
@@ -88,7 +88,7 @@ TrendForce says these agreements are shrinking the supply left for open negotiat
 
 Nobody can say, and the companies that sell memory are the ones giving most of the forecasts. Here is what they and TrendForce say.
 
-SK hynix said in its results that it expects the structure in which demand exceeds supply to continue through 2030. It points to the technical difficulty of the newest chip processes and the long lead times for building new factories. Korean media reported that it considers its DRAM and HBM output effectively sold out through 2029. Samsung expects chip supply to tighten further in 2027, Reuters reported. Both companies are speaking as sellers.
+SK hynix said in its results that it expects the structure in which demand exceeds supply to continue through 2030. It points to the technical difficulty of the newest chip processes and the long lead times for building new factories. The Korean outlet Chosun Biz, as relayed by TrendForce, reported that its DRAM and HBM output is effectively sold out through 2029. Samsung expects chip supply to tighten further in 2027, according to Reuters as relayed by TrendForce. Both companies are speaking as sellers.
 
 New supply is coming, slowly. SK hynix says a plant called M15X will reach full capacity by the end of this year and that the first phase of its Yongin site will enter full operation next year. TrendForce expects the combined bit supply of server DRAM and HBM to grow 27% in 2027, helped by new factory capacity in the second half of that year. But it warns that PC memory supply could fall in 2027 as capacity shifts to servers. PC makers, it says, are still buying aggressively because they expect tightness.
 
@@ -98,11 +98,11 @@ The pace of price rises is already slowing. TrendForce's reasons are a higher st
 
 A few things could shift the balance, and none of them is certain.
 
-Suppliers can move production between HBM and ordinary DRAM. TrendForce notes that in the first quarter of this year, HBM earned less per wafer than a common type of server memory module, because HBM prices are set annually and had not kept up with quick rises in ordinary prices. SK hynix expects the profit gap between HBM and conventional DRAM to narrow substantially. If making ordinary memory pays as well as HBM, makers have less reason to favour one over the other.
+Suppliers can move production between HBM and ordinary DRAM. TrendForce notes that in the first quarter of this year, HBM earned less per wafer than a common type of server memory module, because HBM prices are set annually and had not kept up with quick rises in ordinary prices. The Korean outlet iNews24, as relayed by TrendForce, reports that SK hynix expects the profit gap between HBM and conventional DRAM to narrow significantly. If making ordinary memory pays as well as HBM, makers have less reason to favour one over the other.
 
-Demand could soften. TrendForce says high memory costs may lead cloud companies to cut the memory in each system or turn to other designs. TrendForce's October report also names the Chinese maker CXMT, which is working on a new memory design. It says this has not yet affected spot prices and that full commercial production is generally expected only after 2028.
+Demand could soften. TrendForce says high memory costs may lead cloud companies to cut the memory in each system or turn to other designs. TrendForce's October report also names the Chinese maker CXMT, which is working on a new memory design. Citing the Korean outlet MoneyToday, it says this has not yet significantly affected spot prices and that full commercial production is generally expected only after 2028.
 
-And forecasts can be wrong. TrendForce has revised its fourth-quarter outlook upward before. Micron's own guidance, a revenue forecast of about $61.5 billion for its next quarter, assumes that strong demand continues. That is a company expectation, not a certainty.
+And forecasts can be wrong. TrendForce has revised its fourth-quarter outlook upward before. Micron's own guidance, a revenue forecast of about $61.5 billion for its next quarter, is the company's own expectation, not a certainty.
 
 ## What to take from it
 
