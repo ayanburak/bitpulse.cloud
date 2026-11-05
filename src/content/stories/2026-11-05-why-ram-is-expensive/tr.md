@@ -102,7 +102,7 @@ Tedarikçiler üretimi HBM ile sıradan DRAM arasında kaydırabilir. TrendForce
 
 Talep yumuşayabilir. TrendForce'a göre yüksek bellek maliyetleri bulut şirketlerini sistem başına bellek miktarını azaltmaya ya da başka tasarımlara yönlendirebilir. Ekim raporu ayrıca, yeni bir bellek tasarımı üzerinde çalışan Çinli üretici CXMT'yi anıyor. Rapor, Koreli MoneyToday'e dayanarak bunun spot fiyatlara, yani anında teslimat için ödenen fiyatlara henüz belirgin bir etkisi olmadığını belirtiyor. Rapora göre tam ticari üretim genel olarak 2028'den sonra bekleniyor.
 
-Tahminler de yanılabilir. TrendForce dördüncü çeyrek beklentisini daha önce yukarı yönde revize etti. Micron'un bir sonraki çeyrek için yaklaşık 61,5 milyar dolarlık gelir öngörüsü de şirketin kendi beklentisi, kesinlik değil.
+Tahminler de yanılabilir. Micron'un bir sonraki çeyrek için yaklaşık 61,5 milyar dolarlık gelir öngörüsü de şirketin kendi beklentisi, kesinlik değil.
 
 ## Sırada bekleyen bellek
 

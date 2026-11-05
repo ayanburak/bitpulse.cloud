@@ -102,7 +102,7 @@ Suppliers can move production between HBM and ordinary DRAM. TrendForce notes th
 
 Demand could soften. TrendForce says high memory costs may lead cloud companies to cut the memory in each system or turn to other designs. TrendForce's October report also names the Chinese maker CXMT, which is working on a new memory design. Citing the Korean outlet MoneyToday, it says this has not yet significantly affected spot prices, the prices paid for immediate delivery. The report adds that full commercial production is generally expected only after 2028.
 
-And forecasts can be wrong. TrendForce has revised its fourth-quarter outlook upward before. Micron's own guidance, a revenue forecast of about $61.5 billion for its next quarter, is the company's own expectation, not a certainty.
+And forecasts can be wrong. Micron's own guidance, a revenue forecast of about $61.5 billion for its next quarter, is the company's own expectation, not a certainty.
 
 ## Waiting in line
 
