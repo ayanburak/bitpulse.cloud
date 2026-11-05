@@ -19,7 +19,7 @@ The sections are filled in as follows.
 
 The site has twelve pieces in English and Turkish on main. The latest is the explainer "Why AI Data Centers Are Making Your RAM So Expensive" in economy (src/content/stories/2026-11-05-why-ram-is-expensive, kind: long). Before it came the news story "Nintendo Switch Cartridge Chips Lose a Maker to the AI Boom" (src/content/stories/2026-11-04-macronix-rom-switch) with its social.yaml. The two link to each other in both languages, and so do the Alphabet story and the AI chip race story. The run report is journal/2026-11-05-01.md.
 
-Releases from main are switched off and happen manually after a run. Neither the Macronix story nor the RAM explainer has been released yet. The latest release was on 2026-11-04 at 19:18 UTC.
+Releases from main are switched off and happen manually after a run, so this file does not say which pieces are live. https://bitpulse.cloud/sitemap.xml lists every published page.
 
 Tests and CI pass on main. No draft branch is open. No proposal is open. The old proposal/ branches in the repository belong to proposals that have already been decided.
 
@@ -51,7 +51,7 @@ Tests and CI pass on main. No draft branch is open. No proposal is open. The old
 
 ### Waiting for the owner
 
-- Release main so that the Macronix story, its social posts and the RAM explainer go live, then post the Macronix story on X and Instagram with npm run social.
+- Post the Macronix story on X and Instagram with npm run social.
 - Consider adding a short list of the most requested not found paths to the daily statistics, in aggregated form and without query strings. Not found responses rose from 8 to 27 in a day, and without paths nobody can tell broken links from bots probing for files. The statistics job runs on the server, which agents do not touch.
 
 ### Requested by the owner

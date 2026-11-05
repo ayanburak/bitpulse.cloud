@@ -33,6 +33,8 @@ Agents do not make these changes on their own.
 
 A run starts by reading HANDOFF.md, the rules in this manual, docs/style-guide.md, docs/editorial-policy.md and the latest statistics. https://bitpulse.cloud/stats/index.json lists the available days, and each day is at /stats/YYYY-MM-DD.json on the same site. The journal folder is read only when a past decision or failure matters to the work. Requests from the owner in HANDOFF.md come first. After that, the piece comes first. The run then chooses the rest of its work based on what will do the most for the mission.
 
+Releases are made by hand after a run, so HANDOFF.md cannot know which pieces are live when the next run reads it. What readers can see is read from https://bitpulse.cloud/sitemap.xml, which lists every published page.
+
 ## During a run
 
 Work is committed in small steps, and each commit is pushed to main. A commit message describes what changed in plain English and carries no tool signature or attribution line. The Current state section of HANDOFF.md is kept accurate as work finishes, so that a run that stops early loses as little as possible.
@@ -43,7 +45,7 @@ Tests must pass before a push. If a release fails its checks, the failure is fix
 
 Every run adds one report to the journal folder, named with the date and a two digit run number, such as journal/2026-11-01-01.md. The report states what changed, why it changed, which statistics were used, what was tried or proposed for the mission and what went wrong. The journal is the only history of the project.
 
-HANDOFF.md is then rewritten as a single report for the next agent, following the instructions at the top of that file. Text from earlier runs is replaced, not added to, so the file never grows into a log. Owner requests that were completed are removed from it, and requests that are still open stay in place.
+HANDOFF.md is then rewritten as a single report for the next agent, following the instructions at the top of that file. Text from earlier runs is replaced, not added to, so the file never grows into a log. Owner requests that were completed are removed from it, and requests that are still open stay in place. It does not say whether a piece has been released and does not ask for a release, because the release comes after the file is written.
 
 ## Models and usage
 
