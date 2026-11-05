@@ -22,13 +22,13 @@ image:
   licenseUrl: https://creativecommons.org/licenses/by-sa/4.0/
   source: https://commons.wikimedia.org/wiki/File:NS_handhelds_and_games_display_case_2.jpg
 ---
-Of every 100 yen Nintendo took in from games for its consoles between April and September, about 61 came from digital sales. A year earlier it was about 54.5. The company published the figures on 5 November in its results for the first half of its financial year.
+Of every 100 yen Nintendo took in from game software for its consoles between April and September, about 61 came from digital sales. A year earlier it was about 54.5. The company published the figures on 5 November in its results for the first half of its financial year.
 
 Digital sales reached 249.6 billion yen, up 60.5% from 155.5 billion. Nintendo counts four things as digital: downloadable versions of games that are also sold in boxes, games that exist only as downloads, add-on content and its Nintendo Switch Online subscription. Its share is measured against all software sold for its consoles, so the rest, a little under 40%, is software sold in packaged form.
 
 ## Most of the growth is boxed games, downloaded
 
-The telling detail is what sits inside the digital total. Downloadable versions of games that also come in boxes made up 59.2% of digital sales this half-year, compared with 46.3% a year ago. By those shares, that is roughly 148 billion yen against roughly 72 billion, so it accounts for most of the 94 billion yen the digital total grew by. Nintendo lists the increase among several reasons for the rise and also names the continued weakness of the yen.
+The telling detail is what sits inside the digital total. Downloadable versions of games that also come in boxes made up 59.2% of digital sales this half-year, compared with 46.3% a year ago. By those shares, that is roughly 148 billion yen against roughly 72 billion, so it accounts for most of the 94 billion yen the digital total grew by. Nintendo's results release says the rise was mainly due to this increase in downloadable versions, and its slides also name the continued weakness of the yen.
 
 So the shift is less about new kinds of products than about how people buy the same ones: the game that is on a shop shelf is also on the download page.
 
@@ -38,9 +38,9 @@ The half-year share hides a small step back. In April to June, digital was 61.5%
 
 ## A smaller console year
 
-The wider results show a company selling fewer consoles but earning more. Switch 2 hardware sales were 6.49 million units in the half-year, down 37.4% from 10.36 million a year before, according to games.gg. Software for the console sold 24.49 million units. Net sales fell 12.1% to 966.0 billion yen, while operating profit rose 49.1% to 216.5 billion yen.
+The wider results show a company selling fewer consoles but earning more. Switch 2 hardware sales were 6.49 million units in the half-year, down 37.4% from 10.36 million a year before. Software for the console sold 24.49 million units. Net sales fell 12.1% to 966.0 billion yen, while operating profit rose 49.1% to 216.5 billion yen.
 
-Nintendo gives two reasons for the profit: steady software sales that made up a larger share of the total, and a refund of American import tariffs that had been booked as a cost earlier in the year. It left its forecast for the full year unchanged. As of 30 September, the console had sold 26.35 million units worldwide.
+Nintendo gives two reasons for the profit: steady software sales that made up a larger share of the total, and a first-quarter refund of American import tariffs that had previously been booked as a cost of sales. It left its forecast for the full year unchanged. As of 30 September, the console had sold 26.35 million units worldwide.
 
 Games are also a business where bundles blur the numbers. Software sold together with a console, such as Mario Kart World, counts as hardware revenue, not as software or digital sales.
 

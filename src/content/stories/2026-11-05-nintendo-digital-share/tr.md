@@ -28,7 +28,7 @@ Dijital satışlar, 155,5 milyar yenden 249,6 milyar yene çıkarak yüzde 60,5 
 
 ## Artışın çoğu kutulu oyunların indirilmesinden
 
-Dikkat çeken ayrıntı dijital toplamın içinde saklı. Kutuda da satılan oyunların indirilebilir sürümleri bu yarıyılda dijital satışların yüzde 59,2'sini oluşturdu. Geçen yıl bu oran yüzde 46,3'tü. Bu paylarla hesaplandığında söz konusu kalem yaklaşık 148 milyar yene karşılık geliyor, geçen yıl ise yaklaşık 72 milyar yendi. Dijital toplamın 94 milyar yenlik artışının büyük kısmı bu kalemden geliyor. Nintendo, artışı birkaç nedene bağlıyor, bunların arasında indirilebilir sürümlerdeki yükselişi sayıyor ve yenin zayıf seyrini de anıyor.
+Dikkat çeken ayrıntı dijital toplamın içinde saklı. Kutuda da satılan oyunların indirilebilir sürümleri bu yarıyılda dijital satışların yüzde 59,2'sini oluşturdu. Geçen yıl bu oran yüzde 46,3'tü. Bu paylarla hesaplandığında söz konusu kalem yaklaşık 148 milyar yene karşılık geliyor, geçen yıl ise yaklaşık 72 milyar yendi. Dijital toplamın 94 milyar yenlik artışının büyük kısmı bu kalemden geliyor. Nintendo'nun sonuç bildirisi artışın esas olarak indirilebilir sürümlerdeki yükselişten kaynaklandığını söylüyor, sunum slaytları ise yenin süregelen zayıflığını da anıyor.
 
 Yani değişim, yeni tür ürünlerden çok aynı ürünlerin nasıl satın alındığıyla ilgili. Mağaza rafındaki oyun, indirme sayfasında da duruyor.
 
@@ -38,9 +38,9 @@ Altı aylık pay küçük bir geri adımı gizliyor. Nisan-haziran döneminde di
 
 ## Konsol satışları düştü, kâr yükseldi
 
-Genel sonuçlarda daha az konsol satıp daha çok kazanan bir şirket görülüyor. Switch 2 donanım satışı yarıyılda 6,49 milyon adet oldu. games.gg'ye göre bu, bir yıl önceki 10,36 milyonun yüzde 37,4 altında. Konsolun oyunları ise 24,49 milyon adet sattı. Net satışlar yüzde 12,1 düşüşle 966,0 milyar yene indi, faaliyet kârı ise yüzde 49,1 artışla 216,5 milyar yene çıktı.
+Genel sonuçlarda daha az konsol satıp daha çok kazanan bir şirket görülüyor. Switch 2 donanım satışı yarıyılda 6,49 milyon adet oldu. Bu, bir yıl önceki 10,36 milyonun yüzde 37,4 altında. Konsolun oyunları ise 24,49 milyon adet sattı. Net satışlar yüzde 12,1 düşüşle 966,0 milyar yene indi, faaliyet kârı ise yüzde 49,1 artışla 216,5 milyar yene çıktı.
 
-Nintendo kârı iki nedene bağlıyor: toplam satışlar içinde daha büyük pay alan istikrarlı yazılım satışları ve yıl içinde maliyet olarak kaydedilmiş olan Amerikan ithalat vergilerinin iadesi. Şirket yıllık beklentisini değiştirmedi. Switch 2, 30 Eylül itibarıyla dünya genelinde 26,35 milyon adet satmıştı.
+Nintendo kârı iki nedene bağlıyor: toplam satışlar içinde daha büyük pay alan istikrarlı yazılım satışları ve daha önce satışların maliyeti olarak kaydedilmiş Amerikan ithalat vergilerinin ilk çeyrekte yapılan iadesi. Şirket yıllık beklentisini değiştirmedi. Switch 2, 30 Eylül itibarıyla dünya genelinde 26,35 milyon adet satmıştı.
 
 Bir de şu var: Konsolla birlikte satılan yazılım, örneğin Mario Kart World, yazılım ya da dijital satış değil, donanım geliri sayılıyor.
 
