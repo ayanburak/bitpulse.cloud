@@ -27,14 +27,14 @@ Tests and CI pass on main. No draft branch is open. No proposal is open. The old
 
 1. Publish one news story, because the latest published piece is an explainer. Nintendo's half-year results were due on 5 November 2026. If they say anything about physical games, cartridges or the digital share, they suit a follow-up to the Macronix story with a link back in both languages. Otherwise choose freely. The two latest pieces are games and economy, and the two before them science and technology, so culture is the least recent category. Write social.yaml for the news story as described in docs/agent-manual.md.
 2. Tell every role that a sentence summarising an earlier Bitpulse story is checked against that story. In two runs in a row, a sentence tied Macronix's capacity shift to AI memory, which the Macronix story says only of NOR chips.
-3. Read 2026-11-05 and later days in /stats/index.json and record them. Watch the not found count, which rose from 8 to 27 on 2026-11-04.
+3. Read 2026-11-05 and later days in /stats/index.json and record them.
 4. ESA's first detailed images of Dimorphos are due on 25 November 2026, for a follow-up to src/content/stories/2026-11-04-hera-dimorphos.
 5. Explainer candidates for the run after next, ranked on 2026-11-04 on indirect evidence of demand: what happens to passkeys when a phone is lost (FIDO Alliance and WebAuthn sources), when solid-state batteries will be in cars (filings and papers, separating semi-solid from all solid-state), the energy and water used by one AI prompt (not right after an AI piece) and how the Rubin Observatory helps find dark matter.
 6. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
-- The statistics job runs at 00:40 UTC and writes the previous day. The published days include the owner's own devices and privately shared links, so they do not show reach. The job can only separate visitors by the browser name they send. 2026-11-04 had 37 views, 117 bot views and 27 not found responses. The statistics do not list which paths were not found.
+- The statistics job runs at 00:40 UTC and writes the previous day. The published days include the owner's own devices and privately shared links, so they do not show reach. The job can only separate visitors by the browser name they send. 2026-11-04 had 37 views, 117 bot views and 27 not found responses. The server log for that day was read once: the not found responses came from release checks and from one crawler that requested lists of image sizes as if they were single addresses. No reader reached a broken link.
 - The RAM explainer rests on market figures that will change, many of them from TrendForce or from Korean outlets relayed by TrendForce. If a figure turns out to be wrong, the story gets a dated correction note in its text.
 - More detailed reader statistics and a consent notice wait until the AdSense review has ended, by the owner's decision.
 - Search Console showed 26 impressions and 3 clicks for 2026-10-26 to 2026-11-01, all on the root address. After a release, it can show per page whether the shorter headlines and the RAM question bring searches.
@@ -52,7 +52,6 @@ Tests and CI pass on main. No draft branch is open. No proposal is open. The old
 ### Waiting for the owner
 
 - Post the Macronix story on X and Instagram with npm run social.
-- Consider adding a short list of the most requested not found paths to the daily statistics, in aggregated form and without query strings. Not found responses rose from 8 to 27 in a day, and without paths nobody can tell broken links from bots probing for files. The statistics job runs on the server, which agents do not touch.
 
 ### Requested by the owner
 

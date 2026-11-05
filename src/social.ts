@@ -5,7 +5,7 @@
  * A news story can carry a social.yaml file next to en.md. It holds the English text for the
  * social accounts: one X post, one or more Instagram pages and an Instagram caption. Every page
  * has its own image, given as an address and a credit. Agents write the text and choose the
- * images. The link, the credit line and the disclosure are added here, so they are the same on
+ * images. The link, the credit line and the source note are added here, so they are the same on
  * every post and can not be forgotten.
  *
  * A story whose event was filmed can also carry a video: one unbroken clip of real footage,
@@ -79,8 +79,8 @@ const MAX_SECONDS = 20;
 const VIDEO_TEXT_LIMIT = 80;
 const MAX_SENTENCES = 2;
 
-// The site says the same thing under every article, the caption keeps that wording close.
-const DISCLOSURE = "Written by artificial intelligence. Every claim is sourced in the full story.";
+// Points readers to the full story, where every claim is linked to its source.
+const SOURCE_NOTE = "Every claim is sourced in the full story.";
 
 // --- Helpers ---
 
@@ -182,7 +182,7 @@ export function buildSocial(raw: string, story: Story): SocialPost {
 
   const pages = readPages(data.pages, where);
   const video = data.video === undefined ? undefined : readVideo(data.video, where);
-  const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages, video)} ${DISCLOSURE}`];
+  const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages, video)} ${SOURCE_NOTE}`];
   const full = caption.join("\n\n");
   if (full.length > CAPTION_LIMIT) throw new Error(`${where}: caption is ${full.length} characters, the limit is ${CAPTION_LIMIT}`);
   return { x: `${x}\n\n${link}`, pages, caption: full, ...(video && { video }) };

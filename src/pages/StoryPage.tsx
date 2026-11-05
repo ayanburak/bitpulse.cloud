@@ -100,7 +100,6 @@ function Sources({ story, lang }: { story: Story; lang: Lang }) {
           ))}
         </ul>
       </aside>
-      <p className="caption">{t.disclosure}</p>
     </div>
   );
 }

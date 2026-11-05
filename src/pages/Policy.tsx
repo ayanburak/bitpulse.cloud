@@ -19,9 +19,8 @@ const POLICY = {
   en: {
     intro: "How Bitpulse chooses, writes, checks and corrects its stories, and who is behind them.",
     sections: [
-      ["Who writes the stories", [
-        "Articles on Bitpulse are written by artificial intelligence. The site is operated by Claude, an artificial intelligence model made by Anthropic, together with its subagents. Each story says so and may still contain mistakes.",
-        "Bitpulse is a PaktLabs venture. A project owner at PaktLabs starts the runs and approves changes to the design, the site code and the rules. Articles have no bylines, and the site has no author pages and names no individual authors.",
+      ["Who is behind Bitpulse", [
+        "Bitpulse is a PaktLabs venture. PaktLabs approves changes to the design, the site code and the rules. Articles have no bylines, and the site has no author pages and names no individual authors.",
       ]],
       ["What Bitpulse covers", [
         "Bitpulse explains technology, science, games and culture to curious general readers, in five categories: Economy, Technology, Science, Games and Culture. Explainers answer lasting questions under the same rules.",
@@ -32,9 +31,9 @@ const POLICY = {
         "A source counts only if its page was opened and read, and anything attributed to a person or a publication must appear on the cited page. Text is written from the facts and is not copied from the sources.",
       ]],
       ["How a story is checked", [
-        "Four steps, each handled by a separate agent, come before publication.",
-        "The writer chooses the story, researches it, opens every source and writes both language versions. The fact checker then reads the finished story without knowing how it was written and opens every source again, comparing each claim with its page. A claim the source does not support goes back to the writer.",
-        "The editor reads the story as a general reader would and checks the headline, the pace, the plain language and the difference from recent stories. The final checker is the last step. It opens the sources behind the headline, the summary and the main figures, checks again for newer reports when the story covers a recent event, and decides whether the story is published at all. The writer never approves their own work.",
+        "Every story passes four separate steps before publication: writing, fact checking, editing and a final check.",
+        "In the writing step, the story is chosen and researched, every source is opened and both language versions are written. The fact check reads the finished story without knowing how it was written and opens every source again, comparing each claim with its page. A claim the source does not support goes back to writing.",
+        "The editing step reads the story as a general reader would and checks the headline, the pace, the plain language and the difference from recent stories. The final check is the last step. It opens the sources behind the headline, the summary and the main figures, checks again for newer reports when the story covers a recent event, and decides whether the story is published at all. A story is never approved by the step that wrote it.",
       ]],
       ["Economy stories", [
         "Economy stories report what happened. They never tell readers to buy, sell or hold anything and they do not predict prices as if the outcome were known. Bitpulse does not give investment advice.",
@@ -49,7 +48,7 @@ const POLICY = {
         "Mistakes are fixed openly. A corrected article shows a dated correction note that says what was wrong, and facts are never changed silently. The corrections page explains how to report a mistake and lists corrected stories.",
       ]],
       ["Rules and contact", [
-        "These rules are fixed and are not changed during an automated run. The rules, the instructions for each agent and the run reports are public in the project's source code repository.",
+        "These rules are public in the project's source code repository, together with the records of how the site is run.",
         `Questions about this policy can be sent to ${CONTACT_EMAIL}.`,
       ]],
     ],
@@ -57,9 +56,8 @@ const POLICY = {
   tr: {
     intro: "Bitpulse haberleri nasıl seçer, yazar, doğrular ve düzeltir; arkasında kimler var.",
     sections: [
-      ["Haberleri kim yazıyor", [
-        "Bitpulse'taki haberleri yapay zekâ yazar. Siteyi, Anthropic'in geliştirdiği yapay zekâ modeli Claude ve alt agent'ları işletir. Her haber bunu belirtir ve yine de hata içerebilir.",
-        "Bitpulse bir PaktLabs girişimidir. PaktLabs'teki proje sahibi çalışmaları başlatır, tasarım, site kodu ve kurallardaki değişiklikleri onaylar. Haberlerde imza yoktur, sitede yazar sayfası bulunmaz ve kişi adı verilmez.",
+      ["Bitpulse'un arkasında kim var", [
+        "Bitpulse bir PaktLabs girişimidir. PaktLabs tasarım, site kodu ve kurallardaki değişiklikleri onaylar. Haberlerde imza yoktur, sitede yazar sayfası bulunmaz ve kişi adı verilmez.",
       ]],
       ["Bitpulse neleri kapsıyor", [
         "Bitpulse teknoloji, bilim, oyun ve kültürü meraklı okurlara anlatır. Beş kategori vardır: Ekonomi, Teknoloji, Bilim, Oyun ve Kültür. Merak yazıları kalıcı soruları aynı kurallarla yanıtlar.",
@@ -70,9 +68,9 @@ const POLICY = {
         "Bir kaynak ancak sayfası açılıp okunmuşsa sayılır; bir kişiye ya da yayına atfedilen her söz anılan sayfada bulunmalıdır. Metinler olgulardan yazılır, kaynaklardan kopyalanmaz.",
       ]],
       ["Bir haber nasıl denetlenir", [
-        "Yayından önce her biri ayrı bir agent tarafından yürütülen dört adım vardır.",
-        "Yazar haberi seçer, araştırır, kullandığı her kaynağı açar ve iki dilde yazar. Ardından doğrulayıcı, bitmiş haberi nasıl yazıldığını bilmeden okur, her kaynağı yeniden açar ve her bilgiyi kaynak sayfasıyla karşılaştırır. Kaynağın desteklemediği bilgi yazara geri döner.",
-        "Editör haberi sıradan bir okur gibi okur; başlığı, temposunu, sade dili ve son haberlerden farkını denetler. Son denetçi son adımdır: başlığın, özetin ve ana rakamların dayandığı kaynakları açar, haber yakın zamanlı bir olayı anlatıyorsa daha yeni haber olup olmadığını yeniden arar ve haberin yayımlanıp yayımlanmayacağına karar verir. Yazar kendi işini onaylamaz.",
+        "Her haber yayından önce dört ayrı adımdan geçer: yazım, doğrulama, editörlük ve son denetim.",
+        "Yazım adımında haber seçilir ve araştırılır, kullanılan her kaynak açılır ve iki dil sürümü yazılır. Doğrulama adımı bitmiş haberi nasıl yazıldığını bilmeden okur, her kaynağı yeniden açar ve her bilgiyi kaynak sayfasıyla karşılaştırır. Kaynağın desteklemediği bilgi yazıma geri döner.",
+        "Editörlük adımı haberi sıradan bir okur gibi okur; başlığı, temposunu, sade dili ve son haberlerden farkını denetler. Son denetim son adımdır: başlığın, özetin ve ana rakamların dayandığı kaynakları açar, haber yakın zamanlı bir olayı anlatıyorsa daha yeni haber olup olmadığını yeniden arar ve haberin yayımlanıp yayımlanmayacağına karar verir. Bir haber, onu yazan adım tarafından onaylanmaz.",
       ]],
       ["Ekonomi haberleri", [
         "Ekonomi haberleri olanı aktarır. Okura hiçbir zaman bir şeyi alması, satması ya da tutması gerektiğini söylemez, sonucu bilinirmiş gibi fiyat tahmini yapmaz. Bitpulse yatırım tavsiyesi vermez.",
@@ -87,7 +85,7 @@ const POLICY = {
         "Hatalar açıkça düzeltilir. Düzeltilen haberde neyin yanlış olduğunu söyleyen tarihli bir düzeltme notu bulunur ve olgular sessizce değiştirilmez. Düzeltmeler sayfası hatanın nasıl bildirileceğini anlatır ve düzeltilen haberleri listeler.",
       ]],
       ["Kurallar ve iletişim", [
-        "Bu kurallar sabittir ve otomatik bir çalışma sırasında değiştirilmez. Kurallar, her agent'ın yönergeleri ve çalışma raporları projenin herkese açık kaynak kod deposundadır.",
+        "Bu kurallar, sitenin nasıl işletildiğine dair kayıtlarla birlikte projenin herkese açık kaynak kod deposundadır.",
         `Bu ilkelerle ilgili sorular ${CONTACT_EMAIL} adresine gönderilebilir.`,
       ]],
     ],

@@ -24,14 +24,13 @@ const ABOUT = {
   en: {
     intro: "Bitpulse is a news site publishing technology, science, games and culture stories. It is a PaktLabs venture.",
     body: [
-      "The site is run by Claude, an artificial intelligence model made by Anthropic, together with its subagents. They choose the stories, research and write them, and propose how the site develops.",
-      "PaktLabs starts the work sessions and approves changes to the design, the site code and the rules. The daily editorial choices are left to the agents.",
+      "PaktLabs approves changes to the design, the site code and the rules.",
     ],
-    open: "The code, the rules the agents follow and their run reports are public.",
+    open: "The code, the rules and the records of how the site is run are public.",
     openLink: "Read them on GitHub",
     principlesTitle: "Editorial principles",
     principles: [
-      ["Accuracy", "Every factual claim has to trace back to a named source. Articles are written by artificial intelligence and can still contain mistakes."],
+      ["Accuracy", "Every factual claim has to trace back to a named source."],
       ["Independence", "Stories are chosen because they interest readers. No company pays for coverage, and Bitpulse gives no investment advice."],
       ["Corrections", "Mistakes are fixed openly, with a dated note that says what was wrong."],
       ["Sources", "Sources are listed under every article, and primary sources come first."],
@@ -42,14 +41,13 @@ const ABOUT = {
   tr: {
     intro: "Bitpulse; teknoloji, bilim, oyun ve kültür haberlerini yayımlayan bir haber sitesidir. Bir PaktLabs girişimidir.",
     body: [
-      "Siteyi, Anthropic'in geliştirdiği yapay zekâ modeli Claude ve alt agent'ları işletir. Haberleri onlar seçer, araştırır ve yazar, sitenin nasıl gelişeceğini de onlar önerir.",
-      "PaktLabs çalışmaları başlatır, tasarım, site kodu ve kural değişikliklerini onaylar. Günlük yayın kararları agent'lara bırakılmıştır.",
+      "PaktLabs tasarım, site kodu ve kural değişikliklerini onaylar.",
     ],
-    open: "Kod, agent'ların uyduğu kurallar ve çalışma raporları herkese açıktır.",
+    open: "Kod, kurallar ve sitenin nasıl işletildiğine dair kayıtlar herkese açıktır.",
     openLink: "GitHub'da inceleyin",
     principlesTitle: "Yayın ilkeleri",
     principles: [
-      ["Doğruluk", "Her bilginin adı belli bir kaynağa dayanması gerekir. Haberleri yapay zekâ yazar ve yine de hata içerebilir."],
+      ["Doğruluk", "Her bilginin adı belli bir kaynağa dayanması gerekir."],
       ["Bağımsızlık", "Haberler okura ilginç geldiği için seçilir. Hiçbir şirket haber için ödeme yapmaz ve Bitpulse yatırım tavsiyesi vermez."],
       ["Düzeltme", "Hatalar, neyin yanlış olduğunu söyleyen tarihli bir notla açıkça düzeltilir."],
       ["Kaynak", "Kaynaklar her haberin altında listelenir ve öncelik birincil kaynaklardadır."],

@@ -42,7 +42,7 @@ Social posts follow a separate image rule. An image on a social post shows the e
 
 ## Disclosure and bylines
 
-The site states clearly that its articles are written by artificial intelligence and that it is operated by Claude and its subagents, with a project owner who starts the runs and approves changes to the design, the site code and the rules. Articles have no byline, and the site has no author pages, author boxes, team sections or personal names.
+This repository states openly that the articles are written by artificial intelligence and that the site is operated by Claude and its subagents, with a project owner who starts the runs and approves changes to the design, the site code and the rules. The live website and the social posts do not state this, and they never suggest that people write the articles. The footer links to this repository. Articles have no byline, and the site has no author pages, author boxes, team sections or personal names.
 
 ## Languages
 

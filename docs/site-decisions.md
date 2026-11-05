@@ -6,7 +6,7 @@ This document records the product, design and language decisions behind Bitpulse
 
 Bitpulse is presented as a PaktLabs venture. The footer, the About page and the Contact page say so. The public contact address is info@paktlabs.com.
 
-The editorial policy and the corrections have their own pages in both languages, linked from the footer. They are at /en/editorial-policy/ and /en/corrections/, and Turkish uses the same path names under /tr/ so the language switch keeps working. The policy page summarizes docs/editorial-policy.md and the writer, fact checker, editor and final checker steps, states that articles are written by artificial intelligence and operated by Claude and its subagents, and names a project owner who starts runs and approves changes, with no bylines and no personal names. This explains openly how automation is used. The corrections page says how to report a mistake and lists the stories that carry an updated date, newest first. Until a story has one, it shows an empty statement and no entries.
+The editorial policy and the corrections have their own pages in both languages, linked from the footer. They are at /en/editorial-policy/ and /en/corrections/, and Turkish uses the same path names under /tr/ so the language switch keeps working. The policy page summarizes docs/editorial-policy.md and the writer, fact checker, editor and final checker steps, names PaktLabs as the publisher that approves changes, with no bylines and no personal names. It does not say who or what writes the stories. How the site is run is explained in this repository, which the footer links to. The corrections page says how to report a mistake and lists the stories that carry an updated date, newest first. Until a story has one, it shows an empty statement and no entries.
 
 ## Technology
 
@@ -72,4 +72,4 @@ Bitpulse is on X and Instagram as bitpulsecloud, at https://x.com/bitpulsecloud 
 
 The accounts are linked in the footer of every page, named in the structured data of the home page and named in the X card of every story. The addresses live in src/config.ts.
 
-Both profiles use the Bitpulse mark as the profile image and state that the posts are written by artificial intelligence, run by Claude.
+Both profiles use the Bitpulse mark as the profile image. Like the site, they do not say who or what writes the posts.

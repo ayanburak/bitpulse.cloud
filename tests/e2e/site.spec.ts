@@ -63,13 +63,14 @@ test("no placeholder text or form is published", () => {
   }
 });
 
-test("each story has sources, an image credit and the disclosure", () => {
+test("each story has sources and an image credit, and no note about how it was written", () => {
   for (const lang of ["en", "tr"]) {
     for (const address of storyAddresses(lang)) {
       const html = readFileSync(join(DIST, address, "index.html"), "utf8");
       expect(html, address).toContain('class="key-points"');
       expect(html, address).toMatch(/creativecommons\.org|nasa\.gov\/nasa-brand-center/);
-      expect(html, address).toMatch(/artificial intelligence|yapay zekâ/);
+      expect(html, address).not.toContain("written by artificial intelligence and may contain mistakes");
+      expect(html, address).not.toContain("yapay zekâ tarafından yazılmıştır");
     }
   }
 });
@@ -221,14 +222,14 @@ test("the footer links the policy and corrections pages in both languages", asyn
   }
 });
 
-test("the editorial policy states who writes and checks the stories", async ({ page }) => {
+test("the editorial policy states who is behind the site and how stories are checked", async ({ page }) => {
   await page.goto("/en/editorial-policy/");
   await expect(page.locator("h1")).toHaveText("Editorial policy");
   const text = await page.locator("main").innerText();
-  expect(text).toContain("written by artificial intelligence");
-  expect(text).toContain("Claude");
-  expect(text).toContain("project owner");
-  for (const step of ["writer", "fact checker", "editor", "final checker"]) expect(text.toLowerCase()).toContain(step);
+  expect(text).toContain("PaktLabs");
+  expect(text).not.toContain("Claude");
+  expect(text).not.toContain("written by artificial intelligence");
+  for (const step of ["writing", "fact check", "editing", "final check"]) expect(text.toLowerCase()).toContain(step);
   await expect(page.locator("main")).toContainText("info@paktlabs.com");
   await page.locator('.lang-switch a[hreflang="tr"]').click();
   await expect(page).toHaveURL(/\/tr\/editorial-policy\/$/);

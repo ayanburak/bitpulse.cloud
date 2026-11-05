@@ -13,7 +13,7 @@ Agents think about the first task themselves on every run, from every angle and 
 
 An idea is never dropped because agents can not carry it out alone. An idea that needs a locked file is proposed in the way described under Design proposals. An idea that needs anything outside this repository, or a real person, is written in the Owner actions section of HANDOFF.md with the reason for it and what it would take.
 
-The mission stops at docs/editorial-policy.md. Accuracy, sources, corrections, image rights and disclosure are never traded for reach. Headlines that promise more than the story delivers, fake or paid visits and spam are not allowed.
+The mission stops at docs/editorial-policy.md. Accuracy, sources, corrections and image rights are never traded for reach. Headlines that promise more than the story delivers, fake or paid visits and spam are not allowed.
 
 ## Purpose
 
@@ -75,7 +75,7 @@ Every news story is shared on the X and Instagram accounts of Bitpulse. Explaine
 
 After the final checker approves a news story, a separate agent, defined in agents/social.md, writes the file social.yaml in the story folder on the draft branch. The story is merged to main only together with that file. The tests allow a news story without one only on a draft/ branch, and fail for it on main. The text is in English only.
 
-The file has three fields. x holds the X post. pages is a list of Instagram pages, and each page has an image, given as a direct address to the image file, a credit naming the owner of that image, and a text of one or two paragraphs. caption holds the text written under the Instagram post. A post has as many pages as the story needs, at most twenty, and every page has its own image. The link to the story, the line that points to the link in the profile, the image credits and the note that the post was written by artificial intelligence are added by scripts/social.ts, so they are never written in the file. Hashtags are not used.
+The file has three fields. x holds the X post. pages is a list of Instagram pages, and each page has an image, given as a direct address to the image file, a credit naming the owner of that image, and a text of one or two paragraphs. caption holds the text written under the Instagram post. A post has as many pages as the story needs, at most twenty, and every page has its own image. The link to the story, the line that points to the link in the profile, the image credits and the note that every claim is sourced in the full story are added by scripts/social.ts, so they are never written in the file. Hashtags are not used.
 
 A fourth field, video, is optional. It is written only when the event of the story was filmed and the footage is public, and it turns the post into a vertical video for Instagram and X. The video is one unbroken clip of the event itself with its own sound, the logo above it and one line of text below it that never changes, followed by a short closing screen. It is never cut together from several clips and never made from still images. When no such footage exists, the field is left out and the post goes out with its pages only. The field holds source, the direct address of the video file, start, the second the clip starts at, duration, between 8 and 20 seconds, text, the line under the clip, and credit, the owner of the video. An optional crop, written as width:height:x:y in pixels of the source, keeps the part of the picture where the moment happens, otherwise the clip is cut from the middle. The line has at most two sentences and 80 characters and takes at most three lines on the video, because a fourth line runs into the account name Instagram draws over a reel. Words between asterisks are drawn in the accent color. The video credit goes into the caption, nothing is written on the video but the line.
 
@@ -94,6 +94,8 @@ Rules, site code, build settings, tests, scripts, dependencies, licenses, the si
 ## Writing for the public
 
 Notes, reports, proposals and documents are written for people who follow the project and for the next agent. They do not address the project owner personally and they do not refer to private conversations. They state facts plainly, including failures.
+
+The live website and the social posts do not say that the site, its articles or its posts are made by artificial intelligence, Claude or agents. This repository states it openly instead. No page or post suggests that people write the articles either, so the site stays silent on who writes them. This covers article text, captions, page copy, social posts and profile text.
 
 All source code, comments, error messages, screen output and documents are written in English. Site content is published in English and Turkish.
 
