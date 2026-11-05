@@ -2,7 +2,8 @@
  * file: tests/social.test.ts
  * importable: nothing, the test runner loads this file
  *
- * description: Checks that every news story has valid social text and that explainers have none.
+ * description: Checks that every news story has valid social text, that explainers have none and
+ * that a broken video field is refused.
  */
 
 // NOTE: The social text is written after the final check, so a story on a draft/ branch may not
@@ -48,4 +49,54 @@ describe.each(buildStories(readStoryFiles()))("$key", (story) => {
       expect(existsSync(path)).toBe(false);
     });
   }
+});
+
+// --- Video field ---
+
+// A real story is used, because buildSocial takes the link and the story kind from it. Only the
+// video field changes between the cases, the rest is the smallest valid file.
+const HERA = buildStories(readStoryFiles()).find((story) => story.key === "2026-11-04-hera-dimorphos")!;
+const BASE = `x: A post.
+pages:
+  - image: https://example.com/a.png
+    credit: ESA
+    text: A page.
+caption: A caption.
+`;
+const VIDEO = {
+  source: "https://example.com/clip.mp4",
+  start: 55.5,
+  duration: 15.5,
+  text: "NASA hit this asteroid on purpose. The push was *bigger than predicted.*",
+  credit: "NASA/Johns Hopkins APL",
+};
+
+function withVideo(video: Record<string, unknown>): string {
+  return `${BASE}video:\n${Object.entries(video).map(([key, value]) => `  ${key}: ${JSON.stringify(value)}`).join("\n")}\n`;
+}
+
+describe("video", () => {
+  it("is optional", () => {
+    expect(buildSocial(BASE, HERA).video).toBeUndefined();
+  });
+
+  it("is read and credited first in the caption", () => {
+    const post = buildSocial(withVideo({ ...VIDEO, crop: "1215:1080:352:0" }), HERA);
+    expect(post.video).toEqual({ ...VIDEO, crop: "1215:1080:352:0" });
+    expect(post.caption).toContain("Video: NASA/Johns Hopkins APL. Image: ESA.");
+  });
+
+  it.each([
+    ["a missing address", { ...VIDEO, source: undefined }, "missing source"],
+    ["a clip that is too short", { ...VIDEO, duration: 5 }, "must be between"],
+    ["a clip that is too long", { ...VIDEO, duration: 25 }, "must be between"],
+    ["three sentences", { ...VIDEO, text: "One. Two. Three." }, "3 sentences"],
+    ["a line that is too long", { ...VIDEO, text: "word ".repeat(20) }, "the limit is 80"],
+    ["an asterisk without its pair", { ...VIDEO, text: "One *two." }, "without its pair"],
+    ["a crop that is not four numbers", { ...VIDEO, crop: "iw:ih" }, "crop must be"],
+    ["an unknown field", { ...VIDEO, music: "loud" }, "unknown field: music"],
+  ])("refuses %s", (_, video, message) => {
+    const clean = Object.fromEntries(Object.entries(video).filter(([, value]) => value !== undefined));
+    expect(() => buildSocial(withVideo(clean), HERA)).toThrow(message);
+  });
 });

@@ -8,6 +8,11 @@
  * images. The link, the credit line and the disclosure are added here, so they are the same on
  * every post and can not be forgotten.
  *
+ * A story whose event was filmed can also carry a video: one unbroken clip of real footage,
+ * given as the address of the video file, the second it starts at, how long it runs and one
+ * short line drawn over it. Words between asterisks in that line are drawn in the accent color.
+ * The video credit joins the image credits in the caption, nothing is written on the video.
+ *
  * description: Validates the social text of a story and completes it into ready to share posts.
  */
 
@@ -29,10 +34,20 @@ export interface SocialPage {
   paragraphs: string[];
 }
 
+export interface SocialVideo {
+  source: string;
+  start: number;
+  duration: number;
+  text: string;
+  credit: string;
+  crop?: string;
+}
+
 export interface SocialPost {
   x: string;
   pages: SocialPage[];
   caption: string;
+  video?: SocialVideo;
 }
 
 // --- Constants ---
@@ -50,8 +65,19 @@ const PAGE_LIMIT = 300;
 // Instagram allows twenty pages in one post and cuts captions at 2,200 characters.
 const MAX_PAGES = 20;
 const CAPTION_LIMIT = 2200;
-const FIELDS = ["x", "pages", "caption"];
+const FIELDS = ["x", "pages", "caption", "video"];
 const PAGE_FIELDS = ["image", "credit", "text"];
+const VIDEO_FIELDS = ["source", "start", "duration", "text", "credit", "crop"];
+
+// A clip shorter than this ends before the moment lands, a longer one loses the viewer.
+const MIN_SECONDS = 8;
+const MAX_SECONDS = 20;
+
+// About three lines under the video, a fourth line runs into the account name Instagram draws
+// over the bottom of a reel. scripts/social.ts measures the real lines, this catches most texts
+// earlier, when the tests run.
+const VIDEO_TEXT_LIMIT = 80;
+const MAX_SENTENCES = 2;
 
 // The site says the same thing under every article, the caption keeps that wording close.
 const DISCLOSURE = "Written by artificial intelligence. Every claim is sourced in the full story.";
@@ -90,10 +116,43 @@ function readPages(value: unknown, where: string): SocialPage[] {
   });
 }
 
-// Pages that share an image or a photographer name them once.
-function credits(pages: SocialPage[]): string {
+function seconds(value: unknown, field: string, where: string): number {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) throw new Error(`${where}: invalid ${field}, it must be a number of seconds`);
+  return value;
+}
+
+// The crop is handed to ffmpeg as it is, so it may only hold four whole numbers.
+function readVideo(value: unknown, where: string): SocialVideo {
+  const at = `${where}: video`;
+  if (!isRecord(value)) throw new Error(`${at}: invalid video`);
+  const unknown = Object.keys(value).find((field) => !VIDEO_FIELDS.includes(field));
+  if (unknown) throw new Error(`${at}: unknown field: ${unknown}`);
+
+  const duration = seconds(value.duration, "duration", at);
+  if (duration < MIN_SECONDS || duration > MAX_SECONDS) throw new Error(`${at}: duration is ${duration} seconds, it must be between ${MIN_SECONDS} and ${MAX_SECONDS}`);
+
+  const line = text(value.text, "text", at).replace(/\s+/g, " ");
+  const plain = line.replaceAll("*", "");
+  if (plain.length > VIDEO_TEXT_LIMIT) throw new Error(`${at}: text is ${plain.length} characters, the limit is ${VIDEO_TEXT_LIMIT}`);
+  const sentences = plain.match(/[.!?]+["”’]?(\s|$)/g)?.length ?? 1;
+  if (sentences > MAX_SENTENCES) throw new Error(`${at}: text has ${sentences} sentences, the limit is ${MAX_SENTENCES}`);
+  if ((line.match(/\*/g)?.length ?? 0) % 2) throw new Error(`${at}: text has an asterisk without its pair`);
+
+  const video: SocialVideo = { source: httpUrl(value.source, "source", at), start: seconds(value.start, "start", at), duration, text: line, credit: text(value.credit, "credit", at) };
+  if (value.crop !== undefined) {
+    const crop = text(value.crop, "crop", at);
+    if (!/^\d+:\d+:\d+:\d+$/.test(crop)) throw new Error(`${at}: crop must be width:height:x:y in pixels of the source, got ${crop}`);
+    video.crop = crop;
+  }
+  return video;
+}
+
+// Pages that share an image or a photographer name them once. The video owner comes first,
+// because the video is what the viewer sees first.
+function credits(pages: SocialPage[], video?: SocialVideo): string {
   const names = [...new Set(pages.map((page) => page.credit))];
-  return `${names.length > 1 ? "Images" : "Image"}: ${names.join(" · ")}.`;
+  const images = `${names.length > 1 ? "Images" : "Image"}: ${names.join(" · ")}.`;
+  return video ? `Video: ${video.credit}. ${images}` : images;
 }
 
 // --- Building ---
@@ -103,9 +162,10 @@ function credits(pages: SocialPage[]): string {
  *
  * @param raw Contents of the story's social.yaml.
  * @param story The story the file belongs to.
- * @returns The X post with its link, the Instagram pages and the full caption.
- * @throws Error if a field is missing or unknown, an address is invalid, or the X post, a page
- *   or the caption is over its limit.
+ * @returns The X post with its link, the Instagram pages, the full caption and the video when
+ *   the story has one.
+ * @throws Error if a field is missing or unknown, an address is invalid, the X post, a page,
+ *   the caption or the video line is over its limit, or the video runs too short or too long.
  */
 export function buildSocial(raw: string, story: Story): SocialPost {
   const where = `${story.key}/social.yaml`;
@@ -121,8 +181,9 @@ export function buildSocial(raw: string, story: Story): SocialPost {
   if (length > X_LIMIT) throw new Error(`${where}: X post is ${length} characters with the link, the limit is ${X_LIMIT}`);
 
   const pages = readPages(data.pages, where);
-  const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages)} ${DISCLOSURE}`];
+  const video = data.video === undefined ? undefined : readVideo(data.video, where);
+  const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages, video)} ${DISCLOSURE}`];
   const full = caption.join("\n\n");
   if (full.length > CAPTION_LIMIT) throw new Error(`${where}: caption is ${full.length} characters, the limit is ${CAPTION_LIMIT}`);
-  return { x: `${x}\n\n${link}`, pages, caption: full };
+  return { x: `${x}\n\n${link}`, pages, caption: full, ...(video && { video }) };
 }

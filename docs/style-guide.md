@@ -76,6 +76,8 @@ A social post tells the news, not the story around it. It has no headline and no
 
 Each Instagram page carries one step of the news in one or two sentences, and its image shows what that page says. The X post and the caption stand on their own, because many people read them without opening the story. A post never asks the reader to click, never teases a detail it does not give and never sounds more dramatic than the story.
 
+The line under a video is the one exception. It does not tell the whole news. It gives the one striking fact that makes a viewer stop and want the rest, and the caption under the video gives the rest. It says nothing the story does not say and makes nothing bigger than the story does. It has room for at most three short lines, so every word has to earn its place. The asterisks that color a few words go around the part that surprises.
+
 ## Before publishing
 
 - Would a curious person with no technical background understand every paragraph?

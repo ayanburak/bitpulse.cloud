@@ -3,17 +3,23 @@ x: |
 
   The impact shortened its orbit by about 33 minutes, more than simulations predicted.
 pages:
-  - image: https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2026/10/hera_s_first_view_of_the_separate_didymos_and_dimorphos_asteroids/27592324-1-eng-GB/Hera_s_first_view_of_the_separate_Didymos_and_Dimorphos_asteroids_pillars.png
+  - image: https://media.esa.int/legacy/web/images/esa_multimedia/images/2026/10/hera_s_first_view_of_the_separate_didymos_and_dimorphos_asteroids/27592324-1-eng-GB/Hera_s_first_view_of_the_separate_Didymos_and_Dimorphos_asteroids.png
     credit: ESA
     text: |
       Europe's Hera probe has spotted Dimorphos, the asteroid moon NASA deliberately crashed a spacecraft into in 2022. In its first picture, taken from 1,280 kilometers away, the moon is a single pixel.
-  - image: https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2023/06/dimorphos_asteroid_seen_by_dart/24958158-1-eng-GB/Dimorphos_asteroid_seen_by_DART_article.png
+  - image: https://media.esa.int/legacy/web/images/esa_multimedia/images/2023/06/dimorphos_asteroid_seen_by_dart/24958158-1-eng-GB/Dimorphos_asteroid_seen_by_DART.png
     credit: NASA/Johns Hopkins APL
     text: |
       NASA's DART spacecraft hit it at 6.1 kilometers per second. The moon's orbit got about 33 minutes shorter, a bigger push than simulations predicted, and no one is sure why.
-  - image: https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2024/02/hera_approaches_dimorphos/25470208-3-eng-GB/Hera_approaches_Dimorphos_article.png
+  - image: https://media.esa.int/legacy/web/images/esa_multimedia/images/2024/02/hera_approaches_dimorphos/25470208-3-eng-GB/Hera_approaches_Dimorphos.png
     credit: ESA-Science Office, CC BY-SA 3.0 IGO
     text: |
       Hera was built to find out. The first detailed images of Dimorphos are due on 25 November.
 caption: |
   Europe's Hera probe has spotted Dimorphos, the asteroid moon NASA deliberately crashed a spacecraft into in 2022. The impact shortened the moon's orbit by about 33 minutes, more than simulations predicted, and nobody knows why yet. The first detailed images are due on 25 November.
+video:
+  source: https://images-assets.nasa.gov/video/DART%20Recap%20Video/DART%20Recap%20Video~large.mp4
+  start: 55.5
+  duration: 15.5
+  text: NASA hit this asteroid on purpose. The push was *bigger than predicted.*
+  credit: NASA/Johns Hopkins APL
