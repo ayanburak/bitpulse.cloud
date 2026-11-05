@@ -14,6 +14,8 @@ sources:
     url: https://www.nintendo.co.jp/ir/en/finance/hard_soft/index.html
   - name: "games.gg: Nintendo Switch 2 hits 26.35 million as half-year sales fall 37.4%"
     url: https://games.gg/news/nintendo-switch-2-half-year-sales/
+  - name: "Nintendo Support: Nintendo Switch 2 Game-Key Card Overview"
+    url: https://en-americas-support.nintendo.com/app/answers/detail/a_id/68415
 image:
   file: image.jpg
   alt: "Filipinler'de bir oyuncakçıdaki cam vitrin. Üst rafta kutulu Nintendo Switch konsolları ve Joy-Con kontrolcüleri, altta ise sıra sıra Switch oyun kutuları duruyor."
@@ -46,10 +48,10 @@ Bir ayrıntı daha var: Konsolla birlikte satılan yazılım, örneğin Mario Ka
 
 ## Rakamların söylemedikleri
 
-Nintendo'nun sonuç belgelerinde kartuşlardan söz edilmiyor, oyun anahtarı kartları (game-key card) da geçmiyor. Bu kartlar bir oyunun lisansını taşıyor ama oyunun kendisini değil, oyun indirilmek zorunda. Rakamlar, satılan kutulu oyunların kaçının böyle kart olduğunu göstermiyor. Dolayısıyla fiziksel çıkışların biçiminin değişip değişmediği hakkında bir şey söylemiyorlar.
+Nintendo'nun sonuç belgelerinde kartuşlardan söz edilmiyor, oyun anahtarı kartları (game-key card) da geçmiyor. Bu kartlar oyuna erişim için bir anahtar işlevi görüyor ama oyunun kendisini taşımıyor, oyun indirilmek zorunda. Rakamlar, satılan kutulu oyunların kaçının böyle kart olduğunu göstermiyor. Dolayısıyla fiziksel çıkışların biçiminin değişip değişmediği hakkında bir şey söylemiyorlar.
 
 Bitpulse'taki başka bir haberde, Tayvanlı çip üreticisi [Macronix'in Switch kartlarında oyunları saklayan ROM çiplerini kademeli olarak bıraktığı](/tr/stories/macronix-rom-switch-kartuslari/) aktarılmıştı. Bu çipleri çoğunlukla Nintendo'ya satıyordu. Haberde anılan bir analist, şirketin Nintendo'nun tek kartuş tedarikçisi olmadığını, bu yüzden fiziksel oyunların büyük olasılıkla bir süre daha süreceğini söylüyor ve oyun anahtarı kartlarının yaygınlaşabileceğini öne sürüyordu. O haber nisan-haziran için yüzde 61,5'lik dijital payı vermişti. Aynı ilk çeyrek rakamı Nintendo'nun yeni raporunda da yer alıyor.
 
 ## Çizgi şimdi nerede
 
-Altı aylık sonuç, Nintendo'yu bir yıl öncesine göre mağaza rafından daha uzağa taşıyor, ama tamamen değil. Konsol yazılımı gelirinin her on yeninden dördüne yakını hâlâ kutulu yazılımdan geliyor, dijital pay son çeyrekte ise geriledi. Sonraki rapor, bu gerilemenin bir duraklama mı yoksa bir eğilim mi olduğunu gösterecek.
+Altı aylık sonuç, Nintendo'yu bir yıl öncesine göre mağaza rafından daha uzağa taşıyor, ama tamamen değil. Konsol yazılımı gelirinin her on yeninden dördüne yakını hâlâ kutulu yazılımdan geliyor, dijital pay son çeyrekte ise geriledi. Bu gerilemenin bir duraklama mı yoksa bir eğilim mi olduğunu sonraki raporlar gösterecek.

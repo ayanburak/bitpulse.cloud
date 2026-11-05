@@ -1,6 +1,6 @@
 ---
 slug: nintendo-digital-sales-share-six-months
-title: "Nintendo Now Sells 60.7% of Its Game Software Digitally"
+title: "Nintendo's Game Software Sales Were 60.7% Digital in Six Months"
 summary: "Most of the rise comes from downloading games that are also sold in boxes, Nintendo's half-year report shows. The latest quarter slipped a little."
 category: games
 date: 2026-11-05
@@ -14,6 +14,8 @@ sources:
     url: https://www.nintendo.co.jp/ir/en/finance/hard_soft/index.html
   - name: "games.gg: Nintendo Switch 2 hits 26.35 million as half-year sales fall 37.4%"
     url: https://games.gg/news/nintendo-switch-2-half-year-sales/
+  - name: "Nintendo Support: Nintendo Switch 2 Game-Key Card Overview"
+    url: https://en-americas-support.nintendo.com/app/answers/detail/a_id/68415
 image:
   file: image.jpg
   alt: "A glass display case in a Philippine toy shop, with boxed Nintendo Switch consoles and Joy-Con controllers on the top shelf and rows of Switch game cases below."
@@ -46,10 +48,10 @@ One more catch: software sold together with a console, such as Mario Kart World,
 
 ## What the figures leave out
 
-Nintendo's results documents say nothing about cartridges, and they do not mention game-key cards. These are cards that carry a license to a game but not the game itself, which has to be downloaded. The figures cannot show how many boxed games sold are such cards, so they say nothing about whether physical releases are changing in shape.
+Nintendo's results documents say nothing about cartridges, and they do not mention game-key cards. These are cards that work as a key to a game but do not hold the game itself, which has to be downloaded. The figures cannot show how many boxed games sold are such cards, so they say nothing about whether physical releases are changing in shape.
 
-Another Bitpulse story reported that [Macronix, a Taiwanese chipmaker, is phasing out the ROM chips](/en/stories/macronix-phases-out-rom-switch-cartridges/) that store games on Switch cards and that it had sold mainly to Nintendo. An analyst quoted there said the company is not Nintendo's only cartridge supplier, so physical games will likely carry on for some time, and he suggested game-key cards could become more common. That story cited a digital share of 61.5% for April to June. It is the same first-quarter figure that appears in Nintendo's new report.
+Another Bitpulse story reported that [Macronix, a Taiwanese chipmaker, is phasing out the ROM chips](/en/stories/macronix-phases-out-rom-switch-cartridges/) that store games on Switch cards and that it had sold mainly to Nintendo. An analyst in that story said the company is not Nintendo's only cartridge supplier, so physical games will likely carry on for some time, and he suggested game-key cards could become more common. That story cited a digital share of 61.5% for April to June. It is the same first-quarter figure that appears in Nintendo's new report.
 
 ## Where the line sits now
 
-The six-month result puts Nintendo further from the shop shelf than it was a year ago, but not all the way. Close to four of every ten yen of console software revenue still comes from boxed software, and the digital share slipped in the latest quarter. The next report will show whether that dip was a pause or a trend.
+The six-month result puts Nintendo further from the shop shelf than it was a year ago, but not all the way. Close to four of every ten yen of console software revenue still comes from boxed software, and the digital share slipped in the latest quarter. Later reports will show whether that dip was a pause or a trend.
