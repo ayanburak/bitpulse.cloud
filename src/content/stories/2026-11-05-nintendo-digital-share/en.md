@@ -24,7 +24,7 @@ image:
   licenseUrl: https://creativecommons.org/licenses/by-sa/4.0/
   source: https://commons.wikimedia.org/wiki/File:NS_handhelds_and_games_display_case_2.jpg
 ---
-Of every 100 yen Nintendo took in from game software for its consoles between April and September, about 61 came from digital sales. A year earlier it was about 54.5. The company published the figures on 5 November in its results for the first half of its financial year.
+Of every 100 yen Nintendo took in from game software for its consoles between April and September, about 61 came from digital sales. A year earlier it was 54.5. The company published the figures on 5 November in its results for the first half of its financial year.
 
 Digital sales rose 60.5%, to 249.6 billion yen. Nintendo counts four things as digital: downloadable versions of games that are also sold in boxes, games that exist only as downloads, add-on content and its Nintendo Switch Online subscription. Its share is measured against all software sold for its consoles, so the rest, a little under 40%, is software sold in packaged form.
 

@@ -24,7 +24,7 @@ image:
   licenseUrl: https://creativecommons.org/licenses/by-sa/4.0/
   source: https://commons.wikimedia.org/wiki/File:NS_handhelds_and_games_display_case_2.jpg
 ---
-Nisan ile Eylül arasında Nintendo'nun konsollar için sattığı oyun yazılımlarından gelen her 100 yenin yaklaşık 61'i dijital satıştan geldi. Bir yıl önce bu rakam yaklaşık 54,5'ti. Şirket rakamları, mali yılın ilk yarısının sonuçlarıyla birlikte 5 Kasım'da açıkladı.
+Nisan ile Eylül arasında Nintendo'nun konsollar için sattığı oyun yazılımlarından gelen her 100 yenin yaklaşık 61'i dijital satıştan geldi. Bir yıl önce bu rakam 54,5'ti. Şirket rakamları, mali yılın ilk yarısının sonuçlarıyla birlikte 5 Kasım'da açıkladı.
 
 Dijital satışlar yüzde 60,5 artarak 249,6 milyar yene çıktı. Nintendo dört kalemi dijital sayıyor: kutuda da satılan oyunların indirilebilir sürümleri, yalnızca indirme olarak çıkan oyunlar, ek içerikler ve Nintendo Switch Online aboneliği. Pay, konsollar için satılan tüm yazılıma göre hesaplanıyor. Geri kalan, yüzde 40'ın biraz altındaki bölüm ise kutulu biçimde satılan yazılım.
 
