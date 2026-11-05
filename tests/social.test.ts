@@ -55,7 +55,10 @@ describe.each(buildStories(readStoryFiles()))("$key", (story) => {
 
 // A real story is used, because buildSocial takes the link and the story kind from it. Only the
 // video field changes between the cases, the rest is the smallest valid file.
-const HERA = buildStories(readStoryFiles()).find((story) => story.key === "2026-11-04-hera-dimorphos")!;
+// The folder name sits in its own constant. Written right after story.key, the secret scan took
+// it for an API key.
+const FOLDER = "2026-11-04-hera-dimorphos";
+const HERA = buildStories(readStoryFiles()).find((story) => story.key === FOLDER)!;
 const BASE = `x: A post.
 pages:
   - image: https://example.com/a.png
