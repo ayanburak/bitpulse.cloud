@@ -62,4 +62,4 @@ David Gibson, an analyst at MST Financial who flagged the news, says Macronix wi
 
 Reports disagree on how far this reaches. Some say Macronix's chips are used in both Switch and Switch 2 cards. Kotaku reports that Switch 2 cards use NAND memory from Rohm and so seem unaffected.
 
-The wider picture is that more games are sold as downloads. Gibson notes that digital sales made up 61.5% of Nintendo's software sales from April to June, up from 59.3% a year earlier. Some Switch 2 games already ship on "game-key cards", which carry only a license and no game data, and Gibson suggests this could become more common.
+The wider picture is that more games are sold as downloads. Gibson notes that [digital sales made up 61.5% of Nintendo's software sales](/en/stories/nintendo-digital-sales-share-six-months/) from April to June, up from 59.3% a year earlier. Some Switch 2 games already ship on "game-key cards", which carry only a license and no game data, and Gibson suggests this could become more common.
