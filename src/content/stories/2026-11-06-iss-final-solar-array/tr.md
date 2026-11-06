@@ -4,6 +4,7 @@ title: "Astronotlar Uzay İstasyonu'nun Son Yeni Güneş Panelini Açtı"
 summary: "Zayıf bir güç değeri, istasyonun yenileme listesindeki son paneli bekletti. Karanlıkta bir konektör çıkarılıp yeniden takılınca beş yıllık yenileme tamamlandı."
 category: science
 date: 2026-11-06
+updated: 2026-11-06
 kind: news
 sources:
   - name: "NASA: Spacewalkers Install Final Roll-Out Solar Array (5 Kasım 2026)"
@@ -58,4 +59,6 @@ Bu, istasyonun inşası, bakımı ve yenilenmesine ayrılan 286. uzay yürüyü�
 
 ## İzlemek isteyenler için
 
-NASA uzay yürüyüşünün tamamını NASA+ üzerinden canlı yayınladı. Yayın, astronotlar dışarı çıkmadan yaklaşık bir buçuk saat önce, ABD Doğu saatiyle sabah 7'de başladı. Panel öğleden sonra 3.05 civarında, uzay yürüyüşünün yaklaşık altı buçuk saatinde tamamen açılmıştı. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.
+NASA uzay yürüyüşünün tamamını NASA+ üzerinden canlı yayınladı. Yayın, astronotlar dışarı çıkmadan yaklaşık bir buçuk saat önce, ABD Doğu saatiyle sabah 7'de başladı. Panel öğleden sonra 2.41'de, yani yayının başlamasından yedi buçuk saatten fazla sonra açılmaya başladı. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.
+
+*Düzeltme, 6 Kasım 2026: Bu haberin önceki sürümünde panelin öğleden sonra 3.05 civarında tamamen açıldığı yazıyordu. Panel öğleden sonra 2.41'de açılmaya başladı.*

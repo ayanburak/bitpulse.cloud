@@ -4,6 +4,7 @@ title: "Astronauts Unroll the Space Station's Last New Solar Array"
 summary: "A weak power reading held up the last array on the station's upgrade list. Once a connector was unplugged and replugged in the dark, a five-year upgrade was finished."
 category: science
 date: 2026-11-06
+updated: 2026-11-06
 kind: news
 sources:
   - name: "NASA: Spacewalkers Install Final Roll-Out Solar Array (5 November 2026)"
@@ -58,4 +59,6 @@ It was the 286th spacewalk devoted to building, maintaining and upgrading the st
 
 ## What to watch
 
-NASA streamed the whole spacewalk live on NASA+, with coverage starting at 7 a.m. US Eastern time, about an hour and a half before the astronauts went outside. The panel was fully unrolled at about 3:05 p.m., roughly six and a half hours into the spacewalk. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
+NASA streamed the whole spacewalk live on NASA+, with coverage starting at 7 a.m. US Eastern time, about an hour and a half before the astronauts went outside. The panel began to unroll at 2:41 p.m., more than seven and a half hours into the broadcast. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
+
+*Correction, 6 November 2026: An earlier version of this story said the array was fully unrolled at about 3:05 p.m. It began to unroll at 2:41 p.m.*
