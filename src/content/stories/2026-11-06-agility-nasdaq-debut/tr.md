@@ -1,7 +1,7 @@
 ---
 slug: agility-nasdaq-borsa-insansi-robot
 title: "İnsansı robot üreticisi Agility, 1,8 milyon dolar gelirle Nasdaq'ta"
-summary: "Agility'nin robotları bugün depolarda kutu taşıyor ve hisseleri 5 Kasım'da işlem görmeye başladı. Satışları, topladığı paranın yanında çok küçük kalıyor; ilk saatlerdeki seyir de dalgalı."
+summary: "Robotu şimdiden depolarda kutu taşıyor. Satışlar, borsaya girişle toplanan paranın yanında çok küçük kalıyor; ilk saatlerdeki seyir de dalgalı."
 category: economy
 date: 2026-11-06
 kind: news
@@ -24,7 +24,7 @@ image:
   licenseUrl: https://creativecommons.org/licenses/by/4.0/
   source: https://commons.wikimedia.org/wiki/File:AGIBOT-X2-_by_JxFile_MWC26.jpg
 ---
-Geçen yıl yaklaşık 1,8 milyon dolar geliri olan bir şirketin hisseleri artık Nasdaq borsasında işlem görüyor. İki ayaklı, iki kollu robotlar yapan Oregon merkezli Agility Robotics, 5 Kasım'da AGLT koduyla işlem görmeye başladı. Şirket kendisini, yalnızca insansı robotlara, yani insan biçiminde yapılmış robotlara odaklanan ve borsada işlem gören ilk Amerikan şirketi olarak tanımlıyor ve robotlarının müşterilerde şimdiden çalıştığını belirtiyor.
+Geçen yıl yaklaşık 1,8 milyon dolar geliri olan bir şirketin hisseleri artık Nasdaq borsasında işlem görüyor. İki ayaklı, iki kollu robotlar yapan Oregon merkezli Agility Robotics, 5 Kasım'da AGLT hisse koduyla işlem görmeye başladı. Şirket kendisini, yalnızca insansı robotlara, yani insan biçiminde yapılmış robotlara odaklanan ve borsada işlem gören ilk Amerikan şirketi olarak tanımlıyor ve robotlarının müşterilerde şimdiden çalıştığını belirtiyor.
 
 ## Agility aslında ne satıyor
 
@@ -36,13 +36,13 @@ Digit bir robot kâhya değil. Dar bir işi yapıyor ve şimdiye kadar şirketin
 
 ## Borsaya nasıl girdi
 
-Agility klasik bir halka arz yapmadı. Churchill Capital Corp XI adlı, İngilizcede "blank-check company" (boş çek şirketi) denen bir şirketle birleşti. ABD Menkul Kıymetler ve Borsa Komisyonu bu tür şirketi, birleşme ya da satın alma dışında kendi iş planı olmayan şirket diye tanımlıyor; böyle bir alım için para toplamak üzere kurulan şirketlere ise "özel amaçlı satın alma şirketi" (SPAC) deniyor. Kısacası, önce para toplayıp sonra özel bir işletmeyle birleşen, borsada işlem gören boş bir şirket. Birleşme 4 Kasım'da tamamlandı, birleşik şirket ertesi gün işlem görmeye başladı.
+Agility klasik bir halka arz yapmadı. Churchill Capital Corp XI adlı, İngilizcede "blank-check company" (boş çek şirketi) denen bir şirketle birleşti. Kısacası bu, önce para toplayıp sonra özel bir işletmeyle birleşen, borsada işlem gören boş bir şirket; ABD Menkul Kıymetler ve Borsa Komisyonu onu, birleşme ya da satın alma dışında kendi iş planı olmayan şirket diye tanımlıyor. Bu tür şirketlere "özel amaçlı satın alma şirketi" (SPAC) de deniyor. Birleşme 4 Kasım'da tamamlandı, birleşik şirket ertesi gün işlem görmeye başladı.
 
 Anlaşma, masraflar düşülmeden yaklaşık 465 milyon dolar getirdi. Bunun yaklaşık 164 milyon doları boş şirketin kasasından, yaklaşık 201 milyon doları Foxconn'un öncülük ettiği özel bir hisse satışından, yaklaşık 100 milyon doları ise anlaşma açıklandıktan sonra para koyan yatırımcılardan geldi. Bu, anlaşma haziranda 2,5 milyar dolarlık değerle duyurulduğunda öngörülen 620 milyon doları aşkın tutarın epey altında. Anlaşmayı anlatan bir haber, boş şirketin pay sahiplerinin birçoğunun parasını geri çekmiş olabileceğini düşünüyor, ancak Agility durumu böyle anlatmadı.
 
 ## Açılışın arkasındaki rakamlar
 
-Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu rakam 310 bin dolardı. Şirket 138,1 milyon dolar zarar etti. Gelirin yaklaşık yüzde 64'ü ilişkili taraflardan geldi; rapor bunları daha ayrıntılı vermiyor. Yeni para gelmeden önce, 2025'i 103 milyon dolar nakitle kapattı.
+Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu rakam 310 bin dolardı. Şirket 138,1 milyon dolar zarar etti. Gelirin yaklaşık yüzde 64'ü ilişkili taraflardan, yani şirketle yakın bağı olan işletmelerden geldi; rapor bunları daha ayrıntılı vermiyor. Yeni para gelmeden önce, 2025'i 103 milyon dolar nakitle kapattı.
 
 Şirketin umudu, eylülde tanıttığı yeni robotu Digit 5'te. Agility, bu robot için birkaç yıla yayılan 300 milyon doları aşan bağlayıcı sipariş aldığını söylüyor. Bu siparişler belirli aşamalara ve robotun son özelliklerine bağlı, rakamın tek kaynağı da şirketin kendisi. İlk müşteriler Digit 5'e 2027'nin ilk yarısında ulaşacak, genel satış ise yıl sonu için planlanıyor.
 
@@ -52,6 +52,6 @@ Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu 
 
 Agility'nin CEO'su Peggy Johnson, şirketin "insansı robot sektörünün bel kemiği" olmak istediğini söyledi. Şirket başka robot biçimlerini de araştırdığını ve teknolojisini diğer insansı robot üreticilerine lisanslayabileceğini belirtiyor. Kurucu ortaklardan Jonathan Hurst ise Digit'in tekerlek almasının pek olası olmadığını söyledi.
 
-## Neden önemli
+## Küçük iş, büyük bahis
 
-İnsansı robotlar çok ilgi görüyor ve çoğu özenle hazırlanmış gösterilerde sahneye çıkıyor. Agility, robotları depolarda ücretli iş yapan az sayıdaki şirketten biri. Bu yüzden rakamları, bu işin gerçekte ne kadar büyük olduğuna nadir bir bakış sunuyor. Şimdilik cevap küçük: bir avuç müşteri, 2 milyon doların altında satış ve henüz onlara ulaşmamış bir robota yapılmış büyük bir bahis.
+Birçok insansı robot özenle hazırlanmış gösterilerde sahneye çıkıyor. Agility, robotları depolarda ücretli iş yapan az sayıdaki şirketten biri; bu yüzden rakamları, bu işin gerçekte ne kadar büyük olduğuna nadir bir bakış sunuyor. Şimdilik cevap küçük: bir avuç müşteri, 2 milyon doların altında satış ve henüz onlara ulaşmamış bir robota yapılmış büyük bir bahis.
