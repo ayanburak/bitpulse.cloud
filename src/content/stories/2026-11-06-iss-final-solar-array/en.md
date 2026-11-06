@@ -52,10 +52,10 @@ The spacewalk was extended to about seven hours to make room for the troubleshoo
 
 ## Fifteen years in the making
 
-Menon said afterwards that the day "marks the completion of not just one solar array, but over 15 years of development efforts." Kutryk thanked the ground team for responding quickly and getting the crew to where they needed to be.
+Menon said afterwards that the day "marks the completion of not just one solar array, but over 15 years of development efforts to deploy eight arrays." Kutryk said it was impressive to see the team respond and get the crew to where they needed to be.
 
 It was the 286th spacewalk devoted to building, maintaining and upgrading the station, and the second for Kutryk and the fifth for Menon.
 
 ## What to watch
 
-The whole spacewalk was streamed live, and NASA's recording runs a little over nine hours, including the preparations. The unrolling itself came nearly eight hours after the broadcast began, so it is worth skipping ahead to see the panel open. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
+The whole spacewalk was streamed live, and NASA's recording runs a little over nine hours, including the preparations. The unrolling itself came more than seven and a half hours after the broadcast began, so it is worth skipping ahead to see the panel open. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.

@@ -54,12 +54,12 @@ Sorun giderme için uzay yürüyüşü yaklaşık yedi saate uzatıldı. Panel a
 
 ## On beş yılı aşkın emek
 
-Menon sonrasında bu günün "yalnızca bir güneş panelinin değil, 15 yılı aşkın geliştirme çalışmasının tamamlanması" anlamına geldiğini söyledi. Kutryk ise yer ekibinin hızlı tepki vererek ekibi gerektiği noktaya getirmesinden etkilendiğini belirtti.
+Menon sonrasında bu günün "yalnızca bir güneş panelinin değil, sekiz paneli açmak için yürütülen 15 yılı aşkın geliştirme çalışmasının tamamlanması" anlamına geldiğini söyledi. Kutryk ise yer ekibinin hızlı tepki vererek ekibi gerektiği noktaya getirmesinden etkilendiğini belirtti.
 
-Kutryk bu yürüyüşü "EV1" çağrı koduyla yönetti. Menon'un istasyon dışında geçirdiği toplam süre bu yürüyüşle 33 saat 30 dakikaya ulaştı. Yer ekibinden bir yetkili, dönen panelin parmak sıkıştırabilecek bir nokta olduğunu hatırlatarak astronotları uyardı. Çalışma planın büyük bölümünde takvimin önündeydi; bu da ek işlere vakit bıraktı.
+Kutryk bu yürüyüşü "EV1" çağrı koduyla yönetti. Menon'un istasyon dışında geçirdiği toplam süre bu yürüyüşle 33 saat 30 dakikaya ulaştı. Yer ekibinde iletişimi yürüten bir NASA astronotu, dönen panelin parmak sıkıştırabilecek bir nokta olduğunu hatırlatarak astronotları uyardı. Çalışma planın büyük bölümünde takvimin önündeydi; bu da ek işlere vakit bıraktı.
 
 Bu, istasyonun inşası, bakımı ve yenilenmesine ayrılan 286. uzay yürüyüşüydü. Kutryk için ikinci, Menon için beşinci yürüyüş oldu.
 
 ## İzlemek isteyenler için
 
-Uzay yürüyüşünün tamamı canlı yayınlandı ve NASA'nın kaydı, hazırlıklar dahil dokuz saatin biraz üzerinde sürüyor. Panelin açılışı yayının başlamasından yaklaşık sekiz saat sonra geldi. Açılma anını görmek için o kısma atlamak yeterli. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.
+Uzay yürüyüşünün tamamı canlı yayınlandı ve NASA'nın kaydı, hazırlıklar dahil dokuz saatin biraz üzerinde sürüyor. Panelin açılışı yayının başlamasından yedi buçuk saatten fazla sonra geldi. Açılma anını görmek için o kısma atlamak yeterli. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.
