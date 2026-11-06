@@ -38,7 +38,7 @@ A general image about the topic must be honest about what it shows, so its descr
 
 An image fills its whole frame with a real scene. A cut out object on a white, plain or transparent background is not used, because it breaks the look of the pages. Product photos work only when the product sits in a real setting.
 
-Images are JPEG or PNG in landscape format. The original must be sharp and larger than 2000 pixels wide, and the stored copy is exactly 2000 pixels wide, so it stays clear on large screens without slowing the page.
+Images are JPEG or PNG in landscape format. The original must be sharp and at least 1200 pixels wide. The stored copy keeps the original width up to 2000 pixels and is never enlarged, so it stays clear without slowing the page. An image of the story's own subject at 1200 pixels is better than a larger image of something else.
 
 Social posts use images the same way. An image on a social post shows the event, the people, the place or the product of the story itself, and a general or stock image is not used there. Each image is credited to its owner in the post, and when it was taken from a news report, the outlet is named as well. Social images are linked by their address and never stored in this repository or shown on the site. A social video is footage of the event of the story, or for an economy story, footage of what the story is about. A slow event may be sped up, and the caption says so. It is credited to its owner in the caption and linked by its address.
 

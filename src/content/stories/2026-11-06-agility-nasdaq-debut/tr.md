@@ -22,11 +22,11 @@ sources:
     url: https://www.investor.gov/introduction-investing/investing-basics/glossary/blank-check-company
 image:
   file: image.jpg
-  alt: "Süslü, yaldızlı aynalı bir salonda, siyah küçük başlı beyaz bir insansı robot elini selam verir gibi kaldırıyor; yanında AgiBot X2 afişi ve elinde tablete bakan bir adam var. Robot başka bir şirketin ürünü, MWC 2026 fuarında çekilmiş; Agility robotu değil."
-  credit: "JJxFile"
-  license: "CC BY 4.0"
-  licenseUrl: https://creativecommons.org/licenses/by/4.0/
-  source: https://commons.wikimedia.org/wiki/File:AGIBOT-X2-_by_JxFile_MWC26.jpg
+  alt: "Agility'nin insansı robotu Digit, kırmızı bir GXO yeleğiyle bir depoda mavi plastik bir kasa tutuyor; arkasında konveyör rafları ve üst üste dizilmiş kasalar var. Agility'nin, Digit'in GXO'da çalışmasını gösteren videosundan bir kare."
+  credit: "Agility Robotics"
+  license: "Standard YouTube License"
+  licenseUrl: https://www.youtube.com/watch?v=NgYo-Wd0E_U
+  source: https://www.youtube.com/watch?v=NgYo-Wd0E_U
 ---
 Geçen yıl yaklaşık 1,8 milyon dolar geliri olan bir şirketin hisseleri artık Nasdaq borsasında işlem görüyor. İki ayaklı, iki kollu robotlar yapan Oregon merkezli Agility Robotics, 5 Kasım'da AGLT hisse koduyla işlem görmeye başladı. Şirket kendisini, yalnızca insansı robotlara, yani insan biçiminde yapılmış robotlara odaklanan ve borsada işlem gören ilk Amerikan şirketi olarak tanımlıyor ve robotlarının müşterilerde şimdiden çalıştığını belirtiyor.
 

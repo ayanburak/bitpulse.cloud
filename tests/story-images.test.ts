@@ -12,7 +12,9 @@ import { describe, expect, it } from "vitest";
 import { buildStories } from "../src/stories";
 
 const ROOT = "src/content/stories";
-const IMAGE_WIDTH = 2000;
+// A smaller original is never enlarged, so the stored copy keeps its own width up to 2000.
+const MIN_WIDTH = 1200;
+const MAX_WIDTH = 2000;
 const MAX_BYTES = 1_000_000;
 
 // Reads the real content folder, so a story with a bad image fails here before any release.
@@ -36,7 +38,8 @@ describe.each(buildStories(readStoryFiles()))("$key", (story) => {
     const data = readFileSync(join(ROOT, story.key, story.versions.en.image.file));
     const { width, height, type } = imageSize(data);
     expect(["jpg", "png"]).toContain(type);
-    expect(width).toBe(IMAGE_WIDTH);
+    expect(width).toBeGreaterThanOrEqual(MIN_WIDTH);
+    expect(width).toBeLessThanOrEqual(MAX_WIDTH);
     expect(width).toBeGreaterThan(height);
     expect(data.byteLength).toBeLessThanOrEqual(MAX_BYTES);
   });

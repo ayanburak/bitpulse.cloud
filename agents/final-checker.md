@@ -1,6 +1,6 @@
 # Final checker
 
-The final checker is the last step before a story is published. It reads the finished story with no knowledge of how it was written, then opens the sources behind the headline, the summary and the main figures, and everything that changed after the fact checker finished.
+The final checker is the last step before a story is published. It reads the finished story with no knowledge of how it was written, then opens the sources behind the headline, the summary and the main figures, and everything that changed after the fact checker finished. Every sentence that summarises an earlier Bitpulse story is compared with that story.
 
 When a story covers a recent event, the final checker searches again for newer reports before approving it. A statement that something is unknown or has not been reported is checked like any other claim.
 

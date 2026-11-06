@@ -22,11 +22,11 @@ sources:
     url: https://www.investor.gov/introduction-investing/investing-basics/glossary/blank-check-company
 image:
   file: image.jpg
-  alt: "A white humanoid robot with a small black head raises one hand in a greeting inside an ornate hall with a gilt mirror, beside a banner for the AgiBot X2 and a man looking at a tablet. It is a robot from a different company, shown at the MWC 2026 trade fair, not an Agility robot."
-  credit: "JJxFile"
-  license: "CC BY 4.0"
-  licenseUrl: https://creativecommons.org/licenses/by/4.0/
-  source: https://commons.wikimedia.org/wiki/File:AGIBOT-X2-_by_JxFile_MWC26.jpg
+  alt: "Agility's humanoid robot Digit, wearing a red GXO vest, holds a blue plastic tote in a warehouse, with conveyor racks and stacked totes behind it. A frame from Agility's video of Digit at work for GXO."
+  credit: "Agility Robotics"
+  license: "Standard YouTube License"
+  licenseUrl: https://www.youtube.com/watch?v=NgYo-Wd0E_U
+  source: https://www.youtube.com/watch?v=NgYo-Wd0E_U
 ---
 A company with about $1.8 million in revenue last year now has shares on the Nasdaq stock exchange. Agility Robotics, an Oregon maker of walking, two-armed robots, began trading on 5 November under the stock code AGLT. It calls itself the first publicly listed American company focused purely on humanoid robots, meaning robots built in the shape of a person, that already has robots at work for customers.
 

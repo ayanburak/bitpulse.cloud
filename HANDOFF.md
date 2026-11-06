@@ -22,22 +22,19 @@ The site has fifteen pieces in English and Turkish on main. The latest is the ne
 
 Releases from main are switched off and happen manually after a run, so this file does not say which pieces are live. https://bitpulse.cloud/sitemap.xml lists every published page.
 
-Tests and CI pass on main. No draft branch is open. Two proposals are open: design-proposals/2026-11-05-check-earlier-stories.md on proposal/check-earlier-stories, and design-proposals/2026-11-06-readable-footage.md on proposal/readable-footage. The other proposal/ branches belong to proposals that have already been decided.
+Tests and CI pass on main. No draft branch is open. No proposal is open. The proposal to check sentences about earlier stories was applied to the role files on 2026-11-06. The proposal to count only footage the scan can open was declined, because npm run video-scan and npm run social now open YouTube pages through yt-dlp. The Agility story got a cover image of Agility's own robot, a frame from its video, and its social posts got a video.
 
 ## Next tasks
 
 1. Publish one piece, chosen as described under Choosing a piece in docs/agent-manual.md. The three latest pieces are news stories and the one before them an explainer, so one more news story comes before the next explainer.
-2. Until proposal/readable-footage is decided, tell the writer that footage counts only at an address that npm run video-scan opens, with its own sound. A YouTube page does not count.
-3. Until proposal/check-earlier-stories is decided, tell every role that a sentence summarising an earlier Bitpulse story is checked against that story.
-4. Tell the writer and the final checker to run the browser tests as well as the unit tests (npm run build, then npx playwright test) before handing on. A NASA image must link to https://www.nasa.gov/nasa-brand-center/images-and-media/ as its licenseUrl, and only the browser tests check it.
-5. Tell the writer and the editor that every background explanation, including the meaning of a financial or technical term, needs an opened source like any other claim.
-6. Read 2026-11-06 and later days in /stats/index.json and record them.
-7. Write the journal report at the next free run number and rewrite this file.
+2. Tell the writer and the final checker to run the browser tests as well as the unit tests (npm run build, then npx playwright test) before handing on.
+3. Tell the writer and the editor that every background explanation, including the meaning of a financial or technical term, needs an opened source like any other claim.
+4. Read 2026-11-06 and later days in /stats/index.json and record them.
+5. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
 - The statistics job runs at 00:40 UTC and writes the previous day. The published days include the owner's own devices and privately shared links, so they do not show reach. The latest published day, 2026-11-05, had 142 views, 125 bot views and 30 not found responses, and t.co sent 4 visits.
-- The video in the ISS story's social.yaml points to the HLS address of NASA's live event stream, at 28,190 seconds. Such an address may stop working once NASA moves the replay. If it fails, the NASA+ page or the YouTube replay (https://youtube.com/live/25JEQqgv5I4) is the place to find the same moment.
 - The Agility story's image is a photo of another company's humanoid robot, the AgiBot X2, with alt text that says so. No Agility photo larger than 2000 pixels in a real scene was found. If one appears, the image can be replaced.
 - Reports of Agility's first trading day give an open of $11.26, and Nasdaq's data gives $11.38, so the story says "just over $11".
 - The RAM explainer rests on market figures that will change. If a figure turns out to be wrong, the story gets a dated correction note in its text.
@@ -56,12 +53,11 @@ Tests and CI pass on main. No draft branch is open. Two proposals are open: desi
 
 ### Waiting for the owner
 
-- Review the proposal in design-proposals/2026-11-05-check-earlier-stories.md (branch proposal/check-earlier-stories). It changes role files only.
-- Review the proposal in design-proposals/2026-11-06-readable-footage.md (branch proposal/readable-footage). It changes agents/writer.md only.
-- Run npm run social for the ISS story soon, because its video comes from NASA's live stream address, which may expire.
 - A short daily list of the most requested missing paths, in aggregated form, would show whether readers hit broken links or bots probe for files. The statistics job runs on the server, so only the owner can add it.
 
 ### Requested by the owner
+
+- Research whether Bitpulse should add new categories, which ones and on what evidence. This is a new question about adding categories. It is separate from the categories and scope proposal applied on 2026-11-06, which kept the five categories and gave each a focus, so it is not answered yet. Consider candidates outside the five current categories. Whether images or footage are free to use is not a criterion. Present the result as a design proposal. This request does not replace the piece of the run.
 
 ## Social results
 

@@ -2,11 +2,17 @@ x: |
   Agility Robotics, an Oregon maker of walking, two-armed robots, began trading on the Nasdaq on 5 November under the code AGLT. Its 2025 revenue was $1.78 million.
 
   The shares opened at just over $11, fell as low as $8.40 and closed at about $11.50.
+video:
+  source: https://www.youtube.com/watch?v=NgYo-Wd0E_U
+  start: 83.4
+  duration: 9.5
+  text: This robot has a paid job. Its maker is now on Nasdaq with *$1.8M* in revenue.
+  credit: Agility Robotics
 pages:
   - image: https://cdn.prod.website-files.com/6980c63561bbbeb67b4b7ab5/6aec6faf77fbae9b23a165ea_Press-Release_051126.jpg
     credit: Agility Robotics
     text: |
-      A maker of walking, two-armed robots with about $1.8 million in revenue last year now has shares on the Nasdaq stock exchange.
+      This robot already has a paid job in a warehouse. Its maker is now on Nasdaq, with $1.8 million in revenue last year.
   - image: https://www.therobotreport.com/wp-content/uploads/2026/09/Agility_Digit5_06-featured.jpg
     credit: Agility Robotics, via The Robot Report
     text: |

@@ -2,7 +2,7 @@
  * file: scripts/video-scan.ts
  * importable: nothing, run with npm run video-scan
  *
- * Looks at a video by its address, without downloading it whole, so an agent can decide in one
+ * Looks at a video by its address, a video file, a stream or a YouTube page, without downloading it whole, so an agent can decide in one
  * step whether the video shows the event and where its strongest moment is:
  *
  *   npm run video-scan -- <address>
@@ -32,6 +32,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
+import { resolveVideo } from "./video-source.ts";
 
 // --- Constants ---
 
@@ -40,6 +41,9 @@ import { parseArgs } from "node:util";
 const SHEET = join(tmpdir(), `bitpulse-video-scan-${userInfo().username}.jpg`);
 const FRAMES = 16;
 const SHORT_VIDEO = 120;
+
+// A frame on the sheet is 320 pixels wide, a small picture is enough and loads fast.
+const SCAN_HEIGHT = 360;
 
 // Frames around the loudest moment of a long video reach this far to each side of it.
 const AROUND = 15;
@@ -52,8 +56,13 @@ const AGENT = "BitpulseSocial/1.0 (+https://bitpulse.cloud)";
 // --- Helpers ---
 
 // ffmpeg names the cause in its first lines, the last ones only say that nothing was written.
+// YouTube's servers now and then refuse a request with 403 and accept the same one a moment
+// later, so only that refusal is tried again.
 function run(command: string, args: string[]): string {
-  const result = spawnSync(command, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  let result = spawnSync(command, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  for (let attempt = 1; attempt < 3 && result.status !== 0 && /403 Forbidden/.test(result.stderr ?? ""); attempt++) {
+    result = spawnSync(command, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  }
   if (result.error) throw new Error(`${command} could not be started, the scan needs it: ${result.error.message}`);
   if (result.status !== 0) throw new Error(`${command} failed: ${result.stderr.trim().split("\n").slice(0, 4).join(" ")}`);
   return result.stdout + result.stderr;
@@ -115,10 +124,11 @@ function sheet(url: string, times: number[]): void {
 
 const { positionals, values } = parseArgs({ allowPositionals: true, options: { from: { type: "string" }, to: { type: "string" } } });
 const url = positionals[0];
-if (!url || !/^https?:\/\//.test(url)) throw new Error("Give the address of a video file: npm run video-scan -- <address>");
+if (!url || !/^https?:\/\//.test(url)) throw new Error("Give the address of a video file or a YouTube page: npm run video-scan -- <address>");
+const streams = resolveVideo(url, SCAN_HEIGHT);
 
-const length = Number(run("ffprobe", ["-v", "error", "-user_agent", AGENT, "-show_entries", "format=duration", "-of", "csv=p=0", url]).trim());
-const sound = run("ffprobe", ["-v", "error", "-user_agent", AGENT, "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", url]).trim() !== "";
+const length = Number(run("ffprobe", ["-v", "error", "-user_agent", AGENT, "-show_entries", "format=duration", "-of", "csv=p=0", streams.picture]).trim());
+const sound = run("ffprobe", ["-v", "error", "-user_agent", AGENT, "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", streams.sound]).trim() !== "";
 console.log(`Length: ${clock(length)}, ${sound ? "with sound" : "no sound"}`);
 
 let times: number[];
@@ -128,7 +138,7 @@ if (values.from !== undefined || values.to !== undefined) {
   if (!(to > from)) throw new Error(`--from must come before --to, within the ${clock(length)} of the video`);
   times = spread(from, to, FRAMES);
 } else {
-  const peaks = sound ? loudest(url) : [];
+  const peaks = sound ? loudest(streams.sound) : [];
   if (peaks.length) console.log(`Loudest moments: ${peaks.map((peak) => `${clock(peak.second)} ${peak.level.toFixed(0)} LUFS`).join(", ")}`);
   if (length <= SHORT_VIDEO || !peaks.length) {
     times = spread(0, length, FRAMES);
@@ -139,6 +149,6 @@ if (values.from !== undefined || values.to !== undefined) {
   }
 }
 
-sheet(url, times);
+sheet(streams.picture, times);
 console.log(`Frames at ${times.map(clock).join(", ")}`);
 console.log(`Sheet: ${SHEET}`);

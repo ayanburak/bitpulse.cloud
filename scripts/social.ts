@@ -40,6 +40,7 @@ import { pathToFileURL } from "node:url";
 import { chromium, type Page } from "@playwright/test";
 import { buildSocial, type SocialPost, type SocialVideo } from "../src/social.ts";
 import { buildStories, type Story } from "../src/stories.ts";
+import { resolveVideo } from "./video-source.ts";
 
 // --- Constants ---
 
@@ -60,6 +61,9 @@ const REEL_SIZE = { width: 1080, height: 1920 };
 // A fourth line runs into the account name Instagram draws over the bottom of a reel.
 const MAX_LINES = 3;
 const END_SECONDS = 2.2;
+
+// The clip fills a 1080 pixel wide frame, a taller source adds nothing.
+const REEL_HEIGHT = 1080;
 
 // Without a crop the clip is cut from the middle to the 9:8 window it is shown in. The commas
 // are escaped because they would split the filter otherwise.
@@ -108,8 +112,13 @@ async function download(urls: string[], folder: string): Promise<Map<string, str
 // --- Video ---
 
 // ffmpeg names the cause in its first lines, the last ones only say that nothing was written.
+// YouTube's servers now and then refuse a request with 403 and accept the same one a moment
+// later, so only that refusal is tried again.
 function run(command: string, args: string[]): string {
-  const result = spawnSync(command, args, { encoding: "utf8" });
+  let result = spawnSync(command, args, { encoding: "utf8" });
+  for (let attempt = 1; attempt < 3 && result.status !== 0 && /403 Forbidden/.test(result.stderr ?? ""); attempt++) {
+    result = spawnSync(command, args, { encoding: "utf8" });
+  }
   if (result.error) throw new Error(`${command} could not be started, the video needs it: ${result.error.message}`);
   if (result.status !== 0) throw new Error(`${command} failed: ${result.stderr.trim().split("\n").slice(0, 4).join(" ")}`);
   return result.stdout;
@@ -147,13 +156,20 @@ function encode(video: SocialVideo, key: string, folder: string, out: string): v
   const agent = ["-user_agent", HEADERS["User-Agent"]];
   const speed = video.speed ?? 1;
   const span = video.speed === undefined ? total : video.duration * speed;
-  const inputs = ["-ss", String(video.start), "-t", String(span), ...agent, "-i", video.source];
-  const hasAudio = run("ffprobe", ["-v", "error", ...agent, "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", video.source]).trim() !== "";
+  const streams = resolveVideo(video.source, REEL_HEIGHT);
+  const inputs = ["-ss", String(video.start), "-t", String(span), ...agent, "-i", streams.picture];
+  const hasAudio = run("ffprobe", ["-v", "error", ...agent, "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", streams.sound]).trim() !== "";
+
+  // The sound comes from the picture's own file when they share one, otherwise from a second
+  // input, which also holds the sound of a sped up clip at its own second.
+  const soundStart = video.speed === undefined ? video.start : video.sound;
   let sound = "";
-  if (hasAudio && video.speed === undefined) sound = "[0:a]";
-  if (hasAudio && video.sound !== undefined) {
-    inputs.push("-ss", String(video.sound), "-t", String(total), ...agent, "-i", video.source);
-    sound = "[1:a]";
+  if (hasAudio && soundStart !== undefined) {
+    if (video.speed === undefined && streams.sound === streams.picture) sound = "[0:a]";
+    else {
+      inputs.push("-ss", String(soundStart), "-t", String(total), ...agent, "-i", streams.sound);
+      sound = "[1:a]";
+    }
   }
   const layer = inputs.filter((value) => value === "-i").length;
   const graph = [
