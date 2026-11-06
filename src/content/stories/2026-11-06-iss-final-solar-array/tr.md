@@ -54,10 +54,8 @@ Sorun giderme için uzay yürüyüşü yaklaşık yedi saate uzatıldı. Panel a
 
 Menon sonrasında bu günün "yalnızca bir güneş panelinin değil, sekiz paneli açmak için yürütülen 15 yılı aşkın geliştirme çalışmasının tamamlanması" anlamına geldiğini söyledi. Kutryk ise yer ekibinin hızlı tepki vererek ekibi gerektiği noktaya getirmesinden etkilendiğini belirtti.
 
-Yer ekibinde iletişimi yürüten bir NASA astronotu, dönen panelin parmak sıkıştırabilecek bir nokta olduğunu hatırlatarak astronotları uyardı.
-
 Bu, istasyonun inşası, bakımı ve yenilenmesine ayrılan 286. uzay yürüyüşüydü. Kutryk için ikinci, Menon için beşinci yürüyüş oldu.
 
 ## İzlemek isteyenler için
 
-Uzay yürüyüşünün tamamı canlı yayınlandı ve NASA'nın kaydı, hazırlıklar dahil dokuz saatin biraz üzerinde sürüyor. Panelin açılışı yayının başlamasından yedi buçuk saatten fazla sonra geldi. Açılma anını görmek için o kısma atlamak yeterli. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.
+NASA uzay yürüyüşünün tamamını NASA+ üzerinden canlı yayınladı. Yayın, astronotlar dışarı çıkmadan yaklaşık bir buçuk saat önce, ABD Doğu saatiyle sabah 7'de başladı. Panel öğleden sonra 2.41'de, yani yayının başlamasından yedi buçuk saatten fazla sonra açılmaya başladı. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.

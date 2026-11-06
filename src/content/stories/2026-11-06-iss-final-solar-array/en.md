@@ -58,4 +58,4 @@ It was the 286th spacewalk devoted to building, maintaining and upgrading the st
 
 ## What to watch
 
-The whole spacewalk was streamed live, and NASA's recording runs a little over nine hours, including the preparations. The unrolling itself came more than seven and a half hours after the broadcast began, so viewers who want to see the panel open can skip ahead. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
+NASA streamed the whole spacewalk live on NASA+, with coverage starting at 7 a.m. US Eastern time, about an hour and a half before the astronauts went outside. The panel began to unroll at 2:41 p.m., more than seven and a half hours into the broadcast. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
