@@ -1,0 +1,33 @@
+x: |
+  Astronauts Anil Menon and Joshua Kutryk fitted the last of eight new solar arrays to the space station. The new panel first gave only about half the power expected.
+
+  After Kutryk replugged one connector in the dark, the array unrolled in about 10 minutes.
+video:
+  source: https://ntv1.akamaized.net/hls/live/2110242/spacewlk11526/master_1080.m3u8
+  start: 28190
+  duration: 20
+  text: The last new array unrolled in about *10 minutes*.
+  credit: NASA+
+pages:
+  - image: https://www.nasa.gov/wp-content/uploads/2026/11/blog-useva101-110526h.jpg
+    credit: NASA+
+    text: |
+      Two astronauts fitted the last of eight new solar arrays to the International Space Station on 5 November. The array then unrolled in about 10 minutes.
+  - image: https://upload.wikimedia.org/wikipedia/commons/9/9c/ISS_new_iROSA_deployed.jpg
+    credit: NASA
+    text: |
+      The new arrays are called IROSAs, short for ISS Roll-Out Solar Arrays. Each one travels folded into a bundle about 10 feet (3 meters) long and unrolls to about 20 feet (6 meters) wide.
+  - image: https://images-assets.nasa.gov/image/iss075e0250243/iss075e0250243~orig.jpg
+    credit: NASA/Anil Menon
+    text: |
+      The crew had to move the panel largely themselves. Menon rode the Canadarm2 robotic arm to carry it, while NASA astronauts Luke Delaney and Jessica Watkins operated it from inside.
+  - image: https://images-assets.nasa.gov/image/iss075e0253261/iss075e0253261~orig.jpg
+    credit: CSA
+    text: |
+      Near the end, the power from the new panel was only about half of what it should have been. During the next period of darkness, Kutryk unplugged one connector, checked both ends and plugged it back in.
+  - image: https://images-assets.nasa.gov/image/iss075e0253155/iss075e0253155~orig.jpg
+    credit: NASA
+    text: |
+      With all eight working, NASA says the station's power generation rises from 160 kilowatts to about 215 kilowatts. The upgrade began in 2021 and took 18 spacewalks.
+caption: |
+  Two astronauts, NASA's Anil Menon and Joshua Kutryk of the Canadian Space Agency, spent almost seven hours outside the International Space Station on 5 November to fit the last of eight new solar arrays. Their work completed the station's power upgrade, which began in 2021 and took 18 spacewalks in total. Near the end, the power from the new panel was only about half of what it should have been. During the next period of darkness, Kutryk unplugged one connector, checked both ends and plugged it back in. Controllers then reported good currents and cleared the array to deploy, and it unrolled in about 10 minutes. NASA has not said what caused the low readings. With all eight arrays working, NASA says the station's power generation rises from 160 kilowatts to about 215 kilowatts. Video: NASA+.
