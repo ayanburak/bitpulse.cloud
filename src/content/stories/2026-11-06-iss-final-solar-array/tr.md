@@ -46,7 +46,7 @@ Uzay yürüyüşü, tulumlar pil gücüne geçtiğinde, ABD Doğu saatiyle sabah
 
 Kablolar bağlandıktan sonra yer ekipleri akımı kontrol etti. Uzay yürüyüşünün yaklaşık dört buçuk saatinde yeni panelin beklenen akımın kabaca yarısını verdiğini gördüler.
 
-Uçuş kontrolörleri panelin açılmasını bir tur daha beklettirdi. Bir sonraki karanlık dilimde Kutryk bir konektörü çıkardı, iki ucunu da inceledi ve yeniden taktı. "Artık gerçekten sağlam bir bağlantı gibi görünüyor" dedi. İstasyon yeniden gün ışığına çıkınca kontrolörler akımların iyi olduğunu bildirdi ve panelin açılmasına izin verdi. NASA düşük değerlerin nedenini açıklamadı.
+Uçuş kontrolörleri panelin açılmasını bir tur daha beklettirdi. Bir sonraki karanlık dilimde Kutryk bir konektörü çıkardı, iki ucunu da inceledi ve yeniden taktı. "Artık gerçekten sağlam bir bağlantı gibi görünüyor" dedi. İstasyon yeniden gün ışığına çıkınca kontrolörler akımların iyi olduğunu bildirdi ve panelin açılmasına izin verdi. NASA düşük değerlerin nedenini hemen açıklamadı.
 
 Sorun giderme için uzay yürüyüşü yaklaşık yedi saate uzatıldı. Panel ardından yaklaşık 10 dakikada açıldı. Karbon fiber çubuklarında depolanan enerji onu kendiliğinden iterek açtı. Görev Kontrol, Kutryk'e "Josh, açılma tamamlandı" dedi.
 
@@ -58,4 +58,4 @@ Bu, istasyonun inşası, bakımı ve yenilenmesine ayrılan 286. uzay yürüyü�
 
 ## İzlemek isteyenler için
 
-NASA uzay yürüyüşünün tamamını NASA+ üzerinden canlı yayınladı. Yayın, astronotlar dışarı çıkmadan yaklaşık bir buçuk saat önce, ABD Doğu saatiyle sabah 7'de başladı. Panel öğleden sonra 2.41'de, yani yayının başlamasından yedi buçuk saatten fazla sonra açılmaya başladı. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.
+NASA uzay yürüyüşünün tamamını NASA+ üzerinden canlı yayınladı. Yayın, astronotlar dışarı çıkmadan yaklaşık bir buçuk saat önce, ABD Doğu saatiyle sabah 7'de başladı. Panel öğleden sonra 3.05 civarında, uzay yürüyüşünün yaklaşık altı buçuk saatinde tamamen açılmıştı. ABD'nin bir sonraki uzay yürüyüşleri, astronotların istasyonun çatısında kozmik ışınları algılayan Alfa Manyetik Spektrometresi üzerinde çalışacağı 2027 Ocak başı için planlanıyor.

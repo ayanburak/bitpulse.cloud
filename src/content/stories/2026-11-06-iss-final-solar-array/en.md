@@ -46,7 +46,7 @@ The spacewalk began at 8:36 a.m. US Eastern time, when the suits switched to bat
 
 Once the cables were connected, ground teams checked the current. About four and a half hours into the spacewalk, they saw the new array delivering only around half of what they expected.
 
-Flight controllers held the unrolling for another orbit. During the next period of darkness, Kutryk unplugged one connector, checked both ends and plugged it back in. "Certainly looks like a good solid mate now," he said. When the station swung back into daylight, controllers reported good currents and cleared the array to deploy. NASA has not said what caused the low readings.
+Flight controllers held the unrolling for another orbit. During the next period of darkness, Kutryk unplugged one connector, checked both ends and plugged it back in. "Certainly looks like a good solid mate now," he said. When the station swung back into daylight, controllers reported good currents and cleared the array to deploy. NASA did not say right away what caused the low readings.
 
 The spacewalk was extended to about seven hours to make room for the troubleshooting. The array then unrolled in about 10 minutes, pushed open by energy stored in its carbon-fiber booms. "Josh, deployment is complete," Mission Control told Kutryk.
 
@@ -58,4 +58,4 @@ It was the 286th spacewalk devoted to building, maintaining and upgrading the st
 
 ## What to watch
 
-NASA streamed the whole spacewalk live on NASA+, with coverage starting at 7 a.m. US Eastern time, about an hour and a half before the astronauts went outside. The panel began to unroll at 2:41 p.m., more than seven and a half hours into the broadcast. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
+NASA streamed the whole spacewalk live on NASA+, with coverage starting at 7 a.m. US Eastern time, about an hour and a half before the astronauts went outside. The panel was fully unrolled at about 3:05 p.m., roughly six and a half hours into the spacewalk. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.

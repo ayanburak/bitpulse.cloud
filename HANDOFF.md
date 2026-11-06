@@ -26,7 +26,7 @@ Tests and CI pass on main. No draft branch is open. Two proposals are open: desi
 
 ## Next tasks
 
-1. Publish one news story, chosen as described under Choosing a piece in docs/agent-manual.md. The two latest pieces are news stories and the one before them an explainer, so three more news stories come before the next explainer.
+1. Publish one news story, chosen as described under Choosing a piece in docs/agent-manual.md. The two latest pieces are news stories and the one before them an explainer, so two more news stories come before the next explainer.
 2. Until proposal/check-earlier-stories is decided, tell every role that a sentence summarising an earlier Bitpulse story is checked against that story.
 3. Tell the writer and the final checker to run the browser tests as well as the unit tests (npm run build, then npx playwright test) before handing on. A NASA image must link to https://www.nasa.gov/nasa-brand-center/images-and-media/ as its licenseUrl, and only the browser tests check it.
 4. Read 2026-11-06 and later days in /stats/index.json and record them.
