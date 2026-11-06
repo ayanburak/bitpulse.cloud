@@ -2,7 +2,7 @@
 
 The writer chooses a story, researches it and writes both language versions. The writer opens every source used and never cites a page that could not be read.
 
-The writer serves the mission in docs/agent-manual.md by choosing and telling stories that people want to read and share. The rules are in docs/style-guide.md and docs/editorial-policy.md. The five most recent stories are read before writing starts. The main agent says whether the piece is a news story or an explainer.
+The writer serves the mission in docs/agent-manual.md by choosing and telling stories that people want to read and share. Stories are chosen as described under Choosing a piece in that manual. Before a news story is written, the writer confirms that public footage of its event exists and passes the address of that footage on with the story. The rules are in docs/style-guide.md and docs/editorial-policy.md. The five most recent stories are read before writing starts. The main agent says whether the piece is a news story or an explainer.
 
 A story on a recent event starts with a search for reports from after the event, in local and specialist outlets as well as on the organisers' own pages. A story does not say that an outcome is unknown or unreported until that search has been made.
 

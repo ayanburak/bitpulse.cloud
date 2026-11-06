@@ -13,6 +13,7 @@ The sections are filled in as follows.
 - Current state describes the project at the end of the latest run. It covers what works, what is broken and what is unfinished.
 - Next tasks lists the work for the next run, most important first, with enough detail to start without other context.
 - Open items lists unresolved questions and known risks that are not tasks yet. An item is removed once it is resolved.
+- Social results is written by the owner before a run. It shows how each post did on X and Instagram. Agents read it and keep it as it is.
 - Owner actions has two parts. Waiting for the owner lists work that needs a real person, written by agents. Requested by the owner holds notes added by the owner for the next run. Those requests come first in the run, subject to the editorial policy and the agent manual. A request leaves this file once it is done, and the journal records the result.
 
 ## Current state
@@ -25,12 +26,10 @@ Tests and CI pass on main. No draft branch is open. One proposal is open: design
 
 ## Next tasks
 
-1. Publish one explainer, because the latest published piece is a news story. Candidates, ranked on 2026-11-04 on indirect evidence of demand: what happens to passkeys when a phone is lost (FIDO Alliance and WebAuthn sources), when solid-state batteries will be in cars (filings and papers, separating semi-solid from all solid-state), how the Rubin Observatory helps find dark matter, and the energy and water used by one AI prompt (not right after an AI piece). The three latest pieces are games, economy and games, so a technology or science explainer adds variety.
-2. Until the open proposal is decided, tell every role that a sentence summarising an earlier Bitpulse story is checked against that story. That instruction was given by hand in this run, and no such error reached the main agent.
-3. Read 2026-11-05 and later days in /stats/index.json and record them. The 2026-11-05 day was not yet published during this run.
-4. ESA's first detailed images of Dimorphos are due on 25 November 2026, for a follow-up to src/content/stories/2026-11-04-hera-dimorphos.
-5. A later games story can use two leads found by the final checker on 2026-11-05: Circana's US figure that spending on Switch 2 game-key card games rose 631% this year, and the report that Nintendo counts game-key cards as physical sales. Both need their pages opened and confirmed. Such a story would link to the Nintendo and Macronix stories.
-6. Write the journal report at the next free run number and rewrite this file.
+1. Publish one news story, chosen as described under Choosing a piece in docs/agent-manual.md. The latest published pieces are a news story and, before it, an explainer, so four news stories come before the next explainer.
+2. Until the open proposal is decided, tell every role that a sentence summarising an earlier Bitpulse story is checked against that story. That instruction was given by hand in the run of 2026-11-05 and no such error reached the main agent.
+3. Read 2026-11-05 and later days in /stats/index.json and record them.
+4. Write the journal report at the next free run number and rewrite this file.
 
 ## Open items
 
@@ -52,8 +51,16 @@ Tests and CI pass on main. No draft branch is open. One proposal is open: design
 
 ### Waiting for the owner
 
-- Post the Macronix story and the Nintendo digital share story on X and Instagram with npm run social.
 - Review the proposal in design-proposals/2026-11-05-check-earlier-stories.md (branch proposal/check-earlier-stories). It changes role files only.
 - A short daily list of the most requested missing paths, in aggregated form, would show whether readers hit broken links or bots probe for files. The statistics job runs on the server, so only the owner can add it.
 
 ### Requested by the owner
+
+- Research which news categories draw the most interest worldwide, on social media and in search, for a site like Bitpulse. Take into account that news stories are now chosen only when real footage of the event exists. Use the research to propose the categories and the scope of Bitpulse as a design proposal, with the evidence for it. This request does not replace the piece of the run.
+
+## Social results
+
+Written by the owner before a run. Each line is one post: the date it was posted, the story folder, the platform, the format, views, average watch time for videos, likes, saves, shares and new followers. Agents read this section and keep it as it is.
+
+| Posted | Story | Platform | Format | Views | Avg watch | Likes | Saves | Shares | Follows |
+|---|---|---|---|---|---|---|---|---|---|

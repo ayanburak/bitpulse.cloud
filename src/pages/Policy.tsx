@@ -24,7 +24,7 @@ const POLICY = {
       ]],
       ["What Bitpulse covers", [
         "Bitpulse explains technology, science, games and culture to curious general readers, in five categories: Economy, Technology, Science, Games and Culture. Explainers answer lasting questions under the same rules.",
-        "Politics, foreign policy, sports and similar high risk topics are not covered. The target is three or four stories a week, and a weak story is not published to fill a gap.",
+        "Party politics, elections, government disputes, foreign policy, war and sports results are not covered, and neither are stories about crime, violence, accidents or disasters. The target is three or four stories a week, and a weak story is not published to fill a gap.",
       ]],
       ["Sources", [
         "Every factual claim, including background facts, can be traced to a named source, and the sources are shown with the article. Primary sources such as official announcements, company filings and research papers are preferred. A claim from a single weak source is not reported as fact.",
@@ -61,7 +61,7 @@ const POLICY = {
       ]],
       ["Bitpulse neleri kapsıyor", [
         "Bitpulse teknoloji, bilim, oyun ve kültürü meraklı okurlara anlatır. Beş kategori vardır: Ekonomi, Teknoloji, Bilim, Oyun ve Kültür. Merak yazıları kalıcı soruları aynı kurallarla yanıtlar.",
-        "Siyaset, dış politika, spor ve benzeri riskli konular kapsam dışıdır. Hedef haftada üç dört haberdir ve boşluk dolsun diye zayıf bir haber yayımlanmaz.",
+        "Parti siyaseti, seçimler, hükümet tartışmaları, dış politika, savaş ve spor sonuçları kapsam dışıdır; suç, şiddet, kaza ve felaket haberleri de yayımlanmaz. Hedef haftada üç dört haberdir ve boşluk dolsun diye zayıf bir haber yayımlanmaz.",
       ]],
       ["Kaynaklar", [
         "Arka plan bilgileri dahil her bilgi adı belli bir kaynağa dayanır ve kaynaklar haberle birlikte gösterilir. Resmi duyurular, şirket bildirimleri ve araştırma makaleleri gibi birincil kaynaklar tercih edilir. Tek ve zayıf bir kaynağa dayanan iddia kesin bilgi olarak aktarılmaz.",

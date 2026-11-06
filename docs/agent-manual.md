@@ -7,9 +7,9 @@ This manual defines how agents operate Bitpulse. It is a public document. Everyt
 Every run has two tasks.
 
 1. Take full responsibility for the development of the site as a whole. The measure of this work is reach: more people finding the site and more views. Views are the visits by real readers in the public statistics. The main audience is defined in docs/style-guide.md, and this work starts from it.
-2. Publish one piece. A run publishes one piece and never more. Runs take turns between a news story and an explainer, so a run publishes the kind that the latest published piece is not. An explainer answers a lasting question and stays useful after the news has moved on.
+2. Publish one piece. A run publishes one piece and never more. Four news stories are published for every explainer, so a run publishes an explainer only when the four latest published pieces are news stories, and a news story otherwise. An explainer answers a lasting question and stays useful after the news has moved on.
 
-Agents think about the first task themselves on every run, from every angle and well beyond the task in front of them. They research what works, question how the site is run today and look for ideas nobody has asked for, inside and outside this repository.
+Agents think about the first task themselves on every run, from every angle and well beyond the task in front of them. They research what works, question how the site is run today and look for ideas nobody has asked for about how the site grows, inside and outside this repository. That search for new ideas is about the site, not about which story to cover, which follows the rules under Choosing a piece.
 
 An idea is never dropped because agents can not carry it out alone. An idea that needs a locked file is proposed in the way described under Design proposals. An idea that needs anything outside this repository, or a real person, is written in the Owner actions section of HANDOFF.md with the reason for it and what it would take.
 
@@ -31,7 +31,7 @@ Agents do not make these changes on their own.
 
 ## Start of a run
 
-A run starts by reading HANDOFF.md, the rules in this manual, docs/style-guide.md, docs/editorial-policy.md and the latest statistics. https://bitpulse.cloud/stats/index.json lists the available days, and each day is at /stats/YYYY-MM-DD.json on the same site. The journal folder is read only when a past decision or failure matters to the work. Requests from the owner in HANDOFF.md come first. After that, the piece comes first. The run then chooses the rest of its work based on what will do the most for the mission.
+A run starts by reading HANDOFF.md, the rules in this manual, docs/style-guide.md, docs/editorial-policy.md and the latest statistics. https://bitpulse.cloud/stats/index.json lists the available days, and each day is at /stats/YYYY-MM-DD.json on the same site. The Social results section of HANDOFF.md shows how earlier posts did on X and Instagram, and it is read as evidence of what reaches people. The journal folder is read only when a past decision or failure matters to the work. Requests from the owner in HANDOFF.md come first. After that, the piece comes first. The run then chooses the rest of its work based on what will do the most for the mission.
 
 Releases are made by hand after a run, so HANDOFF.md cannot know which pieces are live when the next run reads it. What readers can see is read from https://bitpulse.cloud/sitemap.xml, which lists every published page.
 
@@ -45,7 +45,7 @@ Tests must pass before a push. If a release fails its checks, the failure is fix
 
 Every run adds one report to the journal folder, named with the date and a two digit run number, such as journal/2026-11-01-01.md. The report states what changed, why it changed, which statistics were used, what was tried or proposed for the mission and what went wrong. The journal is the only history of the project.
 
-HANDOFF.md is then rewritten as a single report for the next agent, following the instructions at the top of that file. Text from earlier runs is replaced, not added to, so the file never grows into a log. Owner requests that were completed are removed from it, and requests that are still open stay in place. It does not say whether a piece has been released and does not ask for a release, because the release comes after the file is written.
+HANDOFF.md is then rewritten as a single report for the next agent, following the instructions at the top of that file. Text from earlier runs is replaced, not added to, so the file never grows into a log. Owner requests that were completed are removed from it, and requests that are still open stay in place. It does not say whether a piece has been released and does not ask for a release, because the release comes after the file is written. It names no candidate pieces for later runs. The Social results section and the Requested by the owner section are written by the owner and are kept as they are, except that a request that was completed is removed.
 
 ## Models and usage
 
@@ -58,6 +58,14 @@ A run has a small usage limit, and reaching it ends the run where it stands. The
 | Plain tasks that need no judgment, such as downloading a page, resizing an image or running a check and reporting the result | Haiku |
 
 An agent does one job and ends. Agents are not resumed, because an old agent carries everything it has read into every later step. When work comes back, a new agent starts from the finished files and written notes. Working notes stay outside this repository. Each agent is told only what it needs and reads only the files its job requires.
+
+## Choosing a piece
+
+Every piece is chosen on its own, in the run that publishes it. A piece is never chosen because it continues an earlier one, and HANDOFF.md does not list candidate pieces, follow-up stories or a ranking for the next run. A real connection to an earlier story can still become an in-body link once a piece has been chosen.
+
+A news story is chosen only when public, real footage of its event exists, because every news story is shared as a vertical video. The footage shows the event itself in one unbroken clip. It does not need to be dramatic, but a speech, a presentation or a series of still images does not count. When a candidate has no such footage, another story is chosen.
+
+The development that readers of a category are talking about most is a strong candidate. Being covered widely elsewhere is never a reason to skip a story, because Bitpulse readers still want it told well.
 
 ## Writing stories
 
@@ -77,7 +85,7 @@ After the final checker approves a news story, a separate agent, defined in agen
 
 The file has three fields. x holds the X post. pages is a list of Instagram pages, and each page has an image, given as a direct address to the image file, a credit naming the owner of that image, and a text of one or two paragraphs. caption holds the text written under the Instagram post. A post has as many pages as the story needs, at most twenty, and every page has its own image. The link to the story, the line that points to the link in the profile, the image credits and the note that every claim is sourced in the full story are added by scripts/social.ts, so they are never written in the file. Hashtags are not used.
 
-A fourth field, video, is optional. It is written only when the event of the story was filmed and the footage is public, and it turns the post into a vertical video for Instagram and X. The video is one unbroken clip of the event itself with its own sound, the logo above it and one line of text below it that never changes, followed by a short closing screen. It is never cut together from several clips and never made from still images. When no such footage exists, the field is left out and the post goes out with its pages only. The field holds source, the direct address of the video file, start, the second the clip starts at, duration, between 8 and 20 seconds, text, the line under the clip, and credit, the owner of the video. An optional crop, written as width:height:x:y in pixels of the source, keeps the part of the picture where the moment happens, otherwise the clip is cut from the middle. The line has at most two sentences and 80 characters and takes at most three lines on the video, because a fourth line runs into the account name Instagram draws over a reel. Words between asterisks are drawn in the accent color. The video credit goes into the caption, nothing is written on the video but the line.
+A fourth field, video, turns the post into a vertical video for Instagram and X. News stories are chosen with footage, so it is written for every news story. It is left out only when the footage turns out to be unusable within the budget in agents/social.md. The video is one unbroken clip of the event itself with its own sound, the logo above it and one line of text below it that never changes, followed by a short closing screen. It is never cut together from several clips and never made from still images. When no such footage exists, the field is left out and the post goes out with its pages only. The field holds source, the direct address of the video file, start, the second the clip starts at, duration, between 8 and 20 seconds, text, the line under the clip, and credit, the owner of the video. An optional crop, written as width:height:x:y in pixels of the source, keeps the part of the picture where the moment happens, otherwise the clip is cut from the middle. The line has at most two sentences and 80 characters and takes at most three lines on the video, because a fourth line runs into the account name Instagram draws over a reel. Words between asterisks are drawn in the accent color. The video credit goes into the caption, nothing is written on the video but the line.
 
 Social text uses only facts that are in the finished English story. It adds no new claim, number, quote or name, so checking it means comparing it with the story. How it sounds is defined in docs/style-guide.md, and which images it may use is defined in docs/editorial-policy.md.
 
