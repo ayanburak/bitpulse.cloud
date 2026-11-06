@@ -36,13 +36,13 @@ Digit bir robot kâhya değil. Dar bir işi yapıyor ve şimdiye kadar şirketin
 
 ## Borsaya nasıl girdi
 
-Agility klasik bir halka arz yapmadı. Churchill Capital Corp XI adlı, İngilizcede "blank-check company" (boş çek şirketi) denen bir şirketle birleşti. Kısacası bu, önce para toplayıp sonra özel bir işletmeyle birleşen, borsada işlem gören boş bir şirket; ABD Menkul Kıymetler ve Borsa Komisyonu onu, birleşme ya da satın alma dışında kendi iş planı olmayan şirket diye tanımlıyor. Bu tür şirketlere "özel amaçlı satın alma şirketi" (SPAC) de deniyor. Birleşme 4 Kasım'da tamamlandı, birleşik şirket ertesi gün işlem görmeye başladı.
+Agility klasik bir halka arz yapmadı. Churchill Capital Corp XI adlı, İngilizcede "blank-check company" (boş çek şirketi) denen bir şirketle birleşti. Kısacası bu, önce para toplayıp sonra özel bir işletmeyle birleşen, borsada işlem gören boş bir şirket; ABD Menkul Kıymetler ve Borsa Komisyonu onu, birleşme ya da satın alma dışında kendi iş planı olmayan şirket diye tanımlıyor. Churchill, boş çek şirketlerinin bir türü olan ve bir birleşme ya da satın almayı finanse etmek için para toplamak üzere kurulan "özel amaçlı satın alma şirketi" (SPAC) idi. Birleşme 4 Kasım'da tamamlandı, birleşik şirket ertesi gün işlem görmeye başladı.
 
 Anlaşma, masraflar düşülmeden yaklaşık 465 milyon dolar getirdi. Bunun yaklaşık 164 milyon doları boş şirketin kasasından, yaklaşık 201 milyon doları Foxconn'un öncülük ettiği özel bir hisse satışından, yaklaşık 100 milyon doları ise anlaşma açıklandıktan sonra para koyan yatırımcılardan geldi. Bu, anlaşma haziranda 2,5 milyar dolarlık değerle duyurulduğunda öngörülen 620 milyon doları aşkın tutarın epey altında. Anlaşmayı anlatan bir haber, boş şirketin pay sahiplerinin birçoğunun parasını geri çekmiş olabileceğini düşünüyor, ancak Agility durumu böyle anlatmadı.
 
 ## Açılışın arkasındaki rakamlar
 
-Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu rakam 310 bin dolardı. Şirket 138,1 milyon dolar zarar etti. Gelirin yaklaşık yüzde 64'ü ilişkili taraflardan, yani şirketle yakın bağı olan işletmelerden geldi; rapor bunları daha ayrıntılı vermiyor. Yeni para gelmeden önce, 2025'i 103 milyon dolar nakitle kapattı.
+Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu rakam 310 bin dolardı. Şirket 138,1 milyon dolar zarar etti. Gelirin yaklaşık yüzde 64'ü ilişkili taraflardan geldi; rapor bunları daha ayrıntılı vermiyor. Yeni para gelmeden önce, 2025'i 103 milyon dolar nakitle kapattı.
 
 Şirketin umudu, eylülde tanıttığı yeni robotu Digit 5'te. Agility, bu robot için birkaç yıla yayılan 300 milyon doları aşan bağlayıcı sipariş aldığını söylüyor. Bu siparişler belirli aşamalara ve robotun son özelliklerine bağlı, rakamın tek kaynağı da şirketin kendisi. İlk müşteriler Digit 5'e 2027'nin ilk yarısında ulaşacak, genel satış ise yıl sonu için planlanıyor.
 

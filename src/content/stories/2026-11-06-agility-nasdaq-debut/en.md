@@ -36,13 +36,13 @@ Digit is not a robot butler. It does a narrow task, and that task is the whole b
 
 ## How it got listed
 
-Agility did not hold a traditional share offering. It merged with Churchill Capital Corp XI, a blank-check company. In plain terms, that is a listed shell that raises cash first and then merges with a private business; the U.S. Securities and Exchange Commission describes it as having no business plan of its own beyond a merger or acquisition. Such a company is also called a special purpose acquisition company, or SPAC. The merger closed on 4 November, and the combined company started trading the next day.
+Agility did not hold a traditional share offering. It merged with Churchill Capital Corp XI, a blank-check company. In plain terms, that is a listed shell that raises cash first and then merges with a private business; the U.S. Securities and Exchange Commission describes it as having no business plan of its own beyond a merger or acquisition. Churchill was a special purpose acquisition company, or SPAC, a type of blank-check company set up to pool money for a merger or acquisition. The merger closed on 4 November, and the combined company started trading the next day.
 
 The deal brought in about $465 million before costs. About $164 million came from the shell's own funds, about $201 million from a private share sale led by Foxconn, and about $100 million from investors who put money in after the deal was announced. That is well short of the more than $620 million that was projected in June, when the deal was unveiled at a value of $2.5 billion. A report on the deal suggested that many of the shell's shareholders took their money back instead, though Agility has not described it that way.
 
 ## The numbers behind the debut
 
-The financial details are modest. In 2025 Agility had revenue of $1.78 million, up from $310,000 in 2024, and it lost $138.1 million. About 64% of that revenue came from related parties, meaning businesses with close ties to the company, which the report does not break down further. It ended 2025 with $103 million in cash, before the new money arrived.
+The financial details are modest. In 2025 Agility had revenue of $1.78 million, up from $310,000 in 2024, and it lost $138.1 million. About 64% of that revenue came from related parties, which the report does not break down further. It ended 2025 with $103 million in cash, before the new money arrived.
 
 The company's hopes rest on its next robot, Digit 5, which it unveiled in September. Agility says it has more than $300 million in committed orders for it, spread over several years. Those orders depend on milestones and on the robot's final features, and the company is the only source for the figure. Early customers should get Digit 5 in the first half of 2027, with general sales planned for the end of the year.
 
