@@ -1,7 +1,7 @@
 ---
 slug: agility-nasdaq-borsa-insansi-robot
 title: "İnsansı robot üreticisi Agility, 1,8 milyon dolar gelirle Nasdaq'ta"
-summary: "Robotu şimdiden depolarda kutu taşıyor. Satışlar, borsaya girişle toplanan paranın yanında çok küçük kalıyor; ilk saatlerdeki seyir de dalgalı."
+summary: "Robotu şimdiden depolarda kutu taşıyor. Satışlar, borsaya girişle toplanan paranın yanında çok küçük kalıyor; ilk gün hisse sert dalgalandı."
 category: economy
 date: 2026-11-06
 kind: news
@@ -10,6 +10,12 @@ sources:
     url: https://www.agilityrobotics.com/content/agility-becomes-first-u-s-publicly-listed-pure-play-humanoid-robotics-company-begins-trading-today-on-nasdaq-as-aglt
   - name: "The Robot Report: Agility Robotics begins trading on Nasdaq (5 Kasım 2026)"
     url: https://www.therobotreport.com/agility-robotics-begins-trading-on-nasdaq/
+  - name: "The Robot Report: How did Agility Robotics perform on its first day on the stock market? (5 Kasım 2026)"
+    url: https://www.therobotreport.com/how-did-agility-robotics-perform-on-its-first-day-on-the-stock-market/
+  - name: "Yahoo Finance: Agility Robotics (AGLT) geçmiş fiyatlar (5 ve 6 Kasım 2026)"
+    url: https://finance.yahoo.com/quote/AGLT/history/
+  - name: "Mike Kalil: Agility Robotics lists on Nasdaq (5 Kasım 2026)"
+    url: https://mikekalil.com/blog/agility-nasdaq/
   - name: "The Robot Report: Agility, GXO Logistics plan expanded deployment of Digit humanoid (26 Ekim 2026)"
     url: https://www.therobotreport.com/agility-gxo-logistics-plan-expanded-deployment-digit-humanoid/
   - name: "Origin of Bots: Agility Robotics Lines Up $465 Million and a Nasdaq Debut for Digit (30 Ekim 2026)"
@@ -48,7 +54,9 @@ Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu 
 
 ## Dalgalı ilk gün
 
-İşlem başladığında hisse, anlaşmada kullanılan 10 dolarlık fiyatın üzerinde, 11,26 dolardan açıldı. The Robot Report haberini yayımladığında fiyat 10,30 dolara inmişti. Mevcut sahiplerin ve Churchill'in kurucu ortağının (sponsorun) hisseleri, anlaşmanın kapandığı günden itibaren 180 gün kilitli; hisse fiyatına bağlı olarak erken serbest bırakma mümkün, yani hisseler hemen satılamıyor.
+Agility, anlaşmada kullanılan hisse başına 10 dolarlık fiyatın üzerinde, 11,26 dolardan açıldı ve gün inişli çıkışlı geçti. Hisse en düşük 8,40 dolara, yani anlaşma fiyatının yaklaşık yüzde 16 altına kadar indi, en yüksek 12,15 dolara çıktı. Günü, açılışın biraz üzerinde, yaklaşık 11,50 dolardan kapattı. Genel piyasa da sarsıntılıydı: Nasdaq endeksi o gün yüzde 5'ten fazla düştü. 6 Kasım'da hisse, New York saatiyle öğleden sonra yaklaşık 10,60 dolardan işlem görüyordu; bu, perşembe kapanışının altında ama anlaşma fiyatının hâlâ üzerinde.
+
+Mevcut sahiplerin ve Churchill'in kurucu ortağının (sponsorun) hisseleri, anlaşmanın kapandığı günden itibaren 180 gün kilitli; hisse fiyatına bağlı olarak erken serbest bırakma mümkün, yani hisseler hemen satılamıyor.
 
 Agility'nin CEO'su Peggy Johnson, şirketin "insansı robot sektörünün bel kemiği" olmak istediğini söyledi. Şirket başka robot biçimlerini de araştırdığını ve teknolojisini diğer insansı robot üreticilerine lisanslayabileceğini belirtiyor. Kurucu ortaklardan Jonathan Hurst ise Digit'in tekerlek almasının pek olası olmadığını söyledi.
 

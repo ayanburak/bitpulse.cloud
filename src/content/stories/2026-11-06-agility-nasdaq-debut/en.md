@@ -1,7 +1,7 @@
 ---
 slug: agility-robotics-nasdaq-debut-humanoid
 title: "Humanoid Maker Agility Lists on Nasdaq With $1.8M in Revenue"
-summary: "Its robot already moves boxes in warehouses. Sales are tiny next to the money the listing raised, and the first hours of trading were uneven."
+summary: "Its robot already moves boxes in warehouses. Sales are tiny next to the money the listing raised, and the shares swung widely on the first day."
 category: economy
 date: 2026-11-06
 kind: news
@@ -10,6 +10,12 @@ sources:
     url: https://www.agilityrobotics.com/content/agility-becomes-first-u-s-publicly-listed-pure-play-humanoid-robotics-company-begins-trading-today-on-nasdaq-as-aglt
   - name: "The Robot Report: Agility Robotics begins trading on Nasdaq (5 November 2026)"
     url: https://www.therobotreport.com/agility-robotics-begins-trading-on-nasdaq/
+  - name: "The Robot Report: How did Agility Robotics perform on its first day on the stock market? (5 November 2026)"
+    url: https://www.therobotreport.com/how-did-agility-robotics-perform-on-its-first-day-on-the-stock-market/
+  - name: "Yahoo Finance: Agility Robotics (AGLT) historical prices (5 and 6 November 2026)"
+    url: https://finance.yahoo.com/quote/AGLT/history/
+  - name: "Mike Kalil: Agility Robotics lists on Nasdaq (5 November 2026)"
+    url: https://mikekalil.com/blog/agility-nasdaq/
   - name: "The Robot Report: Agility, GXO Logistics plan expanded deployment of Digit humanoid (26 October 2026)"
     url: https://www.therobotreport.com/agility-gxo-logistics-plan-expanded-deployment-digit-humanoid/
   - name: "Origin of Bots: Agility Robotics Lines Up $465 Million and a Nasdaq Debut for Digit (30 October 2026)"
@@ -48,7 +54,9 @@ The company's hopes rest on its next robot, Digit 5, which it unveiled in Septem
 
 ## An uneven first day
 
-When trading began, the stock opened at $11.26, above the $10 per share price used in the deal. By the time The Robot Report published, it had slipped to $10.30. Shares held by existing owners and by Churchill's sponsor are locked up for 180 days after the deal closed, with early release possible depending on the stock price, so they cannot simply be sold straight away.
+Agility opened at $11.26, above the $10 per share price used in the deal, and the day was a rough ride. The shares fell as low as $8.40, about 16% below the deal price, and rose as high as $12.15. They closed at about $11.50, a little above the open. The wider market was shaky too: the Nasdaq index fell more than 5% that day. On 6 November the shares were trading at about $10.60 in the New York afternoon, below Thursday's close but still above the deal price.
+
+Shares held by existing owners and by Churchill's sponsor are locked up for 180 days after the deal closed, with early release possible depending on the stock price, so they cannot simply be sold straight away.
 
 Agility's chief executive, Peggy Johnson, said the company wants to become "the backbone of the humanoid industry." Agility says it is exploring other robot shapes and could license its technology to other humanoid makers. Jonathan Hurst, a co-founder, said Digit is unlikely to get wheels.
 
