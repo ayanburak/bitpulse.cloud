@@ -26,7 +26,7 @@ image:
 ---
 For almost seven hours on Thursday, two astronauts worked outside the International Space Station to fit the last of eight new solar arrays. Near the end, the job hit a snag: the power coming from the new panel was only about half of what it should have been.
 
-NASA astronaut Anil Menon and Joshua Kutryk of the Canadian Space Agency left the airlock on 5 November. That completed the station's power upgrade, which began in 2021 and took 18 spacewalks in total.
+NASA astronaut Anil Menon and Joshua Kutryk of the Canadian Space Agency left the airlock on 5 November. Their work completed the station's power upgrade, which began in 2021 and took 18 spacewalks in total.
 
 ## Why the station needed new panels
 
