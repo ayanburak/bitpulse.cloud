@@ -12,10 +12,8 @@ sources:
     url: https://www.therobotreport.com/agility-robotics-begins-trading-on-nasdaq/
   - name: "The Robot Report: How did Agility Robotics perform on its first day on the stock market? (5 November 2026)"
     url: https://www.therobotreport.com/how-did-agility-robotics-perform-on-its-first-day-on-the-stock-market/
-  - name: "Yahoo Finance: Agility Robotics (AGLT) historical prices (5 and 6 November 2026)"
-    url: https://finance.yahoo.com/quote/AGLT/history/
-  - name: "Mike Kalil: Agility Robotics lists on Nasdaq (5 November 2026)"
-    url: https://mikekalil.com/blog/agility-nasdaq/
+  - name: "CNBC: Magnificent 7 loses $1 trillion. The most eye-popping stats from Thursday's tech stock plunge (5 November 2026)"
+    url: https://www.cnbc.com/2026/11/05/stock-market-selloff-ai-fears.html
   - name: "The Robot Report: Agility, GXO Logistics plan expanded deployment of Digit humanoid (26 October 2026)"
     url: https://www.therobotreport.com/agility-gxo-logistics-plan-expanded-deployment-digit-humanoid/
   - name: "Origin of Bots: Agility Robotics Lines Up $465 Million and a Nasdaq Debut for Digit (30 October 2026)"
@@ -54,7 +52,7 @@ The company's hopes rest on its next robot, Digit 5, which it unveiled in Septem
 
 ## An uneven first day
 
-Agility opened at $11.26, above the $10 per share price used in the deal, and the day was a rough ride. The shares fell as low as $8.40, about 16% below the deal price, and rose as high as $12.15. They closed at about $11.50, a little above the open. The wider market was shaky too: the Nasdaq index fell more than 5% that day. On 6 November the shares were trading at about $10.60 in the New York afternoon, below Thursday's close but still above the deal price.
+Agility opened at just over $11, above the $10 per share price used in the deal, and the day was a rough ride. The shares fell as low as $8.40, about 16% below the deal price, and rose as high as $12.15. They closed at about $11.50, a little above the open. The wider market was shaky too: the Nasdaq Composite index fell more than 5% that day, its worst day since April 2025.
 
 Shares held by existing owners and by Churchill's sponsor are locked up for 180 days after the deal closed, with early release possible depending on the stock price, so they cannot simply be sold straight away.
 

@@ -12,10 +12,8 @@ sources:
     url: https://www.therobotreport.com/agility-robotics-begins-trading-on-nasdaq/
   - name: "The Robot Report: How did Agility Robotics perform on its first day on the stock market? (5 Kasım 2026)"
     url: https://www.therobotreport.com/how-did-agility-robotics-perform-on-its-first-day-on-the-stock-market/
-  - name: "Yahoo Finance: Agility Robotics (AGLT) geçmiş fiyatlar (5 ve 6 Kasım 2026)"
-    url: https://finance.yahoo.com/quote/AGLT/history/
-  - name: "Mike Kalil: Agility Robotics lists on Nasdaq (5 Kasım 2026)"
-    url: https://mikekalil.com/blog/agility-nasdaq/
+  - name: "CNBC: Magnificent 7 loses $1 trillion. The most eye-popping stats from Thursday's tech stock plunge (5 Kasım 2026)"
+    url: https://www.cnbc.com/2026/11/05/stock-market-selloff-ai-fears.html
   - name: "The Robot Report: Agility, GXO Logistics plan expanded deployment of Digit humanoid (26 Ekim 2026)"
     url: https://www.therobotreport.com/agility-gxo-logistics-plan-expanded-deployment-digit-humanoid/
   - name: "Origin of Bots: Agility Robotics Lines Up $465 Million and a Nasdaq Debut for Digit (30 Ekim 2026)"
@@ -54,7 +52,7 @@ Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu 
 
 ## Dalgalı ilk gün
 
-Agility, anlaşmada kullanılan hisse başına 10 dolarlık fiyatın üzerinde, 11,26 dolardan açıldı ve gün inişli çıkışlı geçti. Hisse en düşük 8,40 dolara, yani anlaşma fiyatının yaklaşık yüzde 16 altına kadar indi, en yüksek 12,15 dolara çıktı. Günü, açılışın biraz üzerinde, yaklaşık 11,50 dolardan kapattı. Genel piyasa da sarsıntılıydı: Nasdaq endeksi o gün yüzde 5'ten fazla düştü. 6 Kasım'da hisse, New York saatiyle öğleden sonra yaklaşık 10,60 dolardan işlem görüyordu; bu, perşembe kapanışının altında ama anlaşma fiyatının hâlâ üzerinde.
+Agility, anlaşmada kullanılan hisse başına 10 dolarlık fiyatın üzerinde, 11 doların biraz üzerinden açıldı ve gün inişli çıkışlı geçti. Hisse en düşük 8,40 dolara, yani anlaşma fiyatının yaklaşık yüzde 16 altına kadar indi, en yüksek 12,15 dolara çıktı. Günü, açılışın biraz üzerinde, yaklaşık 11,50 dolardan kapattı. Genel piyasa da sarsıntılıydı: Nasdaq Composite endeksi o gün yüzde 5'ten fazla düşerek Nisan 2025'ten bu yana en kötü gününü yaşadı.
 
 Mevcut sahiplerin ve Churchill'in kurucu ortağının (sponsorun) hisseleri, anlaşmanın kapandığı günden itibaren 180 gün kilitli; hisse fiyatına bağlı olarak erken serbest bırakma mümkün, yani hisseler hemen satılamıyor.
 
