@@ -20,8 +20,8 @@ image:
   file: image.jpg
   alt: "Uluslararası Uzay İstasyonu'nun sol kafes yapısında, Haziran 2021'de çekilmiş bir fotoğrafta tamamen açılmış bir sarmal güneş paneli. Karanlık, ızgara desenli panel, istasyonun daha eski ve daha büyük güneş kanatlarının önünde, beyaz taşıyıcı çerçevenin yanında duruyor. Bu, 5 Kasım 2026'da takılan değil, daha önceki bir paneldir."
   credit: "NASA"
-  license: "Kamu malı (NASA)"
-  licenseUrl: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
+  license: "NASA media guidelines"
+  licenseUrl: https://www.nasa.gov/nasa-brand-center/images-and-media/
   source: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
 ---
 Perşembe günü iki astronot, neredeyse yedi saat boyunca Uluslararası Uzay İstasyonu'nun dışında çalışıp sekiz yeni güneş panelinin sonuncusunu yerine taktı. İş bitmeye yakın bir aksilik çıktı: yeni panelden gelen elektrik olması gerekenin yalnızca yarısı kadardı.

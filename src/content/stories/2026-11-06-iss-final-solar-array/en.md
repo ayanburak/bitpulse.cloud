@@ -20,8 +20,8 @@ image:
   file: image.jpg
   alt: "A roll-out solar array fully unrolled on the International Space Station's port truss, in a photo from June 2021. A dark, grid-patterned panel sits in front of the station's older, larger solar wings, beside white structural framework. This is an earlier array, not the one installed on 5 November 2026."
   credit: "NASA"
-  license: "Public domain (NASA)"
-  licenseUrl: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
+  license: "NASA media guidelines"
+  licenseUrl: https://www.nasa.gov/nasa-brand-center/images-and-media/
   source: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
 ---
 For almost seven hours on Thursday, two astronauts worked outside the International Space Station to fit the last of eight new solar arrays. Near the end, the job hit a snag: the power coming from the new panel was only about half of what it should have been.
