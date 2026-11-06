@@ -1,7 +1,7 @@
 ---
 slug: uzay-istasyonu-son-gunes-paneli
 title: "Astronotlar Uzay İstasyonu'nun Son Yeni Güneş Panelini Açtı"
-summary: "İstasyonun yenileme listesindeki son panel, inatçı bir güç değeri yüzünden neredeyse takılacaktı. Karanlıkta çıkarılıp yeniden takılan bir konektörden sonra beş yıllık iş bitti."
+summary: "Zayıf bir güç değeri, istasyonun yenileme listesindeki son paneli bekletti. Karanlıkta bir konektör çıkarılıp yeniden takılınca beş yıllık yenileme tamamlandı."
 category: science
 date: 2026-11-06
 kind: news
@@ -24,9 +24,9 @@ image:
   licenseUrl: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
   source: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
 ---
-Perşembe günü iki astronot, neredeyse yedi saat boyunca Uluslararası Uzay İstasyonu'nun dışında çalışıp sekiz yeni güneş panelinin sonuncusunu yerine taktı. İş bitmeye yakın neredeyse tıkanıyordu, çünkü yeni panelden gelen elektrik olması gerekenin yalnızca yarısı kadardı.
+Perşembe günü iki astronot, neredeyse yedi saat boyunca Uluslararası Uzay İstasyonu'nun dışında çalışıp sekiz yeni güneş panelinin sonuncusunu yerine taktı. İş bitmeye yakın bir aksilik çıktı: yeni panelden gelen elektrik olması gerekenin yalnızca yarısı kadardı.
 
-NASA astronotu Anil Menon ile Kanada Uzay Ajansı'ndan Joshua Kutryk, 5 Kasım'da hava kilidinden çıktı. Böylece 2021'de başlayan ve toplam 18 uzay yürüyüşü süren istasyon güç yenilemesi tamamlandı.
+NASA astronotu Anil Menon ile Kanada Uzay Ajansı'ndan Joshua Kutryk, 5 Kasım'da hava kilidinden çıktı. Bu, 2021'de başlayan ve toplam 18 uzay yürüyüşü süren istasyon güç yenilemesinin sonuncu adımıydı.
 
 ## İstasyon neden yeni panellere ihtiyaç duydu
 
@@ -42,8 +42,6 @@ Son panelin yuvası, istasyonun büyük robot kolu Canadarm2'nin erişemediği b
 
 Uzay yürüyüşü, tulumlar pil gücüne geçtiğinde, ABD Doğu saatiyle sabah 8.36'da başladı. Öğlen civarında cıvatalar tamamdı. Zor kısım kablolamaydı, çünkü güç kabloları yalnızca istasyonun Dünya'nın gölgesinde kaldığı dilimlerde bağlanabiliyor. Bu dilimler, 90 dakikalık her turun yaklaşık 45 dakikasını oluşturuyor.
 
-Zamanlama de önemliydi. Hava kilidinin basıncı sabah 8.34'te boşaltıldı, Kutryk 8.46'da dışarı çıktı. Panelin durduğu tutucudaki cıvatalar çözüldükten sonra panel yerinden oynatıldı. Her iki astronot da panelin kuleden ve sabitleme pininden temiz biçimde ayrıldığını doğruladı. Kutryk bunu "Kulenin kendisinden uzakta" diye bildirdi.
-
 ## Yarım güç
 
 Kablolar bağlandıktan sonra yer ekipleri akımı kontrol etti. Uzay yürüyüşünün yaklaşık dört buçuk saatinde yeni panelin beklenen akımın kabaca yarısını verdiğini gördüler.
@@ -56,7 +54,7 @@ Sorun giderme için uzay yürüyüşü yaklaşık yedi saate uzatıldı. Panel a
 
 Menon sonrasında bu günün "yalnızca bir güneş panelinin değil, sekiz paneli açmak için yürütülen 15 yılı aşkın geliştirme çalışmasının tamamlanması" anlamına geldiğini söyledi. Kutryk ise yer ekibinin hızlı tepki vererek ekibi gerektiği noktaya getirmesinden etkilendiğini belirtti.
 
-Kutryk bu yürüyüşü "EV1" çağrı koduyla yönetti. Menon'un istasyon dışında geçirdiği toplam süre bu yürüyüşle 33 saat 30 dakikaya ulaştı. Yer ekibinde iletişimi yürüten bir NASA astronotu, dönen panelin parmak sıkıştırabilecek bir nokta olduğunu hatırlatarak astronotları uyardı. Çalışma planın büyük bölümünde takvimin önündeydi; bu da ek işlere vakit bıraktı.
+Yer ekibinde iletişimi yürüten bir NASA astronotu, dönen panelin parmak sıkıştırabilecek bir nokta olduğunu hatırlatarak astronotları uyardı.
 
 Bu, istasyonun inşası, bakımı ve yenilenmesine ayrılan 286. uzay yürüyüşüydü. Kutryk için ikinci, Menon için beşinci yürüyüş oldu.
 

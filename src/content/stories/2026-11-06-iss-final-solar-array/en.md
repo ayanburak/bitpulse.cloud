@@ -1,7 +1,7 @@
 ---
 slug: iss-final-roll-out-solar-array-spacewalk
 title: "Astronauts Unroll the Space Station's Last New Solar Array"
-summary: "A stubborn power reading nearly stopped the final array on the station's upgrade list. After a connector was unplugged in the dark and plugged back in, a five-year job was done."
+summary: "A weak power reading held up the last array on the station's upgrade list. Once a connector was unplugged and replugged in the dark, a five-year upgrade was finished."
 category: science
 date: 2026-11-06
 kind: news
@@ -24,9 +24,9 @@ image:
   licenseUrl: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
   source: https://commons.wikimedia.org/wiki/File:ISS_new_iROSA_deployed.jpg
 ---
-For almost seven hours on Thursday, two astronauts worked outside the International Space Station to fit the last of eight new solar arrays. The job nearly stalled near the end, when the power coming from the new panel was only about half of what it should have been.
+For almost seven hours on Thursday, two astronauts worked outside the International Space Station to fit the last of eight new solar arrays. Near the end, the job hit a snag: the power coming from the new panel was only about half of what it should have been.
 
-NASA astronaut Anil Menon and Joshua Kutryk of the Canadian Space Agency left the airlock on 5 November. They finished the station's power upgrade, which began in 2021 and took 18 spacewalks in total.
+NASA astronaut Anil Menon and Joshua Kutryk of the Canadian Space Agency left the airlock on 5 November. That completed the station's power upgrade, which began in 2021 and took 18 spacewalks in total.
 
 ## Why the station needed new panels
 
@@ -58,4 +58,4 @@ It was the 286th spacewalk devoted to building, maintaining and upgrading the st
 
 ## What to watch
 
-The whole spacewalk was streamed live, and NASA's recording runs a little over nine hours, including the preparations. The unrolling itself came more than seven and a half hours after the broadcast began, so it is worth skipping ahead to see the panel open. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
+The whole spacewalk was streamed live, and NASA's recording runs a little over nine hours, including the preparations. The unrolling itself came more than seven and a half hours after the broadcast began, so viewers who want to see the panel open can skip ahead. The next US spacewalks are planned for early January 2027, when astronauts will work on the Alpha Magnetic Spectrometer, an instrument on the station's frame that detects cosmic rays.
