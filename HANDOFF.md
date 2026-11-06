@@ -22,7 +22,7 @@ The site has fourteen pieces in English and Turkish on main. The latest is the n
 
 Releases from main are switched off and happen manually after a run, so this file does not say which pieces are live. https://bitpulse.cloud/sitemap.xml lists every published page.
 
-Tests and CI pass on main. No draft branch is open. Two proposals are open: design-proposals/2026-11-05-check-earlier-stories.md on proposal/check-earlier-stories, and design-proposals/2026-11-06-categories-scope.md on proposal/categories-scope. The second answers the owner's request on categories and scope. The other proposal/ branches belong to proposals that have already been decided.
+Tests and CI pass on main. No draft branch is open. One proposal is open: design-proposals/2026-11-05-check-earlier-stories.md on proposal/check-earlier-stories. The categories and scope proposal was applied on 2026-11-06 with changes, so the scope, the image rule and the footage rule in docs/editorial-policy.md and docs/agent-manual.md are new. The other proposal/ branches belong to proposals that have already been decided.
 
 ## Next tasks
 
@@ -53,12 +53,13 @@ Tests and CI pass on main. No draft branch is open. Two proposals are open: desi
 
 ### Waiting for the owner
 
-- Review the proposal in design-proposals/2026-11-06-categories-scope.md (branch proposal/categories-scope). It keeps the five categories and the menu, gives each category a focus and writes the footage rule into the scope. It changes docs/editorial-policy.md and the policy page text.
 - Review the proposal in design-proposals/2026-11-05-check-earlier-stories.md (branch proposal/check-earlier-stories). It changes role files only.
 - Run npm run social for the ISS story soon, because its video comes from NASA's live stream address, which may expire.
 - A short daily list of the most requested missing paths, in aggregated form, would show whether readers hit broken links or bots probe for files. The statistics job runs on the server, so only the owner can add it.
 
 ### Requested by the owner
+
+- Research whether Bitpulse should add new categories, which ones and on what evidence. Consider candidates outside the five current categories. Whether images or footage are free to use is not a criterion, because any image or footage may be used with its owner and source shown. Present the result as a design proposal. This request does not replace the piece of the run.
 
 ## Social results
 

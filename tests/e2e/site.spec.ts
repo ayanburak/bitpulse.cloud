@@ -68,7 +68,7 @@ test("each story has sources and an image credit, and no note about how it was w
     for (const address of storyAddresses(lang)) {
       const html = readFileSync(join(DIST, address, "index.html"), "utf8");
       expect(html, address).toContain('class="key-points"');
-      expect(html, address).toMatch(/creativecommons\.org|nasa\.gov\/nasa-brand-center/);
+      expect(html, address).toMatch(/(Photo|Fotoğraf): [^<]+\. (License|Lisans): <a href="https?:\/\/[^"]+">[^<]+<\/a>\. <a href="https?:\/\/[^"]+">(Source|Kaynak)<\/a>/);
       expect(html, address).not.toContain("written by artificial intelligence and may contain mistakes");
       expect(html, address).not.toContain("yapay zekâ tarafından yazılmıştır");
     }

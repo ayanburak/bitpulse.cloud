@@ -23,7 +23,7 @@ const POLICY = {
         "Bitpulse is a PaktLabs venture. PaktLabs approves changes to the design, the site code and the rules. Articles have no bylines, and the site has no author pages and names no individual authors.",
       ]],
       ["What Bitpulse covers", [
-        "Bitpulse explains technology, science, games and culture to curious general readers, in five categories: Economy, Technology, Science, Games and Culture. Explainers answer lasting questions under the same rules.",
+        "Bitpulse explains technology, science, games, culture and the economy to curious general readers, in five categories: Economy, Technology, Science, Games and Culture. Technology covers artificial intelligence, robots, devices, chips and vehicles. Science covers space, nature, health research and the Earth. Games covers new games, trailers and hardware. Culture covers film, television, music and internet culture. Economy covers companies, markets and the wider economy. Explainers answer lasting questions under the same rules.",
         "Party politics, elections, government disputes, foreign policy, war and sports results are not covered, and neither are stories about crime, violence, accidents or disasters. The target is three or four stories a week, and a weak story is not published to fill a gap.",
       ]],
       ["Sources", [
@@ -39,7 +39,7 @@ const POLICY = {
         "Economy stories report what happened. They never tell readers to buy, sell or hold anything and they do not predict prices as if the outcome were known. Bitpulse does not give investment advice.",
       ]],
       ["Images", [
-        "Every story has an image, with its source and license shown next to it. An image is used only when its license clearly allows the use. A general image about the topic is described honestly and is never presented as part of an event it was not part of.",
+        "Every story has an image, with its owner and source shown next to it. A general image about the topic is described honestly and is never presented as part of an event it was not part of.",
       ]],
       ["Languages", [
         "Each story is published in English and Turkish with the same facts and the same sources. Each version is written to read naturally and is not a word for word translation.",
@@ -60,7 +60,7 @@ const POLICY = {
         "Bitpulse bir PaktLabs girişimidir. PaktLabs tasarım, site kodu ve kurallardaki değişiklikleri onaylar. Haberlerde imza yoktur, sitede yazar sayfası bulunmaz ve kişi adı verilmez.",
       ]],
       ["Bitpulse neleri kapsıyor", [
-        "Bitpulse teknoloji, bilim, oyun ve kültürü meraklı okurlara anlatır. Beş kategori vardır: Ekonomi, Teknoloji, Bilim, Oyun ve Kültür. Merak yazıları kalıcı soruları aynı kurallarla yanıtlar.",
+        "Bitpulse teknoloji, bilim, oyun, kültür ve ekonomiyi meraklı okurlara anlatır. Beş kategori vardır: Ekonomi, Teknoloji, Bilim, Oyun ve Kültür. Teknoloji yapay zekâyı, robotları, cihazları, çipleri ve araçları kapsar. Bilim uzayı, doğayı, sağlık araştırmalarını ve Dünya'yı kapsar. Oyun yeni oyunları, fragmanları ve donanımı kapsar. Kültür sinemayı, televizyonu, müziği ve internet kültürünü kapsar. Ekonomi şirketleri, piyasaları ve genel ekonomiyi kapsar. Merak yazıları kalıcı soruları aynı kurallarla yanıtlar.",
         "Parti siyaseti, seçimler, hükümet tartışmaları, dış politika, savaş ve spor sonuçları kapsam dışıdır; suç, şiddet, kaza ve felaket haberleri de yayımlanmaz. Hedef haftada üç dört haberdir ve boşluk dolsun diye zayıf bir haber yayımlanmaz.",
       ]],
       ["Kaynaklar", [
@@ -76,7 +76,7 @@ const POLICY = {
         "Ekonomi haberleri olanı aktarır. Okura hiçbir zaman bir şeyi alması, satması ya da tutması gerektiğini söylemez, sonucu bilinirmiş gibi fiyat tahmini yapmaz. Bitpulse yatırım tavsiyesi vermez.",
       ]],
       ["Görseller", [
-        "Her haberin bir görseli vardır ve kaynağı ile lisansı yanında gösterilir. Görsel yalnızca lisansı kullanıma açıkça izin veriyorsa kullanılır. Konuyla ilgili genel bir görsel dürüstçe tanımlanır ve içinde olmadığı bir olayın parçasıymış gibi sunulmaz.",
+        "Her haberin bir görseli vardır ve sahibi ile kaynağı yanında gösterilir. Konuyla ilgili genel bir görsel dürüstçe tanımlanır ve içinde olmadığı bir olayın parçasıymış gibi sunulmaz.",
       ]],
       ["Diller", [
         "Her haber İngilizce ve Türkçe olarak, aynı olgular ve aynı kaynaklarla yayımlanır. Her sürüm doğal okunacak biçimde yazılır, kelimesi kelimesine çeviri değildir.",

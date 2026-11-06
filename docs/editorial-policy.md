@@ -4,11 +4,13 @@ These rules apply to everything published on Bitpulse. They are fixed rules and 
 
 ## Scope
 
-Bitpulse is a news site that explains technology, science, games and culture to curious general readers. A story is welcome whenever it happened, including today, as long as its subject is one of these. Explainers answer lasting questions under the same rules. How stories sound is defined in docs/style-guide.md.
+Bitpulse is a news site that explains technology, science, games, culture and the economy to curious general readers. A story is welcome whenever it happened, including today, as long as its subject is one of these. Explainers answer lasting questions under the same rules. How stories sound is defined in docs/style-guide.md.
 
 There are five categories: Economy, Technology, Science, Games and Culture. Their Turkish names are Ekonomi, Teknoloji, Bilim, Oyun and Kültür, and their shared keys are economy, technology, science, games and culture.
 
-Party politics, elections, government disputes, foreign policy, war and sports results are not covered. Stories whose subject is harm to people, such as crime, violence, accidents and disasters, are not covered either. A natural event can still be a science story when the story is about the event itself and not the harm it caused. A story is not excluded only because a government, a law or a controversy plays a part in it.
+Each category has a focus. Technology covers artificial intelligence, robots, devices, chips, vehicles, aviation and the internet. Science covers space, nature and wildlife, health and medical research, physics and the Earth, and a natural event can be a science story when the story is about the event itself and not the harm it caused. Games covers new games, trailers, consoles and hardware, studios and players. Culture covers film, television, music, books, internet culture and the arts. Economy covers companies, markets, prices, trade and the wider economy.
+
+Party politics, elections, government disputes, foreign policy, war and sports results are not covered. Stories whose subject is harm to people, such as crime, violence, accidents and disasters, are not covered either. A story is not excluded only because a government, a law or a controversy plays a part in it.
 
 ## Publishing rhythm
 
@@ -30,15 +32,15 @@ Mistakes are fixed openly. A corrected article shows a dated correction note tha
 
 ## Images
 
-Every story has an image. The first choice is an image directly tied to the story, such as a photo released by a space agency or a photo of the product. The second choice is a stock or general image about the topic. A general image must be honest about what it shows, so its description names what is really in the frame and it never suggests a person or a thing was part of the event when it was not.
+Every story has an image, and the first choice is an image directly tied to the story. Any image may be used, including press images, film stills, game screenshots, trailer frames and news agency photos, as long as its owner and its source are shown next to it. When an image has no open license, the license field gives its terms as the source states them and links to the source page. Whether an image is free to use is never a reason to choose or drop a story.
 
-An image is used only when its license clearly allows the use, and its source and license are shown next to it. Wikimedia Commons, public agencies and stock libraries with clear terms are good sources. An image with unclear rights is never used, which rules out film stills, game screenshots, press kit images and news agency photos unless their terms clearly allow reuse.
+A general image about the topic must be honest about what it shows, so its description names what is really in the frame and it never suggests a person or a thing was part of the event when it was not.
 
 An image fills its whole frame with a real scene. A cut out object on a white, plain or transparent background is not used, because it breaks the look of the pages. Product photos work only when the product sits in a real setting.
 
 Images are JPEG or PNG in landscape format. The original must be sharp and larger than 2000 pixels wide, and the stored copy is exactly 2000 pixels wide, so it stays clear on large screens without slowing the page.
 
-Social posts follow a separate image rule. An image on a social post shows the event, the people, the place or the product of the story itself, such as a photo from the event, an image released by the organization in the story, a film still or a game screenshot. A general or stock image is not used there. Each image is credited to its owner in the post, and when it was taken from a news report, the outlet is named as well. Social images are linked by their address and never stored in this repository or shown on the site. A social video follows the same rule. It is footage of the event of the story itself, released by the organization in the story or filmed at the event, credited to its owner in the caption and linked by its address.
+Social posts use images the same way. An image on a social post shows the event, the people, the place or the product of the story itself, and a general or stock image is not used there. Each image is credited to its owner in the post, and when it was taken from a news report, the outlet is named as well. Social images are linked by their address and never stored in this repository or shown on the site. A social video is footage of the event of the story, or for an economy story, footage of what the story is about. It is credited to its owner in the caption and linked by its address.
 
 ## Disclosure and bylines
 

@@ -13,7 +13,7 @@ Agents think about the first task themselves on every run, from every angle and 
 
 An idea is never dropped because agents can not carry it out alone. An idea that needs a locked file is proposed in the way described under Design proposals. An idea that needs anything outside this repository, or a real person, is written in the Owner actions section of HANDOFF.md with the reason for it and what it would take.
 
-The mission stops at docs/editorial-policy.md. Accuracy, sources, corrections and image rights are never traded for reach. Headlines that promise more than the story delivers, fake or paid visits and spam are not allowed.
+The mission stops at docs/editorial-policy.md. Accuracy, sources, corrections and crediting every image to its owner are never traded for reach. Headlines that promise more than the story delivers, fake or paid visits and spam are not allowed.
 
 ## Purpose
 
@@ -63,7 +63,9 @@ An agent does one job and ends. Agents are not resumed, because an old agent car
 
 Every piece is chosen on its own, in the run that publishes it. A piece is never chosen because it continues an earlier one, and HANDOFF.md does not list candidate pieces, follow-up stories or a ranking for the next run. A real connection to an earlier story can still become an in-body link once a piece has been chosen.
 
-A news story is chosen only when public, real footage of its event exists, because every news story is shared as a vertical video. The footage shows the event itself in one unbroken clip. It does not need to be dramatic, but a speech, a presentation or a series of still images does not count. When a candidate has no such footage, another story is chosen.
+A news story is chosen only when public, real footage of its event exists, because every news story is shared as a vertical video. The footage shows the event itself in one unbroken clip. It does not need to be dramatic, but a speech, a presentation or a series of still images does not count. When a candidate has no such footage, another story is chosen. A story about the economy or markets often has no footage of an event, so it can use public footage that shows what the story is about instead, still as one unbroken clip.
+
+Whether an image or footage is free to use is never a reason to choose or drop a story. Any image or footage may be used, as long as its owner and source are shown, as set in docs/editorial-policy.md.
 
 The development that readers of a category are talking about most is a strong candidate. Being covered widely elsewhere is never a reason to skip a story, because Bitpulse readers still want it told well.
 
