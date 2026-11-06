@@ -14,6 +14,8 @@ sources:
     url: https://www.therobotreport.com/agility-gxo-logistics-plan-expanded-deployment-digit-humanoid/
   - name: "Origin of Bots: Agility Robotics Lines Up $465 Million and a Nasdaq Debut for Digit (30 Ekim 2026)"
     url: https://www.originofbots.com/news/agility-robotics-lines-up-465-million-and-a-nasdaq-debut-for-digit
+  - name: "Investor.gov (ABD Menkul Kıymetler ve Borsa Komisyonu): Blank Check Company"
+    url: https://www.investor.gov/introduction-investing/investing-basics/glossary/blank-check-company
 image:
   file: image.jpg
   alt: "Süslü, yaldızlı aynalı bir salonda, siyah küçük başlı beyaz bir insansı robot elini selam verir gibi kaldırıyor; yanında AgiBot X2 afişi ve elinde tablete bakan bir adam var. Robot başka bir şirketin ürünü, MWC 2026 fuarında çekilmiş; Agility robotu değil."
@@ -22,7 +24,7 @@ image:
   licenseUrl: https://creativecommons.org/licenses/by/4.0/
   source: https://commons.wikimedia.org/wiki/File:AGIBOT-X2-_by_JxFile_MWC26.jpg
 ---
-Geçen yıl yaklaşık 1,8 milyon dolar geliri olan bir şirketin hisseleri artık Nasdaq borsasında işlem görüyor. İki ayaklı, iki kollu robotlar yapan Oregon merkezli Agility Robotics, 5 Kasım'da AGLT koduyla işlem görmeye başladı. Şirket kendisini, yalnızca insansı robotlara, yani insan biçiminde yapılmış robotlara odaklanan ve borsada işlem gören ilk Amerikan şirketi olarak tanımlıyor.
+Geçen yıl yaklaşık 1,8 milyon dolar geliri olan bir şirketin hisseleri artık Nasdaq borsasında işlem görüyor. İki ayaklı, iki kollu robotlar yapan Oregon merkezli Agility Robotics, 5 Kasım'da AGLT koduyla işlem görmeye başladı. Şirket kendisini, yalnızca insansı robotlara, yani insan biçiminde yapılmış robotlara odaklanan ve borsada işlem gören ilk Amerikan şirketi olarak tanımlıyor ve robotlarının müşterilerde şimdiden çalıştığını belirtiyor.
 
 ## Agility aslında ne satıyor
 
@@ -34,21 +36,21 @@ Digit bir robot kâhya değil. Dar bir işi yapıyor ve şimdiye kadar şirketin
 
 ## Borsaya nasıl girdi
 
-Agility klasik bir halka arz yapmadı. Churchill Capital Corp XI adlı bir "çek defteri şirketiyle" birleşti. Bu, önce para toplayıp sonra bir işletme satın alan, borsada işlem gören boş bir şirket demek. Birleşme 4 Kasım'da tamamlandı, birleşik şirket ertesi gün işlem görmeye başladı.
+Agility klasik bir halka arz yapmadı. Churchill Capital Corp XI adlı, İngilizcede "blank-check company" (boş çek şirketi) denen bir şirketle birleşti. ABD Menkul Kıymetler ve Borsa Komisyonu bu tür şirketi, birleşme ya da satın alma dışında kendi iş planı olmayan şirket diye tanımlıyor; böyle bir alım için para toplamak üzere kurulan şirketlere ise "özel amaçlı satın alma şirketi" (SPAC) deniyor. Kısacası, önce para toplayıp sonra özel bir işletmeyle birleşen, borsada işlem gören boş bir şirket. Birleşme 4 Kasım'da tamamlandı, birleşik şirket ertesi gün işlem görmeye başladı.
 
-Anlaşma, masraflar düşülmeden yaklaşık 465 milyon dolar getirdi. Bunun yaklaşık 164 milyon doları boş şirketin kasasından, yaklaşık 201 milyon doları Foxconn'un öncülük ettiği özel bir hisse satışından, yaklaşık 100 milyon doları ise anlaşma açıklandıktan sonra para koyan yatırımcılardan geldi. Anlaşma haziranda 2,5 milyar dolarlık değerle duyurulduğunda öngörülen 620 milyon doların epey altında. Anlaşmayı anlatan bir haber, boş şirketin pay sahiplerinin birçoğunun parasını geri çekmiş olabileceğini düşünüyor, ancak Agility durumu böyle anlatmadı.
+Anlaşma, masraflar düşülmeden yaklaşık 465 milyon dolar getirdi. Bunun yaklaşık 164 milyon doları boş şirketin kasasından, yaklaşık 201 milyon doları Foxconn'un öncülük ettiği özel bir hisse satışından, yaklaşık 100 milyon doları ise anlaşma açıklandıktan sonra para koyan yatırımcılardan geldi. Bu, anlaşma haziranda 2,5 milyar dolarlık değerle duyurulduğunda öngörülen 620 milyon doları aşkın tutarın epey altında. Anlaşmayı anlatan bir haber, boş şirketin pay sahiplerinin birçoğunun parasını geri çekmiş olabileceğini düşünüyor, ancak Agility durumu böyle anlatmadı.
 
 ## Açılışın arkasındaki rakamlar
 
-Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu rakam 310 bin dolardı. Şirket 138,1 milyon dolar zarar etti. Gelirin yaklaşık yüzde 64'ü ilişkili taraflardan, yani Agility'ye yakın şirketlerden geldi. Yeni para gelmeden önce, 2025'i 103 milyon dolar nakitle kapattı.
+Mali tablo mütevazı. Agility'nin 2025 geliri 1,78 milyon dolardı; 2024'te bu rakam 310 bin dolardı. Şirket 138,1 milyon dolar zarar etti. Gelirin yaklaşık yüzde 64'ü ilişkili taraflardan geldi; rapor bunları daha ayrıntılı vermiyor. Yeni para gelmeden önce, 2025'i 103 milyon dolar nakitle kapattı.
 
 Şirketin umudu, eylülde tanıttığı yeni robotu Digit 5'te. Agility, bu robot için birkaç yıla yayılan 300 milyon doları aşan bağlayıcı sipariş aldığını söylüyor. Bu siparişler belirli aşamalara ve robotun son özelliklerine bağlı, rakamın tek kaynağı da şirketin kendisi. İlk müşteriler Digit 5'e 2027'nin ilk yarısında ulaşacak, genel satış ise yıl sonu için planlanıyor.
 
 ## Dalgalı ilk gün
 
-İşlem başladığında hisse, anlaşmada kullanılan 10 dolarlık fiyatın üzerinde, 11,26 dolardan açıldı. The Robot Report haberini yayımladığında fiyat 10,30 dolara inmişti. Mevcut sahiplerin hisseleri 180 gün kilitli; yani hemen satılamıyor.
+İşlem başladığında hisse, anlaşmada kullanılan 10 dolarlık fiyatın üzerinde, 11,26 dolardan açıldı. The Robot Report haberini yayımladığında fiyat 10,30 dolara inmişti. Mevcut sahiplerin ve Churchill'in kurucu ortağının (sponsorun) hisseleri, anlaşmanın kapandığı günden itibaren 180 gün kilitli; hisse fiyatına bağlı olarak erken serbest bırakma mümkün, yani hisseler hemen satılamıyor.
 
-Agility'nin genel müdürü Peggy Johnson, şirketin "insansı robot sektörünün bel kemiği" olmak istediğini söyledi. Şirket başka robot biçimlerini de araştırdığını ve teknolojisini diğer insansı robot üreticilerine lisanslayabileceğini belirtiyor. Kurucu ortaklardan Jonathan Hurst ise Digit'in tekerlek almasının pek olası olmadığını söyledi.
+Agility'nin CEO'su Peggy Johnson, şirketin "insansı robot sektörünün bel kemiği" olmak istediğini söyledi. Şirket başka robot biçimlerini de araştırdığını ve teknolojisini diğer insansı robot üreticilerine lisanslayabileceğini belirtiyor. Kurucu ortaklardan Jonathan Hurst ise Digit'in tekerlek almasının pek olası olmadığını söyledi.
 
 ## Neden önemli
 
