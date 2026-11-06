@@ -139,24 +139,36 @@ async function drawLayers(page: Page, line: string, key: string, folder: string)
 
 // One ffmpeg call cuts the clip, lays the line over it, adds the closing screen and fades the
 // sound, which keeps running under the closing screen. The source is read from the start second
-// for the whole length, so the sound does not jump where the closing screen begins.
+// for the whole length, so the sound does not jump where the closing screen begins. A sped up
+// clip reads a longer stretch of picture without its sound, and its own sound, when it has one,
+// comes in as a second input that starts at its own second and plays in real time.
 function encode(video: SocialVideo, key: string, folder: string, out: string): void {
   const total = video.duration + END_SECONDS;
-  const input = ["-ss", String(video.start), "-t", String(total), "-user_agent", HEADERS["User-Agent"], "-i", video.source];
-  const sound = run("ffprobe", ["-v", "error", "-user_agent", HEADERS["User-Agent"], "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", video.source]).trim() !== "";
+  const agent = ["-user_agent", HEADERS["User-Agent"]];
+  const speed = video.speed ?? 1;
+  const span = video.speed === undefined ? total : video.duration * speed;
+  const inputs = ["-ss", String(video.start), "-t", String(span), ...agent, "-i", video.source];
+  const hasAudio = run("ffprobe", ["-v", "error", ...agent, "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", video.source]).trim() !== "";
+  let sound = "";
+  if (hasAudio && video.speed === undefined) sound = "[0:a]";
+  if (hasAudio && video.sound !== undefined) {
+    inputs.push("-ss", String(video.sound), "-t", String(total), ...agent, "-i", video.source);
+    sound = "[1:a]";
+  }
+  const layer = inputs.filter((value) => value === "-i").length;
   const graph = [
-    `[0:v]trim=duration=${video.duration},setpts=PTS-STARTPTS,fps=30,split[a][b]`,
+    `[0:v]setpts=(PTS-STARTPTS)/${speed},trim=duration=${video.duration},setpts=PTS-STARTPTS,fps=30,split[a][b]`,
     "[a]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=40:2,eq=brightness=-0.22[bg]",
     `[b]crop=${video.crop ?? CENTER},scale=1080:960[fg]`,
     "[bg][fg]overlay=0:360[clip]",
-    "[1:v]format=rgba,fade=in:st=0:d=0.25:alpha=1[line]",
+    `[${layer}:v]format=rgba,fade=in:st=0:d=0.25:alpha=1[line]`,
     `[clip][line]overlay=0:0:shortest=1,trim=duration=${video.duration},format=yuv420p,setsar=1[main]`,
-    "[2:v]fade=in:st=0:d=0.2,format=yuv420p,setsar=1[end]",
+    `[${layer + 1}:v]fade=in:st=0:d=0.2,format=yuv420p,setsar=1[end]`,
     "[main][end]concat=n=2:v=1:a=0[v]",
   ];
-  if (sound) graph.push(`[0:a]loudnorm=I=-14:TP=-1.5:LRA=11,afade=in:st=0:d=0.2,afade=out:st=${total - 2}:d=2,atrim=duration=${total}[s]`);
+  if (sound) graph.push(`${sound}loudnorm=I=-14:TP=-1.5:LRA=11,afade=in:st=0:d=0.2,afade=out:st=${total - 2}:d=2,atrim=duration=${total}[s]`);
   run("ffmpeg", [
-    "-v", "error", "-y", ...input,
+    "-v", "error", "-y", ...inputs,
     "-loop", "1", "-framerate", "30", "-t", String(video.duration), "-i", join(folder, "line.png"),
     "-loop", "1", "-framerate", "30", "-t", String(END_SECONDS), "-i", join(folder, "end.png"),
     "-filter_complex", graph.join(";"), "-map", "[v]", ...(sound ? ["-map", "[s]", "-c:a", "aac", "-b:a", "160k"] : []),

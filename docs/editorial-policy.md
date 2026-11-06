@@ -40,7 +40,7 @@ An image fills its whole frame with a real scene. A cut out object on a white, p
 
 Images are JPEG or PNG in landscape format. The original must be sharp and larger than 2000 pixels wide, and the stored copy is exactly 2000 pixels wide, so it stays clear on large screens without slowing the page.
 
-Social posts use images the same way. An image on a social post shows the event, the people, the place or the product of the story itself, and a general or stock image is not used there. Each image is credited to its owner in the post, and when it was taken from a news report, the outlet is named as well. Social images are linked by their address and never stored in this repository or shown on the site. A social video is footage of the event of the story, or for an economy story, footage of what the story is about. It is credited to its owner in the caption and linked by its address.
+Social posts use images the same way. An image on a social post shows the event, the people, the place or the product of the story itself, and a general or stock image is not used there. Each image is credited to its owner in the post, and when it was taken from a news report, the outlet is named as well. Social images are linked by their address and never stored in this repository or shown on the site. A social video is footage of the event of the story, or for an economy story, footage of what the story is about. A slow event may be sped up, and the caption says so. It is credited to its owner in the caption and linked by its address.
 
 ## Disclosure and bylines
 

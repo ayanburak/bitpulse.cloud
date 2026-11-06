@@ -13,6 +13,10 @@
  * short line drawn over it. Words between asterisks in that line are drawn in the accent color.
  * The video credit joins the image credits in the caption, nothing is written on the video.
  *
+ * A slow event can be sped up. speed shows a longer stretch of the clip in the same duration,
+ * and sound gives the second its own sound starts at, played in real time, because sped up sound
+ * is noise. Without sound a sped up clip is silent. The caption then says how the clip was sped up.
+ *
  * description: Validates the social text of a story and completes it into ready to share posts.
  */
 
@@ -41,6 +45,8 @@ export interface SocialVideo {
   text: string;
   credit: string;
   crop?: string;
+  speed?: number;
+  sound?: number;
 }
 
 export interface SocialPost {
@@ -67,11 +73,16 @@ const MAX_PAGES = 20;
 const CAPTION_LIMIT = 2200;
 const FIELDS = ["x", "pages", "caption", "video"];
 const PAGE_FIELDS = ["image", "credit", "text"];
-const VIDEO_FIELDS = ["source", "start", "duration", "text", "credit", "crop"];
+const VIDEO_FIELDS = ["source", "start", "duration", "text", "credit", "crop", "speed", "sound"];
 
 // A clip shorter than this ends before the moment lands, a longer one loses the viewer.
 const MIN_SECONDS = 8;
 const MAX_SECONDS = 20;
+
+// Below twice the speed a slow event still looks still, above sixty a ten minute stretch would
+// pass in ten seconds and a viewer could no longer follow it.
+const MIN_SPEED = 2;
+const MAX_SPEED = 60;
 
 // About three lines under the video, a fourth line runs into the account name Instagram draws
 // over the bottom of a reel. scripts/social.ts measures the real lines, this catches most texts
@@ -144,6 +155,15 @@ function readVideo(value: unknown, where: string): SocialVideo {
     if (!/^\d+:\d+:\d+:\d+$/.test(crop)) throw new Error(`${at}: crop must be width:height:x:y in pixels of the source, got ${crop}`);
     video.crop = crop;
   }
+  if (value.speed !== undefined) {
+    const speed = seconds(value.speed, "speed", at);
+    if (speed < MIN_SPEED || speed > MAX_SPEED) throw new Error(`${at}: speed is ${speed}, it must be between ${MIN_SPEED} and ${MAX_SPEED}`);
+    video.speed = speed;
+  }
+  if (value.sound !== undefined) {
+    if (video.speed === undefined) throw new Error(`${at}: sound is only used with speed, a clip at its own speed keeps its own sound`);
+    video.sound = seconds(value.sound, "sound", at);
+  }
   return video;
 }
 
@@ -152,7 +172,9 @@ function readVideo(value: unknown, where: string): SocialVideo {
 function credits(pages: SocialPage[], video?: SocialVideo): string {
   const names = [...new Set(pages.map((page) => page.credit))];
   const images = `${names.length > 1 ? "Images" : "Image"}: ${names.join(" · ")}.`;
-  return video ? `Video: ${video.credit}. ${images}` : images;
+  if (!video) return images;
+  const speed = video.speed === undefined ? "" : `, sped up ${Math.round(video.speed)} times${video.sound === undefined ? "" : ", sound in real time"}`;
+  return `Video: ${video.credit}${speed}. ${images}`;
 }
 
 // --- Building ---

@@ -89,6 +89,14 @@ describe("video", () => {
     expect(post.caption).toContain("Video: NASA/Johns Hopkins APL. Image: ESA.");
   });
 
+  it("says in the caption when a clip is sped up and where its sound comes from", () => {
+    const fast = buildSocial(withVideo({ ...VIDEO, speed: 25.25, sound: 28820 }), HERA);
+    expect(fast.video).toEqual({ ...VIDEO, speed: 25.25, sound: 28820 });
+    expect(fast.caption).toContain("Video: NASA/Johns Hopkins APL, sped up 25 times, sound in real time. Image: ESA.");
+    const silent = buildSocial(withVideo({ ...VIDEO, speed: 10 }), HERA);
+    expect(silent.caption).toContain("Video: NASA/Johns Hopkins APL, sped up 10 times. Image: ESA.");
+  });
+
   it.each([
     ["a missing address", { ...VIDEO, source: undefined }, "missing source"],
     ["a clip that is too short", { ...VIDEO, duration: 5 }, "must be between"],
@@ -98,6 +106,9 @@ describe("video", () => {
     ["an asterisk without its pair", { ...VIDEO, text: "One *two." }, "without its pair"],
     ["a crop that is not four numbers", { ...VIDEO, crop: "iw:ih" }, "crop must be"],
     ["an unknown field", { ...VIDEO, music: "loud" }, "unknown field: music"],
+    ["a speed that is too low", { ...VIDEO, speed: 1.5 }, "must be between 2 and 60"],
+    ["a speed that is too high", { ...VIDEO, speed: 90 }, "must be between 2 and 60"],
+    ["a sound second without a speed", { ...VIDEO, sound: 100 }, "only used with speed"],
   ])("refuses %s", (_, video, message) => {
     const clean = Object.fromEntries(Object.entries(video).filter(([, value]) => value !== undefined));
     expect(() => buildSocial(withVideo(clean), HERA)).toThrow(message);
