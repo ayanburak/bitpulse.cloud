@@ -116,8 +116,11 @@ describe("video", () => {
 });
 
 // The same story under a later folder name, so the rule for pages from 7 November applies to it.
+// The name sits in its own constant for the same reason as FOLDER above.
+const LATER_FOLDER = "2026-11-07-hera-dimorphos";
+
 describe("pages from 7 November", () => {
-  const later = { ...HERA, key: "2026-11-07-hera-dimorphos" };
+  const later = { ...HERA, key: LATER_FOLDER };
   const page = (text: string) => BASE.replace("text: A page.", `text: |\n      ${text.replace(/\n/g, "\n      ")}`);
 
   it("take one short sentence", () => {
