@@ -19,7 +19,7 @@ import type { Lang } from "./i18n";
 
 // --- Types ---
 
-export const categories = ["economy", "technology", "science", "games", "culture"] as const;
+export const categories = ["world", "economy", "technology", "science", "health", "culture", "sports"] as const;
 export const kinds = ["news", "long"] as const;
 
 type Category = (typeof categories)[number];

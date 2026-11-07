@@ -30,7 +30,7 @@ Subheadings are short, plain and specific to the story.
 
 ## Length
 
-A news story takes three to four minutes to read, which is about 600 to 800 words. The extra length exists to explain and to tell a better story, not to repeat points. If a sentence gives the reader nothing new, it is removed.
+A news story is short and fast to read, about 300 to 500 words. It gives the reader what happened and what they need to understand it, and it grows through updates when the event develops. If a sentence gives the reader nothing new, it is removed.
 
 An explainer, stored as kind: long, follows the same voice with more depth. It runs to about 1,500 to 2,500 words in English, and the Turkish version usually needs fewer words.
 

@@ -81,7 +81,7 @@ describe("buildStories", () => {
   });
 
   it("rejects languages that disagree on the category", () => {
-    const tr = file({ slug: "ornek-haber", category: "games" });
+    const tr = file({ slug: "ornek-haber", category: "sports" });
     expect(() => buildStories(story(file(), tr))).toThrow("category differs");
   });
 

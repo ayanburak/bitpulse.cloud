@@ -22,16 +22,15 @@ const LINK = /(https:\/\/\S+)/;
 
 const ABOUT = {
   en: {
-    intro: "Bitpulse is a news site publishing technology, science, games and culture stories. It is a PaktLabs venture.",
+    intro: "Bitpulse is a world news site published in English and Turkish. It is a PaktLabs venture.",
     body: [
-      "PaktLabs approves changes to the design, the site code and the rules.",
     ],
-    open: "The code, the rules and the records of how the site is run are public.",
+    open: "The code and the editorial rules are public.",
     openLink: "Read them on GitHub",
     principlesTitle: "Editorial principles",
     principles: [
       ["Accuracy", "Every factual claim has to trace back to a named source."],
-      ["Independence", "Stories are chosen because they interest readers. No company pays for coverage, and Bitpulse gives no investment advice."],
+      ["Impartiality", "Bitpulse takes no side. Claims are attributed to the people who made them."],
       ["Corrections", "Mistakes are fixed openly, with a dated note that says what was wrong."],
       ["Sources", "Sources are listed under every article, and primary sources come first."],
     ],
@@ -39,16 +38,15 @@ const ABOUT = {
     aboutUs: "About us",
   },
   tr: {
-    intro: "Bitpulse; teknoloji, bilim, oyun ve kültür haberlerini yayımlayan bir haber sitesidir. Bir PaktLabs girişimidir.",
+    intro: "Bitpulse, İngilizce ve Türkçe yayımlanan bir dünya haberleri sitesidir. Bir PaktLabs girişimidir.",
     body: [
-      "PaktLabs tasarım, site kodu ve kural değişikliklerini onaylar.",
     ],
-    open: "Kod, kurallar ve sitenin nasıl işletildiğine dair kayıtlar herkese açıktır.",
+    open: "Kod ve yayın ilkeleri herkese açıktır.",
     openLink: "GitHub'da inceleyin",
     principlesTitle: "Yayın ilkeleri",
     principles: [
       ["Doğruluk", "Her bilginin adı belli bir kaynağa dayanması gerekir."],
-      ["Bağımsızlık", "Haberler okura ilginç geldiği için seçilir. Hiçbir şirket haber için ödeme yapmaz ve Bitpulse yatırım tavsiyesi vermez."],
+      ["Tarafsızlık", "Bitpulse taraf tutmaz. İddialar, onları dile getirenlere atfedilir."],
       ["Düzeltme", "Hatalar, neyin yanlış olduğunu söyleyen tarihli bir notla açıkça düzeltilir."],
       ["Kaynak", "Kaynaklar her haberin altında listelenir ve öncelik birincil kaynaklardadır."],
     ],

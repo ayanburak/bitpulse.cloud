@@ -2,7 +2,7 @@
 slug: nintendo-digital-sales-share-six-months
 title: "Nintendo's Game Software Sales Were 60.7% Digital in Six Months"
 summary: "Most of the rise comes from downloading games that are also sold in boxes, Nintendo's half-year report shows. The latest quarter slipped a little."
-category: games
+category: economy
 date: 2026-11-05
 kind: news
 sources:

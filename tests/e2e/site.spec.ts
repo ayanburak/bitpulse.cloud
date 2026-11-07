@@ -91,7 +91,7 @@ test("each language points to its counterpart story", async ({ page }) => {
 });
 
 test("the home pages tell search engines the site name and icon", async ({ page }) => {
-  for (const [lang, title] of [["en", "Bitpulse | Technology, Science, Games and Culture News"], ["tr", "Bitpulse | Teknoloji, Bilim, Oyun ve Kültür Haberleri"]]) {
+  for (const [lang, title] of [["en", "Bitpulse | World News"], ["tr", "Bitpulse | Dünya Haberleri"]]) {
     await page.goto(`/${lang}/`);
     await expect(page).toHaveTitle(title);
     const data = JSON.parse(await page.locator('script[type="application/ld+json"]').innerHTML());
@@ -222,14 +222,14 @@ test("the footer links the policy and corrections pages in both languages", asyn
   }
 });
 
-test("the editorial policy states who is behind the site and how stories are checked", async ({ page }) => {
+test("the editorial policy states who is behind the site", async ({ page }) => {
   await page.goto("/en/editorial-policy/");
   await expect(page.locator("h1")).toHaveText("Editorial policy");
   const text = await page.locator("main").innerText();
   expect(text).toContain("PaktLabs");
   expect(text).not.toContain("Claude");
   expect(text).not.toContain("written by artificial intelligence");
-  for (const step of ["writing", "fact check", "editing", "final check"]) expect(text.toLowerCase()).toContain(step);
+  expect(text).toContain("Impartiality");
   await expect(page.locator("main")).toContainText("info@paktlabs.com");
   await page.locator('.lang-switch a[hreflang="tr"]').click();
   await expect(page).toHaveURL(/\/tr\/editorial-policy\/$/);

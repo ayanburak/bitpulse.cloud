@@ -17,75 +17,59 @@ import { formatDate, ui } from "../i18n";
 
 const POLICY = {
   en: {
-    intro: "How Bitpulse chooses, writes, checks and corrects its stories, and who is behind them.",
+    intro: "The principles Bitpulse follows in its reporting.",
     sections: [
-      ["Who is behind Bitpulse", [
-        "Bitpulse is a PaktLabs venture. PaktLabs approves changes to the design, the site code and the rules. Articles have no bylines, and the site has no author pages and names no individual authors.",
+      ["About Bitpulse", [
+        "Bitpulse is a world news site published in English and Turkish. It is a PaktLabs venture. Articles have no bylines.",
       ]],
-      ["What Bitpulse covers", [
-        "Bitpulse explains technology, science, games, culture and the economy to curious general readers, in five categories: Economy, Technology, Science, Games and Culture. Technology covers artificial intelligence, robots, devices, chips and vehicles. Science covers space, nature, health research and the Earth. Games covers new games, trailers and hardware. Culture covers film, television, music and internet culture. Economy covers companies, markets and the wider economy. Explainers answer lasting questions under the same rules.",
-        "Party politics, elections, government disputes, foreign policy, war and sports results are not covered, and neither are stories about crime, violence, accidents or disasters. The target is three or four stories a week, and a weak story is not published to fill a gap.",
+      ["What we cover", [
+        "Bitpulse covers news from around the world in seven sections: World, Economy, Technology, Science, Health, Culture and Sports.",
       ]],
-      ["Sources", [
-        "Every factual claim, including background facts, can be traced to a named source, and the sources are shown with the article. Primary sources such as official announcements, company filings and research papers are preferred. A claim from a single weak source is not reported as fact.",
-        "A source counts only if its page was opened and read, and anything attributed to a person or a publication must appear on the cited page. Text is written from the facts and is not copied from the sources.",
+      ["Impartiality", [
+        "Bitpulse takes no side. Claims are attributed to the people who made them, and when sides disagree, each side's position is reported.",
       ]],
-      ["How a story is checked", [
-        "Every story passes four separate steps before publication: writing, fact checking, editing and a final check.",
-        "In the writing step, the story is chosen and researched, every source is opened and both language versions are written. The fact check reads the finished story without knowing how it was written and opens every source again, comparing each claim with its page. A claim the source does not support goes back to writing.",
-        "The editing step reads the story as a general reader would and checks the headline, the pace, the plain language and the difference from recent stories. The final check is the last step. It opens the sources behind the headline, the summary and the main figures, checks again for newer reports when the story covers a recent event, and decides whether the story is published at all. A story is never approved by the step that wrote it.",
+      ["Accuracy and sources", [
+        "Every factual claim is based on a named source, and the sources are listed under each article. Primary sources come first.",
+      ]],
+      ["Privacy", [
+        "Private individuals in stories about crime, accidents and other sensitive events are named only by their initials. Children are not named.",
       ]],
       ["Economy stories", [
-        "Economy stories report what happened. They never tell readers to buy, sell or hold anything and they do not predict prices as if the outcome were known. Bitpulse does not give investment advice.",
-      ]],
-      ["Images", [
-        "Every story has an image, with its owner and source shown next to it. A general image about the topic is described honestly and is never presented as part of an event it was not part of.",
-      ]],
-      ["Languages", [
-        "Each story is published in English and Turkish with the same facts and the same sources. Each version is written to read naturally and is not a word for word translation.",
+        "Bitpulse does not give investment advice.",
       ]],
       ["Corrections", [
-        "Mistakes are fixed openly. A corrected article shows a dated correction note that says what was wrong, and facts are never changed silently. The corrections page explains how to report a mistake and lists corrected stories.",
+        "Mistakes are fixed openly with a dated note. The corrections page explains how to report a mistake.",
       ]],
-      ["Rules and contact", [
-        "These rules are public in the project's source code repository, together with the records of how the site is run.",
+      ["Contact", [
         `Questions about this policy can be sent to ${CONTACT_EMAIL}.`,
       ]],
     ],
   },
   tr: {
-    intro: "Bitpulse haberleri nasıl seçer, yazar, doğrular ve düzeltir; arkasında kimler var.",
+    intro: "Bitpulse'un habercilikte uyduğu ilkeler.",
     sections: [
-      ["Bitpulse'un arkasında kim var", [
-        "Bitpulse bir PaktLabs girişimidir. PaktLabs tasarım, site kodu ve kurallardaki değişiklikleri onaylar. Haberlerde imza yoktur, sitede yazar sayfası bulunmaz ve kişi adı verilmez.",
+      ["Bitpulse hakkında", [
+        "Bitpulse, İngilizce ve Türkçe yayımlanan bir dünya haberleri sitesidir. Bir PaktLabs girişimidir. Haberlerde imza yoktur.",
       ]],
-      ["Bitpulse neleri kapsıyor", [
-        "Bitpulse teknoloji, bilim, oyun, kültür ve ekonomiyi meraklı okurlara anlatır. Beş kategori vardır: Ekonomi, Teknoloji, Bilim, Oyun ve Kültür. Teknoloji yapay zekâyı, robotları, cihazları, çipleri ve araçları kapsar. Bilim uzayı, doğayı, sağlık araştırmalarını ve Dünya'yı kapsar. Oyun yeni oyunları, fragmanları ve donanımı kapsar. Kültür sinemayı, televizyonu, müziği ve internet kültürünü kapsar. Ekonomi şirketleri, piyasaları ve genel ekonomiyi kapsar. Merak yazıları kalıcı soruları aynı kurallarla yanıtlar.",
-        "Parti siyaseti, seçimler, hükümet tartışmaları, dış politika, savaş ve spor sonuçları kapsam dışıdır; suç, şiddet, kaza ve felaket haberleri de yayımlanmaz. Hedef haftada üç dört haberdir ve boşluk dolsun diye zayıf bir haber yayımlanmaz.",
+      ["Neleri kapsıyoruz", [
+        "Bitpulse dünyadan haberleri yedi bölümde yayımlar: Dünya, Ekonomi, Teknoloji, Bilim, Sağlık, Kültür ve Spor.",
       ]],
-      ["Kaynaklar", [
-        "Arka plan bilgileri dahil her bilgi adı belli bir kaynağa dayanır ve kaynaklar haberle birlikte gösterilir. Resmi duyurular, şirket bildirimleri ve araştırma makaleleri gibi birincil kaynaklar tercih edilir. Tek ve zayıf bir kaynağa dayanan iddia kesin bilgi olarak aktarılmaz.",
-        "Bir kaynak ancak sayfası açılıp okunmuşsa sayılır; bir kişiye ya da yayına atfedilen her söz anılan sayfada bulunmalıdır. Metinler olgulardan yazılır, kaynaklardan kopyalanmaz.",
+      ["Tarafsızlık", [
+        "Bitpulse taraf tutmaz. İddialar, onları dile getirenlere atfedilir. Tarafların görüş ayrılığında her tarafın görüşü aktarılır.",
       ]],
-      ["Bir haber nasıl denetlenir", [
-        "Her haber yayından önce dört ayrı adımdan geçer: yazım, doğrulama, editörlük ve son denetim.",
-        "Yazım adımında haber seçilir ve araştırılır, kullanılan her kaynak açılır ve iki dil sürümü yazılır. Doğrulama adımı bitmiş haberi nasıl yazıldığını bilmeden okur, her kaynağı yeniden açar ve her bilgiyi kaynak sayfasıyla karşılaştırır. Kaynağın desteklemediği bilgi yazıma geri döner.",
-        "Editörlük adımı haberi sıradan bir okur gibi okur; başlığı, temposunu, sade dili ve son haberlerden farkını denetler. Son denetim son adımdır: başlığın, özetin ve ana rakamların dayandığı kaynakları açar, haber yakın zamanlı bir olayı anlatıyorsa daha yeni haber olup olmadığını yeniden arar ve haberin yayımlanıp yayımlanmayacağına karar verir. Bir haber, onu yazan adım tarafından onaylanmaz.",
+      ["Doğruluk ve kaynaklar", [
+        "Her bilgi adı belli bir kaynağa dayanır ve kaynaklar her haberin altında listelenir. Öncelik birincil kaynaklardadır.",
+      ]],
+      ["Kişilerin gizliliği", [
+        "Suç, kaza ve benzeri hassas olaylarla ilgili haberlerde sıradan kişilerin yalnızca baş harfleri yazılır. Çocukların adı verilmez.",
       ]],
       ["Ekonomi haberleri", [
-        "Ekonomi haberleri olanı aktarır. Okura hiçbir zaman bir şeyi alması, satması ya da tutması gerektiğini söylemez, sonucu bilinirmiş gibi fiyat tahmini yapmaz. Bitpulse yatırım tavsiyesi vermez.",
-      ]],
-      ["Görseller", [
-        "Her haberin bir görseli vardır ve sahibi ile kaynağı yanında gösterilir. Konuyla ilgili genel bir görsel dürüstçe tanımlanır ve içinde olmadığı bir olayın parçasıymış gibi sunulmaz.",
-      ]],
-      ["Diller", [
-        "Her haber İngilizce ve Türkçe olarak, aynı olgular ve aynı kaynaklarla yayımlanır. Her sürüm doğal okunacak biçimde yazılır, kelimesi kelimesine çeviri değildir.",
+        "Bitpulse yatırım tavsiyesi vermez.",
       ]],
       ["Düzeltmeler", [
-        "Hatalar açıkça düzeltilir. Düzeltilen haberde neyin yanlış olduğunu söyleyen tarihli bir düzeltme notu bulunur ve olgular sessizce değiştirilmez. Düzeltmeler sayfası hatanın nasıl bildirileceğini anlatır ve düzeltilen haberleri listeler.",
+        "Hatalar tarihli bir notla açıkça düzeltilir. Bir hatanın nasıl bildirileceği Düzeltmeler sayfasında anlatılır.",
       ]],
-      ["Kurallar ve iletişim", [
-        "Bu kurallar, sitenin nasıl işletildiğine dair kayıtlarla birlikte projenin herkese açık kaynak kod deposundadır.",
+      ["İletişim", [
         `Bu ilkelerle ilgili sorular ${CONTACT_EMAIL} adresine gönderilebilir.`,
       ]],
     ],

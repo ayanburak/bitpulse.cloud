@@ -66,7 +66,7 @@ export const ui = {
     privacy: "Privacy",
     editorialPolicy: "Editorial policy",
     corrections: "Corrections",
-    footerNote: "A technology and science news site. A PaktLabs venture.",
+    footerNote: "A world news site. A PaktLabs venture.",
     sourceCode: "Source code",
     onThisPage: "On this page",
     notFoundTitle: "Page not found",
@@ -74,8 +74,8 @@ export const ui = {
     backHome: "Back to top stories",
     searchSite: "Search the site",
     advertisements: "Advertisements",
-    homeTitle: "Bitpulse | Technology, Science, Games and Culture News",
-    metaDescription: "Technology, science, games and culture news for curious readers.",
+    homeTitle: "Bitpulse | World News",
+    metaDescription: "The latest news from around the world.",
   },
   tr: {
     skip: "İçeriğe geç",
@@ -124,7 +124,7 @@ export const ui = {
     privacy: "Gizlilik",
     editorialPolicy: "Yayın ilkeleri",
     corrections: "Düzeltmeler",
-    footerNote: "Bir teknoloji ve bilim haberleri sitesi. Bir PaktLabs girişimi.",
+    footerNote: "Bir dünya haberleri sitesi. Bir PaktLabs girişimi.",
     sourceCode: "Kaynak kod",
     onThisPage: "Bu sayfada",
     notFoundTitle: "Bu sayfa bulunamadı",
@@ -132,30 +132,34 @@ export const ui = {
     backHome: "Manşete dön",
     searchSite: "Sitede ara",
     advertisements: "Reklam",
-    homeTitle: "Bitpulse | Teknoloji, Bilim, Oyun ve Kültür Haberleri",
-    metaDescription: "Meraklı okuyucular için teknoloji, bilim, oyun ve kültür haberleri.",
+    homeTitle: "Bitpulse | Dünya Haberleri",
+    metaDescription: "Dünyadan en son haberler.",
   },
 };
 
 export const categoryNames = {
-  en: { economy: "Economy", technology: "Technology", science: "Science", games: "Games", culture: "Culture" },
-  tr: { economy: "Ekonomi", technology: "Teknoloji", science: "Bilim", games: "Oyun", culture: "Kültür" },
+  en: { world: "World", economy: "Economy", technology: "Technology", science: "Science", health: "Health", culture: "Culture", sports: "Sports" },
+  tr: { world: "Dünya", economy: "Ekonomi", technology: "Teknoloji", science: "Bilim", health: "Sağlık", culture: "Kültür", sports: "Spor" },
 };
 
 export const categoryIntros = {
   en: {
-    economy: "Markets and companies shaping technology, reported without investment advice.",
-    technology: "New models, chips, software and the people building them.",
-    science: "Discoveries from space, the lab and the natural world.",
-    games: "New releases, studios and the hardware they run on.",
-    culture: "Film, television, books and fandom.",
+    world: "Politics, diplomacy and events from around the world.",
+    economy: "Companies, markets and the wider economy.",
+    technology: "Artificial intelligence, devices, chips and the internet.",
+    science: "Space, nature and discoveries.",
+    health: "Medicine, diseases and public health.",
+    culture: "Film, television, music, books and games.",
+    sports: "Competitions, results and athletes.",
   },
   tr: {
-    economy: "Teknolojiyi şekillendiren piyasalar ve şirketler, yatırım tavsiyesi vermeden.",
-    technology: "Yeni modeller, çipler, yazılımlar ve onları geliştirenler.",
-    science: "Uzaydan, laboratuvardan ve doğadan gelen keşifler.",
-    games: "Yeni oyunlar, stüdyolar ve onları çalıştıran donanımlar.",
-    culture: "Film, dizi, kitap ve hayran kültürü.",
+    world: "Dünyadan siyaset, diplomasi ve gelişmeler.",
+    economy: "Şirketler, piyasalar ve genel ekonomi.",
+    technology: "Yapay zekâ, cihazlar, çipler ve internet.",
+    science: "Uzay, doğa ve keşifler.",
+    health: "Tıp, hastalıklar ve halk sağlığı.",
+    culture: "Sinema, dizi, müzik, kitap ve oyun.",
+    sports: "Müsabakalar, sonuçlar ve sporcular.",
   },
 };
 

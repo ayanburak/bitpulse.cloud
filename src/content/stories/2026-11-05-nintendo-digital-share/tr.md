@@ -2,7 +2,7 @@
 slug: nintendo-dijital-satis-payi-alti-ay
 title: "Nintendo yazılım satışlarının yüzde 60,7'sini dijitalden yaptı"
 summary: "Nintendo'nun altı aylık raporuna göre artışın büyük kısmı, kutuda da satılan oyunların indirilmesinden geliyor. Son çeyrekte ise pay biraz geriledi."
-category: games
+category: economy
 date: 2026-11-05
 kind: news
 sources:

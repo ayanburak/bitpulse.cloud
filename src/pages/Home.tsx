@@ -24,7 +24,7 @@ const MIN_CATEGORY_STORIES = 3;
 const LOOKBACK_DAYS = 30;
 const DAY_MS = 86_400_000;
 
-const LAYOUTS = ["layout-a", "layout-a", "layout-a", "layout-a", "layout-a"];
+const LAYOUTS = ["layout-a", "layout-a", "layout-a", "layout-a", "layout-a", "layout-a", "layout-a"];
 
 // --- Sections ---
 
