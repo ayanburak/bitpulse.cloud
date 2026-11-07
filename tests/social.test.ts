@@ -114,3 +114,20 @@ describe("video", () => {
     expect(() => buildSocial(withVideo(clean), HERA)).toThrow(message);
   });
 });
+
+// The same story under a later folder name, so the rule for pages from 7 November applies to it.
+describe("pages from 7 November", () => {
+  const later = { ...HERA, key: "2026-11-07-hera-dimorphos" };
+  const page = (text: string) => BASE.replace("text: A page.", `text: |\n      ${text.replace(/\n/g, "\n      ")}`);
+
+  it("take one short sentence", () => {
+    expect(() => buildSocial(page("The US is offering up to $20 million for tips about Iran's nuclear program."), later)).not.toThrow();
+  });
+
+  it("refuse a second paragraph and a long text, which older posts may keep", () => {
+    const two = page("One sentence.\n\nAnother one.");
+    expect(() => buildSocial(two, later)).toThrow("more than 1 paragraph");
+    expect(() => buildSocial(two, HERA)).not.toThrow();
+    expect(() => buildSocial(page("word ".repeat(30).trim()), later)).toThrow("the limit is 120");
+  });
+});

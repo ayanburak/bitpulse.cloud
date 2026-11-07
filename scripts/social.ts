@@ -28,9 +28,11 @@
 // fills the frame behind it, the line never changes, and the closing screen runs for a moment
 // while the sound fades. Sound is brought to -14 LUFS, the level Instagram and X play at.
 //
-// XXX: A page whose text climbs too far over the photo stops the script instead of being saved.
-// src/social.ts limits the characters on a page so this should not happen. TEXT_TOP below is
-// the last guard, because the real height of a text also depends on its words.
+// XXX: The text of a page starts at the top of the dark band in scripts/social-card.html. A text
+// too tall for the band is moved up so it ends at TEXT_BOTTOM, and one that would then climb too
+// far over the photo stops the script instead of being saved. src/social.ts limits the
+// characters on a page so this should not happen. TEXT_TOP is the last guard, because the real
+// height of a text also depends on its words.
 
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
@@ -52,7 +54,9 @@ const SIZE = { width: 1080, height: 1350 };
 // Wikimedia and several press sites refuse requests that do not name the client.
 const HEADERS = { "User-Agent": "BitpulseSocial/1.0 (+https://bitpulse.cloud)" };
 
-// The text block may not start higher than this, otherwise it covers most of the photo.
+// The text block ends no lower than TEXT_BOTTOM, the bottom margin of the page, and may not start
+// higher than TEXT_TOP, otherwise it covers most of the photo.
+const TEXT_BOTTOM = 1262;
 const TEXT_TOP = 680;
 
 const REEL_TEMPLATE = pathToFileURL(resolve("scripts/social-reel.html")).href;
@@ -220,7 +224,7 @@ async function write(page: Page, post: SocialPost, key: string, dir: string): Pr
   for (const [index, { image, paragraphs }] of post.pages.entries()) {
     await page.setViewportSize(SIZE);
     await page.goto(TEMPLATE);
-    const top = await page.evaluate(async ({ image, paragraphs }) => {
+    const top = await page.evaluate(async ({ image, paragraphs, limit }) => {
       const photo = document.querySelector("img")!;
       photo.src = image;
       const text = document.querySelector(".text")!;
@@ -231,8 +235,10 @@ async function write(page: Page, post: SocialPost, key: string, dir: string): Pr
       }
       await photo.decode();
       await document.fonts.ready;
+      const box = text.getBoundingClientRect();
+      if (box.bottom > limit) (text as HTMLElement).style.top = `${limit - box.height}px`;
       return text.getBoundingClientRect().top;
-    }, { image: images.get(image)!, paragraphs });
+    }, { image: images.get(image)!, paragraphs, limit: TEXT_BOTTOM });
 
     if (top < TEXT_TOP) throw new Error(`${key}: page ${index + 1} is too long, its text starts at ${Math.round(top)} pixels and the limit is ${TEXT_TOP}`);
     await page.screenshot({ path: join(dir, `page-${index + 1}.png`) });

@@ -68,6 +68,12 @@ const MAX_PARAGRAPHS = 2;
 // About eight lines on a page. Longer text climbs over the photo, so it goes on another page.
 const PAGE_LIMIT = 300;
 
+// From 2026-11-07 a page carries one short sentence and the caption carries the rest, because a
+// page is looked at for a moment while scrolling. Older posts keep the old limits, since posts
+// that were already shared are not rewritten.
+const SHORT_PAGES_SINCE = "2026-11-07";
+const SHORT_PAGE_LIMIT = 120;
+
 // Instagram allows twenty pages in one post and cuts captions at 2,200 characters.
 const MAX_PAGES = 20;
 const CAPTION_LIMIT = 2200;
@@ -111,7 +117,7 @@ function httpUrl(value: unknown, field: string, where: string): string {
 }
 
 // The text of a page is written as one block, with an empty line between its paragraphs.
-function readPages(value: unknown, where: string): SocialPage[] {
+function readPages(value: unknown, where: string, short: boolean): SocialPage[] {
   if (!Array.isArray(value) || value.length === 0) throw new Error(`${where}: missing pages`);
   if (value.length > MAX_PAGES) throw new Error(`${where}: more than ${MAX_PAGES} pages`);
   return value.map((page, index) => {
@@ -120,9 +126,11 @@ function readPages(value: unknown, where: string): SocialPage[] {
     const unknown = Object.keys(page).find((field) => !PAGE_FIELDS.includes(field));
     if (unknown) throw new Error(`${at}: unknown field: ${unknown}`);
     const paragraphs = text(page.text, "text", at).split(/\n\s*\n/).map((part) => part.replace(/\s+/g, " ").trim());
-    if (paragraphs.length > MAX_PARAGRAPHS) throw new Error(`${at}: more than ${MAX_PARAGRAPHS} paragraphs`);
+    const most = short ? 1 : MAX_PARAGRAPHS;
+    if (paragraphs.length > most) throw new Error(`${at}: more than ${most} paragraph${most > 1 ? "s" : ""}`);
     const length = paragraphs.join(" ").length;
-    if (length > PAGE_LIMIT) throw new Error(`${at}: text is ${length} characters, the limit is ${PAGE_LIMIT}`);
+    const limit = short ? SHORT_PAGE_LIMIT : PAGE_LIMIT;
+    if (length > limit) throw new Error(`${at}: text is ${length} characters, the limit is ${limit}`);
     return { image: httpUrl(page.image, "image", at), credit: text(page.credit, "credit", at), paragraphs };
   });
 }
@@ -202,7 +210,7 @@ export function buildSocial(raw: string, story: Story): SocialPost {
   const length = x.length + 2 + X_LINK_LENGTH;
   if (length > X_LIMIT) throw new Error(`${where}: X post is ${length} characters with the link, the limit is ${X_LIMIT}`);
 
-  const pages = readPages(data.pages, where);
+  const pages = readPages(data.pages, where, story.key.slice(0, 10) >= SHORT_PAGES_SINCE);
   const video = data.video === undefined ? undefined : readVideo(data.video, where);
   const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages, video)} ${SOURCE_NOTE}`];
   const full = caption.join("\n\n");

@@ -18,7 +18,10 @@ body { font-family: Archivo, sans-serif; color: #f3f4f0; }
   linear-gradient(180deg, rgba(20,21,19,0) 38%, rgba(20,21,19,.55) 54%, rgba(20,21,19,.92) 66%, #141513 71%); }
 .logo { position: absolute; top: 64px; left: 72px; display: flex; align-items: center; gap: 14px; font-size: 44px; font-weight: 780; letter-spacing: -.035em; line-height: 1; }
 .logo svg { width: 46px; height: 46px; }
-.text { position: absolute; left: 72px; right: 72px; bottom: 88px; }
+/* The text starts at the top of the dark band under the photo. Anchored to the bottom, a one
+   sentence page sat far down with an empty band above it. scripts/social.ts moves a text that
+   would run off the bottom up until it fits, which only older long pages need. */
+.text { position: absolute; left: 72px; right: 72px; top: 1000px; }
 .text p { font-size: 46px; font-weight: 600; line-height: 1.24; letter-spacing: -.015em; text-wrap: pretty; }
 .text p + p { margin-top: 30px; }
 </style>
