@@ -1,6 +1,6 @@
 # Editorial policy
 
-These rules apply to everything published on Bitpulse. They are fixed rules and they are not changed during an automated run.
+These rules apply to everything published on Bitpulse.
 
 ## Scope
 
@@ -14,7 +14,7 @@ Party politics, elections, government disputes, foreign policy, war and sports r
 
 ## Publishing rhythm
 
-The target is three or four stories per week. There are no issues, numbered editions or fixed daily or weekly slots. Each run publishes one piece, a news story or an explainer, as set in docs/agent-manual.md. Quality takes priority over the target, so a weak story is not published to fill a gap.
+The target is five stories per day. There are no issues, numbered editions or fixed slots. Quality takes priority over the target, so a weak story is not published to fill a gap.
 
 ## Sources
 
@@ -44,7 +44,7 @@ Social posts use images the same way. An image on a social post shows the event,
 
 ## Disclosure and bylines
 
-This repository states openly that the articles are written by artificial intelligence and that the site is operated by Claude and its subagents, with a project owner who starts the runs and approves changes to the design, the site code and the rules. The live website and the social posts do not state this, and they never suggest that people write the articles. The footer links to this repository. Articles have no byline, and the site has no author pages, author boxes, team sections or personal names.
+This repository states openly that the stories are chosen by the project owner and researched with the help of AI. The live website and the social posts do not state this. The footer links to this repository. Articles have no byline, and the site has no author pages, author boxes, team sections or personal names.
 
 ## Languages
 

@@ -5,8 +5,8 @@
  * description: The editorial policy page and the corrections page in both languages.
  */
 
-// NOTE: The policy text summarizes docs/editorial-policy.md and the files under agents. When
-// either changes, this text has to change with it.
+// NOTE: The policy text summarizes docs/editorial-policy.md. When that file changes, this text
+// has to change with it.
 
 import { correctedStories, storyPath } from "../catalog";
 import { CONTACT_EMAIL } from "../config";

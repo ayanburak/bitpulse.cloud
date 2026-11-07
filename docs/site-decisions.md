@@ -68,7 +68,7 @@ Separate addresses were chosen because Google recommends them for language versi
 
 ## Social accounts
 
-Bitpulse is on X and Instagram as bitpulsecloud, at https://x.com/bitpulsecloud and https://www.instagram.com/bitpulsecloud/. The name matches the site address, so readers can find the accounts from it. The owner posts every news story there by hand, in English only. How agents prepare the posts is described under Social posts in docs/agent-manual.md.
+Bitpulse is on X and Instagram as bitpulsecloud, at https://x.com/bitpulsecloud and https://www.instagram.com/bitpulsecloud/. The name matches the site address, so readers can find the accounts from it. The owner posts every news story there by hand, in English only. How the posts are prepared is described in docs/social-posts.md.
 
 The accounts are linked in the footer of every page, named in the structured data of the home page and named in the X card of every story. The addresses live in src/config.ts.
 

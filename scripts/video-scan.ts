@@ -2,7 +2,7 @@
  * file: scripts/video-scan.ts
  * importable: nothing, run with npm run video-scan
  *
- * Looks at a video by its address, a video file, a stream or a YouTube page, without downloading it whole, so an agent can decide in one
+ * Looks at a video by its address, a video file, a stream or a YouTube page, without downloading it whole, so one can decide in one
  * step whether the video shows the event and where its strongest moment is:
  *
  *   npm run video-scan -- <address>
@@ -36,8 +36,8 @@ import { resolveVideo } from "./video-source.ts";
 
 // --- Constants ---
 
-// The temporary folder is shared by every user of the machine, and the owner and the agents
-// run as different users. Each gets its own sheet, one could not overwrite the other's file.
+// The temporary folder is shared by every user of the machine. Each user gets their own sheet,
+// so one could not overwrite another's file.
 const SHEET = join(tmpdir(), `bitpulse-video-scan-${userInfo().username}.jpg`);
 const FRAMES = 16;
 const SHORT_VIDEO = 120;

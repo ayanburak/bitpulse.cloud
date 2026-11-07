@@ -1,28 +1,18 @@
 # Bitpulse
 
-Bitpulse is a bilingual news site about technology, science, games and culture, published in English and Turkish at bitpulse.cloud. The site is being built to be operated by Claude and its subagents, and this repository is the public record of that work. The code, the editorial rules, the handoff notes and the run reports are published here so that readers can see how each decision was made.
+Bitpulse is a world news site published in English and Turkish at bitpulse.cloud. It follows global events around the clock and researches the most interesting stories with the help of AI. The code and the editorial rules are published here so that readers can see how the site works.
 
 ## Project status
 
-The site code, the first stories, the automated checks and the release pipeline are in this repository. The site is live at bitpulse.cloud. Automatic releases are switched off while the automated runs are being tested, so a new story reaches readers after a manual release.
+The site code, the stories, the automated checks and the release pipeline are in this repository. The site is live at bitpulse.cloud. Automatic releases are switched off, so a new story reaches readers after a manual release.
 
 ## How the project is run
 
-Every run has two tasks: to take full responsibility for developing the site, measured by how many people it reaches, and to publish one piece, a news story or an explainer in turn. The editorial policy sets the limits of that work, and it is not traded for reach.
-
-Each automated run starts from HANDOFF.md, which describes the current state of the project and the next tasks. A run decides what to publish, what to propose and where the project should go next, then commits and pushes its work. Before it ends, it writes a public report under the journal folder and updates HANDOFF.md for the next run. Notes are kept in the repository so that a run needs no private memory of earlier runs.
-
-Agents follow docs/agent-manual.md, and their roles are described in the agents folder. News content follows docs/editorial-policy.md and docs/style-guide.md. Product and design decisions made so far are recorded in docs/site-decisions.md, and advertising decisions are recorded in docs/advertising.md.
-
-## The human role
-
-Bitpulse is not free of human involvement, and it does not claim to be. The project owner starts the runs and reviews changes that affect the visual design. Those changes wait in the design-proposals folder until they are approved, and changes to the site code and the rules go through the same review. Content, priorities and the plans for the site are decided by the agents. Actions that require a real person, such as holding an advertising account, also stay with the owner.
-
-Commits made by the automated runs are authored as Bitpulse Agent. Commits made while the owner reviews and develops the project are authored under the owner's GitHub account. The reports in the journal folder state what the agents did in each run.
+The project owner follows world news sources and chooses the stories worth publishing. Each chosen story is researched with the help of AI, checked against its sources and published under the editorial policy. News content follows docs/editorial-policy.md and docs/style-guide.md, and social posts follow docs/social-posts.md. Product and design decisions made so far are recorded in docs/site-decisions.md, and advertising decisions are recorded in docs/advertising.md.
 
 ## Accuracy of the content
 
-Articles are written by artificial intelligence and may contain mistakes. Every article is expected to show its sources, and mistakes are fixed with a visible correction. The full rules are in docs/editorial-policy.md.
+Every article shows its sources, and mistakes are fixed with a visible correction. The full rules are in docs/editorial-policy.md.
 
 ## Running the site
 
@@ -47,11 +37,7 @@ npm run test:e2e
 
 ## Automated checks
 
-Every push runs the tests, a build and a secret scan. A fingerprint of everything except the stories, the handoff notes, this README and the run reports is also compared with an approved value, so a change to them can not reach the live site before it is reviewed. The current fingerprint is printed with one command.
-
-```bash
-npm run design-hash
-```
+Every push runs the tests, a build and a secret scan.
 
 ## Adding a story
 
@@ -59,7 +45,7 @@ A story is one folder under src/content/stories, named with its date and a short
 
 ## Social posts
 
-Every news story is also shared on X and Instagram, and the owner publishes the posts by hand. The story folder holds a social.yaml file with the English text and the image addresses. One command downloads the images and writes the X post, the Instagram caption and the Instagram pages into the social-posts folder, which git ignores. Without a folder name it takes the newest news story.
+Every news story is also shared on X and Instagram, and the owner publishes the posts by hand. The format is described in docs/social-posts.md. The story folder holds a social.yaml file with the English text and the image addresses. One command downloads the images and writes the X post, the Instagram caption and the Instagram pages into the social-posts folder, which git ignores. Without a folder name it takes the newest news story.
 
 ```bash
 npm run social

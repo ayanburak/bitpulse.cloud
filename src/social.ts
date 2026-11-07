@@ -4,8 +4,8 @@
  *
  * A news story can carry a social.yaml file next to en.md. It holds the English text for the
  * social accounts: one X post, one or more Instagram pages and an Instagram caption. Every page
- * has its own image, given as an address and a credit. Agents write the text and choose the
- * images. The link, the credit line and the source note are added here, so they are the same on
+ * has its own image, given as an address and a credit. The text and the images are chosen
+ * by hand. The link, the credit line and the source note are added here, so they are the same on
  * every post and can not be forgotten.
  *
  * A story whose event was filmed can also carry a video: one unbroken clip of real footage,
