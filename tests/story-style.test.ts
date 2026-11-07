@@ -13,8 +13,12 @@ import { describe, expect, it } from "vitest";
 import { buildStories } from "../src/stories";
 
 const ROOT = "src/content/stories";
-const MIN_WORDS = 500;
-const MAX_WORDS = 900;
+// News stories became short on 2026-11-07. Stories published before that keep the old length,
+// because published stories are not rewritten. Turkish says the same thing in fewer words, so its
+// lower limit sits a little below the English one.
+const SHORT_SINCE = "2026-11-07";
+const NEWS_WORDS = { en: [300, 500], tr: [250, 500] } as const;
+const OLD_NEWS_WORDS = [500, 900] as const;
 // Turkish says the same thing in fewer words, so the lower limit sits below the 1,500 of the guide.
 const MIN_LONG_WORDS = 1200;
 const MAX_LONG_WORDS = 2600;
@@ -40,8 +44,10 @@ const stories = buildStories(readStoryFiles());
 describe.each(stories.filter((story) => story.kind === "news"))("$key", (story) => {
   it.each(LANGS)("has a news length in %s", (lang) => {
     const words = wordCount(story.versions[lang].html);
-    expect(words).toBeGreaterThanOrEqual(MIN_WORDS);
-    expect(words).toBeLessThanOrEqual(MAX_WORDS);
+    // The folder name starts with the date, and ISO dates compare correctly as text.
+    const [min, max] = story.key.slice(0, 10) >= SHORT_SINCE ? NEWS_WORDS[lang] : OLD_NEWS_WORDS;
+    expect(words).toBeGreaterThanOrEqual(min);
+    expect(words).toBeLessThanOrEqual(max);
   });
 });
 
