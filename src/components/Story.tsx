@@ -51,10 +51,22 @@ export function ImageCredit({ story, lang }: { story: Story; lang: Lang }) {
 
 // --- Text ---
 
+/**
+ * Shows a time in UTC. The browser script rewrites it in the reader's own time zone, so readers
+ * without JavaScript still see a correct time with its zone.
+ *
+ * @param time Full ISO time in UTC.
+ * @param style stamp gives the day and the time, clock only the time.
+ */
+export function LocalTime({ time, lang, style }: { time: string; lang: Lang; style: "stamp" | "clock" }) {
+  return <time dateTime={time} data-local={style}>{formatDate(time, lang, style)} UTC</time>;
+}
+
 export function Meta({ story, lang, dateStyle = "day" }: { story: Story; lang: Lang; dateStyle?: DateStyle | null }) {
   return (
     <p className="meta">
       <b>{categoryNames[lang][story.category]}</b>{" "}
+      {story.promoted && <span className="meta__updated">{ui[lang].updated}</span>}{" "}
       {dateStyle && <time dateTime={story.date}>{formatDate(story.date, lang, dateStyle)}</time>}
     </p>
   );

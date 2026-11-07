@@ -4,6 +4,7 @@ title: "Nintendo's Game Software Sales Were 60.7% Digital in Six Months"
 summary: "Most of the rise comes from downloading games that are also sold in boxes, Nintendo's half-year report shows. The latest quarter slipped a little."
 category: economy
 date: 2026-11-05
+time: "20:35"
 kind: news
 sources:
   - name: "Nintendo: Consolidated Financial Highlights, six months ended September 2026 (5 November 2026)"

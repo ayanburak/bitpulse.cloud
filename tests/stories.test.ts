@@ -20,6 +20,7 @@ function file(overrides: Record<string, string> = {}, body = "Text.\n"): string 
     summary: "Summary",
     category: "science",
     date: "2026-10-20",
+    time: '"09:00"',
     kind: "news",
     sources: "\n  - name: Example\n    url: https://example.com/a",
     image: IMAGE,
@@ -85,13 +86,43 @@ describe("buildStories", () => {
     expect(() => buildStories(story(file(), tr))).toThrow("category differs");
   });
 
-  it("reads an optional updated date and checks it", () => {
-    expect(buildStories(story())[0].updated).toBeUndefined();
-    const withDate = (updated: string, trUpdated = updated) => story(file({ updated }), file({ slug: "ornek-haber", updated: trUpdated }));
-    expect(buildStories(withDate("2026-10-25"))[0].updated).toBe("2026-10-25");
-    expect(() => buildStories(withDate("2026-10-19"))).toThrow("before the story date");
-    expect(() => buildStories(withDate("soon"))).toThrow("invalid updated date");
-    expect(() => buildStories(withDate("2026-10-25", "2026-10-26"))).toThrow("differs between languages");
+  it("reads the publishing time in UTC", () => {
+    expect(buildStories(story())[0].published).toBe("2026-10-20T09:00:00Z");
+    const withTime = (time: string) => story(file({ time }), file({ slug: "ornek-haber", time }));
+    expect(() => buildStories(withTime('"9am"'))).toThrow("invalid time");
+    expect(() => buildStories(story(file(), file({ slug: "ornek-haber", time: '"10:00"' })))).toThrow("time differs");
+  });
+
+  it("orders stories of the same day by their time", () => {
+    const later = story(file({ time: '"18:30"', slug: "later" }), file({ time: '"18:30"', slug: "sonra" }), "2026-10-20-later");
+    expect(buildStories({ ...story(), ...later }).map((item) => item.key)).toEqual(["2026-10-20-later", FOLDER]);
+  });
+
+  it("reads an optional correction time and checks it", () => {
+    expect(buildStories(story())[0].corrected).toBeUndefined();
+    const withFix = (corrected: string, trCorrected = corrected) =>
+      story(file({ corrected }), file({ slug: "ornek-haber", corrected: trCorrected }));
+    expect(buildStories(withFix('"2026-10-25 08:00"'))[0].corrected).toBe("2026-10-25T08:00:00Z");
+    expect(() => buildStories(withFix('"2026-10-20 08:00"'))).toThrow("before the publishing time");
+    expect(() => buildStories(withFix("soon"))).toThrow("invalid corrected time");
+    expect(() => buildStories(withFix('"2026-10-25 08:00"', '"2026-10-26 08:00"'))).toThrow("differs between languages");
+    expect(() => buildStories(story(file({ updated: "2026-10-25" })))).toThrow("now called corrected");
+  });
+
+  it("reads updates and promotes a story with the latest promoted one", () => {
+    const en = '\n  - time: "2026-10-20 11:00"\n    note: First\n  - time: "2026-10-21 08:00"\n    note: Second\n    promote: true';
+    const tr = '\n  - time: "2026-10-20 11:00"\n    note: Birinci\n  - time: "2026-10-21 08:00"\n    note: İkinci\n    promote: true';
+    const [result] = buildStories(story(file({ updates: en }), file({ slug: "ornek-haber", updates: tr })));
+    expect(result.versions.tr.updates.map((item) => item.note)).toEqual(["Birinci", "İkinci"]);
+    expect(result.promoted).toBe("2026-10-21T08:00:00Z");
+  });
+
+  it("rejects updates that disagree between languages or come out of order", () => {
+    const one = (time: string, promote = "false") => `\n  - time: "${time}"\n    note: Note\n    promote: ${promote}`;
+    const build = (en: string, tr = en) => buildStories(story(file({ updates: en }), file({ slug: "ornek-haber", updates: tr })));
+    expect(() => build(one("2026-10-20 11:00"), one("2026-10-20 11:00", "true"))).toThrow("updates differ");
+    expect(() => build(one("2026-10-20 08:00"))).toThrow("follow the publishing time");
+    expect(() => build(one("2026-10-20 11:00", "yes"))).toThrow("promote must be true or false");
   });
 
   it("rejects a date that does not match the folder", () => {

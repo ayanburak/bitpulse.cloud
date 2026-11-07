@@ -39,6 +39,8 @@ export const ui = {
     minRead: (n: number) => `${n} min read`,
     minutes: (n: number) => `${n} min`,
     copyLink: "Copy link",
+    updated: "Updated",
+    updates: "Updates",
     inThisStory: "In this story",
     contents: "Contents",
     sources: "Sources",
@@ -97,6 +99,8 @@ export const ui = {
     minRead: (n: number) => `${n} dakikalık okuma`,
     minutes: (n: number) => `${n} dk`,
     copyLink: "Bağlantıyı kopyala",
+    updated: "Güncellendi",
+    updates: "Güncellemeler",
     inThisStory: "Bu haberde",
     contents: "İçindekiler",
     sources: "Kaynaklar",
@@ -175,18 +179,20 @@ const STYLES = {
   month: { month: "long", year: "numeric" },
   monthName: { month: "long" },
   weekday: { weekday: "short" },
+  stamp: { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23" },
+  clock: { hour: "2-digit", minute: "2-digit", hourCycle: "h23" },
 } satisfies Record<string, Intl.DateTimeFormatOptions>;
 
 /**
  * Formats a date for one language.
  *
- * @param value Date object or text in the form YYYY-MM-DD.
+ * @param value Date object, text in the form YYYY-MM-DD or a full ISO time in UTC.
  * @param lang Language of the result.
  * @param style Name of the date style.
  * @returns The formatted date.
  */
 export function formatDate(value: string | Date, lang: Lang, style: keyof typeof STYLES): string {
   // UTC keeps a date such as 2026-10-20 on the same day in every time zone of the build machine.
-  const date = typeof value === "string" ? new Date(`${value}T00:00:00Z`) : value;
+  const date = typeof value !== "string" ? value : new Date(value.length === 10 ? `${value}T00:00:00Z` : value);
   return new Intl.DateTimeFormat(LOCALES[lang], { ...STYLES[style], timeZone: "UTC" }).format(date);
 }

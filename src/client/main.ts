@@ -36,6 +36,22 @@ function showToday(): void {
   }).format(new Date());
 }
 
+// --- Local Times ---
+
+// The pages are written with UTC times. Here they are rewritten in the reader's own time zone,
+// with the same two styles the build uses.
+const TIME_STYLES: Record<string, Intl.DateTimeFormatOptions> = {
+  stamp: { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23" },
+  clock: { hour: "2-digit", minute: "2-digit", hourCycle: "h23" },
+};
+
+function showLocalTimes(): void {
+  document.querySelectorAll<HTMLTimeElement>("time[data-local]").forEach((element) => {
+    const style = TIME_STYLES[element.dataset.local ?? ""];
+    if (style) element.textContent = new Intl.DateTimeFormat(LOCALE, style).format(new Date(element.dateTime));
+  });
+}
+
 // --- Pulse Line ---
 
 // Only --x and --w are written, the motion itself comes from CSS transitions. Offsets are read
@@ -199,6 +215,7 @@ function startContents(): void {
 // --- Start ---
 
 showToday();
+showLocalTimes();
 document.querySelectorAll<HTMLElement>(".rail").forEach(startRail);
 startDrawer();
 startLanguageSwitch();

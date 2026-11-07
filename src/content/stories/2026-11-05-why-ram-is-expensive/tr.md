@@ -4,6 +4,7 @@ title: "Yapay Zekâ Veri Merkezleri RAM'i Neden Bu Kadar Pahalılaştırıyor?"
 summary: "Bellek üreticileri hiç olmadığı kadar kazanıyor. Yapay zekâ için üretilen tek bir çip türü dizüstü bilgisayarların ve telefonların belleğini sıkıştırıyor, bu çipin en büyük üreticilerinden SK hynix de talebin 2030'a kadar arzı aşmasını bekliyor."
 category: economy
 date: 2026-11-05
+time: "19:39"
 kind: long
 sources:
   - name: "Micron: 2026 mali yılı dördüncü çeyrek sonuçları (SEC Form 8-K, ek 99.1)"

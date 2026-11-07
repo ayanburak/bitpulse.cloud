@@ -9,7 +9,7 @@
 // the page never shows half empty rows while the archive is still small. There is no most read
 // section yet because it needs real readership numbers, and invented rankings are not acceptable.
 
-import { longStories, newsStories, stories, storiesIn, storyPath } from "../catalog";
+import { frontStories, longStories, stories, storiesIn, storyPath } from "../catalog";
 import { Layout, useLang } from "../components/Layout";
 import { ImageCredit, Meta, Photo, StoryCard } from "../components/Story";
 import { categoryNames, formatDate, ui, type Lang } from "../i18n";
@@ -23,6 +23,9 @@ const MIN_BOXES = 6;
 const MIN_CATEGORY_STORIES = 3;
 const LOOKBACK_DAYS = 30;
 const DAY_MS = 86_400_000;
+
+// The top of the page follows promoted updates, everything below it the publishing order.
+const frontNews = frontStories.filter((story) => story.kind === "news");
 
 const LAYOUTS = ["layout-a", "layout-a", "layout-a", "layout-a", "layout-a", "layout-a", "layout-a"];
 
@@ -56,7 +59,7 @@ function Feed({ lang }: { lang: Lang }) {
         <a className="link-line" href={`/${lang}/archive/`}>{t.archive}</a>
       </div>
       <ol className="feed rows">
-        {stories.slice(0, FEED_SIZE).map((story, index) => (
+        {frontStories.slice(0, FEED_SIZE).map((story, index) => (
           <li key={story.key} className={index === 0 ? "current" : undefined}>
             <time dateTime={story.date}>{formatDate(story.date, lang, "tiny")}</time>
             <div className="card">
@@ -73,7 +76,7 @@ function Feed({ lang }: { lang: Lang }) {
 }
 
 function Secondary({ lang }: { lang: Lang }) {
-  const [first, ...rest] = newsStories().slice(1, 1 + SECONDARY_SIZE);
+  const [first, ...rest] = frontNews.slice(1, 1 + SECONDARY_SIZE);
   if (!first) return null;
   return (
     <div className="grid secondary">
@@ -188,7 +191,7 @@ export function Home() {
     <Layout>
       <div className="container">
         <div className="grid lead">
-          <Lead story={newsStories()[0]} lang={lang} />
+          <Lead story={frontNews[0]} lang={lang} />
           <Feed lang={lang} />
         </div>
         <Secondary lang={lang} />

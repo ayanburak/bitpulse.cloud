@@ -4,6 +4,7 @@ title: "ESA's Hera Probe Spots the Asteroid Moon NASA Hit in 2022"
 summary: "In the image, the moon is a single pixel. What matters is what that pixel promises: a first close look at the only asteroid people have ever pushed off its path, and a list of puzzles that no one has solved yet."
 category: science
 date: 2026-11-04
+time: "10:37"
 kind: news
 sources:
   - name: "ESA: First light, Hera resolves two asteroids instead of one (27 October 2026)"

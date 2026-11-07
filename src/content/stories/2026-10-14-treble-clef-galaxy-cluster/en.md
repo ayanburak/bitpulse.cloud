@@ -4,6 +4,7 @@ title: "The Sky's Treble Clef Hides a Giant Collision Behind the Milky Way"
 summary: "A glowing treble clef in radio images had a hidden cause. Now X-ray telescopes have found what lights it up, and the answer is a cosmic crash hidden behind our own galaxy."
 category: science
 date: 2026-10-14
+time: "12:00"
 kind: news
 sources:
   - name: "NASA Science: NASA's Chandra Breaks Down 'Treble Clef's' Galaxy Cluster Collision"

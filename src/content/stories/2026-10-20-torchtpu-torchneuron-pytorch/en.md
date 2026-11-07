@@ -4,6 +4,7 @@ title: "Google and Amazon Made the Same AI Chip Move on the Same Day"
 summary: "Two tech giants took the stage on the same day to make AI software run more easily on their own chips. The goal is clear: win over the developers who decide which hardware gets used."
 category: technology
 date: 2026-10-20
+time: "12:00"
 kind: news
 sources:
   - name: "Google Cloud Blog: TorchTPU is now open source"

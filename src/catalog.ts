@@ -1,7 +1,7 @@
 /**
  * file: src/catalog.ts
- * importable: stories, findStory, storyPath, storiesIn, correctedStories, longStories, newsStories, monthKeys, storiesInMonth,
- *             counterpart, listPagePaths, sitemapEntries, modifiedDate, imageUrl, imageSet, feedPath, Category
+ * importable: stories, frontStories, findStory, storyPath, storiesIn, correctedStories, longStories, newsStories, monthKeys,
+ *             storiesInMonth, counterpart, listPagePaths, sitemapEntries, modifiedTime, imageUrl, imageSet, feedPath, Category
  *
  * description: Answers page questions about published stories and site addresses.
  */
@@ -13,6 +13,12 @@ import { categories, loadStories, type Story } from "./stories";
 export type Category = (typeof categories)[number];
 
 export const stories = loadStories();
+
+// The home page follows promoted updates, so a story the editor raises comes back to the top.
+// Every other list keeps the publishing order.
+export const frontStories = [...stories].sort(
+  (a, b) => (b.promoted ?? b.published).localeCompare(a.promoted ?? a.published) || a.key.localeCompare(b.key),
+);
 
 // --- Stories ---
 
@@ -39,8 +45,8 @@ export function newsStories(): Story[] {
 // Only stories with a dated correction are listed, the most recently corrected first.
 export function correctedStories(): Story[] {
   return stories
-    .filter((story) => story.updated !== undefined)
-    .sort((a, b) => (b.updated as string).localeCompare(a.updated as string));
+    .filter((story) => story.corrected !== undefined)
+    .sort((a, b) => (b.corrected as string).localeCompare(a.corrected as string));
 }
 
 // --- Months ---
@@ -104,9 +110,11 @@ export interface SitemapEntry {
   alternates: { hreflang: string; path: string }[];
 }
 
-// Stories have no publishing time, so the correction date or else the story date is all there is.
-export function modifiedDate(story: Story): string {
-  return story.updated ?? story.date;
+// The latest of the publishing time, the updates and the correction. All are ISO texts in UTC,
+// so the largest string is the latest moment.
+export function modifiedTime(story: Story): string {
+  const times = [story.published, ...story.versions.en.updates.map((item) => item.time), story.corrected ?? ""];
+  return times.reduce((latest, time) => (time > latest ? time : latest));
 }
 
 /**
@@ -116,7 +124,7 @@ export function modifiedDate(story: Story): string {
  * Only story pages carry a lastmod date.
  */
 export function sitemapEntries(): SitemapEntry[] {
-  const dates = new Map(stories.flatMap((story) => langs.map((lang) => [storyPath(story, lang), modifiedDate(story)] as const)));
+  const dates = new Map(stories.flatMap((story) => langs.map((lang) => [storyPath(story, lang), modifiedTime(story)] as const)));
   return listPagePaths()
     .filter((path) => path !== "/" && !path.endsWith("404.html") && !path.endsWith("/search/"))
     .map((path) => {

@@ -4,6 +4,7 @@ title: "Google's Cloud Sales Doubled, Yet Alphabet Had Its Worst Stock Day"
 summary: "Alphabet says searches are growing at their fastest pace in five years, but the money from them is not. Add a cash shortfall far bigger than analysts expected, and investors erased close to half a trillion dollars in one day."
 category: economy
 date: 2026-11-01
+time: "14:33"
 kind: news
 sources:
   - name: "Alphabet: Third quarter 2026 results"

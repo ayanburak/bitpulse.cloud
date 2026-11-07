@@ -4,6 +4,7 @@ title: "A Grave Among a Theater's Seats in Bursa Puzzles Archaeologists"
 summary: "The ancient city of Apollonia had a cemetery of its own, which is what makes a nearly 2,000-year-old cremation grave in its theater so strange. The excavation director has a cautious idea, and a lot of digging is left."
 category: culture
 date: 2026-11-03
+time: "20:38"
 kind: news
 sources:
   - name: "Daily Sabah (with Anadolu Agency): Unusual tomb discovered at ancient theater in Türkiye"

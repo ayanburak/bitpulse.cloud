@@ -4,6 +4,7 @@ title: "Four Volunteers Walked Out of 378 Days on Pretend Mars"
 summary: "After more than a year of slow messages home and limited supplies, four volunteers left a 3D-printed habitat in Houston on October 31. Two weeks of debriefs come next, and NASA says what they recorded could shape how it feeds and supports crews on the Moon and Mars."
 category: science
 date: 2026-11-01
+time: "16:39"
 kind: news
 sources:
   - name: "NASA: NASA Invites Media to Crew Completion of Yearlong Mars Simulation"

@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { correctedStories, counterpart, listPagePaths, longStories, modifiedDate, sitemapEntries, stories, storyPath } from "../src/catalog";
+import { correctedStories, counterpart, frontStories, listPagePaths, longStories, modifiedTime, sitemapEntries, stories, storyPath } from "../src/catalog";
 import { jsonForScript } from "../src/components/Layout";
 import { escapeXml, renderFeed } from "../src/feed";
 
@@ -30,7 +30,7 @@ describe("renderFeed", () => {
   });
 
   it("dates items in the RSS format", () => {
-    expect(renderFeed("en", [stories[0]])).toMatch(/<pubDate>\w{3}, \d{2} \w{3} \d{4} 00:00:00 GMT<\/pubDate>/);
+    expect(renderFeed("en", [stories[0]])).toContain(`<pubDate>${new Date(stories[0].published).toUTCString()}</pubDate>`);
   });
 });
 
@@ -55,11 +55,11 @@ describe("policy pages", () => {
     }
   });
 
-  it("lists only stories with an updated date, newest correction first", () => {
+  it("lists only corrected stories, newest correction first", () => {
     const corrected = correctedStories();
-    expect(corrected.every((story) => story.updated !== undefined)).toBe(true);
-    expect(corrected.map((story) => story.updated)).toEqual([...corrected.map((story) => story.updated)].sort().reverse());
-    expect(corrected.length).toBe(stories.filter((story) => story.updated).length);
+    expect(corrected.every((story) => story.corrected !== undefined)).toBe(true);
+    expect(corrected.map((story) => story.corrected)).toEqual([...corrected.map((story) => story.corrected)].sort().reverse());
+    expect(corrected.length).toBe(stories.filter((story) => story.corrected).length);
   });
 
   it("links the pages with their counterparts and puts them in the sitemap", () => {
@@ -71,11 +71,20 @@ describe("policy pages", () => {
 describe("sitemapEntries", () => {
   const entries = sitemapEntries();
 
-  it("dates story pages with the updated date or else the story date", () => {
+  it("dates story pages with their latest change", () => {
     const story = stories[0];
-    expect(modifiedDate(story)).toBe(story.updated ?? story.date);
-    expect(modifiedDate({ ...story, updated: "2099-01-01" })).toBe("2099-01-01");
-    expect(entries.find((entry) => entry.path === storyPath(story, "en"))?.lastmod).toBe(modifiedDate(story));
+    expect(modifiedTime({ ...story, corrected: undefined })).toBe(story.published);
+    expect(modifiedTime({ ...story, corrected: "2099-01-01T00:00:00Z" })).toBe("2099-01-01T00:00:00Z");
+    const update = { time: "2099-02-01T00:00:00Z", note: "Note", promote: false };
+    const updated = { ...story, versions: { ...story.versions, en: { ...story.versions.en, updates: [update] } } };
+    expect(modifiedTime(updated)).toBe("2099-02-01T00:00:00Z");
+    expect(entries.find((entry) => entry.path === storyPath(story, "en"))?.lastmod).toBe(modifiedTime(story));
+  });
+
+  it("puts promoted stories first on the home page and keeps the rest in publishing order", () => {
+    const rank = (story: (typeof stories)[number]) => story.promoted ?? story.published;
+    expect(frontStories.map(rank)).toEqual([...frontStories.map(rank)].sort().reverse());
+    expect(frontStories.length).toBe(stories.length);
   });
 
   it("gives no other page a date and leaves out search and error pages", () => {

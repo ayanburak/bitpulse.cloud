@@ -1,17 +1,22 @@
 /**
  * file: src/stories.ts
- * importable: buildStories, loadStories, categories, kinds, Story, StoryVersion, Source, StoryImage, Heading
+ * importable: buildStories, loadStories, categories, kinds, Story, StoryVersion, StoryUpdate, Source, StoryImage, Heading
  *
  * Every story lives in its own folder under src/content/stories, named with the date and a
  * short key, and holds one en.md and one tr.md file. loadStories reads all of them.
  * buildStories does the real work and takes plain file contents, which keeps it testable.
  * Any invalid story stops the build, so a broken article can never reach the live site.
  *
+ * Times in the files are UTC and written as 14:20, or as 2026-11-07 14:20 when they need a day.
+ * The time field is the publishing time on the day of the folder. An update adds an entry to
+ * updates with its time, a note and, when the editor wants the story back at the top of the home
+ * page, promote: true. A correction sets corrected to the time of the fix.
+ *
  * description: Reads, validates and pairs the two language versions of every story.
  */
 
-// NOTE: Raw HTML inside Markdown is dropped on purpose. Article text comes from automated runs
-// and from web research, so it should not be able to put a script or an iframe on a page.
+// NOTE: Raw HTML inside Markdown is dropped on purpose. Article text comes from web research,
+// so it should not be able to put a script or an iframe on a page.
 
 import { Marked } from "marked";
 import { parse as parseYaml } from "yaml";
@@ -44,6 +49,12 @@ export interface Heading {
   text: string;
 }
 
+export interface StoryUpdate {
+  time: string;
+  note: string;
+  promote: boolean;
+}
+
 export interface StoryVersion {
   slug: string;
   title: string;
@@ -53,12 +64,15 @@ export interface StoryVersion {
   minutes: number;
   sources: Source[];
   image: StoryImage;
+  updates: StoryUpdate[];
 }
 
 export interface Story {
   key: string;
   date: string;
-  updated?: string;
+  published: string;
+  promoted?: string;
+  corrected?: string;
   category: Category;
   kind: Kind;
   versions: Record<Lang, StoryVersion>;
@@ -68,7 +82,8 @@ export interface Story {
 
 const LANGS: Lang[] = ["en", "tr"];
 const FRONTMATTER = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
-const DATE = /^\d{4}-\d{2}-\d{2}$/;
+const CLOCK = /^([01]\d|2[0-3]):[0-5]\d$/;
+const MOMENT = /^(\d{4}-\d{2}-\d{2}) (([01]\d|2[0-3]):[0-5]\d)$/;
 const FOLDER = /^(\d{4}-\d{2}-\d{2})-[a-z0-9-]+$/;
 const FILE_PATH = /([^/]+)\/(en|tr)\.md$/;
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -147,17 +162,42 @@ function readingMinutes(html: string): number {
 interface ParsedFile {
   version: StoryVersion;
   date: string;
-  updated?: string;
+  published: string;
+  corrected?: string;
   category: Category;
   kind: Kind;
 }
 
-// A dated correction sets this. It stays a plain date because stories have no publishing time.
-function readUpdated(data: Record<string, unknown>, where: string): string | undefined {
-  if (data.updated === undefined) return undefined;
-  const value = String(data.updated).trim();
-  if (!DATE.test(value)) throw new Error(`${where}: invalid updated date: ${value}`);
-  return value;
+// Every time is turned into a full ISO text in UTC here, so the rest of the site can compare
+// and sort them as plain strings.
+function readMoment(value: unknown, field: string, where: string): string {
+  const parts = MOMENT.exec(String(value).trim());
+  if (!parts) throw new Error(`${where}: invalid ${field} time: ${String(value)}`);
+  return `${parts[1]}T${parts[2]}:00Z`;
+}
+
+function readPublished(data: Record<string, unknown>, where: string): string {
+  const date = text(data, "date", where);
+  const clock = data.time === undefined ? "" : String(data.time).trim();
+  if (!CLOCK.test(clock)) throw new Error(`${where}: missing or invalid time: ${clock}`);
+  return readMoment(`${date} ${clock}`, "publishing", where);
+}
+
+function readUpdates(data: Record<string, unknown>, where: string): StoryUpdate[] {
+  if (data.updates === undefined) return [];
+  if (!Array.isArray(data.updates)) throw new Error(`${where}: invalid updates`);
+  return data.updates.map((item) => {
+    if (!isRecord(item)) throw new Error(`${where}: invalid update`);
+    if (item.promote !== undefined && typeof item.promote !== "boolean") throw new Error(`${where}: promote must be true or false`);
+    return { time: readMoment(item.time, "update", where), note: text(item, "note", where), promote: item.promote === true };
+  });
+}
+
+// The field was called updated while it only held correction dates. An old name left in a file
+// would otherwise be ignored without a word.
+function readCorrected(data: Record<string, unknown>, where: string): string | undefined {
+  if (data.updated !== undefined) throw new Error(`${where}: updated is now called corrected`);
+  return data.corrected === undefined ? undefined : readMoment(data.corrected, "corrected", where);
 }
 
 function parseFile(raw: string, where: string): ParsedFile {
@@ -175,7 +215,8 @@ function parseFile(raw: string, where: string): ParsedFile {
 
   return {
     date: text(data, "date", where),
-    updated: readUpdated(data, where),
+    published: readPublished(data, where),
+    corrected: readCorrected(data, where),
     category: oneOf(categories, text(data, "category", where), "category", where),
     kind: oneOf(kinds, text(data, "kind", where), "kind", where),
     version: {
@@ -187,22 +228,47 @@ function parseFile(raw: string, where: string): ParsedFile {
       minutes: readingMinutes(html),
       sources: readSources(data, where),
       image: readImage(data, where),
+      updates: readUpdates(data, where),
     },
   };
 }
 
 // --- Pairing ---
 
+// Only the notes may differ between the languages. The times and the promote choice are shared,
+// otherwise the two home pages would order the same story differently.
+function sameUpdates(en: StoryUpdate[], tr: StoryUpdate[]): boolean {
+  return en.length === tr.length && en.every((item, index) => item.time === tr[index].time && item.promote === tr[index].promote);
+}
+
 // Facts shared by both languages must match, otherwise one reader sees a different story.
 function pair(key: string, en: ParsedFile, tr: ParsedFile): Story {
   const date = FOLDER.exec(key)?.[1];
   if (!date) throw new Error(`${key}: invalid folder name`);
   if (en.date !== date || tr.date !== date) throw new Error(`${key}: date does not match the folder`);
+  if (en.published !== tr.published) throw new Error(`${key}: time differs between languages`);
   if (en.category !== tr.category) throw new Error(`${key}: category differs between languages`);
   if (en.kind !== tr.kind) throw new Error(`${key}: kind differs between languages`);
-  if (en.updated !== tr.updated) throw new Error(`${key}: updated date differs between languages`);
-  if (en.updated && en.updated < date) throw new Error(`${key}: updated date is before the story date`);
-  return { key, date, updated: en.updated, category: en.category, kind: en.kind, versions: { en: en.version, tr: tr.version } };
+  if (en.corrected !== tr.corrected) throw new Error(`${key}: corrected time differs between languages`);
+  if (en.corrected && en.corrected < en.published) throw new Error(`${key}: corrected time is before the publishing time`);
+
+  const updates = en.version.updates;
+  if (!sameUpdates(updates, tr.version.updates)) throw new Error(`${key}: updates differ between languages`);
+  if (updates.some((item, index) => item.time <= (updates[index - 1]?.time ?? en.published))) {
+    throw new Error(`${key}: updates must follow the publishing time in order`);
+  }
+
+  const promoted = updates.filter((item) => item.promote).at(-1)?.time;
+  return {
+    key,
+    date,
+    published: en.published,
+    promoted,
+    corrected: en.corrected,
+    category: en.category,
+    kind: en.kind,
+    versions: { en: en.version, tr: tr.version },
+  };
 }
 
 // A shared slug would make two stories fight over one address.
@@ -240,7 +306,7 @@ export function buildStories(files: Record<string, string>): Story[] {
   });
 
   assertUniqueSlugs(stories);
-  return stories.sort((a, b) => b.date.localeCompare(a.date) || a.key.localeCompare(b.key));
+  return stories.sort((a, b) => b.published.localeCompare(a.published) || a.key.localeCompare(b.key));
 }
 
 /**

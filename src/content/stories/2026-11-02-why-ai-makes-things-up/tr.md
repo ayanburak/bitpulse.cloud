@@ -4,6 +4,7 @@ title: "Yapay Zekâ Neden Uydurur?"
 summary: "ChatGPT, New York'taki bir avukata verdiği davanın gerçek olduğunu söyledi. Dava uydurmaydı. Arkasındaki nedenler, botların bilmediğini söylemek yerine neden uydurduğunu, kendinden emin bir tonun neden hiçbir şey kanıtlamadığını ve nasıl korunulacağını gösteriyor."
 category: technology
 date: 2026-11-02
+time: "12:00"
 kind: long
 sources:
   - name: "Kalai, Nachum, Vempala ve Zhang: Why Language Models Hallucinate (makale, tam metin)"

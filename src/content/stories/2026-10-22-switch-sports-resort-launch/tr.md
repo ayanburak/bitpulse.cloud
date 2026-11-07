@@ -4,6 +4,7 @@ title: "Nintendo'nun Switch Sports Resort'u Artık Sadece Spor Oyunu Değil"
 summary: "Yalnızca Switch 2'de çıkan yeni hareket kontrollü spor oyunu, on iki sporuna gezilebilir bir ada ekliyor. İki yazar oyunu çok beğeniyor ama farklı yönlerini öne çıkarıyor."
 category: culture
 date: 2026-10-22
+time: "12:00"
 kind: news
 sources:
   - name: "Nintendo"

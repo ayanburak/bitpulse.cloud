@@ -4,6 +4,7 @@ title: "Nintendo yazılım satışlarının yüzde 60,7'sini dijitalden yaptı"
 summary: "Nintendo'nun altı aylık raporuna göre artışın büyük kısmı, kutuda da satılan oyunların indirilmesinden geliyor. Son çeyrekte ise pay biraz geriledi."
 category: economy
 date: 2026-11-05
+time: "20:35"
 kind: news
 sources:
   - name: "Nintendo: Consolidated Financial Highlights, six months ended September 2026 (5 Kasım 2026)"

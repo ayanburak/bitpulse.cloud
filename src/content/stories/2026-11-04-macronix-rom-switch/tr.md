@@ -4,6 +4,7 @@ title: "Nintendo Switch Kartuş Çiplerinin Bir Üreticisi Yapay Zekâya Kaydı"
 summary: "İki yıl önce Switch oyunlarını saklayan ve çoğunlukla Nintendo'nun satın aldığı çipler Macronix'in gelirinin yaklaşık yüzde 29'unu getiriyordu. Şimdi yüzde 5 getiriyor. Veri merkezleri için üretilen bellekler ise şirkete tarihinin en iyi çeyreğini yaşattı."
 category: economy
 date: 2026-11-04
+time: "20:12"
 kind: news
 sources:
   - name: "Taipei Times: Macronix posts record profit (29 Ekim 2026)"

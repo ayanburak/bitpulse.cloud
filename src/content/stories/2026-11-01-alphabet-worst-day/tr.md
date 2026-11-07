@@ -4,6 +4,7 @@ title: "Google'ın Bulut Geliri İkiye Katlandı, Alphabet En Kötü Borsa Gün�
 summary: "Alphabet'e göre aramalar son beş yılın en hızlı artışını yaşıyor, ama aramadan gelen para aynı hızda büyümüyor. Nakit açığı da analistlerin beklediğinden çok daha büyük çıkınca bir günde yarım trilyon dolara yakın değer silindi."
 category: economy
 date: 2026-11-01
+time: "14:33"
 kind: news
 sources:
   - name: "Alphabet: Third quarter 2026 results"

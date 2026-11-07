@@ -189,7 +189,7 @@ export function Corrections() {
                   {corrected.map((story) => (
                     <li key={story.key}>
                       <a href={storyPath(story, lang)}>{story.versions[lang].title}</a>{" "}
-                      {copy.corrected}: <time dateTime={story.updated}>{formatDate(story.updated as string, lang, "long")}</time>.{" "}
+                      {copy.corrected}: <time dateTime={story.corrected}>{formatDate(story.corrected as string, lang, "long")}</time>.{" "}
                       {copy.published}: <time dateTime={story.date}>{formatDate(story.date, lang, "long")}</time>.
                     </li>
                   ))}

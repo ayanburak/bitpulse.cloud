@@ -43,6 +43,8 @@ Every push runs the tests, a build and a secret scan.
 
 A story is one folder under src/content/stories, named with its date and a short key. The folder holds en.md, tr.md and the image. The build stops if a story misses a language, a source, an image or an image license, because a broken article should never reach readers.
 
+Times are written in UTC. The time field gives the publishing time on the day in the folder name, written as 14:20. A story that grows gets an entry under updates with its time, written as 2026-11-07 16:05, and a short note. When the update also sets promote to true, the story returns to the top of the home page with an Updated label. A correction sets corrected to the time of the fix and adds a dated note to the text. The site shows every time in the reader's own time zone.
+
 ## Social posts
 
 Every news story is also shared on X and Instagram, and the owner publishes the posts by hand. The format is described in docs/social-posts.md. The story folder holds a social.yaml file with the English text and the image addresses. One command downloads the images and writes the X post, the Instagram caption and the Instagram pages into the social-posts folder, which git ignores. Without a folder name it takes the newest news story.

@@ -4,7 +4,8 @@ title: "Astronauts Unroll the Space Station's Last New Solar Array"
 summary: "A weak power reading held up the last array on the station's upgrade list. Once a connector was unplugged and replugged in the dark, a five-year upgrade was finished."
 category: science
 date: 2026-11-06
-updated: 2026-11-06
+time: "14:01"
+corrected: "2026-11-06 19:07"
 kind: news
 sources:
   - name: "NASA: Spacewalkers Install Final Roll-Out Solar Array (5 November 2026)"

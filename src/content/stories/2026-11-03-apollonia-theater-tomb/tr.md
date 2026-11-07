@@ -4,6 +4,7 @@ title: "Bursa'da Antik Tiyatronun Basamaklarındaki Mezar Arkeologları Şaşır
 summary: "Apollonia'nın kendi mezarlığı vardı. Tiyatrosundaki yaklaşık 2 bin yıllık yakma mezarını bu kadar şaşırtıcı yapan da bu. Kazı başkanının temkinli bir fikri var, kazılacak çok yer de."
 category: culture
 date: 2026-11-03
+time: "20:38"
 kind: news
 sources:
   - name: "Daily Sabah (Anadolu Ajansı ile): Unusual tomb discovered at ancient theater in Türkiye"

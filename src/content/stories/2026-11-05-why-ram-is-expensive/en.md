@@ -4,6 +4,7 @@ title: "Why AI Data Centers Are Making Your RAM So Expensive"
 summary: "Memory makers are earning more than ever. One kind of chip built for AI is crowding out the memory in laptops and phones, and SK hynix, one of its biggest makers, expects demand to outrun supply through 2030."
 category: economy
 date: 2026-11-05
+time: "19:39"
 kind: long
 sources:
   - name: "Micron: Fourth quarter fiscal 2026 results (SEC Form 8-K, exhibit 99.1)"

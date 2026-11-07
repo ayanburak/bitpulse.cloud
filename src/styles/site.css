@@ -740,3 +740,11 @@ a:hover .photo img { transform: scale(1.015); }
   .site-header, .menu, .site-footer, .story-left, .story-right, .long-side, .story-meta .right, .ad { display: none; }
   .story-text, .long-text { grid-column: 1 / -1; }
 }
+
+/* Updates sit above the text, newest first, and the label marks a promoted story on cards */
+.meta__updated { color: var(--ink); font-weight: 650; }
+.story-updates { margin-bottom: 28px; padding: 14px 0 16px; border-block: 2px solid var(--accent); font-family: Archivo, sans-serif; font-size: 16px; line-height: 1.4; }
+.story-updates li + li { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.story-updates b { color: var(--accent); font-weight: 650; }
+.story-updates time { color: var(--muted); }
+.story-updates p { margin: 4px 0 0; }

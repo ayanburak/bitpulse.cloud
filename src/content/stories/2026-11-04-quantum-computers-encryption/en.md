@@ -4,6 +4,7 @@ title: "Will Quantum Computers Break Encryption?"
 summary: "Nobody can name the date, and that is only part of the story. The danger is narrower than it sounds, secrets sent today can be recorded and opened later, and the fix is already running in your browser."
 category: technology
 date: 2026-11-04
+time: "12:00"
 kind: long
 sources:
   - name: "Cloudflare: State of the post-quantum Internet in 2025"

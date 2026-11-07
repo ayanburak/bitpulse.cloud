@@ -4,6 +4,7 @@ title: "Netflix Puts Greta Gerwig's Narnia in Cinemas First"
 summary: "The first trailer for The Magician's Nephew opens with Led Zeppelin and a question about watching a world be born. Netflix is betting on a long theatrical run before the film reaches streaming."
 category: culture
 date: 2026-10-13
+time: "12:00"
 kind: news
 sources:
   - name: "Associated Press"

@@ -6,10 +6,10 @@
  */
 
 import { useParams } from "react-router";
-import { findStory, imageUrl, longStories, modifiedDate, stories, storyPath } from "../catalog";
+import { findStory, imageUrl, longStories, modifiedTime, stories, storyPath } from "../catalog";
 import { AdSide, AdStrip } from "../components/Ads";
 import { Layout, useLang, type StoryHead } from "../components/Layout";
-import { ImageCredit, Photo, RowItem, StoryCard } from "../components/Story";
+import { ImageCredit, LocalTime, Photo, RowItem, StoryCard } from "../components/Story";
 import { ADS_ENABLED, PUBLISHER_URL, SITE_URL } from "../config";
 import { categoryNames, formatDate, ui, type Lang } from "../i18n";
 import type { Story } from "../stories";
@@ -46,16 +46,16 @@ function storyHead(story: Story, lang: Lang): StoryHead {
   return {
     image,
     imageAlt: version.image.alt,
-    published: story.date,
-    modified: modifiedDate(story),
+    published: story.published,
+    modified: modifiedTime(story),
     data: {
       "@context": "https://schema.org",
       "@type": story.kind === "long" ? "Article" : "NewsArticle",
       headline: version.title,
       description: version.summary,
       image: [image],
-      datePublished: story.date,
-      dateModified: modifiedDate(story),
+      datePublished: story.published,
+      dateModified: modifiedTime(story),
       inLanguage: lang,
       mainEntityOfPage: `${SITE_URL}${storyPath(story, lang)}`,
       author: { "@type": "Organization", name: "Bitpulse", url: `${SITE_URL}/${lang}/about/` },
@@ -85,6 +85,24 @@ function Body({ story, lang, className }: { story: Story; lang: Lang; className:
       <AdStrip lang={lang} />
       {after && <div className={className} dangerouslySetInnerHTML={{ __html: after }} />}
     </>
+  );
+}
+
+// The newest update comes first, because a returning reader wants to see what changed.
+function Updates({ story, lang }: { story: Story; lang: Lang }) {
+  const updates = story.versions[lang].updates;
+  if (updates.length === 0) return null;
+  return (
+    <aside className="story-updates" aria-label={ui[lang].updates}>
+      <ol>
+        {[...updates].reverse().map((item) => (
+          <li key={item.time}>
+            <b>{ui[lang].updated}</b> <LocalTime time={item.time} lang={lang} style="stamp" />
+            <p>{item.note}</p>
+          </li>
+        ))}
+      </ol>
+    </aside>
   );
 }
 
@@ -134,7 +152,7 @@ function NewsStory({ story, lang }: { story: Story; lang: Lang }) {
           <h1 className="head-1">{version.title}</h1>
           <p className="summary-large">{version.summary}</p>
           <div className="story-meta" data-pagefind-ignore>
-            <span><time dateTime={story.date}>{formatDate(story.date, lang, "long")}</time></span>
+            <span><LocalTime time={story.published} lang={lang} style="stamp" /></span>
             <span>{t.minRead(version.minutes)}</span>
             <ShareLinks story={story} lang={lang} />
           </div>
@@ -155,6 +173,7 @@ function NewsStory({ story, lang }: { story: Story; lang: Lang }) {
             </aside>
           )}
           <div className="story-text">
+            <Updates story={story} lang={lang} />
             <Body story={story} lang={lang} className="prose" />
             <Sources story={story} lang={lang} />
           </div>
@@ -200,7 +219,7 @@ function LongStory({ story, lang }: { story: Story; lang: Lang }) {
             <h1 className="wide-1">{version.title}</h1>
             <p className="summary">{version.summary}</p>
             <div className="long-cover__meta" data-pagefind-ignore>
-              <span><time dateTime={story.date}>{formatDate(story.date, lang, "long")}</time></span>
+              <span><LocalTime time={story.published} lang={lang} style="stamp" /></span>
               <span>{t.minRead(version.minutes)}</span>
             </div>
           </div>
@@ -220,6 +239,7 @@ function LongStory({ story, lang }: { story: Story; lang: Lang }) {
               </aside>
             )}
             <div className="long-text">
+              <Updates story={story} lang={lang} />
               <Body story={story} lang={lang} className="long-text prose drop-cap" />
               <Sources story={story} lang={lang} />
             </div>

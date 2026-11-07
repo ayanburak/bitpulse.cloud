@@ -4,6 +4,7 @@ title: "Nintendo Switch Cartridge Chips Lose a Maker to the AI Boom"
 summary: "Two years ago, the chips that store Switch games, mostly bought by Nintendo, brought Macronix about 29% of its revenue. Now they bring 5%, and memory for data centers has delivered the best quarter in the company's history."
 category: economy
 date: 2026-11-04
+time: "20:12"
 kind: news
 sources:
   - name: "Taipei Times: Macronix posts record profit (29 October 2026)"

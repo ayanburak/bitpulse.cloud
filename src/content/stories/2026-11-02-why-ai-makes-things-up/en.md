@@ -4,6 +4,7 @@ title: "Why Do AI Chatbots Make Things Up?"
 summary: "ChatGPT told a New York lawyer that a court case it had given him was real. The case was invented. The reasons behind that answer explain why chatbots bluff, why a confident tone proves nothing, and how to protect yourself."
 category: technology
 date: 2026-11-02
+time: "12:00"
 kind: long
 sources:
   - name: "Kalai, Nachum, Vempala and Zhang: Why Language Models Hallucinate (paper, full text)"

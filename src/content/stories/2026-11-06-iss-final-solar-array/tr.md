@@ -4,7 +4,8 @@ title: "Astronotlar Uzay İstasyonu'nun Son Yeni Güneş Panelini Açtı"
 summary: "Zayıf bir güç değeri, istasyonun yenileme listesindeki son paneli bekletti. Karanlıkta bir konektör çıkarılıp yeniden takılınca beş yıllık yenileme tamamlandı."
 category: science
 date: 2026-11-06
-updated: 2026-11-06
+time: "14:01"
+corrected: "2026-11-06 19:07"
 kind: news
 sources:
   - name: "NASA: Spacewalkers Install Final Roll-Out Solar Array (5 Kasım 2026)"

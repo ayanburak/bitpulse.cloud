@@ -4,6 +4,7 @@ title: "İnsansı robot üreticisi Agility, 1,8 milyon dolar gelirle Nasdaq'ta"
 summary: "Robotu şimdiden depolarda kutu taşıyor. Satışlar, borsaya girişle toplanan paranın yanında çok küçük kalıyor; ilk gün hisse sert dalgalandı."
 category: economy
 date: 2026-11-06
+time: "19:07"
 kind: news
 sources:
   - name: "Agility: Agility Becomes First U.S. Publicly Listed Pure-Play Humanoid Robotics Company, Begins Trading Today on Nasdaq as AGLT (5 Kasım 2026)"

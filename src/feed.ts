@@ -24,9 +24,8 @@ export function escapeXml(text: string): string {
     .replace(/"/g, "&quot;");
 }
 
-// Stories record a date and no time, so every item is dated midnight UTC of that day.
 function pubDate(story: Story): string {
-  return new Date(`${story.date}T00:00:00Z`).toUTCString();
+  return new Date(story.published).toUTCString();
 }
 
 function item(story: Story, lang: Lang): string {

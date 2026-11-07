@@ -4,6 +4,7 @@ title: "Hera Sondası, NASA'nın 2022'de Vurduğu Asteroit Ayını Gördü"
 summary: "Görüntüde ay tek bir piksel. Ama o piksel, insanların rotasından saptırdığı tek asteroide ilk yakın bakışı ve henüz çözülmemiş bir bilmece listesini müjdeliyor."
 category: science
 date: 2026-11-04
+time: "10:37"
 kind: news
 sources:
   - name: "ESA: First light, Hera resolves two asteroids instead of one (27 Ekim 2026)"

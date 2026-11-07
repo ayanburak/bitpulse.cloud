@@ -4,6 +4,7 @@ title: "Kuantum Bilgisayarlar Şifrelemeyi Kıracak mı?"
 summary: "Tarihi kimse bilmiyor, ama hikâye bununla bitmiyor. Tehlike sanıldığından dar, bugün gönderilen sırlar kaydedilip ileride açılabilir ve çözüm tarayıcınızda çoktan çalışıyor."
 category: technology
 date: 2026-11-04
+time: "12:00"
 kind: long
 sources:
   - name: "Cloudflare: 2025'te kuantum sonrası internetin durumu"

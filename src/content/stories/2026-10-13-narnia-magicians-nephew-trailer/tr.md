@@ -4,6 +4,7 @@ title: "Netflix, Greta Gerwig'in Narnia'sını Önce Sinemaya Veriyor"
 summary: "The Magician's Nephew'in ilk fragmanı Led Zeppelin ile ve bir dünyanın doğuşunu görüp görmediğini soran bir soruyla açılıyor. Netflix, filmi yayına vermeden önce uzun bir sinema gösterimine yatırım yapıyor."
 category: culture
 date: 2026-10-13
+time: "12:00"
 kind: news
 sources:
   - name: "Associated Press"

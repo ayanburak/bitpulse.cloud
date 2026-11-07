@@ -4,6 +4,7 @@ title: "Humanoid Maker Agility Lists on Nasdaq With $1.8M in Revenue"
 summary: "Its robot already moves boxes in warehouses. Sales are tiny next to the money the listing raised, and the shares swung widely on the first day."
 category: economy
 date: 2026-11-06
+time: "19:07"
 kind: news
 sources:
   - name: "Agility: Agility Becomes First U.S. Publicly Listed Pure-Play Humanoid Robotics Company, Begins Trading Today on Nasdaq as AGLT (5 November 2026)"

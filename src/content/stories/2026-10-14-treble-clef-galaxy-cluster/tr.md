@@ -4,6 +4,7 @@ title: "Samanyolu'nun Arkasında Dev Bir Çarpışma: Gökyüzündeki Tiz Anahta
 summary: "Radyo görüntülerindeki tiz anahtarı biçimli parıltının gizli bir nedeni vardı. X ışını teleskopları şimdi onu neyin yaktığını buldu ve cevap, kendi galaksimizin arkasında saklı bir kozmik çarpışma."
 category: science
 date: 2026-10-14
+time: "12:00"
 kind: news
 sources:
   - name: "NASA Science: NASA's Chandra Breaks Down 'Treble Clef's' Galaxy Cluster Collision"

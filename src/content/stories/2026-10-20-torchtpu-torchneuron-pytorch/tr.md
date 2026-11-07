@@ -4,6 +4,7 @@ title: "Google ve Amazon Aynı Gün Aynı Hamleyi Yaptı: Çip Yarışı Kızı�
 summary: "İki teknoloji devi, yapay zekâ yazılımlarının kendi çiplerinde daha kolay çalışması için aynı gün sahneye çıktı. Hedef belli: geliştiricileri, yani yapay zekâ dünyasının en değerli müşterilerini kendi tarafına çekmek."
 category: technology
 date: 2026-10-20
+time: "12:00"
 kind: news
 sources:
   - name: "Google Cloud Blog: TorchTPU is now open source"

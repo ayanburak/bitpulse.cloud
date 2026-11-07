@@ -4,6 +4,7 @@ title: "Dört Gönüllü NASA'nın 378 Günlük Mars Simülasyonundan Çıktı"
 summary: "Geç ulaşan mesajlar ve sınırlı malzemeyle geçen bir yılın ardından dört gönüllü 31 Ekim'de Houston'daki 3 boyutlu yazıcıyla basılmış habitattan çıktı. Sırada iki haftalık değerlendirmeler var. NASA, kaydedilenlerin Ay ve Mars ekiplerinin beslenmesini ve desteğini şekillendirebileceğini söylüyor."
 category: science
 date: 2026-11-01
+time: "16:39"
 kind: news
 sources:
   - name: "NASA: NASA Invites Media to Crew Completion of Yearlong Mars Simulation"

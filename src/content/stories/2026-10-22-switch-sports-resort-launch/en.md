@@ -4,6 +4,7 @@ title: "Nintendo's Switch Sports Resort Is More Than a Sports Game"
 summary: "The new motion-controlled sports game, out only on Switch 2, adds a sightseeing island to its twelve sports. Two writers like it a lot, but they point to different things."
 category: culture
 date: 2026-10-22
+time: "12:00"
 kind: news
 sources:
   - name: "Nintendo"
