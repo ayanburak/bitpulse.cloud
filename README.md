@@ -1,61 +1,155 @@
-# Bitpulse
+<div align="center">
 
-Bitpulse is a world news site published in English and Turkish at bitpulse.cloud. It follows global events around the clock and researches the most interesting stories with the help of AI. The code and the editorial rules are published here so that readers can see how the site works.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/logo-dark.png">
+  <img src="docs/readme/logo-light.png" alt="bitpulse" width="240">
+</picture>
 
-## Project status
+<p><strong>A news site that gathers stories from around the world.</strong></p>
 
-The site code, the stories, the automated checks and the release pipeline are in this repository. The site is live at bitpulse.cloud. Automatic releases are switched off, so a new story reaches readers after a manual release.
+<p>
+<a href="https://bitpulse.cloud">bitpulse.cloud</a> ·
+<a href="https://x.com/bitpulsecloud">X</a> ·
+<a href="https://www.instagram.com/bitpulsecloud/">Instagram</a>
+</p>
 
-## How the project is run
+<p><a href="https://github.com/ayanburak/bitpulse.cloud/actions/workflows/ci.yml"><img src="https://github.com/ayanburak/bitpulse.cloud/actions/workflows/ci.yml/badge.svg" alt="CI"></a></p>
 
-The project owner follows world news sources and chooses the stories worth publishing. Each chosen story is researched with the help of AI, checked against its sources and published under the editorial policy. News content follows docs/editorial-policy.md and docs/style-guide.md, and social posts follow docs/social-posts.md. Product and design decisions made so far are recorded in docs/site-decisions.md, and advertising decisions are recorded in docs/advertising.md.
+<p><strong>English</strong> · <a href="README.tr.md">Türkçe</a></p>
 
-## Accuracy of the content
+</div>
 
-Every article shows its sources, and mistakes are fixed with a visible correction. The full rules are in docs/editorial-policy.md.
+<p align="center"><img src="docs/readme/home.png" alt="The English home page of Bitpulse with the top story and the latest stories" width="820"></p>
 
-## Running the site
+## About
 
-React runs only during the build and writes plain HTML files, so readers receive fast static pages with a small script. Node 24 is required. The dev server redraws pages on request, and the build writes the finished site into the dist folder.
+Bitpulse follows world events around the clock and publishes the stories worth sharing in seven categories: world, economy, technology, science, health, culture and sports. A news story is three to five hundred words long and says first what happened, then why it matters. Next to the news, the Explained section answers the questions people wonder about in longer pieces.
+
+Stories are researched with the help of AI. Every fact is checked against the sources named under the story, and an editor reads each story before it goes live. The code, the stories and the editorial rules are public in this repository so that readers can see how the site works.
+
+## Pages
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<img src="docs/readme/story.png" alt="A story page with its headline, summary, publishing time and cover image">
+<p><strong>Story</strong><br>
+Headline, summary, publishing time in the reader's own time zone, and the sources at the end.</p>
+</td>
+<td width="50%" valign="top">
+<img src="docs/readme/explained.png" alt="The Explained section with three long reads">
+<p><strong>Explained</strong><br>
+Longer pieces that answer one question each, with their own look.</p>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<img src="docs/readme/phone.png" alt="The home page on a phone" width="300">
+<p align="left"><strong>Phone</strong><br>
+The same pages on a small screen, with a light and a dark theme.</p>
+</td>
+<td width="50%" valign="top" align="center">
+<img src="docs/readme/instagram.png" alt="An Instagram page made from a story" width="360">
+<p align="left"><strong>Social</strong><br>
+Each news story is also shared on X and Instagram. The pages and the video are made from the story by a script.</p>
+</td>
+</tr>
+</table>
+
+## Structure
+
+```
+src/
+  content/stories/   one folder per story: en.md, tr.md, the image and social.yaml
+  pages/             home, category, archive, story, search and policy pages
+  components/        page layout and story blocks
+  client/            the only script readers download
+  stories.ts         the story rules the build enforces
+scripts/
+  prerender.ts       writes every page as a finished HTML file
+  new-story.ts       opens the folder of a new story
+  social.ts          makes the X post, the Instagram pages and the video
+  video-scan.ts      shows the frames and sound of a video before a clip is chosen
+docs/                editorial policy, style guide and site decisions
+tests/               unit tests and browser tests
+```
+
+Everything about a story lives in its own folder, so a story can be read, reviewed or corrected in one place. The English and Turkish versions sit side by side and share their times, their category and their sources.
+
+## Technical choices
+
+### React only at build time
+
+The pages are written by React during the build and served as plain HTML files. React never reaches the reader. The only script on a page is about 2 KB compressed and handles the theme, the search, the copy link button and the local times. A page is readable before any script runs, and a search engine sees the same page a reader does.
+
+### The build refuses a broken story
+
+A story that misses a language, a source, an image, an image license or a category stops the build. The English and Turkish versions must agree on their publishing time, their updates and their corrections. A mistake in a story is caught before release instead of by a reader.
+
+### One time, shown in every time zone
+
+Publishing, update and correction times are written in UTC. The page carries the UTC time, and the script turns it into the reader's own time zone. An update can bring a story back to the top of the home page with an Updated label. A correction never does, and it stays visible under the story.
+
+### Social posts from one file
+
+The X post, the Instagram pages and the vertical video of a story are written once in its social.yaml. A script downloads the images, draws the pages in a real browser and cuts the video clip from its source without downloading the whole recording. The tests check every text against the limits of X and Instagram, so a post that would be cut off never leaves the repository.
+
+<details>
+<summary><strong>Development</strong></summary>
+
+<br>
+
+Node.js 24 is used. The development server redraws pages on request, and the build writes the finished site into dist.
 
 ```bash
-git clone https://github.com/ayanburak/bitpulse.cloud.git
-cd bitpulse.cloud
 npm install
 npm run dev
 npm run build
 npm run preview
 ```
 
-Unit tests check the story rules. Browser tests run against dist, so they need a build first. They use the browser that Playwright installs, or an existing one given in the CHROME_PATH variable.
+A new story starts from its folder. The script names the folder with today's date, sets the publishing time to now, checks that the cover image is at least 1200 pixels wide and copies the sources from a research brief when one is given. Every field that still needs writing is left empty, so the build refuses the story until it is complete.
+
+```bash
+npm run new-story -- <key> <image-address> [brief.md]
+npm run social -- <story-folder>
+```
+
+</details>
+
+<details>
+<summary><strong>Tests</strong></summary>
+
+<br>
+
+Unit tests check the story rules, the feed and the social posts. Browser tests run with Playwright against the built site. They follow every link, switch languages and themes, search, open the phone menu and read stories with JavaScript turned off.
 
 ```bash
 npm test
+npm run build
 npx playwright install chromium
 npm run test:e2e
 ```
 
-## Automated checks
+GitHub Actions runs the type check, the unit tests, the build, the browser tests and a secret scan on every push.
 
-Every push runs the tests, a build and a secret scan.
+</details>
 
-## Adding a story
+<details>
+<summary><strong>Releases</strong></summary>
 
-A story is one folder under src/content/stories, named with its date and a short key. The folder holds en.md, tr.md and the image. The build stops if a story misses a language, a source, an image or an image license, because a broken article should never reach readers.
+<br>
 
-Times are written in UTC. The time field gives the publishing time on the day in the folder name, written as 14:20. A story that grows gets an entry under updates with its time, written as 2026-11-07 16:05, and a short note. When the update also sets promote to true, the story returns to the top of the home page with an Updated label. A correction sets corrected to the time of the fix and adds a dated note to the text. The site shows every time in the reader's own time zone.
+A release is the built site of a tested commit. The server unpacks it into a new release folder and makes it live by switching one link, so readers never see a half copied site. The last three releases are kept and a rollback only points the link back. The release workflow checks the live pages after each release and returns to the previous release when one of them fails. Automatic releases are switched off for now, and each release is started by hand.
 
-## Social posts
+</details>
 
-Every news story is also shared on X and Instagram, and the owner publishes the posts by hand. The format is described in docs/social-posts.md. The story folder holds a social.yaml file with the English text and the image addresses. One command downloads the images and writes the X post, the Instagram caption and the Instagram pages into the social-posts folder, which git ignores. Without a folder name it takes the newest news story.
+## Editorial rules
 
-```bash
-npm run social
-npm run social -- 2026-11-04-hera-dimorphos
-```
-
-Social images are often press or news photos. They may be shared with credit on a social account, but they are not covered by the licenses of this repository, so only their addresses are stored here.
+How stories are chosen, sourced, written and corrected is described in [docs/editorial-policy.md](docs/editorial-policy.md). The voice and the headline rules are in [docs/style-guide.md](docs/style-guide.md), the social post format in [docs/social-posts.md](docs/social-posts.md), and the decisions behind the site in [docs/site-decisions.md](docs/site-decisions.md).
 
 ## Licenses
 
-Three licenses apply because the project contains three kinds of work. Code and documents are released under the MIT License in LICENSE, which keeps them easy to reuse. Articles are released under Creative Commons Attribution 4.0 as described in LICENSE-CONTENT.md, because a reused article should still credit its source. Fonts keep their own SIL Open Font License, and those license files ship next to the fonts.
+Three licenses apply because the project contains three kinds of work. Code and documents are released under the MIT License in [LICENSE](LICENSE), which keeps them easy to reuse. Stories are released under Creative Commons Attribution 4.0 as described in [LICENSE-CONTENT.md](LICENSE-CONTENT.md), because a reused story should still credit its source. Fonts keep their own SIL Open Font License, and those license files ship next to the fonts.
+
+Story images and social images belong to their owners, who are named next to each image. They are not covered by the licenses of this repository.
