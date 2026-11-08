@@ -1,6 +1,6 @@
 # Advertising
 
-This document records the advertising decisions for Bitpulse and the AdSense notes collected so far. Advertising is not active. The owner holds the account because it requires a real person, and the privacy page already describes advertising so it can start without a new text. The site is under AdSense review since November 1, 2026, and public/ads.txt names the publisher account. No ad code is on the site.
+This document records the advertising decisions for Bitpulse and the AdSense notes collected so far. Advertising is not active. The owner holds the account because it requires a real person, and the privacy page already describes advertising so it can start without a new text. The site is under AdSense review since November 1, 2026, and site/public/ads.txt names the publisher account. No ad code is on the site.
 
 The notes were compiled from Google's help pages, and the date of those pages could not be confirmed. They are checked against current sources before the application.
 

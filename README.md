@@ -59,18 +59,19 @@ Each news story is also shared on X and Instagram. The page and a still video of
 ## Structure
 
 ```
-src/
-  content/stories/   one folder per story: en.md, tr.md, the image and social.yaml
-  pages/             home, category, archive, story, search and policy pages
-  components/        page layout and story blocks
-  client/            the only script readers download
-  stories.ts         the story rules the build enforces
-scripts/
-  prerender.ts       writes every page as a finished HTML file
-  new-story.ts       opens the folder of a new story
-  social.ts          makes the X post, the Instagram page and its still video
-docs/                editorial policy, style guide and site decisions
-tests/               unit tests and browser tests
+site/
+  src/content/stories/   one folder per story: en.md, tr.md, the image and social.yaml
+  src/pages/             home, category, archive, story, search and policy pages
+  src/components/        page layout and story blocks
+  src/client/            the only script readers download
+  src/stories.ts         the story rules the build enforces
+  scripts/prerender.ts   writes every page as a finished HTML file
+  scripts/new-story.ts   opens the folder of a new story
+  scripts/social.ts      makes the X post, the Instagram page and its still video
+  tests/                 unit tests and browser tests
+radar/                   listens to world news feeds and scores the events worth covering
+reels/                   cuts reels for published stories
+docs/                    editorial policy, style guide and site decisions
 ```
 
 Everything about a story lives in its own folder, so a story can be read, reviewed or corrected in one place. The English and Turkish versions sit side by side and share their times, their category and their sources.
@@ -101,6 +102,7 @@ The X post and the Instagram page of a story are written once in its social.yaml
 Node.js 24 is used. The development server redraws pages on request, and the build writes the finished site into dist.
 
 ```bash
+cd site
 npm install
 npm run dev
 npm run build
@@ -110,6 +112,7 @@ npm run preview
 A new story starts from its folder. The script names the folder with today's date, sets the publishing time to now, checks that the cover image is at least 1200 pixels wide and copies the sources from a research brief when one is given. Every field that still needs writing is left empty, so the build refuses the story until it is complete.
 
 ```bash
+cd site
 npm run new-story -- <key> <image-address> [brief.md]
 npm run social -- <story-folder>
 ```
@@ -124,6 +127,7 @@ npm run social -- <story-folder>
 Unit tests check the story rules, the feed and the social posts. Browser tests run with Playwright against the built site. They follow every link, switch languages and themes, search, open the phone menu and read stories with JavaScript turned off.
 
 ```bash
+cd site
 npm test
 npm run build
 npx playwright install chromium

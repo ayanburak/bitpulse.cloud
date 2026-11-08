@@ -59,18 +59,19 @@ Her haber X ve Instagram'da da paylaşılır. Sayfa ve onun hareketsiz videosu h
 ## Yapı
 
 ```
-src/
-  content/stories/   her haber için bir klasör: en.md, tr.md, görsel ve social.yaml
-  pages/             ana sayfa, kategori, arşiv, haber, arama ve ilke sayfaları
-  components/        sayfa düzeni ve haber blokları
-  client/            okurun indirdiği tek script
-  stories.ts         build'in uyguladığı haber kuralları
-scripts/
-  prerender.ts       her sayfayı hazır bir HTML dosyası olarak yazar
-  new-story.ts       yeni bir haberin klasörünü açar
-  social.ts          X metnini, Instagram sayfasını ve onun hareketsiz videosunu üretir
-docs/                yayın ilkeleri, üslup kılavuzu ve site kararları
-tests/               birim testleri ve tarayıcı testleri
+site/
+  src/content/stories/   her haber için bir klasör: en.md, tr.md, görsel ve social.yaml
+  src/pages/             ana sayfa, kategori, arşiv, haber, arama ve ilke sayfaları
+  src/components/        sayfa düzeni ve haber blokları
+  src/client/            okurun indirdiği tek script
+  src/stories.ts         build'in uyguladığı haber kuralları
+  scripts/prerender.ts   her sayfayı hazır bir HTML dosyası olarak yazar
+  scripts/new-story.ts   yeni bir haberin klasörünü açar
+  scripts/social.ts      X metnini, Instagram sayfasını ve onun hareketsiz videosunu üretir
+  tests/                 birim testleri ve tarayıcı testleri
+radar/                   dünya haber kaynaklarını dinler, ele alınmaya değer olayları puanlar
+reels/                   yayınlanan haberler için reels keser
+docs/                    yayın ilkeleri, üslup kılavuzu ve site kararları
 ```
 
 Bir haberle ilgili her şey kendi klasöründe durur, böylece haber tek bir yerden okunur, incelenir ya da düzeltilir. İngilizce ve Türkçe sürümler yan yana durur, saatleri, kategorisi ve kaynakları ortaktır.
@@ -101,6 +102,7 @@ Bir haberin X metni ve Instagram sayfası bir kez, haberin social.yaml dosyasın
 Node.js 24 kullanılır. Geliştirme sunucusu sayfaları istek geldikçe yeniden çizer, build ise bitmiş siteyi dist klasörüne yazar.
 
 ```bash
+cd site
 npm install
 npm run dev
 npm run build
@@ -110,6 +112,7 @@ npm run preview
 Yeni bir haber kendi klasörüyle başlar. Script klasöre bugünün tarihini verir, yayın saatini şimdi olarak yazar, kapak görselinin en az 1200 piksel genişliğinde olduğunu kontrol eder ve bir araştırma dosyası verildiyse kaynakları ondan alır. Yazılması gereken her alan boş bırakılır, böylece haber tamamlanana kadar build onu reddeder.
 
 ```bash
+cd site
 npm run new-story -- <anahtar> <görsel-adresi> [brief.md]
 npm run social -- <haber-klasörü>
 ```
@@ -124,6 +127,7 @@ npm run social -- <haber-klasörü>
 Birim testleri haber kurallarını, beslemeyi ve sosyal paylaşımları kontrol eder. Tarayıcı testleri Playwright ile build edilmiş site üzerinde çalışır. Her bağlantıyı izler, dili ve temayı değiştirir, arama yapar, telefon menüsünü açar ve haberleri JavaScript kapalıyken okur.
 
 ```bash
+cd site
 npm test
 npm run build
 npx playwright install chromium

@@ -1,0 +1,176 @@
+# The music library. Keyed by file name, every track lives in this folder once approved.
+#
+# mood: the tone of the stories it fits: tense, somber, mysterious, neutral, hopeful or upbeat.
+# credit: the line deliver puts after "Music:" in the caption.
+# peak: the second of the track that lands on the first card. The edit's music.from is set from it.
+# approved: true once the editor listened and kept it. Candidates wait in candidates/ with
+#   approved: null, rejected ones are deleted with their entry.
+# url: where the file came from.
+
+Impact Prelude.mp3:
+  mood: tense
+  credit: '"Impact Prelude" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 35.7
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Impact%20Prelude.mp3
+
+Unanswered Questions.mp3:
+  mood: tense
+  credit: '"Unanswered Questions" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 86.5
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Unanswered%20Questions.mp3
+
+Lightless Dawn.mp3:
+  mood: somber
+  credit: '"Lightless Dawn" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 95.1
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Lightless%20Dawn.mp3
+
+Long Note Four.mp3:
+  mood: somber
+  credit: '"Long Note Four" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 10.3
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Long%20Note%20Four.mp3
+
+Ossuary 6 - Air.mp3:
+  mood: mysterious
+  credit: '"Ossuary 6 - Air" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 96.5
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ossuary%206%20-%20Air.mp3
+
+Thunder Dreams.mp3:
+  mood: mysterious
+  credit: '"Thunder Dreams" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 105.6
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Thunder%20Dreams.mp3
+
+Jerry Five.mp3:
+  mood: neutral
+  credit: '"Jerry Five" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 106.1
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Jerry%20Five.mp3
+
+Miami Viceroy.mp3:
+  mood: neutral
+  credit: '"Miami Viceroy" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 15.5
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Miami%20Viceroy.mp3
+
+Inspired.mp3:
+  mood: hopeful
+  credit: '"Inspired" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 80.0
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Inspired.mp3
+
+Adding the Sun.mp3:
+  mood: hopeful
+  credit: '"Adding the Sun" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 85.4
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Adding%20the%20Sun.mp3
+
+Realizer.mp3:
+  mood: upbeat
+  credit: '"Realizer" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 60.9
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Realizer.mp3
+
+Loopster.mp3:
+  mood: upbeat
+  credit: '"Loopster" Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0, creativecommons.org/licenses/by/4.0'
+  peak: 11.3
+  approved: true
+  url: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Loopster.mp3
+
+Tension Documentary - AtlasAudio.mp3:
+  mood: tense
+  credit: 'Music by AtlasAudio from Pixabay'
+  peak: 49.3
+  approved: true
+  url: https://pixabay.com/music/ambient-tension-documentary-519912/
+
+Documentary Suspense - leberch.mp3:
+  mood: tense
+  credit: 'Music by leberch from Pixabay'
+  peak: 24.8
+  approved: true
+  url: https://pixabay.com/music/pulses-documentary-suspense-375268/
+
+Sad Documentary Music - Tunetank.mp3:
+  mood: somber
+  credit: 'Music by Tunetank from Pixabay'
+  peak: 19.2
+  approved: true
+  url: https://pixabay.com/music/small-drama-sad-documentary-music-349124/
+
+Sad Drama - AtlasAudio.mp3:
+  mood: somber
+  credit: 'Music by AtlasAudio from Pixabay'
+  peak: 30.9
+  approved: true
+  url: https://pixabay.com/music/drama-scene-sad-drama-621600/
+
+Mystery Detective Investigation Music - ViacheslavStarostin.mp3:
+  mood: mysterious
+  credit: 'Music by ViacheslavStarostin from Pixabay'
+  peak: 19.9
+  approved: true
+  url: https://pixabay.com/music/suspense-mystery-detective-investigation-music-473843/
+
+Financial News - Kulakovka.mp3:
+  mood: neutral
+  credit: 'Music by Kulakovka from Pixabay'
+  peak: 20.8
+  approved: true
+  url: https://pixabay.com/music/adventure-financial-news-614884/
+
+News - AtlasAudio.mp3:
+  mood: neutral
+  credit: 'Music by AtlasAudio from Pixabay'
+  peak: 91.8
+  approved: true
+  url: https://pixabay.com/music/corporate-news-625721/
+
+Hopeful - Kulakovka.mp3:
+  mood: hopeful
+  credit: 'Music by Kulakovka from Pixabay'
+  peak: 13.3
+  approved: true
+  url: https://pixabay.com/music/beats-hopeful-614905/
+
+Inspiring - The_Mountain.mp3:
+  mood: hopeful
+  credit: 'Music by The_Mountain from Pixabay'
+  peak: 12.7
+  approved: true
+  url: https://pixabay.com/music/epic-classical-inspiring-610147/
+
+Technology Upbeat - The_Mountain.mp3:
+  mood: upbeat
+  credit: 'Music by The_Mountain from Pixabay'
+  peak: 79.2
+  approved: true
+  url: https://pixabay.com/music/corporate-technology-upbeat-199140/
+
+Technology - Sub_Clair.mp3:
+  mood: upbeat
+  credit: 'Music by Sub_Clair from Pixabay'
+  peak: 76.0
+  approved: true
+  url: https://pixabay.com/music/future-bass-technology-623486/
+
+Investigation - leberch.mp3:
+  mood: mysterious
+  credit: 'Music by leberch from Pixabay'
+  peak: 13.6
+  approved: null
+  url: https://pixabay.com/music/crime-scene-investigation-375272/

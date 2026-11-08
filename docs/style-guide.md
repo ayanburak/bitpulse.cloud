@@ -91,6 +91,6 @@ A post never asks the reader to click and never sounds more dramatic than the st
 
 The stories listed here show how different a Bitpulse story can be. They share a voice, not a formula. Their openings, structure and comparisons are never copied.
 
-- src/content/stories/2026-10-20-torchtpu-torchneuron-pytorch
-- src/content/stories/2026-10-14-treble-clef-galaxy-cluster
-- src/content/stories/2026-10-13-narnia-magicians-nephew-trailer
+- site/src/content/stories/2026-10-20-torchtpu-torchneuron-pytorch
+- site/src/content/stories/2026-10-14-treble-clef-galaxy-cluster
+- site/src/content/stories/2026-10-13-narnia-magicians-nephew-trailer

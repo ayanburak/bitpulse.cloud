@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Music and sounds are large binary files. They live only on this machine, the repository keeps
+# the code that uses them.
+library/music/*
+!library/music/tracks.yaml
+library/sfx/**/*.wav
+library/fonts/*
+
+# Local records and early experiments stay on this machine.
+records/
+prototype/
