@@ -1,8 +1,8 @@
 x: |
   US Central Command says a US military aircraft fired on and disabled the St. Kitts-flagged cargo ship M/V Huda in the Gulf of Oman on Saturday. The command says the crew ignored repeated warnings and tried to violate the US naval blockade of Iran.
 pages:
-  - image: https://images.euronews.com/articles/stories/09/98/41/07/1920x1080_cmsv2_1a31f037-5292-5b2f-a0de-0110b34e7b49-9984107.jpg
-    credit: U.S. Central Command via Euronews
+  - image: https://bitpulse.cloud/media/2026-11-08-gulf-of-oman-cargo-ship-2000.jpg
+    credit: U.S. Central Command
     position: 85% 50%
     text: |
       The US military says it fired on a cargo ship in the Gulf of Oman after its crew ignored repeated warnings.
