@@ -13,7 +13,7 @@ sources:
     url: https://www.aljazeera.com/sports/2026/11/8/messi-becomes-first-player-to-win-back-to-back-mls-golden-boot-awards?traffic_source=rss
 image:
   file: image.jpg
-  alt: "Lionel Messi smiles in a pink Inter Miami shirt with the captain's armband, holding a match ball under his arm."
+  alt: "Lionel Messi smiles in a pink Inter Miami shirt with the captain's armband."
   credit: "Rich Storry/Getty Images via AFP"
   license: "All rights reserved"
   licenseUrl: https://www.aljazeera.com/wp-content/uploads/2026/11/AFP__20261108__D6TB63J__v1__HighRes__MlsRegularSeasonFootballMatchBetweenInterMiamiC-1794133062.jpg?resize=1920%2C1440
