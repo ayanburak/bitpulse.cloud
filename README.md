@@ -51,7 +51,7 @@ The same pages on a small screen, with a light and a dark theme.</p>
 <td width="50%" valign="top" align="center">
 <img src="docs/readme/instagram.png" alt="An Instagram page made from a story" width="360">
 <p align="left"><strong>Social</strong><br>
-Each news story is also shared on X and Instagram. The pages and the video are made from the story by a script.</p>
+Each news story is also shared on X and Instagram. The page and a still video of it are made from the story by a script.</p>
 </td>
 </tr>
 </table>
@@ -68,8 +68,7 @@ src/
 scripts/
   prerender.ts       writes every page as a finished HTML file
   new-story.ts       opens the folder of a new story
-  social.ts          makes the X post, the Instagram pages and the video
-  video-scan.ts      shows the frames and sound of a video before a clip is chosen
+  social.ts          makes the X post, the Instagram page and its still video
 docs/                editorial policy, style guide and site decisions
 tests/               unit tests and browser tests
 ```
@@ -92,7 +91,7 @@ Publishing, update and correction times are written in UTC. The page carries the
 
 ### Social posts from one file
 
-The X post, the Instagram pages and the vertical video of a story are written once in its social.yaml. A script downloads the images, draws the pages in a real browser and cuts the video clip from its source without downloading the whole recording. The tests check every text against the limits of X and Instagram, so a post that would be cut off never leaves the repository.
+The X post and the Instagram page of a story are written once in its social.yaml. A script downloads the image, draws the page in a real browser and saves it also as a still vertical video, so the same post can go out as a reel. The tests check every text against the limits of X and Instagram, so a post that would be cut off never leaves the repository.
 
 <details>
 <summary><strong>Development</strong></summary>

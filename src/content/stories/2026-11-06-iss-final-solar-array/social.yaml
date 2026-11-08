@@ -2,14 +2,6 @@ x: |
   Astronauts Anil Menon and Joshua Kutryk fitted the last of eight new solar arrays to the space station. The new panel first gave only about half the power expected.
 
   After Kutryk replugged one connector in the dark, the array unrolled in about 10 minutes.
-video:
-  source: https://ntv1.akamaized.net/hls/live/2110242/spacewlk11526/master_1080.m3u8
-  start: 28300
-  duration: 20
-  speed: 25.25
-  sound: 28820
-  text: The space station's *last* new solar panel, after a five-year upgrade.
-  credit: NASA+
 pages:
   - image: https://www.nasa.gov/wp-content/uploads/2026/11/blog-useva101-110526h.jpg
     credit: NASA+

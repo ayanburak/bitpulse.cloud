@@ -51,7 +51,7 @@ Aynı sayfalar küçük ekranda, açık ve koyu temayla.</p>
 <td width="50%" valign="top" align="center">
 <img src="docs/readme/instagram.png" alt="Bir haberden üretilmiş Instagram sayfası" width="360">
 <p align="left"><strong>Sosyal medya</strong><br>
-Her haber X ve Instagram'da da paylaşılır. Sayfalar ve video haberden bir script ile üretilir.</p>
+Her haber X ve Instagram'da da paylaşılır. Sayfa ve onun hareketsiz videosu haberden bir script ile üretilir.</p>
 </td>
 </tr>
 </table>
@@ -68,8 +68,7 @@ src/
 scripts/
   prerender.ts       her sayfayı hazır bir HTML dosyası olarak yazar
   new-story.ts       yeni bir haberin klasörünü açar
-  social.ts          X metnini, Instagram sayfalarını ve videoyu üretir
-  video-scan.ts      klip seçilmeden önce videonun karelerini ve sesini gösterir
+  social.ts          X metnini, Instagram sayfasını ve onun hareketsiz videosunu üretir
 docs/                yayın ilkeleri, üslup kılavuzu ve site kararları
 tests/               birim testleri ve tarayıcı testleri
 ```
@@ -92,7 +91,7 @@ Yayın, güncelleme ve düzeltme saatleri UTC olarak yazılır. Sayfa UTC saatin
 
 ### Sosyal paylaşımlar tek dosyadan
 
-Bir haberin X metni, Instagram sayfaları ve dikey videosu bir kez, haberin social.yaml dosyasına yazılır. Bir script görselleri indirir, sayfaları gerçek bir tarayıcıda çizer ve video klibini kaynağın tamamını indirmeden keser. Testler her metni X ve Instagram sınırlarına göre kontrol eder, böylece yarıda kesilecek bir paylaşım depodan çıkmaz.
+Bir haberin X metni ve Instagram sayfası bir kez, haberin social.yaml dosyasına yazılır. Bir script görseli indirir, sayfayı gerçek bir tarayıcıda çizer ve aynı paylaşım reels olarak da gidebilsin diye onu hareketsiz, dikey bir video olarak da kaydeder. Testler her metni X ve Instagram sınırlarına göre kontrol eder, böylece yarıda kesilecek bir paylaşım depodan çıkmaz.
 
 <details>
 <summary><strong>Geliştirme</strong></summary>

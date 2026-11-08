@@ -13,20 +13,19 @@
  * output. The Instagram pages are drawn by a real browser from scripts/social-card.html.
  * CHROME_PATH points to an installed browser when the one Playwright expects is not downloaded.
  *
- * A story with a video field also gets video/reel.mp4, a vertical video for Instagram and X.
- * ffmpeg fetches only the part of the source that is used, so a long recording is not
- * downloaded whole. The logo, the line and the closing screen come from scripts/social-reel.html.
- * This part needs ffmpeg and ffprobe on the machine.
+ * The first page is also saved as post.mp4, a silent vertical video that shows the page without
+ * any movement, so it can be shared on Instagram as a reel. This part needs ffmpeg on the machine.
  *
- * description: Writes the X post, the Instagram caption, the Instagram pages and the video of a story.
+ * description: Writes the X post, the Instagram caption, the Instagram pages and the still video of a story.
  */
 
 // NOTE: The output folder is in .gitignore. The page images may be press or news photos that can
 // be shared on a social account but must not be republished in this repository.
 //
-// NOTE: The video layout is fixed. The clip keeps its own sound, a blurred copy of the picture
-// fills the frame behind it, the line never changes, and the closing screen runs for a moment
-// while the sound fades. Sound is brought to -14 LUFS, the level Instagram and X play at.
+// NOTE: The still video puts the 1080 by 1350 page in the middle of a 1080 by 1920 frame, on the
+// dark color of the page itself. Instagram shows a reel in the feed cut to 4:5, which is exactly
+// the page, and in the reels tab the whole frame, where the text of the page stays above the
+// account name drawn over the bottom.
 //
 // XXX: The text of a page starts at the top of the dark band in scripts/social-card.html. A text
 // too tall for the band is moved up so it ends at TEXT_BOTTOM, and one that would then climb too
@@ -35,14 +34,12 @@
 // height of a text also depends on its words.
 
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium, type Page } from "@playwright/test";
-import { buildSocial, type SocialPost, type SocialVideo } from "../src/social.ts";
+import { buildSocial, type SocialPost } from "../src/social.ts";
 import { buildStories, type Story } from "../src/stories.ts";
-import { resolveVideo } from "./video-source.ts";
 
 // --- Constants ---
 
@@ -59,19 +56,9 @@ const HEADERS = { "User-Agent": "BitpulseSocial/1.0 (+https://bitpulse.cloud)" }
 const TEXT_BOTTOM = 1262;
 const TEXT_TOP = 680;
 
-const REEL_TEMPLATE = pathToFileURL(resolve("scripts/social-reel.html")).href;
-const REEL_SIZE = { width: 1080, height: 1920 };
-
-// A fourth line runs into the account name Instagram draws over the bottom of a reel.
-const MAX_LINES = 3;
-const END_SECONDS = 2.2;
-
-// The clip fills a 1080 pixel wide frame, a taller source adds nothing.
-const REEL_HEIGHT = 1080;
-
-// Without a crop the clip is cut from the middle to the 9:8 window it is shown in. The commas
-// are escaped because they would split the filter otherwise.
-const CENTER = "min(iw\\,ih*9/8):min(ih\\,iw*8/9)";
+// The page sits 285 pixels below the top of the still video, half of the 570 left over.
+const STILL_SECONDS = 6;
+const STILL_FILTER = "pad=1080:1920:0:285:color=0x141513,format=yuv420p";
 
 // --- Reading ---
 
@@ -113,103 +100,17 @@ async function download(urls: string[], folder: string): Promise<Map<string, str
   return files;
 }
 
-// --- Video ---
+// --- Still video ---
 
 // ffmpeg names the cause in its first lines, the last ones only say that nothing was written.
-// YouTube's servers now and then refuse a request with 403 and accept the same one a moment
-// later, so only that refusal is tried again.
-function run(command: string, args: string[]): string {
-  let result = spawnSync(command, args, { encoding: "utf8" });
-  for (let attempt = 1; attempt < 3 && result.status !== 0 && /403 Forbidden/.test(result.stderr ?? ""); attempt++) {
-    result = spawnSync(command, args, { encoding: "utf8" });
-  }
-  if (result.error) throw new Error(`${command} could not be started, the video needs it: ${result.error.message}`);
-  if (result.status !== 0) throw new Error(`${command} failed: ${result.stderr.trim().split("\n").slice(0, 4).join(" ")}`);
-  return result.stdout;
-}
-
-// The line is drawn once over a clear background, then the same page draws the closing screen.
-// Words between asterisks become em, which the template colors.
-async function drawLayers(page: Page, line: string, key: string, folder: string): Promise<void> {
-  await page.setViewportSize(REEL_SIZE);
-  await page.goto(REEL_TEMPLATE);
-  const lines = await page.evaluate(async (line) => {
-    const text = document.querySelector(".text")!;
-    for (const [index, part] of line.split("*").entries()) {
-      if (!part) continue;
-      const node = index % 2 ? document.createElement("em") : document.createTextNode(part);
-      if (node instanceof HTMLElement) node.textContent = part;
-      text.append(node);
-    }
-    await document.fonts.ready;
-    return Math.round(text.getBoundingClientRect().height / parseFloat(getComputedStyle(text).lineHeight));
-  }, line);
-  if (lines > MAX_LINES) throw new Error(`${key}: the video line takes ${lines} lines, the limit is ${MAX_LINES}`);
-  await page.screenshot({ path: join(folder, "line.png"), omitBackground: true });
-  await page.evaluate(() => document.body.classList.add("end"));
-  await page.screenshot({ path: join(folder, "end.png") });
-}
-
-// One ffmpeg call cuts the clip, lays the line over it, adds the closing screen and fades the
-// sound, which keeps running under the closing screen. The source is read from the start second
-// for the whole length, so the sound does not jump where the closing screen begins. A sped up
-// clip reads a longer stretch of picture without its sound, and its own sound, when it has one,
-// comes in as a second input that starts at its own second and plays in real time.
-function encode(video: SocialVideo, key: string, folder: string, out: string): void {
-  const total = video.duration + END_SECONDS;
-  const agent = ["-user_agent", HEADERS["User-Agent"]];
-  const speed = video.speed ?? 1;
-  const span = video.speed === undefined ? total : video.duration * speed;
-  const streams = resolveVideo(video.source, REEL_HEIGHT);
-  const inputs = ["-ss", String(video.start), "-t", String(span), ...agent, "-i", streams.picture];
-  const hasAudio = run("ffprobe", ["-v", "error", ...agent, "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", streams.sound]).trim() !== "";
-
-  // The sound comes from the picture's own file when they share one, otherwise from a second
-  // input, which also holds the sound of a sped up clip at its own second.
-  const soundStart = video.speed === undefined ? video.start : video.sound;
-  let sound = "";
-  if (hasAudio && soundStart !== undefined) {
-    if (video.speed === undefined && streams.sound === streams.picture) sound = "[0:a]";
-    else {
-      inputs.push("-ss", String(soundStart), "-t", String(total), ...agent, "-i", streams.sound);
-      sound = "[1:a]";
-    }
-  }
-  const layer = inputs.filter((value) => value === "-i").length;
-  const graph = [
-    `[0:v]setpts=(PTS-STARTPTS)/${speed},trim=duration=${video.duration},setpts=PTS-STARTPTS,fps=30,split[a][b]`,
-    "[a]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=40:2,eq=brightness=-0.22[bg]",
-    `[b]crop=${video.crop ?? CENTER},scale=1080:960[fg]`,
-    "[bg][fg]overlay=0:360[clip]",
-    `[${layer}:v]format=rgba,fade=in:st=0:d=0.25:alpha=1[line]`,
-    `[clip][line]overlay=0:0:shortest=1,trim=duration=${video.duration},format=yuv420p,setsar=1[main]`,
-    `[${layer + 1}:v]fade=in:st=0:d=0.2,format=yuv420p,setsar=1[end]`,
-    "[main][end]concat=n=2:v=1:a=0[v]",
-  ];
-  if (sound) graph.push(`${sound}loudnorm=I=-14:TP=-1.5:LRA=11,afade=in:st=0:d=0.2,afade=out:st=${total - 2}:d=2,atrim=duration=${total}[s]`);
-  run("ffmpeg", [
-    "-v", "error", "-y", ...inputs,
-    "-loop", "1", "-framerate", "30", "-t", String(video.duration), "-i", join(folder, "line.png"),
-    "-loop", "1", "-framerate", "30", "-t", String(END_SECONDS), "-i", join(folder, "end.png"),
-    "-filter_complex", graph.join(";"), "-map", "[v]", ...(sound ? ["-map", "[s]", "-c:a", "aac", "-b:a", "160k"] : []),
-    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-r", "30", "-movflags", "+faststart", out,
-  ]);
-
-  // A start second too close to the end of the source gives a short clip without any error.
-  // The line layer stops with the clip, otherwise ffmpeg would hold the last frame to fill it.
-  const length = Number(run("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", out]));
-  if (length < total - 0.5) throw new Error(`${key}: the video is ${length.toFixed(1)} seconds instead of ${total}, the source ends before the clip does`);
-}
-
-async function makeReel(page: Page, video: SocialVideo, key: string, out: string): Promise<void> {
-  const folder = mkdtempSync(join(tmpdir(), "bitpulse-reel-"));
-  try {
-    await drawLayers(page, video.text, key, folder);
-    mkdirSync(join(out, "video"), { recursive: true });
-    encode(video, key, folder, join(out, "video", "reel.mp4"));
-  } finally {
-    rmSync(folder, { recursive: true, force: true });
-  }
+// stillimage tells the encoder that no frame changes, which keeps the file small.
+function makeStill(page: string, out: string): void {
+  const result = spawnSync("ffmpeg", [
+    "-v", "error", "-y", "-loop", "1", "-framerate", "30", "-t", String(STILL_SECONDS), "-i", page,
+    "-vf", STILL_FILTER, "-c:v", "libx264", "-tune", "stillimage", "-preset", "medium", "-crf", "18", "-r", "30", "-movflags", "+faststart", out,
+  ], { encoding: "utf8" });
+  if (result.error) throw new Error(`ffmpeg could not be started, the still video needs it: ${result.error.message}`);
+  if (result.status !== 0) throw new Error(`ffmpeg failed: ${result.stderr.trim().split("\n").slice(0, 4).join(" ")}`);
 }
 
 // --- Posts ---
@@ -243,7 +144,7 @@ async function write(page: Page, post: SocialPost, key: string, dir: string): Pr
     if (top < TEXT_TOP) throw new Error(`${key}: page ${index + 1} is too long, its text starts at ${Math.round(top)} pixels and the limit is ${TEXT_TOP}`);
     await page.screenshot({ path: join(dir, `page-${index + 1}.png`) });
   }
-  if (post.video) await makeReel(page, post.video, key, dir);
+  makeStill(join(dir, "page-1.png"), join(dir, "post.mp4"));
 }
 
 // --- Run ---
@@ -272,7 +173,7 @@ try {
     }
     rmSync(out, { recursive: true, force: true });
     renameSync(draft, out);
-    console.log(`${out}: x.txt, caption.txt, ${post.pages.length} page${post.pages.length > 1 ? "s" : ""}${post.video ? " and video/reel.mp4" : ""}`);
+    console.log(`${out}: x.txt, caption.txt, ${post.pages.length} page${post.pages.length > 1 ? "s" : ""} and post.mp4`);
   }
 } finally {
   await browser.close();

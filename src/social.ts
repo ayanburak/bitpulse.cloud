@@ -8,14 +8,8 @@
  * by hand. The link, the credit line and the source note are added here, so they are the same on
  * every post and can not be forgotten.
  *
- * A story whose event was filmed can also carry a video: one unbroken clip of real footage,
- * given as the address of the video file, the second it starts at, how long it runs and one
- * short line drawn over it. Words between asterisks in that line are drawn in the accent color.
- * The video credit joins the image credits in the caption, nothing is written on the video.
- *
- * A slow event can be sped up. speed shows a longer stretch of the clip in the same duration,
- * and sound gives the second its own sound starts at, played in real time, because sped up sound
- * is noise. Without sound a sped up clip is silent. The caption then says how the clip was sped up.
+ * From 8 November 2026 a post has exactly one page. Older posts keep the pages they were shared
+ * with.
  *
  * description: Validates the social text of a story and completes it into ready to share posts.
  */
@@ -38,22 +32,10 @@ export interface SocialPage {
   paragraphs: string[];
 }
 
-export interface SocialVideo {
-  source: string;
-  start: number;
-  duration: number;
-  text: string;
-  credit: string;
-  crop?: string;
-  speed?: number;
-  sound?: number;
-}
-
 export interface SocialPost {
   x: string;
   pages: SocialPage[];
   caption: string;
-  video?: SocialVideo;
 }
 
 // --- Constants ---
@@ -77,24 +59,12 @@ const SHORT_PAGE_LIMIT = 120;
 // Instagram allows twenty pages in one post and cuts captions at 2,200 characters.
 const MAX_PAGES = 20;
 const CAPTION_LIMIT = 2200;
-const FIELDS = ["x", "pages", "caption", "video"];
+const FIELDS = ["x", "pages", "caption"];
 const PAGE_FIELDS = ["image", "credit", "text"];
-const VIDEO_FIELDS = ["source", "start", "duration", "text", "credit", "crop", "speed", "sound"];
 
-// A clip shorter than this ends before the moment lands, a longer one loses the viewer.
-const MIN_SECONDS = 8;
-const MAX_SECONDS = 20;
-
-// Below twice the speed a slow event still looks still, above sixty a ten minute stretch would
-// pass in ten seconds and a viewer could no longer follow it.
-const MIN_SPEED = 2;
-const MAX_SPEED = 60;
-
-// About three lines under the video, a fourth line runs into the account name Instagram draws
-// over the bottom of a reel. scripts/social.ts measures the real lines, this catches most texts
-// earlier, when the tests run.
-const VIDEO_TEXT_LIMIT = 80;
-const MAX_SENTENCES = 2;
+// From 2026-11-08 the post is one page, also turned into a still video, and the caption carries
+// everything else. Reels are made apart from the story, so the post only has to stop a reader.
+const ONE_PAGE_SINCE = "2026-11-08";
 
 // Points readers to the full story, where every claim is linked to its source.
 const SOURCE_NOTE = "Every claim is sourced in the full story.";
@@ -117,17 +87,17 @@ function httpUrl(value: unknown, field: string, where: string): string {
 }
 
 // The text of a page is written as one block, with an empty line between its paragraphs.
-function readPages(value: unknown, where: string, short: boolean): SocialPage[] {
+function readPages(value: unknown, where: string, short: boolean, most: number): SocialPage[] {
   if (!Array.isArray(value) || value.length === 0) throw new Error(`${where}: missing pages`);
-  if (value.length > MAX_PAGES) throw new Error(`${where}: more than ${MAX_PAGES} pages`);
+  if (value.length > most) throw new Error(`${where}: more than ${most} page${most > 1 ? "s" : ""}`);
   return value.map((page, index) => {
     const at = `${where}: page ${index + 1}`;
     if (!isRecord(page)) throw new Error(`${at}: invalid page`);
     const unknown = Object.keys(page).find((field) => !PAGE_FIELDS.includes(field));
     if (unknown) throw new Error(`${at}: unknown field: ${unknown}`);
     const paragraphs = text(page.text, "text", at).split(/\n\s*\n/).map((part) => part.replace(/\s+/g, " ").trim());
-    const most = short ? 1 : MAX_PARAGRAPHS;
-    if (paragraphs.length > most) throw new Error(`${at}: more than ${most} paragraph${most > 1 ? "s" : ""}`);
+    const parts = short ? 1 : MAX_PARAGRAPHS;
+    if (paragraphs.length > parts) throw new Error(`${at}: more than ${parts} paragraph${parts > 1 ? "s" : ""}`);
     const length = paragraphs.join(" ").length;
     const limit = short ? SHORT_PAGE_LIMIT : PAGE_LIMIT;
     if (length > limit) throw new Error(`${at}: text is ${length} characters, the limit is ${limit}`);
@@ -135,54 +105,10 @@ function readPages(value: unknown, where: string, short: boolean): SocialPage[] 
   });
 }
 
-function seconds(value: unknown, field: string, where: string): number {
-  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) throw new Error(`${where}: invalid ${field}, it must be a number of seconds`);
-  return value;
-}
-
-// The crop is handed to ffmpeg as it is, so it may only hold four whole numbers.
-function readVideo(value: unknown, where: string): SocialVideo {
-  const at = `${where}: video`;
-  if (!isRecord(value)) throw new Error(`${at}: invalid video`);
-  const unknown = Object.keys(value).find((field) => !VIDEO_FIELDS.includes(field));
-  if (unknown) throw new Error(`${at}: unknown field: ${unknown}`);
-
-  const duration = seconds(value.duration, "duration", at);
-  if (duration < MIN_SECONDS || duration > MAX_SECONDS) throw new Error(`${at}: duration is ${duration} seconds, it must be between ${MIN_SECONDS} and ${MAX_SECONDS}`);
-
-  const line = text(value.text, "text", at).replace(/\s+/g, " ");
-  const plain = line.replaceAll("*", "");
-  if (plain.length > VIDEO_TEXT_LIMIT) throw new Error(`${at}: text is ${plain.length} characters, the limit is ${VIDEO_TEXT_LIMIT}`);
-  const sentences = plain.match(/[.!?]+["”’]?(\s|$)/g)?.length ?? 1;
-  if (sentences > MAX_SENTENCES) throw new Error(`${at}: text has ${sentences} sentences, the limit is ${MAX_SENTENCES}`);
-  if ((line.match(/\*/g)?.length ?? 0) % 2) throw new Error(`${at}: text has an asterisk without its pair`);
-
-  const video: SocialVideo = { source: httpUrl(value.source, "source", at), start: seconds(value.start, "start", at), duration, text: line, credit: text(value.credit, "credit", at) };
-  if (value.crop !== undefined) {
-    const crop = text(value.crop, "crop", at);
-    if (!/^\d+:\d+:\d+:\d+$/.test(crop)) throw new Error(`${at}: crop must be width:height:x:y in pixels of the source, got ${crop}`);
-    video.crop = crop;
-  }
-  if (value.speed !== undefined) {
-    const speed = seconds(value.speed, "speed", at);
-    if (speed < MIN_SPEED || speed > MAX_SPEED) throw new Error(`${at}: speed is ${speed}, it must be between ${MIN_SPEED} and ${MAX_SPEED}`);
-    video.speed = speed;
-  }
-  if (value.sound !== undefined) {
-    if (video.speed === undefined) throw new Error(`${at}: sound is only used with speed, a clip at its own speed keeps its own sound`);
-    video.sound = seconds(value.sound, "sound", at);
-  }
-  return video;
-}
-
-// Pages that share an image or a photographer name them once. The video owner comes first,
-// because the video is what the viewer sees first.
-function credits(pages: SocialPage[], video?: SocialVideo): string {
+// Pages that share an image or a photographer name them once.
+function credits(pages: SocialPage[]): string {
   const names = [...new Set(pages.map((page) => page.credit))];
-  const images = `${names.length > 1 ? "Images" : "Image"}: ${names.join(" · ")}.`;
-  if (!video) return images;
-  const speed = video.speed === undefined ? "" : `, sped up ${Math.round(video.speed)} times${video.sound === undefined ? "" : ", sound in real time"}`;
-  return `Video: ${video.credit}${speed}. ${images}`;
+  return `${names.length > 1 ? "Images" : "Image"}: ${names.join(" · ")}.`;
 }
 
 // --- Building ---
@@ -192,10 +118,9 @@ function credits(pages: SocialPage[], video?: SocialVideo): string {
  *
  * @param raw Contents of the story's social.yaml.
  * @param story The story the file belongs to.
- * @returns The X post with its link, the Instagram pages, the full caption and the video when
- *   the story has one.
- * @throws Error if a field is missing or unknown, an address is invalid, the X post, a page,
- *   the caption or the video line is over its limit, or the video runs too short or too long.
+ * @returns The X post with its link, the Instagram pages and the full caption.
+ * @throws Error if a field is missing or unknown, an address is invalid, the post has more pages
+ *   than its date allows, or the X post, a page or the caption is over its limit.
  */
 export function buildSocial(raw: string, story: Story): SocialPost {
   const where = `${story.key}/social.yaml`;
@@ -210,10 +135,10 @@ export function buildSocial(raw: string, story: Story): SocialPost {
   const length = x.length + 2 + X_LINK_LENGTH;
   if (length > X_LIMIT) throw new Error(`${where}: X post is ${length} characters with the link, the limit is ${X_LIMIT}`);
 
-  const pages = readPages(data.pages, where, story.key.slice(0, 10) >= SHORT_PAGES_SINCE);
-  const video = data.video === undefined ? undefined : readVideo(data.video, where);
-  const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages, video)} ${SOURCE_NOTE}`];
+  const day = story.key.slice(0, 10);
+  const pages = readPages(data.pages, where, day >= SHORT_PAGES_SINCE, day >= ONE_PAGE_SINCE ? 1 : MAX_PAGES);
+  const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages)} ${SOURCE_NOTE}`];
   const full = caption.join("\n\n");
   if (full.length > CAPTION_LIMIT) throw new Error(`${where}: caption is ${full.length} characters, the limit is ${CAPTION_LIMIT}`);
-  return { x: `${x}\n\n${link}`, pages, caption: full, ...(video && { video }) };
+  return { x: `${x}\n\n${link}`, pages, caption: full };
 }
