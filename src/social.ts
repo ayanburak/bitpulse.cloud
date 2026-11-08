@@ -4,7 +4,7 @@
  *
  * A news story can carry a social.yaml file next to en.md. It holds the English text for the
  * social accounts: one X post, one or more Instagram pages and an Instagram caption. Every page
- * has its own image, given as an address and a credit. The text and the images are chosen
+ * has its own image, given as an address, a credit and, when the subject is off center, a position. The text and the images are chosen
  * by hand. The link, the credit line and the source note are added here, so they are the same on
  * every post and can not be forgotten.
  *
@@ -29,6 +29,7 @@ import type { Story } from "./stories";
 export interface SocialPage {
   image: string;
   credit: string;
+  position: string;
   paragraphs: string[];
 }
 
@@ -60,7 +61,12 @@ const SHORT_PAGE_LIMIT = 120;
 const MAX_PAGES = 20;
 const CAPTION_LIMIT = 2200;
 const FIELDS = ["x", "pages", "caption"];
-const PAGE_FIELDS = ["image", "credit", "text"];
+const PAGE_FIELDS = ["image", "credit", "position", "text"];
+
+// The page shows a wide photo cut to the shape of its upper part. When the subject sits near an
+// edge, a position such as 85% 50% moves the cut there, the first number across, the second down.
+const CENTER = "50% 50%";
+const POSITION = /^(\d{1,3})% (\d{1,3})%$/;
 
 // From 2026-11-08 the post is one page, also turned into a still video, and the caption carries
 // everything else. Reels are made apart from the story, so the post only has to stop a reader.
@@ -86,6 +92,14 @@ function httpUrl(value: unknown, field: string, where: string): string {
   return url;
 }
 
+// A page without a position keeps the centered cut every older post was made with.
+function readPosition(value: unknown, where: string): string {
+  if (value === undefined) return CENTER;
+  const match = typeof value === "string" ? POSITION.exec(value.trim()) : null;
+  if (!match || Number(match[1]) > 100 || Number(match[2]) > 100) throw new Error(`${where}: invalid position, write two percents such as 85% 50%: ${value}`);
+  return match[0];
+}
+
 // The text of a page is written as one block, with an empty line between its paragraphs.
 function readPages(value: unknown, where: string, short: boolean, most: number): SocialPage[] {
   if (!Array.isArray(value) || value.length === 0) throw new Error(`${where}: missing pages`);
@@ -101,7 +115,7 @@ function readPages(value: unknown, where: string, short: boolean, most: number):
     const length = paragraphs.join(" ").length;
     const limit = short ? SHORT_PAGE_LIMIT : PAGE_LIMIT;
     if (length > limit) throw new Error(`${at}: text is ${length} characters, the limit is ${limit}`);
-    return { image: httpUrl(page.image, "image", at), credit: text(page.credit, "credit", at), paragraphs };
+    return { image: httpUrl(page.image, "image", at), credit: text(page.credit, "credit", at), position: readPosition(page.position, at), paragraphs };
   });
 }
 

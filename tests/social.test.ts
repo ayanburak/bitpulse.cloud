@@ -71,6 +71,14 @@ it("refuses the old video field, reels are made apart from the post", () => {
   expect(() => buildSocial(`${BASE}video:\n  source: https://example.com/clip.mp4\n`, HERA)).toThrow("unknown field: video");
 });
 
+it("takes a position for a photo whose subject is off center", () => {
+  const at = (position: string) => BASE.replace("    credit: ESA\n", `    credit: ESA\n    position: ${position}\n`);
+  expect(buildSocial(BASE, HERA).pages[0].position).toBe("50% 50%");
+  expect(buildSocial(at("85% 50%"), HERA).pages[0].position).toBe("85% 50%");
+  expect(() => buildSocial(at("right"), HERA)).toThrow("invalid position");
+  expect(() => buildSocial(at("120% 50%"), HERA)).toThrow("invalid position");
+});
+
 // The same story under a later folder name, so the rule for pages from 7 November applies to it.
 // The name sits in its own constant for the same reason as FOLDER above.
 const LATER_FOLDER = "2026-11-07-hera-dimorphos";

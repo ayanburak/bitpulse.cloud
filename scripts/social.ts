@@ -122,12 +122,13 @@ async function write(page: Page, post: SocialPost, key: string, dir: string): Pr
   writeFileSync(join(dir, "caption.txt"), `${post.caption}\n`);
 
   const images = await download(post.pages.map((item) => item.image), join(dir, "images"));
-  for (const [index, { image, paragraphs }] of post.pages.entries()) {
+  for (const [index, { image, position, paragraphs }] of post.pages.entries()) {
     await page.setViewportSize(SIZE);
     await page.goto(TEMPLATE);
-    const top = await page.evaluate(async ({ image, paragraphs, limit }) => {
+    const top = await page.evaluate(async ({ image, position, paragraphs, limit }) => {
       const photo = document.querySelector("img")!;
       photo.src = image;
+      photo.style.objectPosition = position;
       const text = document.querySelector(".text")!;
       for (const words of paragraphs) {
         const paragraph = document.createElement("p");
@@ -139,7 +140,7 @@ async function write(page: Page, post: SocialPost, key: string, dir: string): Pr
       const box = text.getBoundingClientRect();
       if (box.bottom > limit) (text as HTMLElement).style.top = `${limit - box.height}px`;
       return text.getBoundingClientRect().top;
-    }, { image: images.get(image)!, paragraphs, limit: TEXT_BOTTOM });
+    }, { image: images.get(image)!, position, paragraphs, limit: TEXT_BOTTOM });
 
     if (top < TEXT_TOP) throw new Error(`${key}: page ${index + 1} is too long, its text starts at ${Math.round(top)} pixels and the limit is ${TEXT_TOP}`);
     await page.screenshot({ path: join(dir, `page-${index + 1}.png`) });
