@@ -1,6 +1,6 @@
 """
 file: radar/rank.py
-importable: shortlist, choose, rank, reserve, score_of, Score, Scores, BAR, NOISE
+importable: shortlist, choose, rank, reserve, floor, score_of, Score, Scores, BAR, NOISE
 
 Every hour the radar looks at all events of the last day that have not been sent yet. Software
 keeps the strongest ones, a small model scores them and only the events above a fixed bar reach
@@ -25,6 +25,7 @@ description: Scores the events of the last day with Claude Haiku and picks the o
 
 import re
 import sqlite3
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 from typing import Literal
 
@@ -38,12 +39,25 @@ POOL = timedelta(hours=24)
 GROWTH = timedelta(hours=3)
 SHORTLIST = 100
 SUMMARY = 400
-MAX_TOKENS = 16000
+
+# A science or technology story often has one outlet, so outlet counts alone never bring it to the
+# model. Each subject feed keeps these seats on top of the shortlist.
+TOPICS = ("Science", "Technology", "Health", "Culture", "Sports")
+TOPIC_SEATS = 20
+
+# XXX: Above about 21,000 tokens the SDK refuses a plain request unless it is given its own timeout.
+# The two values stay together for that reason.
+MAX_TOKENS = 32000
+REQUEST_SECONDS = 300
 RECENT_SENT = 30
 
 BAR = 6.5
 PICKS = 3
 DIGEST_PICKS = 5
+CATEGORY_CAP = 2
+
+# The round that fills every category that had nothing yet today, evening in Turkey.
+FLOOR_HOUR = 18
 
 # A reserve event older than this is old news by the time it would be sent.
 RESERVE_FOR = timedelta(hours=12)
@@ -82,12 +96,15 @@ Give each event a category. When an event is the same story as another event in 
 Give one short English sentence on why the event is or is not worth covering."""
 
 
+Category = Literal["world", "economy", "technology", "science", "health", "culture", "sports"]
+
+
 class Score(BaseModel):
     id: int
     importance: int
     shareable: int
     visual: int
-    category: Literal["world", "economy", "technology", "science", "health", "culture", "sports"]
+    category: Category
     duplicate_of: int | None
     reason: str
 
@@ -115,6 +132,20 @@ def strength(db: sqlite3.Connection, cluster: sqlite3.Row, regions: dict[str, st
     return 3 * len(outlets) + 2 * len(places) + 2 * len(recent) + int(any(item["image"] for item in items))
 
 
+# The rows arrive strongest first, so the seats of a subject go to its strongest events.
+def seated(db: sqlite3.Connection, rows: list[sqlite3.Row], regions: dict[str, str]) -> list[sqlite3.Row]:
+    seats = dict.fromkeys(TOPICS, 0)
+    picked = []
+    for row in rows:
+        outlets = db.execute("select distinct source from items where cluster = ?", (row["id"],)).fetchall()
+        open_topics = sorted(topic for topic in {regions.get(item["source"]) for item in outlets}
+                             if topic in seats and seats[topic] < TOPIC_SEATS)
+        if open_topics:
+            seats[open_topics[0]] += 1
+            picked.append(row)
+    return picked
+
+
 def shortlist(db: sqlite3.Connection, regions: dict[str, str], now: datetime) -> list[sqlite3.Row]:
     """
     Picks the events worth asking the model about.
@@ -125,7 +156,8 @@ def shortlist(db: sqlite3.Connection, regions: dict[str, str], now: datetime) ->
         now: Time of the round.
 
     Returns:
-        The strongest unsent events of the last day that are new or have grown since their last score.
+        The strongest unsent events of the last day that are new or have grown since their last score,
+        followed by the strongest of the rest from each subject feed.
     """
     rows = db.execute(
         "select * from clusters where last_seen >= ? and sent is null and merged_into is null and sources > scored_sources",
@@ -133,7 +165,7 @@ def shortlist(db: sqlite3.Connection, regions: dict[str, str], now: datetime) ->
     ).fetchall()
     rows = [row for row in rows if not NOISE.search(row["title"])]
     rows.sort(key=lambda row: (strength(db, row, regions, now), row["last_seen"]), reverse=True)
-    return rows[:SHORTLIST]
+    return rows[:SHORTLIST] + seated(db, rows[SHORTLIST:], regions)
 
 
 # --- Model ---
@@ -164,6 +196,7 @@ def ask(db: sqlite3.Connection, rows: list[sqlite3.Row], regions: dict[str, str]
     response = client.messages.parse(
         model=MODEL,
         max_tokens=MAX_TOKENS,
+        timeout=REQUEST_SECONDS,
         system=SYSTEM,
         output_config={"effort": "low"},
         messages=[{"role": "user", "content": prompt}],
@@ -181,7 +214,7 @@ def ask(db: sqlite3.Connection, rows: list[sqlite3.Row], regions: dict[str, str]
 
 def choose(scores: list[Score], limit: int) -> list[Score]:
     """
-    Applies the bar and keeps at most one event from each category.
+    Applies the bar and keeps at most two events from each category.
 
     Args:
         scores: Scores of this round, duplicates already removed.
@@ -190,11 +223,11 @@ def choose(scores: list[Score], limit: int) -> list[Score]:
     Returns:
         The chosen scores, best first.
     """
-    chosen, categories = [], set()
+    chosen, counts = [], Counter()
     for item in sorted(scores, key=lambda score: score.total, reverse=True):
-        if item.total < BAR or item.category in categories:
+        if item.total < BAR or counts[item.category] >= CATEGORY_CAP:
             continue
-        categories.add(item.category)
+        counts[item.category] += 1
         chosen.append(item)
     return chosen[:limit]
 
@@ -259,6 +292,33 @@ def reserve(db: sqlite3.Connection, skip: set[int], now: datetime) -> list[sqlit
     return waiting[:RESERVE_SIZE]
 
 
+# --- Floor ---
+
+# A story stored at first sight has sent equal to first_seen and never reached the editor, so it
+# does not count as covering its category.
+def floor(db: sqlite3.Connection, now: datetime) -> list[sqlite3.Row]:
+    """
+    Finds the best waiting event of every category that sent nothing today.
+
+    Args:
+        db: Open radar database.
+        now: Time of the round.
+
+    Returns:
+        At most one event per category, whatever its score, best first.
+    """
+    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    covered = {row["category"] for row in db.execute(
+        "select distinct category from clusters where sent >= ? and sent <> first_seen and merged_into is null", (stamp(midnight),)
+    )}
+    rows = db.execute("select * from clusters where sent is null and merged_into is null and scored_at >= ?", (stamp(now - POOL),)).fetchall()
+    best: dict[str, sqlite3.Row] = {}
+    for row in sorted(rows, key=lambda row: score_of(row).total, reverse=True):
+        if row["category"] not in covered:
+            best.setdefault(row["category"], row)
+    return list(best.values())
+
+
 # --- Round ---
 
 def rank(db: sqlite3.Connection, send, now: datetime | None = None, dry_run: bool = False,
@@ -289,7 +349,7 @@ def rank(db: sqlite3.Connection, send, now: datetime | None = None, dry_run: boo
         return []
     ids = [row["id"] for row in rows]
     waiting = reserve(db, set(ids), now)
-    if not rows and not waiting:
+    if not rows and not waiting and now.hour != FLOOR_HOUR:
         return []
 
     kept = []
@@ -307,4 +367,11 @@ def rank(db: sqlite3.Connection, send, now: datetime | None = None, dry_run: boo
         reason = f"{item.reason} Importance {item.importance}, shareable {item.shareable}, visual {item.visual}."
         send(db, cluster, reason)
         chosen.append((cluster, reason))
+
+    if now.hour == FLOOR_HOUR:
+        for row in floor(db, now):
+            item = score_of(row)
+            reason = f"Best {item.category} event today. {item.reason} Importance {item.importance}, shareable {item.shareable}, visual {item.visual}."
+            send(db, row, reason)
+            chosen.append((row, reason))
     return chosen

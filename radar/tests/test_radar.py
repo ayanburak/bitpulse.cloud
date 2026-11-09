@@ -88,9 +88,68 @@ def test_weak_rounds_send_nothing(tmp_path):
     assert sent == []
 
 
-def test_one_event_per_category_and_best_first():
-    chosen = choose([score(1, 7, "sports"), score(2, 9, "sports"), score(3, 8, "world")], limit=3)
-    assert [item.id for item in chosen] == [2, 3]
+def test_two_events_per_category_and_best_first():
+    chosen = choose([score(1, 7, "sports"), score(2, 9, "sports"), score(3, 8, "sports"), score(4, 8, "world")], limit=4)
+    assert [item.id for item in chosen] == [2, 3, 4]
+
+
+def four_events(db) -> list[int]:
+    titles = ["Giant pandas debut at Atlanta zoo", "Tesla ends Cybertruck production", "Volcano erupts near Reykjavik harbor", "Parliament dissolved after budget vote"]
+    return [add_item(db, Source(name, "", ""), entry(title, f"https://{name}.com/1"), NOW) for name, title in zip("WSTU", titles)]
+
+
+def test_subject_feeds_keep_their_seats_beyond_the_shortlist(tmp_path, monkeypatch):
+    db = connect(str(tmp_path / "r.db"))
+    four_events(db)
+    monkeypatch.setattr(ranking, "SHORTLIST", 1)
+    monkeypatch.setattr(ranking, "TOPIC_SEATS", 1)
+    rows = shortlist(db, {"W": "Europe", "S": "Science", "T": "Science", "U": "Europe"}, NOW)
+    assert len(rows) == 2 and "Parliament" not in rows[1]["title"]
+
+
+def test_the_long_request_carries_its_own_timeout(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    cluster = four_events(db)[0]
+    asked = []
+
+    class Model:
+        messages = SimpleNamespace(parse=lambda **kwargs: asked.append(kwargs) or SimpleNamespace(
+            stop_reason="end_turn", parsed_output=Scores(events=[score(cluster, 4)]), usage=SimpleNamespace(input_tokens=1, output_tokens=1)))
+
+    ranking.rank(db, collect([]), now=NOW, client=Model())
+    assert asked[0]["timeout"] == ranking.REQUEST_SECONDS
+
+
+EVENING = NOW.replace(hour=18)
+
+
+def test_the_evening_round_fills_every_empty_category(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first, second, third, _ = four_events(db)
+    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 2, "science"), score(second, 4, "science"), score(third, 3, "technology")))
+    sent = []
+    ranking.rank(db, collect(sent), now=EVENING, client=None)
+    assert sent == [second, third]
+
+
+def test_a_category_with_a_story_today_is_not_filled(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first, second, _, _ = four_events(db)
+    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 8, "science"), score(second, 4, "science")))
+    db.execute("update clusters set sent = ? where id = ?", (NOW.replace(hour=13).isoformat(timespec="seconds"), first))
+    db.commit()
+    sent = []
+    ranking.rank(db, collect(sent), now=EVENING, client=None)
+    assert sent == []
+
+
+def test_other_rounds_never_fill_a_category(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first = four_events(db)[0]
+    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 2, "science")))
+    sent = []
+    ranking.rank(db, collect(sent), now=NOW.replace(hour=17), client=None)
+    assert sent == []
 
 
 def test_an_event_is_scored_again_only_after_it_grows(tmp_path):
@@ -218,7 +277,8 @@ def no_model() -> SimpleNamespace:
     return SimpleNamespace(messages=SimpleNamespace(parse=refuse))
 
 
-def test_an_event_that_lost_its_place_waits_and_costs_no_second_call(tmp_path):
+def test_an_event_that_lost_its_place_waits_and_costs_no_second_call(tmp_path, monkeypatch):
+    monkeypatch.setattr(ranking, "CATEGORY_CAP", 1)
     db = connect(str(tmp_path / "r.db"))
     first, second = two_world_events(db)
     sent = []
@@ -235,14 +295,16 @@ def test_an_event_below_the_bar_never_waits(tmp_path):
     assert ranking.reserve(db, {first}, NOW) == []
 
 
-def test_the_reserve_goes_stale(tmp_path):
+def test_the_reserve_goes_stale(tmp_path, monkeypatch):
+    monkeypatch.setattr(ranking, "CATEGORY_CAP", 1)
     db = connect(str(tmp_path / "r.db"))
     first, second = two_world_events(db)
     ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 9), score(second, 8)))
     assert ranking.reserve(db, set(), NOW + timedelta(hours=13)) == []
 
 
-def test_a_new_event_can_merge_into_a_waiting_one(tmp_path):
+def test_a_new_event_can_merge_into_a_waiting_one(tmp_path, monkeypatch):
+    monkeypatch.setattr(ranking, "CATEGORY_CAP", 1)
     db = connect(str(tmp_path / "r.db"))
     first, second = two_world_events(db)
     ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 9), score(second, 8)))

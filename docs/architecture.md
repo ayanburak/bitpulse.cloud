@@ -28,7 +28,7 @@ The workflows folder holds the written procedures that a writing session follows
 
 ## From an event to a story
 
-The radar reads the feeds every few minutes and scores events once an hour during the editor's working hours. An event that passes a fixed bar goes to Telegram, at most one from each category in a round. One that passes the bar but loses its place waits and competes again in later rounds. Every other event is copied to the panel too, marked with how far it got, so the editor can see what was left out and why, and can still choose it.
+The radar reads the feeds every few minutes and scores events once an hour during the editor's working hours. An event that passes a fixed bar goes to Telegram, at most two from each category in a round. Once a day the best waiting event of every category that had nothing yet is sent as well, so no subject goes missing. One that passes the bar but loses its place waits and competes again in later rounds. Every other event is copied to the panel too, marked with how far it got, so the editor can see what was left out and why, and can still choose it.
 
 The editor answers Do or Skip in Telegram or in the panel. The answer is stored by the API and nowhere else. A link can also be sent to the bot or added in the panel, and it becomes a chosen event of its own. Because the API can not reach the internet, it only records what is wanted and the radar picks the work up. The radar then reads the sources of the event and writes one file, the brief, which it hands back to the API.
 
