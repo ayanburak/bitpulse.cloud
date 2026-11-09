@@ -10,7 +10,7 @@ description: Opens the radar database and reads or writes its small key value ta
 """
 
 # NOTE: SQLite is enough here. One process writes at a time, the timers never overlap by design,
-# and the poll service only touches the decision column. WAL mode keeps a reader from blocking a
+# and the poll service only touches a few columns of a row. WAL mode keeps a reader from blocking a
 # writer when the two do meet.
 
 import os
@@ -67,6 +67,13 @@ ADDED = {
     "scored_sources": "integer not null default 0",
     "merged_into": "integer",
     "clip": "integer not null default 0",
+    "message_id": "integer",
+    "importance": "integer",
+    "shareable": "integer",
+    "visual": "integer",
+    "category": "text",
+    "reason": "text",
+    "scored_at": "text",
 }
 
 

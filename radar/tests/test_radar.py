@@ -12,12 +12,12 @@ from types import SimpleNamespace
 import pytest
 
 from radar.listen import Source, add_item, clean_url, plain_title, tokens
-from radar import brief, clip
+from radar import api, brief, clip, sync
 from radar import rank as ranking
 from radar import telegram
 from radar.rank import Score, Scores, choose, shortlist
 from radar.replay import replay
-from radar.store import connect, meta
+from radar.store import connect, meta, set_meta
 
 NOW = datetime(2026, 11, 7, 12, 0, tzinfo=timezone.utc)
 
@@ -202,3 +202,315 @@ def test_a_failing_press_does_not_stop_the_poll(tmp_path, monkeypatch):
     except Stop:
         pass
     assert meta(db, "telegram_offset") == "42"
+
+
+# --- Reserve ---
+
+def two_world_events(db) -> tuple[int, int]:
+    first = add_item(db, Source("A", "", ""), entry("Giant pandas debut at Atlanta zoo", "https://a.com/1"), NOW)
+    second = add_item(db, Source("B", "", ""), entry("Tesla ends Cybertruck production line", "https://b.com/2"), NOW)
+    return first, second
+
+
+def no_model() -> SimpleNamespace:
+    def refuse(**_):
+        raise AssertionError("the model must not be called")
+    return SimpleNamespace(messages=SimpleNamespace(parse=refuse))
+
+
+def test_an_event_that_lost_its_place_waits_and_costs_no_second_call(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first, second = two_world_events(db)
+    sent = []
+    ranking.rank(db, collect(sent), now=NOW, client=fake_model(score(first, 9), score(second, 8)))
+    assert sent == [first]
+    ranking.rank(db, collect(sent), now=NOW + timedelta(hours=1), client=no_model())
+    assert sent == [first, second]
+
+
+def test_an_event_below_the_bar_never_waits(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first, second = two_world_events(db)
+    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 9), score(second, 4)))
+    assert ranking.reserve(db, {first}, NOW) == []
+
+
+def test_the_reserve_goes_stale(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first, second = two_world_events(db)
+    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 9), score(second, 8)))
+    assert ranking.reserve(db, set(), NOW + timedelta(hours=13)) == []
+
+
+def test_a_new_event_can_merge_into_a_waiting_one(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first, second = two_world_events(db)
+    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 9), score(second, 8)))
+    later = NOW + timedelta(hours=1)
+    third = add_item(db, Source("C", "", ""), entry("Electric pickup assembly halted by carmaker", "https://c.com/3"), later)
+    asked = []
+    answer = Scores(events=[score(third, 7, duplicate=second)])
+
+    class Model:
+        messages = SimpleNamespace(parse=lambda **kwargs: asked.append(kwargs["messages"][0]["content"]) or SimpleNamespace(
+            stop_reason="end_turn", parsed_output=answer, usage=SimpleNamespace(input_tokens=1, output_tokens=1)))
+
+    ranking.rank(db, collect([]), now=later, client=Model())
+    assert "Tesla ends Cybertruck" in asked[0]
+    assert db.execute("select merged_into from clusters where id = ?", (third,)).fetchone()[0] == second
+
+
+def test_the_model_reads_more_of_each_summary(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    long = {**entry("Giant pandas debut at Atlanta zoo", "https://a.com/1"), "summary": "x" * 400}
+    add_item(db, Source("A", "", ""), long, NOW)
+    row = db.execute("select * from clusters").fetchone()
+    assert "x" * 400 in ranking.describe(db, row, {})
+
+
+# --- API ---
+
+class FakeApi:
+    def __init__(self):
+        self.calls = []
+        self.broken = False
+        self.waiting = {"briefs": [], "decisions": [], "links": []}
+
+    def __call__(self, method, path, body=None):
+        if self.broken:
+            raise api.ApiError("down")
+        self.calls.append((method, path, body))
+        return self.waiting if path == "/radar/work" else None
+
+    def events(self):
+        return [item for method, path, body in self.calls if path == "/radar/events" for item in body["events"]]
+
+
+@pytest.fixture
+def fake_api(monkeypatch):
+    fake = FakeApi()
+    monkeypatch.setenv("RADAR_API_KEY", "key")
+    monkeypatch.setattr(api, "_call", fake)
+    return fake
+
+
+@pytest.fixture
+def telegram_calls(monkeypatch):
+    calls = []
+    monkeypatch.setenv("TELEGRAM_CHAT_ID", "7")
+    monkeypatch.setattr(telegram, "call", lambda method, **params: calls.append((method, params)) or {"message_id": 55})
+    return calls
+
+
+def press(number=1, choice="do", chat=7):
+    return {"callback_query": {"id": "q", "data": f"{choice}:{number}", "message": {"message_id": 5, "chat": {"id": chat}}}}
+
+
+def one_event(db) -> int:
+    return add_item(db, Source("A", "", ""), entry("Giant pandas debut at Atlanta zoo", "https://a.com/1"), NOW)
+
+
+def test_a_press_goes_to_the_api_and_the_button_changes(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    number = one_event(db)
+    telegram.handle(db, press(number))
+    assert ("POST", f"/radar/events/{number}/decision", {"decision": "do"}) in fake_api.calls
+    assert [method for method, _ in telegram_calls] == ["answerCallbackQuery", "editMessageReplyMarkup"]
+    assert db.execute("select decision from clusters").fetchone()[0] is None
+
+
+def test_a_press_is_refused_while_the_api_is_down(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    number = one_event(db)
+    fake_api.broken = True
+    telegram.handle(db, press(number))
+    assert [method for method, _ in telegram_calls] == ["answerCallbackQuery"]
+    assert "press again" in telegram_calls[0][1]["text"]
+
+
+def test_a_press_from_another_chat_reaches_nothing(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    telegram.handle(db, press(one_event(db), chat=9))
+    assert fake_api.calls == [] and telegram_calls == []
+
+
+def test_a_sent_post_remembers_its_message_and_reaches_the_api(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    number = one_event(db)
+    telegram.send_cluster(db, db.execute("select * from clusters").fetchone(), "A reason")
+    assert db.execute("select message_id from clusters where id = ?", (number,)).fetchone()[0] == 55
+    assert fake_api.events()[0]["stage"] == "sent"
+
+
+def test_a_stopped_api_does_not_stop_a_post(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    one_event(db)
+    fake_api.broken = True
+    telegram.send_cluster(db, db.execute("select * from clusters").fetchone())
+    assert telegram_calls[0][0] == "sendMessage"
+
+
+# --- Stages ---
+
+def row_with(db, **columns):
+    number = one_event(db)
+    for name, value in columns.items():
+        db.execute(f"update clusters set {name} = ? where id = ?", (value, number))
+    return db.execute("select * from clusters where id = ?", (number,)).fetchone()
+
+
+SCORED = {"importance": 8, "shareable": 8, "visual": 8, "category": "world", "reason": "Why", "scored_at": NOW.isoformat()}
+
+
+@pytest.mark.parametrize(
+    "columns,stage",
+    [
+        ({}, "unseen"),
+        (SCORED, "reserve"),
+        ({**SCORED, "importance": 2, "shareable": 2, "visual": 2}, "below"),
+        ({"sent": "2026-11-07T12:30:00+00:00"}, "sent"),
+        ({"merged_into": 9, "sent": "2026-11-07T12:30:00+00:00"}, "merged"),
+        ({"title": "Live: a final"}, "noise"),
+        ({"clip": 1, "sent": NOW.isoformat(timespec="seconds"), "first_seen": NOW.isoformat(timespec="seconds")}, "sent"),
+        ({"sent": NOW.isoformat(timespec="seconds"), "first_seen": NOW.isoformat(timespec="seconds")}, None),
+    ],
+)
+def test_stages(tmp_path, columns, stage):
+    db = connect(str(tmp_path / "r.db"))
+    assert sync.stage_of(row_with(db, **columns)) == stage
+
+
+# --- Sending Events ---
+
+def test_the_first_round_sends_only_what_comes_after_it(tmp_path, fake_api):
+    db = connect(str(tmp_path / "r.db"))
+    one_event(db)
+    assert sync.sync(db) == 0
+    db.execute("update clusters set last_seen = ?", ("2999-01-01T00:00:00+00:00",))
+    assert sync.sync(db) == 1
+
+
+def test_a_failed_round_is_sent_again(tmp_path, fake_api):
+    db = connect(str(tmp_path / "r.db"))
+    number = one_event(db)
+    sync.sync(db)
+    db.execute("update clusters set last_seen = ?", ("2999-01-01T00:00:00+00:00",))
+    fake_api.broken = True
+    with pytest.raises(api.ApiError):
+        sync.sync(db)
+    fake_api.broken = False
+    assert sync.sync(db) == 1 and fake_api.events()[0]["number"] == number
+
+
+def test_a_bad_link_and_long_text_do_not_block_a_round(tmp_path, fake_api):
+    db = connect(str(tmp_path / "r.db"))
+    number = one_event(db)
+    db.execute("update items set title = ? where cluster = ?", ("t" * 900, number))
+    db.execute("insert into items(url, source, title, summary, image, published, seen, cluster) values('javascript:alert(1)', 'B', 'T', '', 0, null, 's', ?)", (number,))
+    row = db.execute("select * from clusters").fetchone()
+    event = sync.payload(db, row, "unseen")
+    assert [link["url"] for link in event["links"]] == ["https://a.com/1"]
+    assert len(event["links"][0]["title"]) == 400
+
+
+def test_a_stored_score_goes_across(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    event = sync.payload(db, row_with(db, **SCORED), "reserve")
+    assert (event["score"], event["importance"], event["reason"], event["category"]) == (8.0, 8, "Why", "world")
+
+
+def test_history_copies_only_what_reached_the_editor(tmp_path, fake_api, monkeypatch):
+    monkeypatch.setenv("RADAR_DB", str(tmp_path / "r.db"))
+    db = connect()
+    reached = row_with(db, sent="2026-11-07T12:30:00+00:00", decision="do")["id"]
+    add_item(db, Source("B", "", ""), entry("Tesla ends Cybertruck production line", "https://b.com/2"), NOW)
+    brief.brief_path(reached).write_text("Old brief")
+    assert sync.sync_history(db) == 1
+    assert fake_api.events()[0]["decision"] == "do"
+    assert ("PUT", f"/radar/events/{reached}/brief", {"text": "Old brief", "error": None}) in fake_api.calls
+
+
+def test_a_lost_connection_warns_once_a_day(tmp_path, fake_api, monkeypatch):
+    from radar.__main__ import send_events
+
+    db = connect(str(tmp_path / "r.db"))
+    said = []
+    monkeypatch.setenv("TELEGRAM_TOKEN", "t")
+    monkeypatch.setattr(telegram, "send", said.append)
+    one_event(db)
+    set_meta(db, "api_synced_at", "2000-01-01T00:00:00+00:00")
+    fake_api.broken = True
+    send_events(db)
+    send_events(db)
+    assert len(said) == 1
+
+
+# --- Panel Requests ---
+
+def test_a_panel_decision_updates_the_post_and_leaves_the_running(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    number = row_with(db, message_id=12)["id"]
+    fake_api.waiting["decisions"] = [{"number": number, "decision": "skip"}]
+    telegram.run_work(db)
+    assert telegram_calls[0][1]["reply_markup"]["inline_keyboard"][0][0]["text"] == "Skip ✓"
+    assert ("POST", f"/radar/events/{number}/seen", None) in fake_api.calls
+    assert db.execute("select sent from clusters").fetchone()[0] and shortlist(db, {}, NOW) == []
+
+
+def test_an_event_that_never_had_a_post_is_just_acknowledged(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    number = one_event(db)
+    fake_api.waiting["decisions"] = [{"number": number, "decision": "do"}]
+    telegram.run_work(db)
+    assert telegram_calls == [] and ("POST", f"/radar/events/{number}/seen", None) in fake_api.calls
+
+
+def test_a_brief_goes_to_the_api_and_a_panel_request_stays_quiet(tmp_path, fake_api, telegram_calls, monkeypatch):
+    monkeypatch.setenv("RADAR_DB", str(tmp_path / "r.db"))
+    db = connect()
+    number = one_event(db)
+    monkeypatch.setattr(telegram, "build_brief", lambda db, n: brief.brief_path(n).write_text("Text") and brief.brief_path(n))
+    fake_api.waiting["briefs"] = [{"number": number, "decided_by": "panel"}]
+    telegram.run_work(db)
+    assert ("PUT", f"/radar/events/{number}/brief", {"text": "Text", "error": None}) in fake_api.calls
+    assert telegram_calls == []
+
+
+def test_a_failed_brief_is_reported_to_the_api(tmp_path, fake_api, telegram_calls):
+    db = connect(str(tmp_path / "r.db"))
+    fake_api.waiting["briefs"] = [{"number": 404, "decided_by": "telegram"}]
+    telegram.run_work(db)
+    method, path, body = fake_api.calls[-1]
+    assert (method, path) == ("PUT", "/radar/events/404/brief") and "LookupError" in body["error"]
+    assert "failed" in telegram_calls[0][1]["text"]
+
+
+def test_a_link_from_the_panel_becomes_a_chosen_event(tmp_path, fake_api, telegram_calls, monkeypatch):
+    monkeypatch.setenv("RADAR_DB", str(tmp_path / "r.db"))
+    db = connect()
+    monkeypatch.setattr(clip, "title_of", lambda url: ("Pandas debut at the zoo", "Text"))
+    monkeypatch.setattr(clip, "build_brief", lambda db, n: brief.brief_path(n).write_text("Brief"))
+    fake_api.waiting["links"] = [{"id": 3, "url": "https://a.com/1"}]
+    telegram.run_work(db)
+    assert fake_api.events()[0]["decision"] == "do" and fake_api.events()[0]["clip"] is True
+    assert ("POST", "/radar/links/3", {"number": 1, "error": None}) in fake_api.calls
+
+
+def test_one_failing_item_does_not_stop_the_others(tmp_path, fake_api, telegram_calls, monkeypatch):
+    db = connect(str(tmp_path / "r.db"))
+    number = one_event(db)
+    done = []
+
+    def broken(db, number, choice):
+        raise RuntimeError("no")
+
+    monkeypatch.setattr(telegram, "reflect", broken)
+    monkeypatch.setattr(telegram, "make_brief", lambda db, n, by: done.append(n))
+    fake_api.waiting.update(decisions=[{"number": number, "decision": "do"}], briefs=[{"number": number, "decided_by": "panel"}])
+    telegram.run_work(db)
+    assert done == [number]
+
+
+def test_without_a_key_the_poll_does_no_panel_work(tmp_path, monkeypatch):
+    monkeypatch.delenv("RADAR_API_KEY", raising=False)
+    telegram.run_work(connect(str(tmp_path / "r.db")))

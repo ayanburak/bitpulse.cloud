@@ -7,6 +7,8 @@ importable: main, run as radar <command> or python -m radar <command>
     radar rank --dry-run  print this round's shortlist without the model or Telegram
     radar replay 2026-11-08 --db copy.db   run the rounds of a past day without Telegram
     radar poll            wait for Do and Skip presses and pasted links, runs as a service
+    radar sync            send the events that changed to the API
+    radar sync --history  copy every event that reached the editor, used once
     radar clips           list the links saved from the bot
     radar show 142        print every story of cluster R-0142 with its link
     radar brief R-0142    download the stories of a cluster into a brief and print it
@@ -26,13 +28,15 @@ import sys
 from datetime import datetime, timezone
 from html import escape
 
+from radar import api
 from radar import brief as briefing
 from radar import check as checking
 from radar import listen as listening
 from radar import rank as ranking
 from radar import replay as replaying
+from radar import sync as syncing
 from radar import telegram
-from radar.store import connect
+from radar.store import connect, meta, set_meta
 
 
 def regions(path: str) -> dict[str, str]:
@@ -78,6 +82,29 @@ def cmd_rank(args) -> None:
         raise
     for cluster, reason in chosen:
         print(f"R-{cluster['id']:04d} {cluster['title']}\n  {reason}")
+    if not args.dry_run:
+        send_events(connect())
+
+
+# A key that ended or a stopped API would otherwise only show in the journal, while the panel quietly
+# goes stale. One line a day is enough, every round tries again by itself.
+def send_events(db) -> None:
+    try:
+        print(f"{syncing.sync(db)} events sent to the API", flush=True)
+    except api.ApiError as error:
+        print(f"events not sent: {error}", flush=True)
+        today = datetime.now(timezone.utc).date().isoformat()
+        if "TELEGRAM_TOKEN" in os.environ and meta(db, "api_warned") != today:
+            telegram.send(f"The panel is not getting radar events: {escape(str(error)[:300])}")
+            set_meta(db, "api_warned", today)
+
+
+def cmd_sync(args) -> None:
+    db = connect()
+    if args.history:
+        print(f"{syncing.sync_history(db)} events copied")
+    else:
+        send_events(db)
 
 
 def cmd_replay(args) -> None:
@@ -105,7 +132,7 @@ def cmd_show(args) -> None:
     if not cluster:
         sys.exit(f"No cluster R-{number:04d}")
     print(f"R-{number:04d} {cluster['title']}")
-    print(f"first seen {cluster['first_seen']}, {cluster['sources']} sources, decision {cluster['decision'] or 'none'}\n")
+    print(f"first seen {cluster['first_seen']}, {cluster['sources']} sources\n")
     for item in db.execute("select * from items where cluster = ? order by published", (number,)):
         print(f"{item['published'] or 'no date'}  {item['source']}\n  {item['title']}\n  {item['url']}")
         if item["summary"]:
@@ -153,6 +180,9 @@ def main() -> None:
     day.add_argument("--db", required=True)
     day.set_defaults(run=cmd_replay)
     sub.add_parser("poll").set_defaults(run=cmd_poll)
+    send = sub.add_parser("sync")
+    send.add_argument("--history", action="store_true")
+    send.set_defaults(run=cmd_sync)
     sub.add_parser("clips").set_defaults(run=cmd_clips)
     show = sub.add_parser("show")
     show.add_argument("cluster")
