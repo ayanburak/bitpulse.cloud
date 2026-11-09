@@ -91,6 +91,6 @@ A post never asks the reader to click and never sounds more dramatic than the st
 
 The stories listed here show how different a Bitpulse story can be. They share a voice, not a formula. Their openings, structure and comparisons are never copied.
 
-- site/src/content/stories/2026-11-04-hera-dimorphos
-- site/src/content/stories/2026-11-01-alphabet-worst-day
-- site/src/content/stories/2026-11-02-why-ai-makes-things-up
+- https://bitpulse.cloud/en/stories/hera-spots-dimorphos-asteroid-moon/
+- https://bitpulse.cloud/en/stories/alphabet-worst-day-google-cloud-search/
+- https://bitpulse.cloud/en/stories/why-do-ai-chatbots-make-things-up/

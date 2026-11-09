@@ -60,7 +60,6 @@ Her haber X ve Instagram'da da paylaşılır. Sayfa ve onun hareketsiz videosu h
 
 ```
 site/
-  src/content/stories/   her haber için bir klasör: en.md, tr.md, görsel ve social.yaml
   src/pages/             ana sayfa, kategori, arşiv, haber, arama ve ilke sayfaları
   src/components/        sayfa düzeni ve haber blokları
   src/client/            okurun indirdiği tek script
@@ -68,13 +67,16 @@ site/
   scripts/prerender.ts   her sayfayı hazır bir HTML dosyası olarak yazar
   scripts/new-story.ts   yeni bir haberin klasörünü açar
   scripts/social.ts      X metnini, Instagram sayfasını ve onun hareketsiz videosunu üretir
-  tests/                 birim testleri ve tarayıcı testleri
+  tests/                 birim testleri, tarayıcı testleri ve örnek haberler
+  deploy/                içerik güvenliği politikası ve kod yayını script'i
+api/                     haberleri veritabanında tutar ve her yayını sıraya alır
+cli/                     taslak yükleyen, yayınlayan ve haberleri kopyalayan bitpulse komutu
 radar/                   dünya haber kaynaklarını dinler, ele alınmaya değer olayları puanlar
 reels/                   yayınlanan haberler için reels keser
 docs/                    yayın ilkeleri, üslup kılavuzu ve site kararları
 ```
 
-Bir haberle ilgili her şey kendi klasöründe durur, böylece haber tek bir yerden okunur, incelenir ya da düzeltilir. İngilizce ve Türkçe sürümler yan yana durur, saatleri, kategorisi ve kaynakları ortaktır.
+Yayınlanan haberler bu depoda tutulmaz. Sunucudaki bir veritabanında durur ve her haberin bütün sürümleri orada saklanır. Haber yazılırken en.md, tr.md, görsel ve social.yaml dosyalarıyla kendi klasörüne sahiptir, böylece tek bir yerden okunur ve incelenir. İngilizce ve Türkçe sürümlerin saatleri, kategorisi ve kaynakları ortaktır.
 
 ## Teknik tercihler
 
@@ -92,18 +94,19 @@ Yayın, güncelleme ve düzeltme saatleri UTC olarak yazılır. Sayfa UTC saatin
 
 ### Sosyal paylaşımlar tek dosyadan
 
-Bir haberin X metni ve Instagram sayfası bir kez, haberin social.yaml dosyasına yazılır. Bir script görseli indirir, sayfayı gerçek bir tarayıcıda çizer ve aynı paylaşım reels olarak da gidebilsin diye onu hareketsiz, dikey bir video olarak da kaydeder. Testler her metni X ve Instagram sınırlarına göre kontrol eder, böylece yarıda kesilecek bir paylaşım depodan çıkmaz.
+Bir haberin X metni ve Instagram sayfası bir kez, haberin social.yaml dosyasına yazılır. Bir script görseli indirir, sayfayı gerçek bir tarayıcıda çizer ve aynı paylaşım reels olarak da gidebilsin diye onu hareketsiz, dikey bir video olarak da kaydeder. Testler her metni X ve Instagram sınırlarına göre kontrol eder, böylece yarıda kesilecek bir paylaşım yayınlanmaz.
 
 <details>
 <summary><strong>Geliştirme</strong></summary>
 
 <br>
 
-Node.js 24 kullanılır. Geliştirme sunucusu sayfaları istek geldikçe yeniden çizer, build ise bitmiş siteyi dist klasörüne yazar.
+Node.js 24 kullanılır. Geliştirme sunucusu sayfaları istek geldikçe yeniden çizer, build ise bitmiş siteyi dist klasörüne yazar. Yeni bir kopyada haber yoktur, bu yüzden aşağıdaki değişken siteyi testlerin kullandığı örnek haberlere yönlendirir.
 
 ```bash
 cd site
 npm install
+export BITPULSE_STORIES=tests/fixtures/stories
 npm run dev
 npm run build
 npm run preview
@@ -143,7 +146,13 @@ GitHub Actions her push'ta tür kontrolünü, birim testlerini, build'i, tarayı
 
 <br>
 
-Bir sürüm, test edilmiş bir commit'in build edilmiş halidir. Sunucu onu yeni bir sürüm klasörüne açar ve tek bir bağlantıyı değiştirerek yayına alır, böylece okur yarım kopyalanmış bir site görmez. Son üç sürüm saklanır ve geri dönüş yalnızca bağlantıyı eski sürüme çevirir. Yayın akışı her sürümden sonra canlı sayfaları kontrol eder ve biri hata verirse önceki sürüme döner. Otomatik yayın şimdilik kapalıdır, her sürüm elle başlatılır.
+Bir haber bitpulse komutuyla, Git ve CI olmadan yayınlanır. API haberi kaydeder ve tek bir iş sıraya alır, sunucudaki işçi veritabanından yeni bir sürüm klasörü üretir. İşçi tek bir bağlantıyı değiştirerek sürümü yayına alır, böylece okur yarım kopyalanmış bir site görmez. Ardından canlı sayfaları kontrol eder ve biri hata verirse önceki sürüme döner. Son üç sürüm saklanır ve geri dönüş yalnızca bağlantıyı eski sürüme çevirir.
+
+GitHub'ın sunucuya erişimi yoktur. Site kodu geliştiricinin cihazından yayınlanır ve yalnızca commit edilmiş kod çıkabilir.
+
+```bash
+bash site/deploy/release-code.sh
+```
 
 </details>
 

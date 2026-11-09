@@ -1,6 +1,6 @@
 /**
  * file: src/Document.tsx
- * importable: Document, Assets
+ * importable: Document, Assets, THEME_SCRIPT
  *
  * description: The HTML shell shared by every page.
  */
@@ -21,8 +21,9 @@ interface Props {
 }
 
 // Runs before the first paint, so a reader who chose the dark theme never sees a white flash.
-// The data-js mark lets CSS show the theme button only where it can work.
-const THEME_SCRIPT = `document.documentElement.dataset.js="";try{if(localStorage.getItem("bp_theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`;
+// The data-js mark lets CSS show the theme button only where it can work. The content security
+// policy in deploy/csp.conf allows this exact text by its hash, and a test keeps the two together.
+export const THEME_SCRIPT = `document.documentElement.dataset.js="";try{if(localStorage.getItem("bp_theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`;
 
 // Page titles and meta tags are rendered by each page, and React moves them into this head.
 export function Document({ lang, assets, children }: Props) {

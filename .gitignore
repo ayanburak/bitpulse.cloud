@@ -24,3 +24,6 @@ test-results/
 
 # Social posts, made again from the stories with npm run social
 social-posts/
+
+# Stories, kept in the server database and copied here with the bitpulse command
+site/src/content/stories/

@@ -92,12 +92,17 @@ def _wait_for(api: Api, job_id: int) -> dict:
     raise ApiError(0, f"job {job_id} is still running, check it later")
 
 
+# Explainers are not shared and must have no social file at all, the site tests check for that.
 def _write_story(api: Api, root: Path, story: dict) -> Path:
     folder = root / story["key"]
     folder.mkdir(parents=True, exist_ok=True)
     (folder / "en.md").write_text(story["en"], encoding="utf-8")
     (folder / "tr.md").write_text(story["tr"], encoding="utf-8")
-    (folder / "social.yaml").write_text(story["social"], encoding="utf-8")
+    social = folder / "social.yaml"
+    if story["social"]:
+        social.write_text(story["social"], encoding="utf-8")
+    else:
+        social.unlink(missing_ok=True)
     image = folder / "image.jpg"
     if not image.exists() or hashlib.sha256(image.read_bytes()).hexdigest() != story["image"]:
         image.write_bytes(api.get_bytes(f"/images/{story['image']}"))

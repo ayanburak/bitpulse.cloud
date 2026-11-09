@@ -60,7 +60,6 @@ Each news story is also shared on X and Instagram. The page and a still video of
 
 ```
 site/
-  src/content/stories/   one folder per story: en.md, tr.md, the image and social.yaml
   src/pages/             home, category, archive, story, search and policy pages
   src/components/        page layout and story blocks
   src/client/            the only script readers download
@@ -68,13 +67,16 @@ site/
   scripts/prerender.ts   writes every page as a finished HTML file
   scripts/new-story.ts   opens the folder of a new story
   scripts/social.ts      makes the X post, the Instagram page and its still video
-  tests/                 unit tests and browser tests
+  tests/                 unit tests, browser tests and sample stories
+  deploy/                the content security policy and the code release script
+api/                     stores stories in a database and queues every release
+cli/                     the bitpulse command that drafts, publishes and copies stories
 radar/                   listens to world news feeds and scores the events worth covering
 reels/                   cuts reels for published stories
 docs/                    editorial policy, style guide and site decisions
 ```
 
-Everything about a story lives in its own folder, so a story can be read, reviewed or corrected in one place. The English and Turkish versions sit side by side and share their times, their category and their sources.
+Published stories are not kept in this repository. They live in a database on the server, and every story keeps all its versions there. While a story is written it has its own folder, with en.md, tr.md, the image and social.yaml, so it can be read and reviewed in one place. The English and Turkish versions share their times, their category and their sources.
 
 ## Technical choices
 
@@ -92,18 +94,19 @@ Publishing, update and correction times are written in UTC. The page carries the
 
 ### Social posts from one file
 
-The X post and the Instagram page of a story are written once in its social.yaml. A script downloads the image, draws the page in a real browser and saves it also as a still vertical video, so the same post can go out as a reel. The tests check every text against the limits of X and Instagram, so a post that would be cut off never leaves the repository.
+The X post and the Instagram page of a story are written once in its social.yaml. A script downloads the image, draws the page in a real browser and saves it also as a still vertical video, so the same post can go out as a reel. The tests check every text against the limits of X and Instagram, so a post that would be cut off is never published.
 
 <details>
 <summary><strong>Development</strong></summary>
 
 <br>
 
-Node.js 24 is used. The development server redraws pages on request, and the build writes the finished site into dist.
+Node.js 24 is used. The development server redraws pages on request, and the build writes the finished site into dist. A fresh checkout has no stories, so the variable below points the site at the sample stories used by the tests.
 
 ```bash
 cd site
 npm install
+export BITPULSE_STORIES=tests/fixtures/stories
 npm run dev
 npm run build
 npm run preview
@@ -143,7 +146,13 @@ GitHub Actions runs the type check, the unit tests, the build, the browser tests
 
 <br>
 
-A release is the built site of a tested commit. The server unpacks it into a new release folder and makes it live by switching one link, so readers never see a half copied site. The last three releases are kept and a rollback only points the link back. The release workflow checks the live pages after each release and returns to the previous release when one of them fails. Automatic releases are switched off for now, and each release is started by hand.
+A story is published with the bitpulse command, without Git or CI. The API stores it and queues one job, and a worker on the server builds a new release folder from the database. The worker makes it live by switching one link, so readers never see a half copied site. It checks the live pages afterwards and returns to the previous release when one of them fails. The last three releases are kept and a rollback only points the link back.
+
+GitHub has no access to the server. Site code is released from the maintainer's machine, and only committed code can leave it.
+
+```bash
+bash site/deploy/release-code.sh
+```
 
 </details>
 

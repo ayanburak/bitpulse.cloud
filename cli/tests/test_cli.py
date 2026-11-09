@@ -91,3 +91,11 @@ def test_pull_all_skips_stories_never_published(tmp_path):
     assert pull_all(FakeApi(known_image=True), tmp_path) == 1
     assert (tmp_path / "2026-02-03-done").is_dir()
     assert not (tmp_path / "open").exists()
+
+
+def test_pull_writes_no_social_file_for_a_story_without_social_text(tmp_path):
+    api = FakeApi(known_image=True)
+    story = api.get("/stories/done") | {"social": ""}
+    api.get = lambda path: [{"handle": "done", "key": "2026-02-03-done"}] if path == "/stories" else story
+    pull_all(api, tmp_path)
+    assert not (tmp_path / "2026-02-03-done" / "social.yaml").exists()
