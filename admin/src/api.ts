@@ -1,6 +1,7 @@
 /**
  * file: src/api.ts
- * importable: ApiError, call, setCsrf, onSignedOut, type Language, type StoryFields, type Job, type StoryRow
+ * importable: ApiError, call, setCsrf, onSignedOut, type Language, type StoryFields, type Job, type StoryRow,
+ *             type EventRow, type EventDetail, type EventPage, type LinkRow, type SocialRow
  *
  * call talks to the panel routes and adds the token every change needs. When the session ends on
  * the server, the handler given to onSignedOut sends the user back to the login page.
@@ -49,6 +50,61 @@ export interface StoryRow {
   live: number | null;
   published_at: string | null;
   saved_at: string;
+}
+
+export interface EventRow {
+  number: number;
+  title: string;
+  first_seen: string;
+  sources: number;
+  stage: "sent" | "reserve" | "below" | "unseen" | "noise" | "merged";
+  score: number | null;
+  category: string | null;
+  reason: string;
+  decision: "do" | "skip" | null;
+  clip: number;
+  handle: string | null;
+  has_brief: boolean;
+  status: "new" | "do" | "skip" | "draft" | "published";
+}
+
+export interface EventDetail extends EventRow {
+  summary: string;
+  last_seen: string;
+  importance: number | null;
+  shareable: number | null;
+  visual: number | null;
+  merged_into: number | null;
+  links: { source: string; title: string; url: string }[];
+  decided_by: string | null;
+  decided_at: string | null;
+  brief_error: string | null;
+  brief_at: string | null;
+}
+
+export interface EventPage {
+  rows: EventRow[];
+  next: string | null;
+  counts: Record<string, number>;
+}
+
+export interface LinkRow {
+  id: number;
+  url: string;
+  state: "waiting" | "done" | "failed";
+  number: number | null;
+  error: string | null;
+  added_at: string;
+}
+
+export interface SocialRow {
+  handle: string;
+  title: string;
+  uploaded_at: string;
+  shared_at: string | null;
+  x: string;
+  caption: string;
+  pages: string[];
 }
 
 // --- Client ---

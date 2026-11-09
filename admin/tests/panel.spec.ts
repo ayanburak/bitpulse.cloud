@@ -115,7 +115,7 @@ test("cancelling the confirmation publishes nothing", async () => {
   await page.getByRole("button", { name: "Publish", exact: true }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Cancel" }).click();
   await page.goto("/#stories");
-  await expect(page.locator(".story-row__state")).toHaveText("Draft");
+  await expect(page.locator(".story-row", { hasText: "A Sample Headline" }).locator(".story-row__state")).toHaveText("Draft");
 });
 
 test("publishes after a passkey", async () => {
@@ -133,7 +133,7 @@ test("withdraws after a passkey", async () => {
   await expect(page.getByRole("dialog").getByRole("heading", { name: "Done" })).toBeVisible();
   await page.getByRole("dialog").getByRole("button", { name: "Close" }).click();
   await page.goto("/#stories");
-  await expect(page.locator(".story-row__state")).toHaveText("Withdrawn");
+  await expect(page.locator(".story-row", { hasText: "A Sample Headline" }).locator(".story-row__state")).toHaveText("Withdrawn");
 });
 
 test("creates a device key and shows it once", async () => {
@@ -151,6 +151,81 @@ test("the audit log records the work", async () => {
   for (const action of ["login.ok", "publish.request", "withdraw.request", "key.create"]) {
     await expect(page.locator(".audit-row", { hasText: action }).first()).toBeVisible();
   }
+});
+
+test("the radar shows what was sent", async () => {
+  await page.goto("/#radar");
+  await expect(page.getByRole("heading", { name: "Radar", level: 1 })).toBeVisible();
+  await expect(page.locator(".event-row")).toHaveCount(1);
+  await expect(page.locator(".event-row__title")).toHaveText("A candidate sent to Telegram");
+});
+
+test("the left out list opens with the scored events in pages", async () => {
+  await page.getByRole("link", { name: "Left out" }).click();
+  await expect(page.locator(".event-row")).toHaveCount(50);
+  await expect(page.getByRole("button", { name: "Scored 121" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Never read by the model")).toHaveCount(0);
+  await page.getByRole("button", { name: "Next fifty" }).click();
+  await expect(page.locator(".event-row")).toHaveCount(100);
+  await page.getByRole("button", { name: /^Not read/ }).click();
+  await expect(page.locator(".event-row__title")).toHaveText("Never read by the model");
+});
+
+test("a headline from the web stays plain text", async () => {
+  await page.getByRole("button", { name: /^Passed the bar/ }).click();
+  await expect(page.locator(".event-row__title")).toContainText("<img src=x");
+  await expect(page.locator("#injected-title")).toHaveCount(0);
+});
+
+test("search narrows the list and a row keeps its size", async () => {
+  await page.getByRole("button", { name: /^Below the bar/ }).click();
+  await page.getByLabel("Headline").fill("event 77");
+  await expect(page.locator(".event-row")).toHaveCount(1);
+  await page.getByLabel("Headline").fill("");
+  await expect(page.locator(".event-row")).toHaveCount(50);
+});
+
+test("do on a left out event asks the radar for a brief", async () => {
+  await page.getByRole("button", { name: /^Passed the bar/ }).click();
+  await page.locator(".event-row__head").first().click();
+  await expect(page.getByRole("link", { name: "The article" })).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(page.getByRole("button", { name: "Skip" })).toHaveCount(0);
+  await page.getByRole("button", { name: "Do", exact: true }).click();
+  await expect(page.getByText("The radar is writing the brief.")).toBeVisible();
+  await expect(page.locator(".event-row__state")).toHaveText("Do");
+  await page.getByRole("link", { name: "Candidates" }).click();
+  await expect(page.locator(".event-row")).toHaveCount(2);
+});
+
+test("a link waits for the radar", async () => {
+  await page.getByRole("link", { name: "Add link" }).click();
+  await page.getByLabel("Address").fill("https://example.com/news");
+  await page.getByRole("button", { name: "Add" }).click();
+  await expect(page.getByText("Waiting for the radar")).toBeVisible();
+});
+
+test("the social page shows a post ready to share", async () => {
+  await page.goto("/#social");
+  await expect(page.getByRole("heading", { name: "A Shared Sample" })).toBeVisible();
+  await expect(page.getByText("The X post")).toBeVisible();
+  const image = page.locator(".social-post__page");
+  await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(1080);
+  await page.getByRole("button", { name: "Mark as shared" }).click();
+  await expect(page.getByText("Nothing here.")).toBeVisible();
+  await page.getByRole("button", { name: "Shared", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "A Shared Sample" })).toBeVisible();
+});
+
+test("the new pages fit a phone", async () => {
+  await page.setViewportSize({ width: 390, height: 800 });
+  for (const address of ["/#radar/eliminated", "/#social"]) {
+    await page.goto(address);
+    await page.waitForTimeout(300);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const last = await page.getByRole("link", { name: "Access" }).boundingBox();
+    expect(last!.x + last!.width).toBeLessThanOrEqual(390);
+  }
+  await page.setViewportSize({ width: 1360, height: 900 });
 });
 
 test("signing out ends the session", async () => {

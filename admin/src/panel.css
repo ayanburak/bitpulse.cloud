@@ -105,7 +105,7 @@ description: Form, table and dialog styles the panel adds to the site design.
 }
 .field select { min-height: 46px; }
 
-/* The site swaps its long menu for a drawer on phones. The panel has three links, and they fit. */
+/* The site swaps its long menu for a drawer on phones. The panel has five short links, and they fit. */
 @media (max-width: 820px) {
   .menu { top: 0; }
   .menu .rail { height: var(--menu-height); }
@@ -134,3 +134,61 @@ description: Form, table and dialog styles the panel adds to the site design.
 .load-more { margin-top: 20px; }
 .confirm__inner input { width: 100%; }
 button:disabled { opacity: .55; cursor: default; }
+
+/* --- Radar And Social --- */
+
+/* NOTE: A row is one fixed line, so a page of fifty stays short and a very long headline can not
+   push the layout around. The details open under the row only when asked for. */
+
+.view-tabs { margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.view-tabs a { display: inline-block; margin-right: 22px; padding: 8px 0; font-size: 15px; font-weight: 550; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.view-tabs a:hover { color: var(--accent); }
+.view-tabs a[aria-current="page"] { color: var(--accent); font-weight: 650; border-color: var(--accent); }
+.filters--wrap { flex-wrap: wrap; gap: 4px 18px; }
+.filters small { margin-left: 5px; font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.radar-tools { display: grid; grid-template-columns: minmax(0, 1fr) 170px 150px 120px; gap: 12px; align-items: end; margin-block: 8px 18px; }
+.radar-tools .field { margin-top: 0; }
+.event-row { border-top: 1px solid var(--line); }
+.event-row__head { display: grid; grid-template-columns: 76px 44px minmax(0, 1fr) 78px 84px 86px; gap: 14px; align-items: baseline; width: 100%; padding-block: 11px; font-size: 15px; text-align: left; color: inherit; cursor: pointer; }
+.event-row__head:hover .event-row__title { color: var(--accent); }
+.event-row__num, .event-row__score { font-variant-numeric: tabular-nums; }
+.event-row__num { color: var(--muted); font-size: 14px; }
+.event-row__score { font-weight: 650; }
+.event-row__title { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; transition: color 160ms; }
+.event-row__muted { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13.5px; color: var(--muted); }
+.event-row__state { font-size: 13.5px; font-weight: 650; text-align: right; }
+.event-row__state--active { color: var(--accent); }
+.event-detail { padding: 2px 0 20px 134px; font-size: 15px; }
+.event-detail > * + * { margin-top: 12px; }
+.event-detail__title { font-weight: 650; overflow-wrap: anywhere; }
+.event-detail__meta { font-size: 13.5px; color: var(--muted); }
+.event-links li { padding-block: 4px; overflow-wrap: anywhere; font-size: 14.5px; }
+.event-links span { color: var(--muted); margin-right: 8px; }
+.event-links a { color: var(--accent); }
+.event-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.event-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.brief-text { max-height: 420px; overflow: auto; padding: 14px; border: 1px solid var(--line); font-size: 13.5px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+.link-form { display: flex; gap: 12px; align-items: end; margin-bottom: 24px; }
+.link-form .field { flex: 1; margin-top: 0; }
+.link-row { grid-template-columns: 130px minmax(0, 1fr) 150px; }
+.link-row span { overflow-wrap: anywhere; }
+
+.social-post { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding-block: 22px; border-top: 1px solid var(--line); }
+.social-post__page { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.social-post__body { min-width: 0; }
+.social-post__body > * + * { margin-top: 12px; }
+.social-text { padding: 12px; border: 1px solid var(--line); font-size: 14.5px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.social-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; font-weight: 600; }
+
+@media (max-width: 820px) {
+  .radar-tools { grid-template-columns: 1fr 1fr; }
+  .radar-tools .field:first-child { grid-column: 1 / -1; }
+  .event-row__head { grid-template-columns: 62px 40px minmax(0, 1fr) 76px; gap: 10px; }
+  .event-row__muted { display: none; }
+  .event-detail { padding-left: 0; }
+  .link-row { grid-template-columns: 1fr; gap: 2px; }
+  .social-post { grid-template-columns: 1fr; }
+  .social-post__page { max-width: 260px; }
+  .menu .rail ul { gap: 0; }
+  .menu .rail a { padding-inline: 7px; font-size: 14px; }
+}
