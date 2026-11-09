@@ -74,7 +74,7 @@ cli/                     the bitpulse command that drafts, publishes and copies 
 radar/                   listens to world news feeds and scores the events worth covering
 reels/                   cuts reels for published stories
 workflows/               the written workflows that take a candidate to a published story
-docs/                    editorial policy, style guide and site decisions
+docs/                    editorial policy, style guide, site decisions, architecture and security model
 ```
 
 Published stories are not kept in this repository. They live in a database on the server, and every story keeps all its versions there. While a story is written it has its own folder, with en.md, tr.md, the image and social.yaml, so it can be read and reviewed in one place. The English and Turkish versions share their times, their category and their sources.
@@ -149,7 +149,7 @@ GitHub Actions runs the type check, the unit tests, the build, the browser tests
 
 A story is published with the bitpulse command, without Git or CI. The API stores it and queues one job, and a worker on the server builds a new release folder from the database. The worker makes it live by switching one link, so readers never see a half copied site. It checks the live pages afterwards and returns to the previous release when one of them fails. The last three releases are kept and a rollback only points the link back.
 
-GitHub has no access to the server. Site code is released from the maintainer's machine, and only committed code can leave it.
+GitHub has no access to the server. Site code is released from the maintainer's machine, and only committed code can leave it. The whole system is described in [docs/architecture.md](docs/architecture.md) and the way it is protected in [docs/security.md](docs/security.md).
 
 ```bash
 bash site/deploy/release-code.sh

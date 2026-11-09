@@ -34,12 +34,13 @@
 // height of a text also depends on its words.
 
 import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium, type Page } from "@playwright/test";
 import { buildSocial, type SocialPost } from "../src/social.ts";
 import { buildStories, type Story } from "../src/stories.ts";
+import { replacePost } from "./social-output.ts";
 
 // --- Constants ---
 
@@ -161,8 +162,7 @@ try {
 
     // The post is built in a side folder and takes the place of the old one only when every
     // file is made, so a run that stops halfway, for example on an image address that moved,
-    // leaves the last good post untouched. The old folder goes away whole, a post that got
-    // shorter must not keep a stale last page.
+    // leaves the last good post untouched.
     const draft = join(OUT, `.${story.key}.new`);
     rmSync(draft, { recursive: true, force: true });
     mkdirSync(draft, { recursive: true });
@@ -172,8 +172,7 @@ try {
       rmSync(draft, { recursive: true, force: true });
       throw error;
     }
-    rmSync(out, { recursive: true, force: true });
-    renameSync(draft, out);
+    replacePost(draft, out);
     console.log(`${out}: x.txt, caption.txt, ${post.pages.length} page${post.pages.length > 1 ? "s" : ""} and post.mp4`);
   }
 } finally {

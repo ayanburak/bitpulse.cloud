@@ -74,7 +74,7 @@ cli/                     taslak yükleyen, yayınlayan ve haberleri kopyalayan b
 radar/                   dünya haber kaynaklarını dinler, ele alınmaya değer olayları puanlar
 reels/                   yayınlanan haberler için reels keser
 workflows/               adayı yayınlanmış habere götüren yazılı iş akışları
-docs/                    yayın ilkeleri, üslup kılavuzu ve site kararları
+docs/                    yayın ilkeleri, üslup kılavuzu, site kararları, mimari ve güvenlik modeli
 ```
 
 Yayınlanan haberler bu depoda tutulmaz. Sunucudaki bir veritabanında durur ve her haberin bütün sürümleri orada saklanır. Haber yazılırken en.md, tr.md, görsel ve social.yaml dosyalarıyla kendi klasörüne sahiptir, böylece tek bir yerden okunur ve incelenir. İngilizce ve Türkçe sürümlerin saatleri, kategorisi ve kaynakları ortaktır.

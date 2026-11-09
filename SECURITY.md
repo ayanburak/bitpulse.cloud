@@ -1,6 +1,6 @@
 # Security
 
-The whole code of Bitpulse is public, so the safety of the site must never depend on the code staying secret. Keys, access rights and separated services protect it instead.
+The whole code of Bitpulse is public, so the safety of the site must never depend on the code staying secret. Keys, access rights and separated services protect it instead. How they do so is described in [docs/security.md](docs/security.md).
 
 ## Reporting a problem
 
