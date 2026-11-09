@@ -24,6 +24,7 @@ from typing import Any, Optional
 
 ELIMINATED = "eliminated"
 CANDIDATES = "candidates"
+SCORED = "scored"
 STATUS = (
     "CASE WHEN s.live_version IS NOT NULL THEN 'published' WHEN e.handle IS NOT NULL THEN 'draft' "
     "ELSE COALESCE(e.decision, 'new') END"
@@ -100,7 +101,9 @@ def browse(conn: sqlite3.Connection, filters: Filters, after: Optional[tuple[flo
         score first.
     """
     clauses, args = _common(filters)
-    if filters.stage:
+    if filters.stage == SCORED:
+        clauses.append("e.stage IN ('reserve', 'below')")
+    elif filters.stage:
         clauses.append("e.stage = ?")
         args.append(filters.stage)
     if filters.status:

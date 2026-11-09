@@ -83,7 +83,7 @@ def attach(router: APIRouter, settings: Settings, Conn: Any, Full: Any) -> None:
         conn: Conn,
         _: Full,
         group: Literal["candidates", "eliminated"] = "candidates",
-        stage: Optional[Literal["reserve", "below", "unseen", "noise", "merged"]] = None,
+        stage: Optional[Literal["scored", "reserve", "below", "unseen", "noise", "merged"]] = None,
         status: Optional[Literal["new", "do", "skip", "draft", "published"]] = None,
         recent: bool = False,
         day: Optional[str] = Query(None, pattern=DAY),
@@ -148,6 +148,7 @@ def attach(router: APIRouter, settings: Settings, Conn: Any, Full: Any) -> None:
             result.append(
                 {
                     "handle": row["handle"],
+                    "title": main_store.latest_version(conn, row["handle"])["content"]["en"]["title"],
                     "uploaded_at": row["uploaded_at"],
                     "shared_at": row["shared_at"],
                     "x": social.read_text(settings, row["handle"], "x.txt"),

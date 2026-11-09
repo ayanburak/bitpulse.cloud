@@ -119,16 +119,18 @@ def uploaded(panel_settings, db, jpeg):
     from bitpulse_api import images
 
     sha, width, height = images.accept_upload(panel_settings.images, jpeg)
+    fields = {"title": "A Sample Story"}
     with db:
         store.add_image(db, sha, width, height)
         store.ensure_story(db, "sample")
+        store.add_version(db, "sample", {"en": fields}, sha, "laptop")
     social.accept(db, panel_settings, "sample", files(), "laptop")
     return "sample"
 
 
 def test_the_panel_lists_a_post_with_its_text(panel, uploaded):
     row = panel.get("/panel-api/social").json()["rows"][0]
-    assert (row["x"], row["caption"], row["pages"]) == ("A post", "Caption ü", ["page-1.png"])
+    assert (row["x"], row["caption"], row["pages"], row["title"]) == ("A post", "Caption ü", ["page-1.png"], "A Sample Story")
 
 
 def test_files_are_served_as_downloads(panel, uploaded):

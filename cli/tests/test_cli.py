@@ -5,6 +5,7 @@ importable: nothing, pytest loads it
 description: Checks the command against a small stand-in for the API.
 """
 
+import base64
 import hashlib
 import stat
 from datetime import datetime, timezone
@@ -12,7 +13,19 @@ from datetime import datetime, timezone
 import pytest
 
 from bitpulse_cli import client as client_module
-from bitpulse_cli.__main__ import days_left, handle_of, list_rows, publish, pull_all, push_draft
+from bitpulse_cli.__main__ import (
+    candidate_rows,
+    days_left,
+    handle_of,
+    link_skills,
+    list_rows,
+    number_of,
+    publish,
+    pull_all,
+    push_draft,
+    save_brief,
+    upload_social,
+)
 from bitpulse_cli.client import ApiError, SSH_HOST, write_key
 
 
@@ -37,9 +50,14 @@ class FakeApi:
         if path.endswith("/draft"):
             self.drafts.append((path, body))
             return {"version": 1}
+        if path.endswith("/social"):
+            self.social = (path, body)
+            return {"files": sorted(body["files"])}
         return {"job": 7}
 
     def get(self, path):
+        if path == "/candidates/493/brief":
+            return {"text": "The brief"}
         if path.startswith("/jobs/"):
             return {"status": self.status, "error": "boom", "release": "r", "duration_ms": 1}
         if path == "/stories":
@@ -129,3 +147,73 @@ def test_key_file_is_private(tmp_path, monkeypatch):
 
 def test_tunnel_does_not_use_the_root_account():
     assert SSH_HOST != "vps"
+
+
+def test_a_draft_can_name_its_radar_event(folder):
+    api = FakeApi(known_image=True)
+    push_draft(api, folder, 493)
+    assert api.drafts[0][1]["candidate"] == 493
+
+
+def test_a_plain_draft_sends_no_event(folder):
+    api = FakeApi(known_image=True)
+    push_draft(api, folder)
+    assert "candidate" not in api.drafts[0][1]
+
+
+def test_publish_passes_the_event_on(folder):
+    api = FakeApi(known_image=True)
+    publish(api, folder, 493)
+    assert api.drafts[0][1]["candidate"] == 493
+
+
+def test_event_numbers():
+    assert number_of("R-0493") == 493 and number_of("r-12") == 12 and number_of("7") == 7
+    with pytest.raises(ValueError):
+        number_of("story")
+
+
+def test_a_brief_is_saved_under_its_number(tmp_path):
+    path = save_brief(FakeApi(), 493, tmp_path / "briefs")
+    assert path.name == "R-0493.md" and path.read_text() == "The brief"
+
+
+def test_candidates_show_whether_the_brief_is_ready():
+    rows = candidate_rows([{"number": 7, "has_brief": 1, "title": "A"}, {"number": 8, "has_brief": 0, "title": "B"}])
+    assert rows[0].startswith("R-0007  brief ready") and "no brief" in rows[1]
+
+
+def test_only_finished_social_files_are_uploaded(tmp_path):
+    post = tmp_path / "2026-11-09-a-story"
+    (post / "images").mkdir(parents=True)
+    (post / "x.txt").write_bytes(b"post")
+    (post / "page-1.png").write_bytes(b"png")
+    (post / "reel.mp4").write_bytes(b"not this one")
+    api = FakeApi()
+    assert upload_social(api, post) == ["page-1.png", "x.txt"]
+    assert api.social[0] == "/stories/a-story/social"
+    assert base64.b64decode(api.social[1]["files"]["x.txt"]) == b"post"
+
+
+def repository(tmp_path):
+    (tmp_path / "workflows" / "haber").mkdir(parents=True)
+    (tmp_path / "workflows" / "haber" / "SKILL.md").write_text("skill")
+    (tmp_path / "workflows" / "notes").mkdir()
+    return tmp_path
+
+
+def test_skills_are_linked_and_linking_twice_is_fine(tmp_path):
+    root = repository(tmp_path)
+    assert link_skills(root) == ["haber"] and link_skills(root) == ["haber"]
+    assert (root / ".claude" / "skills" / "haber" / "SKILL.md").read_text() == "skill"
+    assert not (root / ".claude" / "skills" / "notes").exists()
+
+
+def test_linking_never_replaces_a_real_folder(tmp_path):
+    root = repository(tmp_path)
+    kept = root / ".claude" / "skills" / "haber"
+    kept.mkdir(parents=True)
+    (kept / "mine.md").write_text("mine")
+    with pytest.raises(OSError, match="already exists"):
+        link_skills(root)
+    assert (kept / "mine.md").read_text() == "mine"

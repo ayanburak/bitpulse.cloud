@@ -1,18 +1,25 @@
 """
 file: bitpulse_cli/__main__.py
-importable: main, push_draft, publish, pull, pull_all, handle_of, list_rows, days_left
+importable: main, push_draft, publish, pull, pull_all, handle_of, list_rows, days_left, number_of, save_brief,
+            candidate_rows, upload_social, link_skills, BRIEFS
 
-    bitpulse setup                      stores the device key and checks the connection
+    bitpulse setup                      stores the device key, checks the connection and links the skills
+    bitpulse setup --skills             only links the skills of this repository
     bitpulse whoami                     shows this device and when its key ends
     bitpulse list                       lists every story
     bitpulse show <handle>              shows one story
     bitpulse history <handle>           lists the versions of one story
     bitpulse job <id>                   shows one publishing job
+    bitpulse candidates                 lists the radar events chosen for writing
+    bitpulse brief <R-number>           saves the brief of one event and prints where
     bitpulse draft <story folder>       stores the folder as a new draft version
     bitpulse publish <story folder>     stores it, publishes it and renames the folder to its key
+    bitpulse social <post folder>       uploads the finished social files of a story
     bitpulse pull <folder> <handle>     copies one story into folder
     bitpulse pull <folder> --all        copies every published story into folder
     bitpulse rebuild                    builds the site again, for example after a code release
+
+draft and publish take --candidate R-0493 to tie the story to the radar event it was written from.
 
 description: The command for uploading, publishing and fetching stories from a device.
 """
@@ -25,14 +32,17 @@ description: The command for uploading, publishing and fetching stories from a d
 # and a passkey, so a device key that leaks can not do them.
 
 import argparse
+import base64
 import getpass
 import hashlib
+import os
 import re
 import shutil
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Optional
 
 from .client import Api, ApiError, read_key, tunnel, write_key
 
@@ -42,6 +52,8 @@ JOB_WAIT_SECONDS = 180
 DATED = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 TIME_FORMAT = "%Y-%m-%d %H:%M"
 KEY_WARNING_DAYS = 14
+BRIEFS = Path.home() / ".cache" / "bitpulse-radar" / "briefs"
+SOCIAL_FILE = re.compile(r"^(x\.txt|caption\.txt|post\.mp4|page-\d+\.png)$")
 
 # --- Stories ---
 
@@ -71,12 +83,13 @@ def _image_hash(api: Api, path: Path) -> str:
     return str(api.post_bytes("/images", data)["sha"])
 
 
-def push_draft(api: Api, folder: Path) -> int:
+def push_draft(api: Api, folder: Path, candidate: Optional[int] = None) -> int:
     """Stores a story folder as a new draft version.
 
     Args:
         api: API client.
         folder: Story folder.
+        candidate: Number of the radar event the story was written from.
 
     Returns:
         Number of the new version.
@@ -92,6 +105,8 @@ def push_draft(api: Api, folder: Path) -> int:
         "social": social.read_text(encoding="utf-8") if social.exists() else "",
         "image": _image_hash(api, folder / "image.jpg"),
     }
+    if candidate is not None:
+        body["candidate"] = candidate
     return int(api.send_json("PUT", f"/stories/{handle_of(folder)}/draft", body)["version"])
 
 
@@ -160,12 +175,13 @@ def pull_all(api: Api, root: Path) -> int:
 
 # The server decides the date, so the finished story may belong in a folder with another name. The
 # new folder is written first and the old one is removed only after that.
-def publish(api: Api, folder: Path) -> dict:
+def publish(api: Api, folder: Path, candidate: Optional[int] = None) -> dict:
     """Stores a story, publishes it and waits for the result.
 
     Args:
         api: API client.
         folder: Story folder. It ends up renamed to the published key.
+        candidate: Number of the radar event the story was written from.
 
     Returns:
         Finished job, with the story folder added under the folder key.
@@ -174,7 +190,7 @@ def publish(api: Api, folder: Path) -> dict:
         ApiError: If the API refuses the story or the job fails.
     """
     folder = folder.resolve()
-    push_draft(api, folder)
+    push_draft(api, folder, candidate)
     handle = handle_of(folder)
     job = _wait_for(api, int(api.send_json("POST", f"/stories/{handle}/publish", {})["job"]))
     if job["status"] != "succeeded":
@@ -183,6 +199,110 @@ def publish(api: Api, folder: Path) -> dict:
     if final != folder:
         shutil.rmtree(folder)
     return {**job, "folder": str(final)}
+
+# --- Radar ---
+
+def number_of(text: str) -> int:
+    """Reads the number of a radar event.
+
+    Args:
+        text: R-0493 or plain 493.
+
+    Returns:
+        The number.
+
+    Raises:
+        ValueError: If the text is neither.
+    """
+    return int(text.upper().removeprefix("R-"))
+
+
+def save_brief(api: Api, number: int, folder: Path = BRIEFS) -> Path:
+    """Saves the brief of one radar event for a writing session.
+
+    Args:
+        api: API client.
+        number: Event number.
+        folder: Where to save it.
+
+    Returns:
+        Path of the saved file.
+
+    Raises:
+        ApiError: If the event has no brief yet.
+    """
+    answer = api.get(f"/candidates/{number}/brief")
+    folder.mkdir(parents=True, exist_ok=True)
+    path = folder / f"R-{number:04d}.md"
+    path.write_text(answer["text"], encoding="utf-8")
+    return path
+
+
+def candidate_rows(items: list[dict]) -> list[str]:
+    """Formats the chosen events for the screen.
+
+    Args:
+        items: Items from the API.
+
+    Returns:
+        One line per event.
+    """
+    return [f"R-{item['number']:04d}  {'brief ready' if item['has_brief'] else 'no brief   '}  {item['title']}" for item in items]
+
+# --- Social ---
+
+def upload_social(api: Api, folder: Path) -> list[str]:
+    """Uploads the finished social files of a story.
+
+    Args:
+        api: API client.
+        folder: Post folder, named after the story. Anything but the finished files is left out.
+
+    Returns:
+        The file names the server stored.
+
+    Raises:
+        ApiError: If the API refuses them.
+    """
+    files = {path.name: base64.b64encode(path.read_bytes()).decode() for path in folder.iterdir() if SOCIAL_FILE.match(path.name)}
+    return list(api.send_json("PUT", f"/stories/{handle_of(folder)}/social", {"files": files})["files"])
+
+# --- Skills ---
+
+def _repository() -> Optional[Path]:
+    for folder in [Path.cwd(), *Path.cwd().parents]:
+        if (folder / "workflows").is_dir() and (folder / "api").is_dir():
+            return folder
+    return None
+
+
+# Links are relative so the repository can move, and anything else at the path is left for a person.
+def link_skills(root: Path) -> list[str]:
+    """Links every workflow of a repository into the skill folder of Claude Code.
+
+    Args:
+        root: Repository folder.
+
+    Returns:
+        Names of the linked skills.
+
+    Raises:
+        OSError: If something other than the right link is already at a skill path.
+    """
+    skills = root / ".claude" / "skills"
+    skills.mkdir(parents=True, exist_ok=True)
+    names = []
+    for source in sorted((root / "workflows").glob("*/SKILL.md")):
+        name = source.parent.name
+        link, wanted = skills / name, f"../../workflows/{name}"
+        if link.is_symlink() and os.readlink(link) == wanted:
+            names.append(name)
+            continue
+        if link.exists() or link.is_symlink():
+            raise OSError(f"{link} already exists, move it away first")
+        link.symlink_to(wanted, target_is_directory=True)
+        names.append(name)
+    return names
 
 # --- Reading ---
 
@@ -222,10 +342,16 @@ def _whoami(api: Api) -> None:
 # --- Commands ---
 
 # The key is typed at a hidden prompt, an argument would stay in the shell history.
-def _setup() -> None:
-    write_key(getpass.getpass("Device key: "))
-    with tunnel() as base:
-        _whoami(Api(base, read_key()))
+def _setup(skills_only: bool) -> None:
+    if not skills_only:
+        write_key(getpass.getpass("Device key: "))
+        with tunnel() as base:
+            _whoami(Api(base, read_key()))
+    root = _repository()
+    if root is not None:
+        print(f"skills linked: {', '.join(link_skills(root))}")
+    elif skills_only:
+        raise OSError("run this inside the repository")
 
 
 def _finish_job(job: dict, failed: str) -> None:
@@ -247,12 +373,19 @@ def _job(api: Api, job_id: int) -> None:
 
 
 def _run(args: argparse.Namespace) -> None:
+    candidate = number_of(args.candidate) if getattr(args, "candidate", None) else None
     with tunnel() as base:
         api = Api(base, read_key())
         if args.command == "draft":
-            print(f"draft version {push_draft(api, Path(args.folder))}")
+            print(f"draft version {push_draft(api, Path(args.folder), candidate)}")
+        elif args.command == "candidates":
+            print("\n".join(candidate_rows(api.get("/candidates"))) or "nothing is waiting")
+        elif args.command == "brief":
+            print(save_brief(api, number_of(args.number)))
+        elif args.command == "social":
+            print(f"uploaded: {', '.join(upload_social(api, Path(args.folder).resolve()))}")
         elif args.command == "publish":
-            job = publish(api, Path(args.folder))
+            job = publish(api, Path(args.folder), candidate)
             print(f"live: {job['release']}, {job['duration_ms']} ms")
             print(f"folder: {job['folder']}")
         elif args.command == "pull" and args.all:
@@ -280,14 +413,19 @@ def main() -> None:
     """Runs the command given on the command line."""
     parser = argparse.ArgumentParser(prog="bitpulse")
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser("setup")
+    commands.add_parser("setup").add_argument("--skills", action="store_true")
     commands.add_parser("whoami")
     commands.add_parser("list")
     commands.add_parser("show").add_argument("handle")
     commands.add_parser("history").add_argument("handle")
     commands.add_parser("job").add_argument("id", type=int)
-    commands.add_parser("draft").add_argument("folder")
-    commands.add_parser("publish").add_argument("folder")
+    commands.add_parser("candidates")
+    commands.add_parser("brief").add_argument("number")
+    commands.add_parser("social").add_argument("folder")
+    for name in ("draft", "publish"):
+        store = commands.add_parser(name)
+        store.add_argument("folder")
+        store.add_argument("--candidate")
     fetch = commands.add_parser("pull")
     fetch.add_argument("folder")
     fetch.add_argument("handle", nargs="?")
@@ -295,8 +433,8 @@ def main() -> None:
     commands.add_parser("rebuild")
     args = parser.parse_args()
     try:
-        _setup() if args.command == "setup" else _run(args)
-    except (ApiError, OSError) as error:
+        _setup(args.skills) if args.command == "setup" else _run(args)
+    except (ApiError, OSError, ValueError) as error:
         sys.exit(f"error: {error}")
 
 

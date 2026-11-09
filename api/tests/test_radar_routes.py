@@ -223,6 +223,11 @@ def test_one_stage_is_shown_and_the_counts_stay_complete(panel, feed):
     assert page["counts"] == {"below": 1, "reserve": 1}
 
 
+def test_the_scored_view_leaves_out_what_the_model_never_read(panel, feed):
+    push(feed, event(2, "below", 5.0), event(3, "reserve", 7.0), event(4, "unseen", -1))
+    assert [row["number"] for row in listed(panel, group="eliminated", stage="scored")["rows"]] == [3, 2]
+
+
 def test_pages_cover_every_row_once(panel, feed):
     push(feed, *[event(number, "below", number % 4 + 1.0) for number in range(1, 124)])
     seen, cursor = [], None
