@@ -52,10 +52,11 @@ def test_history_before_the_relay_existed_is_not_sent(tmp_path, settings):
 
     path = tmp_path / "old.db"
     old = sqlite3.connect(path)
-    for script in db.MIGRATIONS[:-1]:
+    before_relay = db.MIGRATIONS.index(db.NOTIFY)
+    for script in db.MIGRATIONS[:before_relay]:
         for statement in db._statements(script):
             old.execute(statement)
-    old.execute(f"PRAGMA user_version = {len(db.MIGRATIONS) - 1}")
+    old.execute(f"PRAGMA user_version = {before_relay}")
     old.execute("INSERT INTO audit_log (at, actor, action, target) VALUES ('now', 'a', 'login.ok', 'b')")
     old.commit()
     old.close()

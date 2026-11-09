@@ -49,6 +49,10 @@ class Settings:
         return self.data / "images"
 
     @property
+    def social(self) -> Path:
+        return self.data / "social"
+
+    @property
     def jobs(self) -> Path:
         return self.spool / "jobs"
 
@@ -69,7 +73,7 @@ class Settings:
     # test nothing has made them yet, so they are created here and existing ones are left alone.
     def prepare(self) -> None:
         """Creates every working folder that does not exist yet."""
-        for path in (self.data, self.images, self.jobs, self.queue, self.results, self.notify):
+        for path in (self.data, self.images, self.social, self.jobs, self.queue, self.results, self.notify):
             path.mkdir(parents=True, exist_ok=True)
 
     @classmethod

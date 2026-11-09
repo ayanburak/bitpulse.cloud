@@ -1,6 +1,6 @@
 """
 file: bitpulse_api/jobs.py
-importable: tick, run
+importable: tick, run, prune_old
 
 tick does one round of the job loop: it collects a finished result, then starts the next queued
 job if nothing is running. run repeats tick until the service stops.
@@ -20,14 +20,16 @@ import logging
 import shutil
 import sqlite3
 import threading
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 from . import content as story_text
-from . import notify, store
+from . import notify, social, store
 from .config import Settings
 from .db import connect
+from .radar import store as radar_store
 from .service import story_key
 
 log = logging.getLogger(__name__)
@@ -37,6 +39,8 @@ log = logging.getLogger(__name__)
 TICK_SECONDS = 1.0
 # The worker service is stopped by systemd after five minutes, so a job silent for longer is dead.
 TIMEOUT = timedelta(minutes=10)
+PRUNE_SECONDS = 3600
+KEEP = timedelta(days=30)
 
 # --- Snapshot ---
 
@@ -131,6 +135,20 @@ def tick(conn: sqlite3.Connection, settings: Settings) -> None:
         _dispatch(conn, settings, queued)
 
 
+# Old radar events and social files are thrown away so neither the table nor the disk keeps growing.
+def prune_old(conn: sqlite3.Connection, settings: Settings) -> None:
+    """Removes radar events and social files older than a month.
+
+    Args:
+        conn: Open connection.
+        settings: Folder paths.
+    """
+    moment = datetime.now(timezone.utc) - KEEP
+    with conn:
+        radar_store.prune(conn, moment.isoformat(timespec="seconds"))
+    social.prune(conn, settings, moment.strftime("%Y-%m-%d %H:%M"))
+
+
 # A failing round is logged and the loop goes on, one bad job must not stop every later publish.
 def run(settings: Settings, stop: threading.Event) -> None:
     """Repeats tick until stop is set.
@@ -140,9 +158,14 @@ def run(settings: Settings, stop: threading.Event) -> None:
         stop: Set by the service when it shuts down.
     """
     conn = connect(settings.db)
+    next_prune = 0.0
     try:
         while not stop.is_set():
-            for step in (tick, notify.relay):
+            steps = [tick, notify.relay]
+            if time.monotonic() >= next_prune:
+                steps.append(prune_old)
+                next_prune = time.monotonic() + PRUNE_SECONDS
+            for step in steps:
                 try:
                     step(conn, settings)
                 except Exception:

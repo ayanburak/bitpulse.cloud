@@ -3,7 +3,8 @@ file: bitpulse_api/app.py
 importable: create_app
 
 create_app builds the HTTP application for the given folders. Every route except health and the
-panel routes needs a device key. The panel routes use a browser session and live under /panel-api.
+panel routes needs a key: a device key for the story routes and a radar key for the radar routes.
+The panel routes use a browser session and live under /panel-api.
 
 description: Exposes stories, images and publishing jobs over HTTP.
 """
@@ -13,18 +14,20 @@ description: Exposes stories, images and publishing jobs over HTTP.
 import sqlite3
 import threading
 from contextlib import asynccontextmanager
-from typing import Annotated, Any, AsyncIterator, Iterator
+from typing import Annotated, Any, AsyncIterator, Iterator, Optional
 
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 
-from . import images, jobs, keys, service, store
+from . import images, jobs, keys, service, social, store
 from .config import Settings
 from .content import InvalidDraft
 from .db import connect
 from .panel import routes as panel_routes
+from .radar import routes as radar_routes
+from .radar import service as radar_service
 
 # --- Request Bodies ---
 
@@ -33,6 +36,7 @@ class DraftBody(BaseModel):
     tr: str
     social: str = ""
     image: str
+    candidate: Optional[int] = None
 
 
 class RebuildBody(BaseModel):
@@ -72,13 +76,20 @@ def create_app(settings: Settings) -> FastAPI:
 
     Conn = Annotated[sqlite3.Connection, Depends(get_conn)]
 
-    # The same answer for a missing, expired and revoked key, a caller learns nothing about which.
-    def get_actor(request: Request, conn: Conn) -> str:
-        scheme, _, token = request.headers.get("authorization", "").partition(" ")
-        actor = keys.actor_for(conn, token) if scheme.lower() == "bearer" and token else None
+    # The same answer for a missing, expired, revoked and wrong scope key, a caller learns nothing
+    # about which.
+    def _key_owner(request: Request, conn: sqlite3.Connection, scope: str) -> str:
+        kind, _, token = request.headers.get("authorization", "").partition(" ")
+        actor = keys.actor_for(conn, token, scope) if kind.lower() == "bearer" and token else None
         if actor is None:
             raise HTTPException(401, "invalid key")
         return actor
+
+    def get_actor(request: Request, conn: Conn) -> str:
+        return _key_owner(request, conn, keys.DEVICE)
+
+    def get_radar(request: Request, conn: Conn) -> str:
+        return _key_owner(request, conn, keys.RADAR)
 
     Actor = Annotated[str, Depends(get_actor)]
 
@@ -88,6 +99,10 @@ def create_app(settings: Settings) -> FastAPI:
 
     @app.exception_handler(images.InvalidImage)
     async def _invalid_image(_: Request, error: images.InvalidImage) -> JSONResponse:
+        return JSONResponse({"detail": str(error)}, status_code=422)
+
+    @app.exception_handler(social.InvalidSocial)
+    async def _invalid_social(_: Request, error: social.InvalidSocial) -> JSONResponse:
         return JSONResponse({"detail": str(error)}, status_code=422)
 
     @app.exception_handler(service.NotFound)
@@ -145,7 +160,23 @@ def create_app(settings: Settings) -> FastAPI:
 
     @app.put("/stories/{handle}/draft")
     def save_draft(handle: str, body: DraftBody, conn: Conn, actor: Actor) -> dict[str, int]:
-        return {"version": service.save_draft(conn, handle, body.en, body.tr, body.social, body.image, actor)}
+        if body.candidate is not None:
+            radar_service.require(conn, body.candidate)
+        version = service.save_draft(conn, handle, body.en, body.tr, body.social, body.image, actor)
+        if body.candidate is not None:
+            radar_service.link_story(conn, body.candidate, handle, actor)
+        return {"version": version}
+
+    # The whole set arrives in one body, and it is cut off at the limit like an image upload.
+    @app.put("/stories/{handle}/social")
+    async def upload_social(handle: str, request: Request, conn: Conn, actor: Actor) -> dict[str, list[str]]:
+        raw = bytearray()
+        async for chunk in request.stream():
+            raw.extend(chunk)
+            if len(raw) > social.MAX_UPLOAD:
+                raise HTTPException(413, "upload is too large")
+        files = social.decode(bytes(raw))
+        return {"files": await run_in_threadpool(social.accept, conn, settings, handle, files, actor)}
 
     @app.post("/stories/{handle}/publish", status_code=202)
     def publish(handle: str, conn: Conn, actor: Actor) -> dict[str, int]:
@@ -162,6 +193,7 @@ def create_app(settings: Settings) -> FastAPI:
             raise service.NotFound(f"job not found: {job_id}")
         return {key: row[key] for key in ("id", "kind", "handle", "status", "release", "error", "duration_ms")}
 
+    app.include_router(radar_routes.build(get_conn, get_actor, get_radar))
     app.include_router(panel_routes.build(settings, get_conn))
 
     return app

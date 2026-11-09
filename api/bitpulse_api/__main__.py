@@ -6,6 +6,7 @@ Commands run on the server:
 
     bitpulse-api serve
     bitpulse-api key-create laptop
+    bitpulse-api key-create radar-2026-11 --scope radar
     bitpulse-api key-revoke laptop
     bitpulse-api import /path/to/stories --skip 2026-10-13-example
     bitpulse-api rebuild --no-switch
@@ -37,7 +38,7 @@ def _serve(settings: Settings, _: argparse.Namespace) -> None:
 
 
 def _key_create(settings: Settings, args: argparse.Namespace) -> None:
-    print(keys.create_key(connect(settings.db), args.name))
+    print(keys.create_key(connect(settings.db), args.name, scope=args.scope))
 
 
 def _key_revoke(settings: Settings, args: argparse.Namespace) -> None:
@@ -90,6 +91,7 @@ def main() -> None:
 
     create = commands.add_parser("key-create")
     create.add_argument("name")
+    create.add_argument("--scope", choices=(keys.DEVICE, keys.RADAR), default=keys.DEVICE)
     create.set_defaults(run=_key_create)
 
     revoke = commands.add_parser("key-revoke")

@@ -185,7 +185,62 @@ CREATE TABLE notify_state (
 INSERT INTO notify_state (id, last_audit) SELECT 1, COALESCE(MAX(id), 0) FROM audit_log;
 """
 
-MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY)
+# One row per event the radar has seen. The radar writes what it knows and the panel writes the
+# decision, so an update from the radar must never touch decision, brief or handle. A score of minus
+# one means the model never read the event, a plain number keeps the sort simple.
+RADAR = """
+ALTER TABLE api_keys ADD COLUMN scope TEXT NOT NULL DEFAULT 'device' CHECK (scope IN ('device', 'radar'));
+
+CREATE TABLE radar_events (
+    number INTEGER PRIMARY KEY,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL DEFAULT '',
+    first_seen TEXT NOT NULL,
+    last_seen TEXT NOT NULL,
+    sources INTEGER NOT NULL,
+    stage TEXT NOT NULL CHECK (stage IN ('sent', 'reserve', 'below', 'unseen', 'noise', 'merged')),
+    score REAL NOT NULL DEFAULT -1,
+    importance INTEGER,
+    shareable INTEGER,
+    visual INTEGER,
+    category TEXT,
+    reason TEXT NOT NULL DEFAULT '',
+    merged_into INTEGER,
+    clip INTEGER NOT NULL DEFAULT 0,
+    links TEXT NOT NULL,
+    decision TEXT CHECK (decision IN ('do', 'skip')),
+    decided_by TEXT,
+    decided_at TEXT,
+    decision_seen INTEGER NOT NULL DEFAULT 1,
+    brief TEXT,
+    brief_error TEXT,
+    brief_at TEXT,
+    handle TEXT REFERENCES stories (handle)
+);
+
+CREATE INDEX radar_events_browse ON radar_events (stage, score DESC, number DESC);
+
+CREATE INDEX radar_events_first_seen ON radar_events (first_seen);
+
+CREATE INDEX radar_events_pending ON radar_events (decision, decision_seen);
+
+CREATE TABLE radar_links (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    url TEXT NOT NULL,
+    state TEXT NOT NULL CHECK (state IN ('waiting', 'done', 'failed')),
+    number INTEGER,
+    error TEXT,
+    added_at TEXT NOT NULL
+);
+
+CREATE TABLE social_posts (
+    handle TEXT PRIMARY KEY REFERENCES stories (handle),
+    uploaded_at TEXT NOT NULL,
+    shared_at TEXT
+);
+"""
+
+MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR)
 
 WAL_TRIES = 100
 WAL_WAIT_SECONDS = 0.05

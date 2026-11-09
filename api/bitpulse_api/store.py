@@ -4,7 +4,8 @@ importable: minute, add_audit, add_image, has_image, story, ensure_story, storie
             version, add_version, live_versions, add_job, job, next_queued, dispatched, mark_dispatched,
             finish_job, set_live, clear_live, add_key, find_key, revoke_key, keys, audit_page, version_by_number,
             versions_of, published_versions, story_rows, active_job, last_finished_job, key_by_name,
-            notify_cursor, set_notify_cursor, audit_after
+            notify_cursor, set_notify_cursor, audit_after, save_social, social_post, social_rows, set_social_shared,
+            old_social, remove_social
 
 Every function takes an open connection. None of them commits, the caller groups writes that must
 happen together inside one with conn block.
@@ -195,10 +196,10 @@ def last_finished_job(conn: sqlite3.Connection) -> Optional[sqlite3.Row]:
 
 # --- Keys ---
 
-def add_key(conn: sqlite3.Connection, name: str, digest: str, expires_at: str) -> None:
+def add_key(conn: sqlite3.Connection, name: str, digest: str, expires_at: str, scope: str) -> None:
     conn.execute(
-        "INSERT INTO api_keys (name, digest, created_at, expires_at) VALUES (?, ?, ?, ?)",
-        (name, digest, minute(), expires_at),
+        "INSERT INTO api_keys (name, digest, created_at, expires_at, scope) VALUES (?, ?, ?, ?, ?)",
+        (name, digest, minute(), expires_at, scope),
     )
 
 
@@ -214,7 +215,7 @@ def revoke_key(conn: sqlite3.Connection, name: str) -> bool:
 
 
 def keys(conn: sqlite3.Connection) -> list[sqlite3.Row]:
-    return conn.execute("SELECT name, created_at, expires_at, revoked_at FROM api_keys ORDER BY created_at DESC").fetchall()
+    return conn.execute("SELECT name, scope, created_at, expires_at, revoked_at FROM api_keys ORDER BY created_at DESC").fetchall()
 
 
 def key_by_name(conn: sqlite3.Connection, name: str) -> Optional[sqlite3.Row]:
@@ -240,3 +241,36 @@ def audit_page(conn: sqlite3.Connection, before: Optional[int], limit: int) -> l
     if before is None:
         return conn.execute("SELECT * FROM audit_log ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
     return conn.execute("SELECT * FROM audit_log WHERE id < ? ORDER BY id DESC LIMIT ?", (before, limit)).fetchall()
+
+# --- Social ---
+
+# A new upload keeps shared_at, a corrected text does not mean the post went out a second time.
+def save_social(conn: sqlite3.Connection, handle: str) -> None:
+    conn.execute(
+        "INSERT INTO social_posts (handle, uploaded_at) VALUES (?, ?) "
+        "ON CONFLICT (handle) DO UPDATE SET uploaded_at = excluded.uploaded_at",
+        (handle, minute()),
+    )
+
+
+def social_post(conn: sqlite3.Connection, handle: str) -> Optional[sqlite3.Row]:
+    return conn.execute("SELECT * FROM social_posts WHERE handle = ?", (handle,)).fetchone()
+
+
+def social_rows(conn: sqlite3.Connection, shared: Optional[bool], limit: int, offset: int) -> list[sqlite3.Row]:
+    condition = "" if shared is None else ("WHERE shared_at IS NOT NULL" if shared else "WHERE shared_at IS NULL")
+    return conn.execute(
+        f"SELECT * FROM social_posts {condition} ORDER BY uploaded_at DESC, handle LIMIT ? OFFSET ?", (limit, offset)
+    ).fetchall()
+
+
+def set_social_shared(conn: sqlite3.Connection, handle: str, shared: bool) -> None:
+    conn.execute("UPDATE social_posts SET shared_at = ? WHERE handle = ?", (minute() if shared else None, handle))
+
+
+def old_social(conn: sqlite3.Connection, before: str) -> list[str]:
+    return [row["handle"] for row in conn.execute("SELECT handle FROM social_posts WHERE uploaded_at < ?", (before,))]
+
+
+def remove_social(conn: sqlite3.Connection, handle: str) -> None:
+    conn.execute("DELETE FROM social_posts WHERE handle = ?", (handle,))

@@ -20,7 +20,7 @@ from pydantic import BaseModel
 
 from .. import store as main_store
 from ..config import Settings
-from . import accounts, actions, passkeys, sessions
+from . import accounts, actions, passkeys, radar, sessions
 
 # --- Request Bodies ---
 
@@ -201,5 +201,6 @@ def build(settings: Settings, get_conn: Callable) -> APIRouter:
         sessions.grant_action(conn, current, body.action, body.target)
 
     actions.attach(router, settings, Conn, Full)
+    radar.attach(router, settings, Conn, Full)
 
     return router
