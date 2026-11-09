@@ -168,11 +168,13 @@ test("the left out list opens with the scored events in pages", async () => {
   await page.getByRole("button", { name: "Next fifty" }).click();
   await expect(page.locator(".event-row")).toHaveCount(100);
   await page.getByRole("button", { name: /^Not read/ }).click();
+  await expect(page.locator(".event-row")).toHaveCount(1);
   await expect(page.locator(".event-row__title")).toHaveText("Never read by the model");
 });
 
 test("a headline from the web stays plain text", async () => {
   await page.getByRole("button", { name: /^Passed the bar/ }).click();
+  await expect(page.locator(".event-row")).toHaveCount(1);
   await expect(page.locator(".event-row__title")).toContainText("<img src=x");
   await expect(page.locator("#injected-title")).toHaveCount(0);
 });
@@ -187,6 +189,7 @@ test("search narrows the list and a row keeps its size", async () => {
 
 test("do on a left out event asks the radar for a brief", async () => {
   await page.getByRole("button", { name: /^Passed the bar/ }).click();
+  await expect(page.locator(".event-row")).toHaveCount(1);
   await page.locator(".event-row__head").first().click();
   await expect(page.getByRole("link", { name: "The article" })).toHaveAttribute("rel", "noopener noreferrer");
   await expect(page.getByRole("button", { name: "Skip" })).toHaveCount(0);
