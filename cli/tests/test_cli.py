@@ -188,7 +188,7 @@ def test_only_finished_social_files_are_uploaded(tmp_path):
     (post / "images").mkdir(parents=True)
     (post / "x.txt").write_bytes(b"post")
     (post / "page-1.png").write_bytes(b"png")
-    (post / "reel.mp4").write_bytes(b"not this one")
+    (post / "notes.mp4").write_bytes(b"not this one")
     api = FakeApi()
     assert upload_social(api, post) == ["page-1.png", "x.txt"]
     assert api.social[0] == "/stories/a-story/social"

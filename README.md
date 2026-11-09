@@ -72,7 +72,6 @@ site/
 api/                     stores stories in a database and queues every release
 cli/                     the bitpulse command that drafts, publishes and copies stories
 radar/                   listens to world news feeds and scores the events worth covering
-reels/                   cuts reels for published stories
 workflows/               the written workflows that take a candidate to a published story
 docs/                    editorial policy, style guide, site decisions, architecture and security model
 ```

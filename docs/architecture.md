@@ -22,7 +22,7 @@ The radar is a Python program with its own database. It reads news feeds, groups
 
 The notice service sends important events from the audit log to Telegram with a bot of its own. It exists because the API is not allowed to open a connection to the internet.
 
-The reels engine and the social post generator run on the editor's device, because they need a real browser and video tools that do not belong on a shared server.
+The social post generator runs on the editor's device, because they need a real browser and video tools that do not belong on a shared server.
 
 The workflows folder holds the written procedures that a writing session follows. They are part of the code because they decide how a story is checked.
 

@@ -86,17 +86,6 @@ jobs:
       - run: pipx install uv==0.13.1
       - run: uv run --locked --python 3.10 pytest
 
-  reels:
-    name: Test the reels engine
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: reels
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: pipx install uv==0.13.1
-      - run: uv run --locked --python 3.12 pytest
-
   secrets:
     name: Scan for secrets
     runs-on: ubuntu-latest
