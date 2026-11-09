@@ -18,6 +18,8 @@
 // NOTE: Raw HTML inside Markdown is dropped on purpose. Article text comes from web research,
 // so it should not be able to put a script or an iframe on a page.
 
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { Marked } from "marked";
 import { parse as parseYaml } from "yaml";
 import type { Lang } from "./i18n";
@@ -81,6 +83,7 @@ export interface Story {
 // --- Constants ---
 
 const LANGS: Lang[] = ["en", "tr"];
+const STORIES_ROOT = join("src", "content", "stories");
 const FRONTMATTER = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
 const CLOCK = /^([01]\d|2[0-3]):[0-5]\d$/;
 const MOMENT = /^(\d{4}-\d{2}-\d{2}) (([01]\d|2[0-3]):[0-5]\d)$/;
@@ -309,14 +312,23 @@ export function buildStories(files: Record<string, string>): Story[] {
   return stories.sort((a, b) => b.published.localeCompare(a.published) || a.key.localeCompare(b.key));
 }
 
+// Stories are read while pages are rendered, not while the code is bundled. The same bundle can then
+// build the site from any folder, which is how the publishing worker gives it a fresh snapshot.
 /**
- * Reads every story in the repository.
+ * Reads every story in a folder.
  *
+ * @param root Folder with one folder per story. BITPULSE_STORIES overrides the default.
  * @returns Stories sorted from newest to oldest.
  * @throws Error if any story is invalid or misses a language.
  */
-export function loadStories(): Story[] {
-  return buildStories(
-    import.meta.glob<string>("./content/stories/*/*.md", { query: "?raw", import: "default", eager: true }),
-  );
+export function loadStories(root = process.env.BITPULSE_STORIES ?? STORIES_ROOT): Story[] {
+  const files: Record<string, string> = {};
+  for (const folder of readdirSync(root, { withFileTypes: true })) {
+    if (!folder.isDirectory()) continue;
+    for (const lang of LANGS) {
+      const path = join(root, folder.name, `${lang}.md`);
+      if (existsSync(path)) files[path] = readFileSync(path, "utf8");
+    }
+  }
+  return buildStories(files);
 }

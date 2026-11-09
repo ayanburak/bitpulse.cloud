@@ -17,6 +17,8 @@ jobs:
   verify:
     name: Test and build the site
     runs-on: ubuntu-latest
+    env:
+      BITPULSE_STORIES: tests/fixtures/stories
     defaults:
       run:
         working-directory: site
@@ -46,6 +48,28 @@ jobs:
     defaults:
       run:
         working-directory: radar
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: pipx install uv==0.13.1
+      - run: uv run --locked --python 3.10 pytest
+
+  api:
+    name: Test the API
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: pipx install uv==0.13.1
+      - run: uv run --locked --python 3.10 pytest
+
+  cli:
+    name: Test the command
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cli
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: pipx install uv==0.13.1

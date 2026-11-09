@@ -8,8 +8,9 @@
  * description: Writes every page, resized story image, feed, the sitemap and robots.txt into dist.
  */
 
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { createHash } from "node:crypto";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 
@@ -46,10 +47,13 @@ interface RenderModule {
 
 // --- Constants ---
 
-const OUT = "dist";
+// The defaults fit npm run build. The publishing worker sets all four for its own folders.
+const OUT = process.env.BITPULSE_OUT ?? "dist";
+const SSR = process.env.BITPULSE_SSR ?? ".ssr";
+const CONTENT = process.env.BITPULSE_STORIES ?? join("src", "content", "stories");
+const MEDIA_CACHE = process.env.BITPULSE_MEDIA_CACHE;
 const ENTRY = "src/client/main.ts";
 const MANIFEST = join(OUT, ".vite", "manifest.json");
-const CONTENT = join("src", "content", "stories");
 const SITE_URL = "https://bitpulse.cloud";
 const IMAGE_WIDTHS = [640, 1280, 2000];
 const IMAGE_QUALITY = 80;
@@ -72,16 +76,36 @@ function outputFile(path: string): string {
   return join(OUT, path.endsWith("/") ? `${path}index.html` : path);
 }
 
+async function resizeImage(source: string, width: number, target: string): Promise<void> {
+  await sharp(source)
+    .resize({ width, withoutEnlargement: true })
+    .jpeg({ quality: IMAGE_QUALITY, mozjpeg: true })
+    .toFile(target);
+}
+
+// Resizing is nearly all of the build time, and a published image rarely changes. On the server each
+// copy is kept under the hash of its source, so a new publish only resizes the new picture. The
+// finished copy is renamed into the cache, an interrupted job can not leave half a picture there.
+async function cachedImage(source: string, sourceHash: string, width: number, target: string): Promise<void> {
+  if (!MEDIA_CACHE) return resizeImage(source, width, target);
+  const cached = join(MEDIA_CACHE, `${sourceHash}-${width}-q${IMAGE_QUALITY}.jpg`);
+  if (!existsSync(cached)) {
+    const partial = `${cached}.part.jpg`;
+    await resizeImage(source, width, partial);
+    renameSync(partial, cached);
+  }
+  copyFileSync(cached, target);
+}
+
 // Smaller copies keep a card thumbnail from downloading the full size image.
 async function writeImages(stories: Story[]): Promise<void> {
   mkdirSync(join(OUT, "media"), { recursive: true });
+  if (MEDIA_CACHE) mkdirSync(MEDIA_CACHE, { recursive: true });
   for (const story of stories) {
     const source = join(CONTENT, story.key, story.versions.en.image.file);
+    const hash = createHash("sha256").update(readFileSync(source)).digest("hex");
     for (const width of IMAGE_WIDTHS) {
-      await sharp(source)
-        .resize({ width, withoutEnlargement: true })
-        .jpeg({ quality: IMAGE_QUALITY, mozjpeg: true })
-        .toFile(join(OUT, "media", `${story.key}-${width}.jpg`));
+      await cachedImage(source, hash, width, join(OUT, "media", `${story.key}-${width}.jpg`));
     }
   }
 }
@@ -108,7 +132,7 @@ function writeSitemap(entries: SitemapEntry[]): void {
 // --- Build ---
 
 const assets = readAssets();
-const bundle = pathToFileURL(join(".ssr", "render.js")).href;
+const bundle = pathToFileURL(resolve(SSR, "render.js")).href;
 const { stories, listPagePaths, sitemapEntries, renderPage, renderFeed } = (await import(bundle)) as RenderModule;
 
 // The live site must never be built without real content.
@@ -125,7 +149,8 @@ writeSitemap(sitemapEntries());
 for (const lang of ["en", "tr"]) writeFileSync(join(OUT, lang, "feed.xml"), renderFeed(lang));
 
 // The manifest and the server bundle are build tools, neither belongs on the live site.
+// The worker keeps its bundle for the next job, so only the plain build removes it.
 rmSync(join(OUT, ".vite"), { recursive: true });
-rmSync(".ssr", { recursive: true });
+if (!process.env.BITPULSE_SSR) rmSync(".ssr", { recursive: true });
 
 console.log(`Wrote ${paths.length} pages and ${stories.length} story images to ${OUT}`);

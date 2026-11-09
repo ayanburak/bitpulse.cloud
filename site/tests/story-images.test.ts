@@ -11,7 +11,7 @@ import { imageSize } from "image-size";
 import { describe, expect, it } from "vitest";
 import { buildStories } from "../src/stories";
 
-const ROOT = "src/content/stories";
+const ROOT = process.env.BITPULSE_STORIES ?? "src/content/stories";
 // A smaller original is never enlarged, so the stored copy keeps its own width up to 2000.
 const MIN_WIDTH = 1200;
 const MAX_WIDTH = 2000;

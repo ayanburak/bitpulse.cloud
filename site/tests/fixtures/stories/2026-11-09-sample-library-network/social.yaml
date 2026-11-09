@@ -1,0 +1,9 @@
+x: |
+  Examplefield says its library network opens in spring. This is a sample post for the tests.
+pages:
+  - image: https://example.com/sample-image.jpg
+    credit: Bitpulse test image
+    text: |
+      A made up town plans a library network.
+caption: |
+  A sample caption about the library network of a made up town.

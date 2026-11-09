@@ -1,0 +1,9 @@
+x: |
+  Examplefield says its comet camera opens in spring. This is a sample post for the tests.
+pages:
+  - image: https://example.com/sample-image.jpg
+    credit: Bitpulse test image
+    text: |
+      A made up town plans a comet camera.
+caption: |
+  A sample caption about the comet camera of a made up town.

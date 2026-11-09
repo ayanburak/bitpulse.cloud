@@ -1,0 +1,9 @@
+[Unit]
+Description=Bitpulse, start the render worker when a job is queued
+
+[Path]
+PathExistsGlob=/var/lib/bitpulse/spool/queue/*
+Unit=bitpulse-render.service
+
+[Install]
+WantedBy=multi-user.target

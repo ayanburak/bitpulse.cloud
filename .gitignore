@@ -2,6 +2,11 @@
 node_modules/
 dist/
 
+# Python environments and caches
+.venv/
+__pycache__/
+.pytest_cache/
+
 # Test output
 coverage/
 playwright-report/

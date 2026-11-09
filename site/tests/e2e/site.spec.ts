@@ -119,11 +119,17 @@ test("pages load with no browser errors", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+// The word comes from a built story, so the test works with any set of stories.
+function longestTitleWord(lang: string): string {
+  const html = readFileSync(join(DIST, storyAddresses(lang)[0], "index.html"), "utf8");
+  const title = /<h1[^>]*>([^<]+)</.exec(html)?.[1] ?? "";
+  return title.split(/\s+/).map((word) => word.replace(/[^\p{L}\p{N}]/gu, "")).sort((a, b) => b.length - a.length)[0];
+}
+
 test("search finds a story in the page language", async ({ page }) => {
-  await page.goto("/tr/search/?q=Narnia");
-  await expect(page.locator(".search-list article")).toHaveCount(1);
-  await expect(page.locator(".search-list article h2")).toContainText("Narnia");
-  await expect(page.locator(".search-list a")).toHaveAttribute("href", /\/tr\/stories\//);
+  await page.goto(`/tr/search/?q=${encodeURIComponent(longestTitleWord("tr"))}`);
+  await expect(page.locator(".search-list article").first()).toBeVisible();
+  await expect(page.locator(".search-list a").first()).toHaveAttribute("href", /\/tr\/stories\//);
 
   await page.fill("#search-input", "zzzzqqqq");
   await expect(page.locator(".search-empty")).toBeVisible();

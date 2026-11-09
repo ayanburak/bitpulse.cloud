@@ -27,9 +27,11 @@ function devPages(): Plugin {
       server.middlewares.use(async (req, res, next) => {
         const path = (req.url ?? "/").split("?")[0];
         const media = /^\/media\/(.+)-\d+\.jpg$/.exec(path);
-        if (media) return res.end(readFileSync(join("src/content/stories", media[1], "image.jpg")));
+        if (media) return res.end(readFileSync(join(process.env.BITPULSE_STORIES ?? "src/content/stories", media[1], "image.jpg")));
         if (/\.[a-z0-9]+$/i.test(path) && !path.endsWith("404.html")) return next();
         try {
+          // Stories are plain files read at render time, Vite can not see them change.
+          server.moduleGraph.invalidateAll();
           const { renderPage } = await server.ssrLoadModule("/src/render.tsx");
           const html = renderPage(path, { css: [], js: [`/${CLIENT_ENTRY}`] });
           res.setHeader("Content-Type", "text/html; charset=utf-8");

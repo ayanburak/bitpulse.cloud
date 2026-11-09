@@ -1,0 +1,24 @@
+[project]
+name = "bitpulse-api"
+version = "0.1.0"
+description = "Keeps every story version in SQLite and queues publishing jobs for the render worker."
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+    "pyyaml>=6.0",
+    "pillow>=11.0",
+]
+
+[project.scripts]
+bitpulse-api = "bitpulse_api.__main__:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["bitpulse_api"]

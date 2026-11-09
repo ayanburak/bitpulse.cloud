@@ -1,0 +1,31 @@
+[Unit]
+Description=Bitpulse, build site releases from queued jobs
+
+[Service]
+Type=oneshot
+User=bitpulse-render
+Group=bitpulse-render
+WorkingDirectory=/opt/bitpulse/render/current
+ExecStart=/opt/bitpulse/render/node/bin/node scripts/publish.ts
+TimeoutStartSec=300
+Nice=10
+CPUWeight=50
+MemoryMax=1G
+UMask=0022
+
+# The server hosts other sites, so the builder is kept small and shut in.
+IPAddressDeny=any
+IPAddressAllow=localhost
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/www/bitpulse-releases /var/lib/bitpulse/spool/queue /var/lib/bitpulse/spool/results /var/lib/bitpulse/render
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+LockPersonality=yes
+CapabilityBoundingSet=

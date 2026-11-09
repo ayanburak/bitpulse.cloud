@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { buildStories } from "../src/stories";
 
-const ROOT = "src/content/stories";
+const ROOT = process.env.BITPULSE_STORIES ?? "src/content/stories";
 // News stories became short on 2026-11-07. Stories published before that keep the old length,
 // because published stories are not rewritten. Turkish says the same thing in fewer words, so its
 // lower limit sits a little below the English one.

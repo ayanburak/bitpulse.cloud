@@ -16,7 +16,7 @@ import { describe, expect, it } from "vitest";
 import { buildSocial } from "../src/social";
 import { buildStories } from "../src/stories";
 
-const ROOT = "src/content/stories";
+const ROOT = process.env.BITPULSE_STORIES ?? "src/content/stories";
 
 // GitHub Actions checks out a commit without a branch, so it names the branch in variables.
 // GITHUB_HEAD_REF is set for pull requests and GITHUB_REF_NAME for pushes.
@@ -58,7 +58,8 @@ describe.each(buildStories(readStoryFiles()))("$key", (story) => {
 // The folder name sits in its own constant. Written right after story.key, the secret scan took
 // it for an API key.
 const FOLDER = "2026-11-04-hera-dimorphos";
-const HERA = buildStories(readStoryFiles()).find((story) => story.key === FOLDER)!;
+// Any news story works, the rules depend on the date in its folder name and that is set here.
+const HERA = { ...buildStories(readStoryFiles()).find((story) => story.kind === "news")!, key: FOLDER };
 const BASE = `x: A post.
 pages:
   - image: https://example.com/a.png

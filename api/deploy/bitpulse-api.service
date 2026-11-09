@@ -1,0 +1,34 @@
+[Unit]
+Description=Bitpulse API
+After=network.target
+
+[Service]
+User=bitpulse-api
+Group=bitpulse-api
+WorkingDirectory=/opt/bitpulse/api
+ExecStart=/opt/bitpulse/api/.venv/bin/bitpulse-api serve
+Restart=on-failure
+RestartSec=3
+MemoryMax=300M
+UMask=0027
+
+# The API answers only on the local address and never opens a connection of its own.
+IPAddressDeny=any
+IPAddressAllow=localhost
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/bitpulse/api /var/lib/bitpulse/spool
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target
