@@ -25,7 +25,7 @@
 
 Bitpulse dünya gündemini gün boyu takip eder ve paylaşılmaya değer haberleri yedi kategoride yayınlar: dünya, ekonomi, teknoloji, bilim, sağlık, kültür ve spor. Bir haber üç yüz ile beş yüz kelime arasındadır ve önce ne olduğunu, sonra neden önemli olduğunu anlatır. Haberlerin yanında Merak bölümü, insanların merak ettiği soruları daha uzun yazılarla cevaplar.
 
-Haberler yapay zekâ desteğiyle araştırılır. Her bilgi haberin altında adı geçen kaynaklarla karşılaştırılır ve her haberi yayından önce bir editör okur. Sitenin kodu, haberleri ve yayın kuralları, okurlar sitenin nasıl işlediğini görebilsin diye bu depoda açıktır.
+Haberler yapay zekâ desteğiyle araştırılır. Her bilgi haberin altında adı geçen kaynaklarla karşılaştırılır ve her haberi yayından önce bir editör okur. Sitenin kodu ve yayın kuralları, okurlar sitenin nasıl işlediğini görebilsin diye bu depoda açıktır. Yayınlanan haberler sunucudaki veritabanında durur.
 
 ## Sayfalar
 

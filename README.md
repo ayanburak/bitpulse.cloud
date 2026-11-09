@@ -25,7 +25,7 @@
 
 Bitpulse follows world events around the clock and publishes the stories worth sharing in seven categories: world, economy, technology, science, health, culture and sports. A news story is three to five hundred words long and says first what happened, then why it matters. Next to the news, the Explained section answers the questions people wonder about in longer pieces.
 
-Stories are researched with the help of AI. Every fact is checked against the sources named under the story, and an editor reads each story before it goes live. The code, the stories and the editorial rules are public in this repository so that readers can see how the site works.
+Stories are researched with the help of AI. Every fact is checked against the sources named under the story, and an editor reads each story before it goes live. The code and the editorial rules are public in this repository so that readers can see how the site works. Published stories live in a database on the server.
 
 ## Pages
 
