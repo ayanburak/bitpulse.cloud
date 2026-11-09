@@ -62,7 +62,8 @@ LOGIN_PURPOSE = "login"
 # --- Helpers ---
 
 def _set_cookie(response: Response, token: str) -> None:
-    response.set_cookie(sessions.COOKIE, token, httponly=True, secure=True, samesite="strict", path="/")
+    # Without a lifetime the browser forgets the session as soon as it closes.
+    response.set_cookie(sessions.COOKIE, token, max_age=sessions.FULL_SECONDS, httponly=True, secure=True, samesite="strict", path="/")
 
 
 def _refused() -> HTTPException:

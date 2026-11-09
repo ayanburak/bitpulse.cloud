@@ -153,6 +153,13 @@ def test_activity_keeps_a_session_until_the_full_limit(browser, account, clock):
     assert not signed_in(browser)
 
 
+def test_session_cookie_survives_closing_the_browser(browser, account):
+    key = account[0]
+    options = password(browser).json()["options"]
+    response = browser.post("/panel-api/auth/passkey", json={"credential": key.answer(options)})
+    assert f"Max-Age={sessions.FULL_SECONDS}" in response.headers["set-cookie"]
+
+
 def test_pending_session_runs_out(browser, account, clock):
     key = account[0]
     options = password(browser).json()["options"]

@@ -23,8 +23,9 @@ from . import accounts, store
 
 # The __Host- prefix makes the browser refuse this cookie unless it is secure and for the exact host.
 COOKIE = "__Host-bitpulse"
-IDLE_SECONDS = 30 * 60
-FULL_SECONDS = 12 * 60 * 60
+# Dangerous actions ask for the passkey again, whatever the age of the session.
+IDLE_SECONDS = 14 * 24 * 60 * 60
+FULL_SECONDS = 30 * 24 * 60 * 60
 PENDING_SECONDS = 5 * 60
 GRANT_SECONDS = 2 * 60
 
