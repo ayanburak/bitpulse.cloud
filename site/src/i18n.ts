@@ -76,8 +76,8 @@ export const ui = {
     backHome: "Back to top stories",
     searchSite: "Search the site",
     advertisements: "Advertisements",
-    homeTitle: "Bitpulse | World News",
-    metaDescription: "The latest news from around the world.",
+    homeTitle: "Bitpulse | The World, Beat by Beat",
+    metaDescription: "Follow the world beat by beat: world news, economy, technology, science, health, culture and sports, with every claim sourced.",
   },
   tr: {
     skip: "İçeriğe geç",
@@ -136,8 +136,8 @@ export const ui = {
     backHome: "Manşete dön",
     searchSite: "Sitede ara",
     advertisements: "Reklam",
-    homeTitle: "Bitpulse | Dünya Haberleri",
-    metaDescription: "Dünyadan en son haberler.",
+    homeTitle: "Bitpulse | Dünya, An Be An",
+    metaDescription: "Dünyayı an be an izle: dünya, ekonomi, teknoloji, bilim, sağlık, kültür ve spor haberleri, her bilginin kaynağıyla.",
   },
 };
 

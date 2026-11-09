@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { correctedStories, counterpart, frontStories, listPagePaths, longStories, modifiedTime, sitemapEntries, stories, storyPath } from "../src/catalog";
+import { correctedStories, counterpart, frontStories, listPagePaths, longStories, modifiedTime, newsEntries, sitemapEntries, stories, storyPath } from "../src/catalog";
 import { jsonForScript } from "../src/components/Layout";
 import { escapeXml, renderFeed } from "../src/feed";
 
@@ -65,6 +65,19 @@ describe("policy pages", () => {
   it("links the pages with their counterparts and puts them in the sitemap", () => {
     expect(counterpart("/tr/corrections/")).toBe("/en/corrections/");
     expect(sitemapEntries().some((entry) => entry.path === "/tr/editorial-policy/")).toBe(true);
+  });
+});
+
+describe("newsEntries", () => {
+  const newest = stories.find((story) => story.kind === "news")!;
+  const moment = Date.parse(newest.published);
+
+  it("lists a recent news story in both languages", () => {
+    expect(newsEntries(moment + 1000).filter((entry) => entry.published === newest.published).map((entry) => entry.lang).sort()).toEqual(["en", "tr"]);
+  });
+
+  it("leaves out a story older than two days", () => {
+    expect(newsEntries(moment + 3 * 24 * 60 * 60 * 1000).some((entry) => entry.published === newest.published)).toBe(false);
   });
 });
 

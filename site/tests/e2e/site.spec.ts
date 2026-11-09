@@ -91,7 +91,7 @@ test("each language points to its counterpart story", async ({ page }) => {
 });
 
 test("the home pages tell search engines the site name and icon", async ({ page }) => {
-  for (const [lang, title] of [["en", "Bitpulse | World News"], ["tr", "Bitpulse | Dünya Haberleri"]]) {
+  for (const [lang, title] of [["en", "Bitpulse | The World, Beat by Beat"], ["tr", "Bitpulse | Dünya, An Be An"]]) {
     await page.goto(`/${lang}/`);
     await expect(page).toHaveTitle(title);
     const data = JSON.parse(await page.locator('script[type="application/ld+json"]').innerHTML());

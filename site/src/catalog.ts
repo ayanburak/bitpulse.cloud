@@ -1,7 +1,7 @@
 /**
  * file: src/catalog.ts
  * importable: stories, frontStories, findStory, storyPath, storiesIn, correctedStories, longStories, newsStories, monthKeys,
- *             storiesInMonth, counterpart, listPagePaths, sitemapEntries, modifiedTime, imageUrl, imageSet, feedPath, Category
+ *             storiesInMonth, counterpart, listPagePaths, sitemapEntries, newsEntries, modifiedTime, imageUrl, imageSet, feedPath, Category
  *
  * description: Answers page questions about published stories and site addresses.
  */
@@ -137,6 +137,28 @@ export function sitemapEntries(): SitemapEntry[] {
       ];
       return { path, lastmod: dates.get(path), alternates };
     });
+}
+
+export interface NewsEntry {
+  path: string;
+  lang: Lang;
+  title: string;
+  published: string;
+}
+
+// Google reads a news sitemap only for articles of the last two days.
+const NEWS_WINDOW_MS = 2 * 24 * 60 * 60 * 1000;
+
+/**
+ * Lists the news stories young enough for the news sitemap, once per language.
+ *
+ * @param now Current time in milliseconds.
+ * @returns One entry per language of each recent news story.
+ */
+export function newsEntries(now = Date.now()): NewsEntry[] {
+  return stories
+    .filter((story) => story.kind === "news" && now - Date.parse(story.published) <= NEWS_WINDOW_MS)
+    .flatMap((story) => langs.map((lang) => ({ path: storyPath(story, lang), lang, title: story.versions[lang].title, published: story.published })));
 }
 
 export function feedPath(lang: Lang): string {

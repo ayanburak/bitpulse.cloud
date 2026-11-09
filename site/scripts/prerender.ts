@@ -37,10 +37,19 @@ interface SitemapEntry {
   alternates: { hreflang: string; path: string }[];
 }
 
+interface NewsEntry {
+  path: string;
+  lang: string;
+  title: string;
+  published: string;
+}
+
 interface RenderModule {
   stories: Story[];
   listPagePaths(): string[];
   sitemapEntries(): SitemapEntry[];
+  newsEntries(): NewsEntry[];
+  escapeXml(text: string): string;
   renderPage(path: string, assets: Assets): string;
   renderFeed(lang: string): string;
 }
@@ -126,14 +135,24 @@ function writeSitemap(entries: SitemapEntry[]): void {
     join(OUT, "sitemap.xml"),
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${urls}</urlset>\n`,
   );
-  writeFileSync(join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+  writeFileSync(join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/news-sitemap.xml\n`);
+}
+
+function writeNewsSitemap(entries: NewsEntry[]): void {
+  const urls = entries
+    .map((entry) => `<url><loc>${SITE_URL}${entry.path}</loc><news:news><news:publication><news:name>Bitpulse</news:name><news:language>${entry.lang}</news:language></news:publication><news:publication_date>${entry.published}</news:publication_date><news:title>${escapeXml(entry.title)}</news:title></news:news></url>`)
+    .join("");
+  writeFileSync(
+    join(OUT, "news-sitemap.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">${urls}</urlset>\n`,
+  );
 }
 
 // --- Build ---
 
 const assets = readAssets();
 const bundle = pathToFileURL(resolve(SSR, "render.js")).href;
-const { stories, listPagePaths, sitemapEntries, renderPage, renderFeed } = (await import(bundle)) as RenderModule;
+const { stories, listPagePaths, sitemapEntries, newsEntries, escapeXml, renderPage, renderFeed } = (await import(bundle)) as RenderModule;
 
 // The live site must never be built without real content.
 if (stories.length === 0) throw new Error("No stories found, refusing to build an empty site");
@@ -146,6 +165,7 @@ for (const path of paths) {
 }
 await writeImages(stories);
 writeSitemap(sitemapEntries());
+writeNewsSitemap(newsEntries());
 for (const lang of ["en", "tr"]) writeFileSync(join(OUT, lang, "feed.xml"), renderFeed(lang));
 
 // The manifest and the server bundle are build tools, neither belongs on the live site.

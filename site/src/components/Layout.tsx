@@ -208,16 +208,21 @@ interface Props {
 // The root address counts as the shared language entry, so it is the x-default of the home page.
 // On other pages the x-default is the English version, which on a story has its own slug.
 // The root redirects here, so the language home pages are where Google reads the site name.
+// The picture shown when the home page is shared as a link.
+const HOME_IMAGE = "/share.png";
+
 function HeadTags({ lang, title, description, story }: { lang: Lang; title: string; description: string; story?: StoryHead }) {
   const { pathname } = useLocation();
   const url = (path: string) => `${SITE_URL}${path}`;
   const other = counterpart(pathname);
   const isHome = pathname === `/${lang}/`;
+  // A list of search results is not a page worth finding in a search engine.
+  const robots = pathname.endsWith("/search/") ? "noindex, follow" : "max-image-preview:large";
   return (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content="max-image-preview:large" />
+      <meta name="robots" content={robots} />
       <meta property="og:type" content={story ? "article" : "website"} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
@@ -232,6 +237,15 @@ function HeadTags({ lang, title, description, story }: { lang: Lang; title: stri
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content={`@${X_HANDLE}`} />
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript(story.data) }} />
+        </>
+      )}
+      {isHome && (
+        <>
+          <meta property="og:image" content={url(HOME_IMAGE)} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content={`@${X_HANDLE}`} />
         </>
       )}
       {isHome && (
