@@ -2,12 +2,14 @@
 file: bitpulse_api/store.py
 importable: minute, add_audit, add_image, has_image, story, ensure_story, stories, latest_version,
             version, add_version, live_versions, add_job, job, next_queued, dispatched, mark_dispatched,
-            finish_job, set_live, add_key, find_key, revoke_key
+            finish_job, set_live, clear_live, add_key, find_key, revoke_key, keys, audit_page, version_by_number,
+            versions_of, published_versions, story_rows, active_job, last_finished_job, key_by_name,
+            notify_cursor, set_notify_cursor, audit_after
 
 Every function takes an open connection. None of them commits, the caller groups writes that must
 happen together inside one with conn block.
 
-description: Holds all SQL used by the API.
+description: Holds the SQL for stories, images, jobs, keys and the audit log.
 """
 
 import json
@@ -66,6 +68,23 @@ def set_live(conn: sqlite3.Connection, handle: str, version_id: int, published_a
         (version_id, published_at, handle),
     )
 
+
+# published_at stays, so a story brought back later keeps its place and its address.
+def clear_live(conn: sqlite3.Connection, handle: str) -> None:
+    conn.execute("UPDATE stories SET live_version = NULL WHERE handle = ?", (handle,))
+
+
+def story_rows(conn: sqlite3.Connection) -> list[sqlite3.Row]:
+    return conn.execute(
+        "SELECT s.handle, s.published_at, s.created_at, s.live_version, live.number AS live_number, "
+        "last.number AS latest, last.content AS content, last.created_at AS saved_at "
+        "FROM stories s "
+        "JOIN story_versions last ON last.handle = s.handle AND last.number = "
+        "(SELECT MAX(number) FROM story_versions WHERE handle = s.handle) "
+        "LEFT JOIN story_versions live ON live.id = s.live_version "
+        "ORDER BY last.created_at DESC, s.handle"
+    ).fetchall()
+
 # --- Versions ---
 
 # Content is one JSON text, and only the API ever looks inside it.
@@ -81,6 +100,18 @@ def latest_version(conn: sqlite3.Connection, handle: str) -> Optional[dict[str, 
 
 def version(conn: sqlite3.Connection, version_id: int) -> Optional[dict[str, Any]]:
     return _version(conn.execute("SELECT * FROM story_versions WHERE id = ?", (version_id,)).fetchone())
+
+
+def version_by_number(conn: sqlite3.Connection, handle: str, number: int) -> Optional[dict[str, Any]]:
+    return _version(
+        conn.execute("SELECT * FROM story_versions WHERE handle = ? AND number = ?", (handle, number)).fetchone()
+    )
+
+
+def versions_of(conn: sqlite3.Connection, handle: str) -> list[sqlite3.Row]:
+    return conn.execute(
+        "SELECT id, number, actor, created_at FROM story_versions WHERE handle = ? ORDER BY number DESC", (handle,)
+    ).fetchall()
 
 
 def add_version(conn: sqlite3.Connection, handle: str, content: dict[str, Any], image: str, actor: str) -> int:
@@ -145,6 +176,23 @@ def finish_job(
         ("succeeded" if ok else "failed", release, error, ms, minute(), job_id),
     )
 
+
+# Newest first, the first row is what readers see now unless a withdraw came after it.
+def published_versions(conn: sqlite3.Connection, handle: str) -> list[int]:
+    rows = conn.execute(
+        "SELECT version FROM jobs WHERE kind = 'publish' AND handle = ? AND status = 'succeeded' ORDER BY id DESC",
+        (handle,),
+    ).fetchall()
+    return [int(row["version"]) for row in rows]
+
+
+def active_job(conn: sqlite3.Connection) -> Optional[sqlite3.Row]:
+    return conn.execute("SELECT * FROM jobs WHERE status IN ('queued', 'dispatched') ORDER BY id LIMIT 1").fetchone()
+
+
+def last_finished_job(conn: sqlite3.Connection) -> Optional[sqlite3.Row]:
+    return conn.execute("SELECT * FROM jobs WHERE status IN ('succeeded', 'failed') ORDER BY id DESC LIMIT 1").fetchone()
+
 # --- Keys ---
 
 def add_key(conn: sqlite3.Connection, name: str, digest: str, expires_at: str) -> None:
@@ -163,3 +211,32 @@ def revoke_key(conn: sqlite3.Connection, name: str) -> bool:
         "UPDATE api_keys SET revoked_at = ? WHERE name = ? AND revoked_at IS NULL", (minute(), name)
     )
     return cursor.rowcount > 0
+
+
+def keys(conn: sqlite3.Connection) -> list[sqlite3.Row]:
+    return conn.execute("SELECT name, created_at, expires_at, revoked_at FROM api_keys ORDER BY created_at DESC").fetchall()
+
+
+def key_by_name(conn: sqlite3.Connection, name: str) -> Optional[sqlite3.Row]:
+    return conn.execute("SELECT name, created_at, expires_at FROM api_keys WHERE name = ?", (name,)).fetchone()
+
+# --- Notifications ---
+
+def notify_cursor(conn: sqlite3.Connection) -> int:
+    return int(conn.execute("SELECT last_audit FROM notify_state WHERE id = 1").fetchone()[0])
+
+
+def set_notify_cursor(conn: sqlite3.Connection, audit_id: int) -> None:
+    conn.execute("UPDATE notify_state SET last_audit = ? WHERE id = 1", (audit_id,))
+
+
+def audit_after(conn: sqlite3.Connection, audit_id: int, limit: int) -> list[sqlite3.Row]:
+    return conn.execute("SELECT * FROM audit_log WHERE id > ? ORDER BY id LIMIT ?", (audit_id, limit)).fetchall()
+
+# --- Audit Page ---
+
+# Paging by id stays correct while new rows arrive at the top.
+def audit_page(conn: sqlite3.Connection, before: Optional[int], limit: int) -> list[sqlite3.Row]:
+    if before is None:
+        return conn.execute("SELECT * FROM audit_log ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
+    return conn.execute("SELECT * FROM audit_log WHERE id < ? ORDER BY id DESC LIMIT ?", (before, limit)).fetchall()

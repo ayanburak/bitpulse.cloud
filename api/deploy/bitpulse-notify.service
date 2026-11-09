@@ -1,0 +1,25 @@
+[Unit]
+Description=Bitpulse, send waiting notices
+
+[Service]
+Type=oneshot
+User=bitpulse-notify
+Group=bitpulse-notify
+EnvironmentFile=/etc/bitpulse/notify.env
+ExecStart=/usr/bin/python3 /opt/bitpulse/notify/notify.py
+TimeoutStartSec=5min
+MemoryMax=64M
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/bitpulse/notify
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=

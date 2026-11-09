@@ -1,6 +1,7 @@
 """
 file: bitpulse_api/service.py
-importable: NotFound, save_draft, request_publish, request_rebuild, read_story, list_stories, story_key
+importable: NotFound, Conflict, save_draft, save_fields, request_publish, request_undo, request_withdraw,
+            request_rebuild, read_story, list_stories, story_key
 
 These are the operations behind the HTTP routes. They know nothing about HTTP, and the one time
 import and the server commands can call them too.
@@ -21,6 +22,10 @@ from . import store
 
 class NotFound(Exception):
     """Raised when a story, image or job does not exist."""
+
+
+class Conflict(Exception):
+    """Raised when the story is not in a state that allows the request."""
 
 # --- Helpers ---
 
@@ -61,7 +66,36 @@ def save_draft(conn: sqlite3.Connection, handle: str, en: str, tr: str, social: 
     """
     if not story_text.HANDLE.match(handle):
         raise story_text.InvalidDraft(f"invalid story name: {handle}")
-    parsed = story_text.parse_draft(en, tr, social)
+    return _store_draft(conn, handle, story_text.parse_draft(en, tr, social), image, actor)
+
+
+def save_fields(
+    conn: sqlite3.Connection, handle: str, en: dict[str, Any], tr: dict[str, Any], social: str, image: str, actor: str
+) -> int:
+    """Stores a draft sent as separate fields as a new version of its story.
+
+    Args:
+        conn: Open connection.
+        handle: Lasting name of the story.
+        en: English fields with a body field.
+        tr: Turkish fields with a body field.
+        social: Text of social.yaml.
+        image: Hash of an image already uploaded.
+        actor: Name for the audit log.
+
+    Returns:
+        Number of the new version.
+
+    Raises:
+        InvalidDraft: If a field is invalid.
+        NotFound: If the image was not uploaded.
+    """
+    if not story_text.HANDLE.match(handle):
+        raise story_text.InvalidDraft(f"invalid story name: {handle}")
+    return _store_draft(conn, handle, story_text.parse_fields(en, tr, social), image, actor)
+
+
+def _store_draft(conn: sqlite3.Connection, handle: str, parsed: dict[str, Any], image: str, actor: str) -> int:
     if not store.has_image(conn, image):
         raise NotFound(f"image not found: {image}")
     with conn:
@@ -81,7 +115,7 @@ def read_story(conn: sqlite3.Connection, handle: str) -> dict[str, Any]:
 
     Returns:
         Key, publishing moment, both Markdown files, social text and image hash. The key is None
-        for a story that was never published.
+        for a story that is not on the site.
 
     Raises:
         NotFound: If the story does not exist.
@@ -94,7 +128,7 @@ def read_story(conn: sqlite3.Connection, handle: str) -> dict[str, Any]:
     moment = published or store.minute()
     return {
         "handle": handle,
-        "key": story_key(handle, published) if published else None,
+        "key": story_key(handle, published) if published and row["live_version"] else None,
         "published_at": published,
         "version": latest["number"],
         "en": story_text.to_markdown(latest["content"]["en"], moment),
@@ -108,7 +142,7 @@ def list_stories(conn: sqlite3.Connection) -> list[dict[str, Any]]:
     return [
         {
             "handle": row["handle"],
-            "key": story_key(row["handle"], row["published_at"]) if row["published_at"] else None,
+            "key": story_key(row["handle"], row["published_at"]) if row["published_at"] and row["live_version"] else None,
             "published_at": row["published_at"],
             "latest": row["latest"],
         }
@@ -142,6 +176,65 @@ def request_publish(conn: sqlite3.Connection, handle: str, actor: str) -> int:
         version_id = store.add_version(conn, handle, stamped, latest["image"], actor)
         job_id = store.add_job(conn, "publish", handle, version_id, moment, True)
         store.add_audit(conn, actor, "publish.request", handle, f"job {job_id}")
+    return job_id
+
+
+# The site worker can put an older release back, but the database would still call the bad version
+# live and the next build would bring it back. So undo is an ordinary publish of the older content.
+def request_undo(conn: sqlite3.Connection, handle: str, actor: str) -> int:
+    """Queues the version that was live before the current one.
+
+    Args:
+        conn: Open connection.
+        handle: Lasting name of the story.
+        actor: Name for the audit log.
+
+    Returns:
+        Id of the queued job.
+
+    Raises:
+        NotFound: If the story does not exist.
+        Conflict: If the story is not live or was never published before.
+    """
+    row = store.story(conn, handle)
+    if row is None:
+        raise NotFound(f"story not found: {handle}")
+    if row["live_version"] is None:
+        raise Conflict("story is not live")
+    earlier = [item for item in store.published_versions(conn, handle) if item != row["live_version"]]
+    if not earlier:
+        raise Conflict("there is no earlier published version, withdraw the story instead")
+    target = store.version(conn, earlier[0])
+    with conn:
+        version_id = store.add_version(conn, handle, target["content"], target["image"], actor)
+        job_id = store.add_job(conn, "publish", handle, version_id, store.minute(), True)
+        store.add_audit(conn, actor, "undo.request", handle, f"job {job_id}, back to version {target['number']}")
+    return job_id
+
+
+def request_withdraw(conn: sqlite3.Connection, handle: str, actor: str) -> int:
+    """Queues the removal of a story from the site. Its versions stay on record.
+
+    Args:
+        conn: Open connection.
+        handle: Lasting name of the story.
+        actor: Name for the audit log.
+
+    Returns:
+        Id of the queued job.
+
+    Raises:
+        NotFound: If the story does not exist.
+        Conflict: If the story is not live.
+    """
+    row = store.story(conn, handle)
+    if row is None:
+        raise NotFound(f"story not found: {handle}")
+    if row["live_version"] is None:
+        raise Conflict("story is not live")
+    with conn:
+        job_id = store.add_job(conn, "withdraw", handle, None, store.minute(), True)
+        store.add_audit(conn, actor, "withdraw.request", handle, f"job {job_id}")
     return job_id
 
 

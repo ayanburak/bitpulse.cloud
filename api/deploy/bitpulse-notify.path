@@ -1,0 +1,8 @@
+[Unit]
+Description=Bitpulse, watch for waiting notices
+
+[Path]
+PathExistsGlob=/var/lib/bitpulse/notify/*.json
+
+[Install]
+WantedBy=multi-user.target

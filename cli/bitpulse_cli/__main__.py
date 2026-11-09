@@ -1,7 +1,13 @@
 """
 file: bitpulse_cli/__main__.py
-importable: main, push_draft, publish, pull, pull_all, handle_of
+importable: main, push_draft, publish, pull, pull_all, handle_of, list_rows, days_left
 
+    bitpulse setup                      stores the device key and checks the connection
+    bitpulse whoami                     shows this device and when its key ends
+    bitpulse list                       lists every story
+    bitpulse show <handle>              shows one story
+    bitpulse history <handle>           lists the versions of one story
+    bitpulse job <id>                   shows one publishing job
     bitpulse draft <story folder>       stores the folder as a new draft version
     bitpulse publish <story folder>     stores it, publishes it and renames the folder to its key
     bitpulse pull <folder> <handle>     copies one story into folder
@@ -14,21 +20,28 @@ description: The command for uploading, publishing and fetching stories from a d
 # NOTE: A story folder has the same four files as before: en.md, tr.md, image.jpg and social.yaml.
 # Pulling every story into site/src/content/stories keeps the local build and the social scripts
 # working without knowing the stories now live on the server.
+#
+# NOTE: There is no command to withdraw a story, undo a publish or make a key. Those need the panel
+# and a passkey, so a device key that leaks can not do them.
 
 import argparse
+import getpass
 import hashlib
 import re
 import shutil
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
-from .client import Api, ApiError, read_key, tunnel
+from .client import Api, ApiError, read_key, tunnel, write_key
 
 # --- Constants ---
 
 JOB_WAIT_SECONDS = 180
 DATED = re.compile(r"^\d{4}-\d{2}-\d{2}-")
+TIME_FORMAT = "%Y-%m-%d %H:%M"
+KEY_WARNING_DAYS = 14
 
 # --- Stories ---
 
@@ -171,7 +184,67 @@ def publish(api: Api, folder: Path) -> dict:
         shutil.rmtree(folder)
     return {**job, "folder": str(final)}
 
+# --- Reading ---
+
+def list_rows(stories: list[dict]) -> list[str]:
+    """Formats the story list for the screen.
+
+    Args:
+        stories: Items from the API.
+
+    Returns:
+        One line per story.
+    """
+    return [f"{item['published_at'] or 'not published':<17}  {item['handle']}  v{item['latest']}" for item in stories]
+
+
+def days_left(expires_at: str, now: datetime) -> int:
+    """Counts the days a key still works.
+
+    Args:
+        expires_at: End of the key as YYYY-MM-DD HH:MM in UTC.
+        now: Current moment in UTC.
+
+    Returns:
+        Whole days, negative once it has ended.
+    """
+    return (datetime.strptime(expires_at, TIME_FORMAT).replace(tzinfo=timezone.utc) - now).days
+
+
+def _whoami(api: Api) -> None:
+    me = api.get("/whoami")
+    left = days_left(me["expires_at"], datetime.now(timezone.utc))
+    print(f"device: {me['name']}")
+    print(f"key ends: {me['expires_at']} UTC, {left} days left")
+    if left <= KEY_WARNING_DAYS:
+        print("make a new key in the panel soon")
+
 # --- Commands ---
+
+# The key is typed at a hidden prompt, an argument would stay in the shell history.
+def _setup() -> None:
+    write_key(getpass.getpass("Device key: "))
+    with tunnel() as base:
+        _whoami(Api(base, read_key()))
+
+
+def _finish_job(job: dict, failed: str) -> None:
+    if job["status"] != "succeeded":
+        raise ApiError(0, f"{failed}, the live site did not change: {job['error']}")
+    print(f"live: {job['release']}, {job['duration_ms']} ms")
+
+
+def _show(api: Api, handle: str) -> None:
+    story = api.get(f"/stories/{handle}")
+    for name in ("handle", "key", "published_at", "version", "image"):
+        print(f"{name}: {story[name]}")
+
+
+def _job(api: Api, job_id: int) -> None:
+    job = api.get(f"/jobs/{job_id}")
+    for name in ("id", "kind", "handle", "status", "release", "error", "duration_ms"):
+        print(f"{name}: {job[name]}")
+
 
 def _run(args: argparse.Namespace) -> None:
     with tunnel() as base:
@@ -188,17 +261,31 @@ def _run(args: argparse.Namespace) -> None:
             if not args.handle:
                 raise ApiError(0, "give a story name or --all")
             print(f"pulled to {pull(api, Path(args.folder), args.handle)}")
+        elif args.command == "whoami":
+            _whoami(api)
+        elif args.command == "list":
+            print("\n".join(list_rows(api.get("/stories"))))
+        elif args.command == "show":
+            _show(api, args.handle)
+        elif args.command == "history":
+            for row in api.get(f"/stories/{args.handle}/versions"):
+                print(f"v{row['number']}  {row['created_at']}  {row['actor']}")
+        elif args.command == "job":
+            _job(api, args.id)
         else:
-            job = _wait_for(api, int(api.send_json("POST", "/rebuild", {"go_live": True})["job"]))
-            if job["status"] != "succeeded":
-                raise ApiError(0, f"rebuild failed, the live site did not change: {job['error']}")
-            print(f"live: {job['release']}, {job['duration_ms']} ms")
+            _finish_job(_wait_for(api, int(api.send_json("POST", "/rebuild", {"go_live": True})["job"])), "rebuild failed")
 
 
 def main() -> None:
     """Runs the command given on the command line."""
     parser = argparse.ArgumentParser(prog="bitpulse")
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("setup")
+    commands.add_parser("whoami")
+    commands.add_parser("list")
+    commands.add_parser("show").add_argument("handle")
+    commands.add_parser("history").add_argument("handle")
+    commands.add_parser("job").add_argument("id", type=int)
     commands.add_parser("draft").add_argument("folder")
     commands.add_parser("publish").add_argument("folder")
     fetch = commands.add_parser("pull")
@@ -206,8 +293,9 @@ def main() -> None:
     fetch.add_argument("handle", nargs="?")
     fetch.add_argument("--all", action="store_true")
     commands.add_parser("rebuild")
+    args = parser.parse_args()
     try:
-        _run(parser.parse_args())
+        _setup() if args.command == "setup" else _run(args)
     except (ApiError, OSError) as error:
         sys.exit(f"error: {error}")
 

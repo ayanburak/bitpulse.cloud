@@ -1,6 +1,6 @@
 """
 file: bitpulse_cli/client.py
-importable: Api, ApiError, tunnel, read_key
+importable: Api, ApiError, tunnel, read_key, write_key
 
 Api makes the HTTP calls. tunnel opens the private route to the server for as long as a command
 runs.
@@ -10,8 +10,8 @@ description: Talks to the Bitpulse API through an SSH tunnel.
 
 # NOTE: Only the standard library is used, so the command installs anywhere without extra packages.
 #
-# NOTE: The API is not on the internet yet. The tunnel carries the calls over the SSH access this
-# device already has, and the device key is still checked on the server side.
+# NOTE: The device routes of the API are never on the internet. The tunnel uses an SSH account that
+# has no shell and can reach only the API port, and the device key is still checked on the server.
 
 import json
 import os
@@ -30,6 +30,7 @@ from typing import Any, Optional
 REMOTE_PORT = 8010
 KEY_FILE = Path.home() / ".config" / "bitpulse" / "key"
 TUNNEL_WAIT_SECONDS = 15
+SSH_HOST = "bitpulse-tunnel"
 
 # --- Errors ---
 
@@ -108,6 +109,24 @@ def read_key() -> str:
     return KEY_FILE.read_text(encoding="utf-8").strip()
 
 
+# The folder and the file are private from the moment they exist.
+def write_key(key: str) -> Path:
+    """Stores the device key for this user.
+
+    Args:
+        key: Key text.
+
+    Returns:
+        Path of the key file.
+    """
+    KEY_FILE.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    descriptor = os.open(KEY_FILE, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(descriptor, "w", encoding="utf-8") as output:
+        output.write(key.strip() + "\n")
+    os.chmod(KEY_FILE, 0o600)
+    return KEY_FILE
+
+
 def _free_port() -> int:
     with socket.socket() as probe:
         probe.bind(("127.0.0.1", 0))
@@ -141,7 +160,7 @@ def tunnel() -> Iterator[str]:
         yield os.environ["BITPULSE_API"]
         return
     port = _free_port()
-    host = os.environ.get("BITPULSE_SSH", "vps")
+    host = os.environ.get("BITPULSE_SSH", SSH_HOST)
     forward = f"127.0.0.1:{port}:127.0.0.1:{REMOTE_PORT}"
     process = subprocess.Popen(
         ["ssh", "-N", "-o", "ExitOnForwardFailure=yes", "-o", "BatchMode=yes", "-L", forward, host],

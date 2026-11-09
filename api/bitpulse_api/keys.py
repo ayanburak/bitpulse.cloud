@@ -32,13 +32,14 @@ def _digest(token: str) -> str:
 
 
 # The key is returned and never kept, so losing it means making a new one.
-def create_key(conn: sqlite3.Connection, name: str, days: int = LIFETIME_DAYS) -> str:
+def create_key(conn: sqlite3.Connection, name: str, days: int = LIFETIME_DAYS, actor: str = "server") -> str:
     """Creates a device key.
 
     Args:
         conn: Open connection.
         name: Device name. It appears in the audit log.
         days: How long the key works.
+        actor: Who made it, for the audit log.
 
     Returns:
         The key text, shown only this once.
@@ -47,7 +48,7 @@ def create_key(conn: sqlite3.Connection, name: str, days: int = LIFETIME_DAYS) -
     expires = (datetime.now(timezone.utc) + timedelta(days=days)).strftime(FORMAT)
     with conn:
         store.add_key(conn, name, _digest(token), expires)
-        store.add_audit(conn, "server", "key.create", name)
+        store.add_audit(conn, actor, "key.create", name)
     return token
 
 

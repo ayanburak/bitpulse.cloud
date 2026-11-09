@@ -6,11 +6,14 @@ description: Checks the command against a small stand-in for the API.
 """
 
 import hashlib
+import stat
+from datetime import datetime, timezone
 
 import pytest
 
-from bitpulse_cli.__main__ import handle_of, publish, pull_all, push_draft
-from bitpulse_cli.client import ApiError
+from bitpulse_cli import client as client_module
+from bitpulse_cli.__main__ import days_left, handle_of, list_rows, publish, pull_all, push_draft
+from bitpulse_cli.client import ApiError, SSH_HOST, write_key
 
 
 # Records calls and answers like the API, so the tests stay about what the command decides.
@@ -99,3 +102,30 @@ def test_pull_writes_no_social_file_for_a_story_without_social_text(tmp_path):
     api.get = lambda path: [{"handle": "done", "key": "2026-02-03-done"}] if path == "/stories" else story
     pull_all(api, tmp_path)
     assert not (tmp_path / "2026-02-03-done" / "social.yaml").exists()
+
+
+def test_list_marks_unpublished_stories():
+    rows = list_rows([
+        {"published_at": "2026-02-03 09:00", "handle": "done", "latest": 3},
+        {"published_at": None, "handle": "open", "latest": 1},
+    ])
+    assert "done  v3" in rows[0] and rows[1].startswith("not published")
+
+
+def test_days_left():
+    now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    assert days_left("2026-01-11 00:00", now) == 10
+    assert days_left("2025-12-30 00:00", now) < 0
+
+
+def test_key_file_is_private(tmp_path, monkeypatch):
+    path = tmp_path / "config" / "key"
+    monkeypatch.setattr(client_module, "KEY_FILE", path)
+    write_key("  secret\n")
+    assert path.read_text() == "secret\n"
+    assert stat.S_IMODE(path.stat().st_mode) == 0o600
+    assert stat.S_IMODE(path.parent.stat().st_mode) == 0o700
+
+
+def test_tunnel_does_not_use_the_root_account():
+    assert SSH_HOST != "vps"

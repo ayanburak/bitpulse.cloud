@@ -1,0 +1,135 @@
+/*
+file: src/panel.css
+importable: nothing, src/main.tsx imports this after the site stylesheet
+
+description: Form, table and dialog styles the panel adds to the site design.
+*/
+
+/* NOTE: Colors, type, the pulse line, buttons and corners all come from the site stylesheet. This
+   file only adds what a news page never needed, and it follows the same rules. */
+
+.logo small { margin-left: 4px; font-size: 15px; font-weight: 550; letter-spacing: 0; color: var(--muted); }
+.page { padding-block: clamp(24px, 3vw, 44px) 72px; }
+.page-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: clamp(20px, 2.6vw, 34px); }
+.page-top p { margin-top: 8px; }
+.top-link { font-size: 14.5px; font-weight: 550; }
+.top-link:hover { color: var(--accent); }
+
+.status { font-size: 14px; color: var(--muted); }
+.status b { color: var(--accent); font-weight: 650; }
+
+.filters { display: flex; gap: 18px; margin-bottom: 8px; font-size: 15px; font-weight: 550; }
+.filters button { padding: 6px 0; color: var(--muted); border-bottom: 2px solid transparent; }
+.filters button:hover { color: var(--accent); }
+.filters button[aria-pressed="true"] { color: var(--accent); font-weight: 650; border-color: var(--accent); }
+
+.story-row { color: inherit; display: grid; grid-template-columns: 96px minmax(0, 1fr) 96px 64px; gap: 18px; align-items: start; padding-block: 16px; border-top: 1px solid var(--line); cursor: pointer; }
+.story-row:hover .head-4 { color: var(--accent); }
+.story-row .head-4 { margin-top: 4px; transition: color 160ms; }
+.story-row small { display: block; margin-top: 4px; font-size: 13.5px; color: var(--muted); }
+.story-row__num { text-align: right; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.data-row { display: grid; gap: 18px; padding-block: 12px; border-top: 1px solid var(--line); font-size: 15px; align-items: baseline; }
+.data-row > :first-child { font-variant-numeric: tabular-nums; }
+.data-row span.m { color: var(--muted); }
+.data-row.head-row { border-top: 0; font-size: 14px; font-weight: 650; padding-block: 0 8px; }
+.audit-row { grid-template-columns: 150px 90px 170px minmax(0, 1fr) minmax(0, 1fr); }
+.key-row { grid-template-columns: minmax(0, 1fr) 150px 150px 90px 70px; }
+.pk-row { grid-template-columns: minmax(0, 1fr) 150px 150px 70px; }
+.text-button { font-size: 14.5px; font-weight: 600; color: var(--accent); }
+.text-button:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.editor { row-gap: 32px; align-items: start; }
+.editor__main { grid-column: 1 / span 8; min-width: 0; }
+.editor__side { grid-column: 9 / span 4; padding-left: var(--gap); border-left: 1px solid var(--line); min-width: 0; }
+.editor__side > * + * { margin-top: 28px; }
+.side-title { font-size: 15px; font-weight: 650; margin-bottom: 10px; }
+.switches { display: flex; justify-content: space-between; gap: 16px; }
+
+.field { display: block; margin-top: 18px; }
+.field > span { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; }
+.field input, .field select, .field textarea { display: block; width: 100%; padding: 10px 12px; background: transparent; border: 1px solid var(--line); border-radius: 0; transition: border-color 160ms; }
+.field input:hover, .field textarea:hover, .field select:hover { border-color: var(--muted); }
+.field input:focus, .field textarea:focus, .field select:focus { outline: 0; border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.field .title-input { font-stretch: 75%; font-weight: 720; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.06; }
+.field textarea.body-input { font-family: Literata, Georgia, serif; font-size: 18px; line-height: 1.6; min-height: 340px; resize: vertical; }
+.fields-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--gap); }
+
+.preview { margin-top: 18px; padding: clamp(18px, 2.4vw, 32px); border: 1px solid var(--line); }
+.preview .summary-large { margin-top: 14px; }
+.preview .prose { margin-top: 22px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.actions .button { flex: 1; }
+.danger-note { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
+.side-rows li { display: flex; justify-content: space-between; gap: 12px; padding-block: 9px; border-top: 1px solid var(--line); font-size: 14.5px; }
+.side-rows li:first-child { border-top: 0; padding-top: 0; }
+.side-rows span { color: var(--muted); }
+.side-rows b { color: var(--accent); font-weight: 650; }
+
+.login { min-height: 100dvh; display: flex; flex-direction: column; }
+.login__body { flex: 1; display: grid; align-content: center; padding-block: 48px; }
+.login__box { grid-column: 1 / span 5; }
+.login__box .head-2 { margin-bottom: 10px; }
+.login__box .button { width: 100%; margin-top: 22px; }
+.login__alt { display: block; margin-top: 16px; font-size: 14.5px; font-weight: 550; color: var(--muted); }
+.login__alt:hover { color: var(--accent); }
+.login__rule { position: relative; height: 9px; }
+.login__rule .pulse { --x: max(var(--gutter), calc((100vw - var(--max-width)) / 2 + var(--gutter))); --w: 150px; --y: 9px; }
+
+.confirm { width: min(520px, calc(100vw - 32px)); padding: 0; border: 2px solid var(--accent); border-radius: 0; background: var(--bg); color: var(--ink); }
+.confirm::backdrop { background: rgba(20, 21, 19, .55); }
+.confirm__inner { padding: 26px; }
+.confirm__inner .head-3 { margin-bottom: 10px; }
+.confirm__what { margin-top: 16px; padding-block: 12px; border-block: 1px solid var(--line); font-size: 15px; }
+.confirm .actions { margin-top: 20px; }
+.steps { margin-top: 16px; }
+.steps li { display: flex; justify-content: space-between; padding-block: 8px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+.steps li:first-child { border-top: 0; }
+.steps li.done { color: var(--ink); }
+.steps li.done b { color: var(--accent); font-weight: 650; }
+.steps b { font-weight: 500; }
+
+.secret { margin-top: 14px; padding: 12px; border: 1px solid var(--line); font-size: 15px; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 820px) {
+  .editor__main, .editor__side, .login__box { grid-column: 1 / -1; }
+  .editor__side { padding-left: 0; border-left: 0; padding-top: 24px; border-top: 2px solid var(--ink); }
+  .story-row { grid-template-columns: minmax(0, 1fr) 64px; }
+  .story-row > time { grid-column: 1 / -1; }
+  .story-row__num { grid-column: 2; grid-row: 2; }
+  .story-row__state { grid-column: 1; grid-row: 3; }
+  .audit-row, .key-row, .pk-row { grid-template-columns: 1fr 1fr; gap: 2px 14px; }
+  .data-row.head-row { display: none; }
+  .fields-2 { grid-template-columns: 1fr; }
+}
+.field select { min-height: 46px; }
+
+/* The site swaps its long menu for a drawer on phones. The panel has three links, and they fit. */
+@media (max-width: 820px) {
+  .menu { top: 0; }
+  .menu .rail { height: var(--menu-height); }
+  .menu .rail ul { display: flex; }
+  .menu .rail ul:last-of-type { display: none; }
+}
+
+/* --- Additions For The Real Panel --- */
+
+.form-error { margin-top: 14px; font-size: 14.5px; font-weight: 600; color: var(--accent); }
+.field-note { margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+.empty { padding-block: 28px; color: var(--muted); }
+.section-head--spaced { margin-top: 56px; }
+.after-list { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-top: 18px; }
+.after-list .field { margin-top: 0; }
+.title-gap { margin-top: 6px; }
+.photo-gap { margin-top: 22px; }
+.push-top { margin-top: 12px; }
+.preview-frame { display: block; width: 100%; height: 760px; margin-top: 18px; border: 1px solid var(--line); background: var(--bg); }
+.preview-body { margin: 0; padding: clamp(18px, 2.4vw, 32px); }
+.preview-body .summary-large { margin-top: 14px; }
+.preview-body .prose { margin-top: 22px; }
+.update-row { padding-block: 12px; border-top: 1px solid var(--line); }
+.update-row .field { margin-top: 0; }
+.check { display: flex; gap: 8px; align-items: center; margin-top: 8px; font-size: 14px; }
+.load-more { margin-top: 20px; }
+.confirm__inner input { width: 100%; }
+button:disabled { opacity: .55; cursor: default; }

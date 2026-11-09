@@ -9,11 +9,16 @@ Commands run on the server:
     bitpulse-api key-revoke laptop
     bitpulse-api import /path/to/stories --skip 2026-10-13-example
     bitpulse-api rebuild --no-switch
+    bitpulse-api admin-init
+    bitpulse-api admin-init --reset
+    bitpulse-api admin-unlock
 
 description: Starts the API and runs the server side management commands.
 """
 
 import argparse
+import getpass
+import sys
 from pathlib import Path
 
 import uvicorn
@@ -23,6 +28,7 @@ from .app import create_app
 from .config import PORT, Settings
 from .db import connect
 from .importer import import_stories
+from .panel import accounts
 
 # --- Commands ---
 
@@ -52,6 +58,27 @@ def _import(settings: Settings, args: argparse.Namespace) -> None:
 def _rebuild(settings: Settings, args: argparse.Namespace) -> None:
     print(f"job {service.request_rebuild(connect(settings.db), 'server', not args.no_switch)}")
 
+
+# The password is typed on the server and never passes through an argument, which would show in the
+# process list and the shell history.
+def _admin_init(settings: Settings, args: argparse.Namespace) -> None:
+    password = getpass.getpass("New panel password: ")
+    if password != getpass.getpass("Again: "):
+        sys.exit("error: the passwords differ")
+    try:
+        token, codes = accounts.init_admin(connect(settings.db), password, args.reset)
+    except accounts.InvalidAdmin as error:
+        sys.exit(f"error: {error}")
+    print(f"Register the first passkey within {accounts.ENROL_MINUTES} minutes:")
+    print(f"{settings.panel_origin}/#enrol={token}")
+    print("Backup codes, write them on paper. They are not shown again:")
+    print("\n".join(codes))
+
+
+def _admin_unlock(settings: Settings, _: argparse.Namespace) -> None:
+    accounts.unlock(connect(settings.db))
+    print("unlocked")
+
 # --- Entry ---
 
 def main() -> None:
@@ -77,6 +104,12 @@ def main() -> None:
     rebuild = commands.add_parser("rebuild")
     rebuild.add_argument("--no-switch", action="store_true")
     rebuild.set_defaults(run=_rebuild)
+
+    init = commands.add_parser("admin-init")
+    init.add_argument("--reset", action="store_true")
+    init.set_defaults(run=_admin_init)
+
+    commands.add_parser("admin-unlock").set_defaults(run=_admin_unlock)
 
     args = parser.parse_args()
     args.run(Settings.from_env(), args)

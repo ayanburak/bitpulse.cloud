@@ -25,7 +25,7 @@ from pathlib import Path
 from typing import Any
 
 from . import content as story_text
-from . import store
+from . import notify, store
 from .config import Settings
 from .db import connect
 from .service import story_key
@@ -60,6 +60,8 @@ def _dispatch(conn: sqlite3.Connection, settings: Settings, job: sqlite3.Row) ->
         published = story["published_at"] or job["moment"]
         records[job["handle"]] = {**candidate, "published_at": published}
         paths = [f"/{lang}/stories/{candidate['content'][lang]['slug']}/" for lang in ("en", "tr")]
+    elif job["kind"] == "withdraw":
+        records.pop(job["handle"], None)
 
     partial = settings.jobs / f".{job_id}"
     shutil.rmtree(partial, ignore_errors=True)
@@ -96,6 +98,8 @@ def _finish(conn: sqlite3.Connection, settings: Settings, job: sqlite3.Row, resu
         if ok and job["kind"] == "publish":
             story = store.story(conn, job["handle"])
             store.set_live(conn, job["handle"], job["version"], story["published_at"] or job["moment"])
+        elif ok and job["kind"] == "withdraw":
+            store.clear_live(conn, job["handle"])
         target = job["handle"] or f"job {job_id}"
         store.add_audit(conn, "worker", "publish.done" if ok else "publish.failed", target, release or str(error))
     _clean(settings, job_id)
@@ -138,10 +142,11 @@ def run(settings: Settings, stop: threading.Event) -> None:
     conn = connect(settings.db)
     try:
         while not stop.is_set():
-            try:
-                tick(conn, settings)
-            except Exception:
-                log.exception("job loop round failed")
+            for step in (tick, notify.relay):
+                try:
+                    step(conn, settings)
+                except Exception:
+                    log.exception("job loop round failed")
             stop.wait(TICK_SECONDS)
     finally:
         conn.close()

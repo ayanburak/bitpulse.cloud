@@ -1,6 +1,6 @@
 """
 file: bitpulse_api/content.py
-importable: InvalidDraft, parse_file, parse_draft, to_markdown, stamp_updates, handle_of, HANDLE
+importable: InvalidDraft, parse_file, parse_draft, parse_fields, to_markdown, stamp_updates, handle_of, HANDLE
 
 A draft arrives as the same en.md and tr.md text the editor works on. parse_draft checks it and
 turns it into plain data for the database. to_markdown writes that data back as the file the site
@@ -156,6 +156,37 @@ def parse_draft(en: str, tr: str, social: str = "") -> dict[str, Any]:
     tr_fields, tr_body, _, _ = parse_file(tr, "tr.md")
     _check_pair(en_fields, tr_fields)
     return {"en": {**en_fields, "body": en_body}, "tr": {**tr_fields, "body": tr_body}, "social": social}
+
+
+# The panel sends fields instead of files, and they pass the same model and the same pair check.
+def parse_fields(en: dict[str, Any], tr: dict[str, Any], social: str = "") -> dict[str, Any]:
+    """Checks both languages of a draft sent as separate fields.
+
+    Args:
+        en: English fields with a body field.
+        tr: Turkish fields with a body field.
+        social: Text of social.yaml, stored as it is.
+
+    Returns:
+        Plain data that can be stored as JSON.
+
+    Raises:
+        InvalidDraft: If a field is missing or wrong, or the languages disagree.
+    """
+    checked = {}
+    for lang, source in (("en", en), ("tr", tr)):
+        data = dict(source)
+        body = data.pop("body", "")
+        if not isinstance(body, str) or not body.strip():
+            raise InvalidDraft(f"{lang}: empty body")
+        try:
+            checked[lang] = {**Language.model_validate(data).model_dump(), "body": body}
+        except ValidationError as error:
+            first = error.errors()[0]
+            path = ".".join(str(item) for item in first["loc"])
+            raise InvalidDraft(f"{lang}: {path}: {first['msg']}") from None
+    _check_pair(checked["en"], checked["tr"])
+    return {"en": checked["en"], "tr": checked["tr"], "social": social}
 
 
 def handle_of(name: str) -> str:

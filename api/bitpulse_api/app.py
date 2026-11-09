@@ -2,8 +2,8 @@
 file: bitpulse_api/app.py
 importable: create_app
 
-create_app builds the HTTP application for the given folders. Every route except health needs a
-device key.
+create_app builds the HTTP application for the given folders. Every route except health and the
+panel routes needs a device key. The panel routes use a browser session and live under /panel-api.
 
 description: Exposes stories, images and publishing jobs over HTTP.
 """
@@ -24,6 +24,7 @@ from . import images, jobs, keys, service, store
 from .config import Settings
 from .content import InvalidDraft
 from .db import connect
+from .panel import routes as panel_routes
 
 # --- Request Bodies ---
 
@@ -93,6 +94,10 @@ def create_app(settings: Settings) -> FastAPI:
     async def _not_found(_: Request, error: service.NotFound) -> JSONResponse:
         return JSONResponse({"detail": str(error)}, status_code=404)
 
+    @app.exception_handler(service.Conflict)
+    async def _conflict(_: Request, error: service.Conflict) -> JSONResponse:
+        return JSONResponse({"detail": str(error)}, status_code=409)
+
     # --- Routes ---
 
     @app.get("/health")
@@ -128,6 +133,16 @@ def create_app(settings: Settings) -> FastAPI:
     def read_story(handle: str, conn: Conn, _: Actor) -> dict[str, Any]:
         return service.read_story(conn, handle)
 
+    @app.get("/stories/{handle}/versions")
+    def story_versions(handle: str, conn: Conn, _: Actor) -> list[dict[str, Any]]:
+        if store.story(conn, handle) is None:
+            raise service.NotFound(f"story not found: {handle}")
+        return [dict(row) for row in store.versions_of(conn, handle)]
+
+    @app.get("/whoami")
+    def whoami(conn: Conn, actor: Actor) -> dict[str, Any]:
+        return dict(store.key_by_name(conn, actor))
+
     @app.put("/stories/{handle}/draft")
     def save_draft(handle: str, body: DraftBody, conn: Conn, actor: Actor) -> dict[str, int]:
         return {"version": service.save_draft(conn, handle, body.en, body.tr, body.social, body.image, actor)}
@@ -146,5 +161,7 @@ def create_app(settings: Settings) -> FastAPI:
         if row is None:
             raise service.NotFound(f"job not found: {job_id}")
         return {key: row[key] for key in ("id", "kind", "handle", "status", "release", "error", "duration_ms")}
+
+    app.include_router(panel_routes.build(settings, get_conn))
 
     return app
