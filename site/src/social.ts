@@ -69,8 +69,15 @@ const CENTER = "50% 50%";
 const POSITION = /^(\d{1,3})% (\d{1,3})%$/;
 
 // From 2026-11-08 the post is one page, also turned into a still video, and the caption carries
-// everything else. Reels are made apart from the story, so the post only has to stop a reader.
+// everything else, so the post only has to stop a reader.
 const ONE_PAGE_SINCE = "2026-11-08";
+
+// From 2026-11-10 what Instagram shows is plain sentences: no dashes and no formatting. A dash stays
+// only inside a name, because a name can not be rewritten: Jean-Noël, Al-Asbahi, F-35.
+const PLAIN_SINCE = "2026-11-10";
+const NAME_WITH_DASH = /\p{Lu}\p{L}*-(?:\p{Lu}\p{L}*|\d+)|\bal-\p{Lu}\p{L}*/gu;
+const DASH = /[-‐-―]/u;
+const FORMATTING = /[*_#`~]|\p{Extended_Pictographic}/u;
 
 // Points readers to the full story, where every claim is linked to its source.
 const SOURCE_NOTE = "Every claim is sourced in the full story.";
@@ -119,6 +126,11 @@ function readPages(value: unknown, where: string, short: boolean, most: number):
   });
 }
 
+function requirePlain(value: string, field: string, where: string): void {
+  if (DASH.test(value.replace(NAME_WITH_DASH, ""))) throw new Error(`${where}: ${field} has a dash, write the sentence without one: ${value}`);
+  if (FORMATTING.test(value)) throw new Error(`${where}: ${field} has formatting or an emoji, write plain text: ${value}`);
+}
+
 // Pages that share an image or a photographer name them once.
 function credits(pages: SocialPage[]): string {
   const names = [...new Set(pages.map((page) => page.credit))];
@@ -134,7 +146,8 @@ function credits(pages: SocialPage[]): string {
  * @param story The story the file belongs to.
  * @returns The X post with its link, the Instagram pages and the full caption.
  * @throws Error if a field is missing or unknown, an address is invalid, the post has more pages
- *   than its date allows, or the X post, a page or the caption is over its limit.
+ *   than its date allows, the X post, a page or the caption is over its limit, or the Instagram
+ *   text of a newer post is not plain.
  */
 export function buildSocial(raw: string, story: Story): SocialPost {
   const where = `${story.key}/social.yaml`;
@@ -151,6 +164,10 @@ export function buildSocial(raw: string, story: Story): SocialPost {
 
   const day = story.key.slice(0, 10);
   const pages = readPages(data.pages, where, day >= SHORT_PAGES_SINCE, day >= ONE_PAGE_SINCE ? 1 : MAX_PAGES);
+  if (day >= PLAIN_SINCE) {
+    pages.forEach((page, index) => requirePlain(page.paragraphs.join(" "), `page ${index + 1}`, where));
+    requirePlain(text(data.caption, "caption", where), "caption", where);
+  }
   const caption = [text(data.caption, "caption", where), "Full story and sources: link in bio.", `${credits(pages)} ${SOURCE_NOTE}`];
   const full = caption.join("\n\n");
   if (full.length > CAPTION_LIMIT) throw new Error(`${where}: caption is ${full.length} characters, the limit is ${CAPTION_LIMIT}`);

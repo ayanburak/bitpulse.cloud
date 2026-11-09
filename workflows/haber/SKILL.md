@@ -60,7 +60,7 @@ Principles of verification:
 
 ## 5. Social posts
 
-No video is searched for or suggested. Reels are made in a separate `/reels` session.
+No video is searched for or suggested.
 
 The Instagram post is one page: one short sentence of at most 120 characters, and the rest of the information goes to the caption. `npm run social` also saves this page as a silent `post.mp4`. The rule is in `docs/social-posts.md` and the tests check it too.
 
@@ -90,7 +90,7 @@ When social text or an image changes after publishing, this check runs again for
 bash workflows/haber/publish.sh --dry-run <folder> R-0493
 ```
 
-The script runs the tests and the build and makes the social files in `site/social-posts/<folder>/`, outside Git. It changes nothing on the server. The Bash call uses `timeout: 600000`. The editor gets the headline, the summary, the output of the script and the path of the social files. `npm run preview` is available on request.
+The script runs the tests and the build and makes the social files in `site/social-posts/<folder>/`, outside Git. It changes nothing on the server. The Bash call uses `timeout: 600000`. The editor gets the output of the script, the path of the social files and the full Turkish text of the story. The last message before the editor says publish holds `tr.md` word for word: headline, summary and the whole body, nothing shortened or summed up. The editor reads the story there and does not have to open a file. When the text changes afterwards, the same message is sent again. `npm run preview` is available on request.
 
 ## 8. Publishing
 
@@ -100,4 +100,4 @@ The editor says publish. That is the one approval for this story. Only this runs
 bash workflows/haber/publish.sh <folder> R-0493
 ```
 
-The Bash call uses `timeout: 600000`. The script sends the story to the server and publishes it, ties it to its radar event and uploads the social files, which then appear in the panel. The server decides the publishing time, so the folder name may change with that date. The server checks the two new pages and the cover image and stays on the previous release when they do not open. The story does not enter Git and no git command is run. When the script stops, its output goes to the editor as it is and no other way of publishing is tried. At the end the editor gets the live addresses and the path of the social files that the script printed.
+The Bash call uses `timeout: 600000`. The script sends the story to the server and publishes it, ties it to its radar event and uploads the social files, which then appear in the panel. The server decides the publishing time, so the folder name may change with that date. The server checks the two new pages and the cover image and stays on the previous release when they do not open. The story does not enter Git and no git command is run. When the script stops, its output goes to the editor as it is and no other way of publishing is tried. When it prints SOCIAL FILES NOT UPLOADED, the story is live and the panel misses its files. The editor is told so, and only the command that the line names is run. At the end the editor gets the live addresses and the path of the social files that the script printed.

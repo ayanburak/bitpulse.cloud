@@ -34,7 +34,8 @@
 // height of a text also depends on its words.
 
 import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { setDefaultAutoSelectFamilyAttemptTimeout } from "node:net";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium, type Page } from "@playwright/test";
@@ -44,7 +45,7 @@ import { replacePost } from "./social-output.ts";
 
 // --- Constants ---
 
-const ROOT = "src/content/stories";
+const ROOT = process.env.BITPULSE_STORIES ?? "src/content/stories";
 const OUT = "social-posts";
 const TEMPLATE = pathToFileURL(resolve("scripts/social-card.html")).href;
 const SIZE = { width: 1080, height: 1350 };
@@ -60,6 +61,16 @@ const TEXT_TOP = 680;
 // The page sits 285 pixels below the top of the still video, half of the 570 left over.
 const STILL_SECONDS = 6;
 const STILL_FILTER = "pad=1080:1920:0:285:color=0x141513,format=yuv420p";
+
+// Node gives an address a quarter of a second before it tries the next one. On a slow connection
+// the only reachable address runs out of time and the download fails.
+setDefaultAutoSelectFamilyAttemptTimeout(2_000);
+const ATTEMPTS = 3;
+const ATTEMPT_MS = 30_000;
+const RETRY_MS = 2_000;
+
+// Which address each saved image came from, so a later run can reuse exactly that image.
+const SOURCES = "sources.json";
 
 // --- Reading ---
 
@@ -86,18 +97,52 @@ function pick(stories: Story[], keys: string[]): Story[] {
 
 // --- Images ---
 
-// The same address is fetched once, even when several pages use it.
-async function download(urls: string[], folder: string): Promise<Map<string, string>> {
+class NotAnImage extends Error {}
+
+// A connection that fails is tried again. An answer that is not an image will not change.
+async function fetchImage(url: string): Promise<{ data: Buffer; extension: string }> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const response = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(ATTEMPT_MS) });
+      const type = response.headers.get("content-type") ?? "";
+      if (!response.ok || !type.startsWith("image/")) throw new NotAnImage(`Could not download an image from ${url}: ${response.status} ${type}`);
+      return { data: Buffer.from(await response.arrayBuffer()), extension: type.slice(6).split(/[+;]/)[0] };
+    } catch (error) {
+      if (error instanceof NotAnImage || attempt === ATTEMPTS) throw error;
+      await new Promise((done) => setTimeout(done, RETRY_MS));
+    }
+  }
+}
+
+function readSources(folder: string): Record<string, string> {
+  const path = join(folder, SOURCES);
+  return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
+}
+
+// The same address is fetched once, even when several pages use it. When a download fails, the image
+// the last run saved from that same address is used instead.
+async function download(urls: string[], folder: string, previous: string): Promise<Map<string, string>> {
   mkdirSync(folder, { recursive: true });
+  const saved = readSources(previous);
+  const sources: Record<string, string> = {};
   const files = new Map<string, string>();
   for (const url of new Set(urls)) {
-    const response = await fetch(url, { headers: HEADERS });
-    const type = response.headers.get("content-type") ?? "";
-    if (!response.ok || !type.startsWith("image/")) throw new Error(`Could not download an image from ${url}: ${response.status} ${type}`);
-    const path = resolve(folder, `${files.size + 1}.${type.slice(6).split(/[+;]/)[0]}`);
-    writeFileSync(path, Buffer.from(await response.arrayBuffer()));
-    files.set(url, pathToFileURL(path).href);
+    let name: string;
+    try {
+      const image = await fetchImage(url);
+      name = `${files.size + 1}.${image.extension}`;
+      writeFileSync(join(folder, name), image.data);
+    } catch (error) {
+      const old = saved[url];
+      if (!old || !existsSync(join(previous, old))) throw error;
+      name = old;
+      copyFileSync(join(previous, old), join(folder, name));
+      console.warn(`Could not download ${url}, using the copy from the last run.`);
+    }
+    sources[url] = name;
+    files.set(url, pathToFileURL(resolve(folder, name)).href);
   }
+  writeFileSync(join(folder, SOURCES), JSON.stringify(sources, null, 2));
   return files;
 }
 
@@ -122,7 +167,7 @@ async function write(page: Page, post: SocialPost, key: string, dir: string): Pr
   writeFileSync(join(dir, "x.txt"), `${post.x}\n`);
   writeFileSync(join(dir, "caption.txt"), `${post.caption}\n`);
 
-  const images = await download(post.pages.map((item) => item.image), join(dir, "images"));
+  const images = await download(post.pages.map((item) => item.image), join(dir, "images"), join(OUT, key, "images"));
   for (const [index, { image, position, paragraphs }] of post.pages.entries()) {
     await page.setViewportSize(SIZE);
     await page.goto(TEMPLATE);

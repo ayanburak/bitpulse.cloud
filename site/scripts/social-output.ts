@@ -5,9 +5,8 @@
  * description: Puts a finished social post into its folder and leaves everything else there alone.
  */
 
-// NOTE: The folder of a post is shared. The reels workflow delivers reel.mp4 and reel.txt into it,
-// so only the files this script makes are removed. A post that got shorter still loses its old last
-// page, because every page matches the pattern.
+// NOTE: Only the files this script makes are removed. A post that got shorter still loses its old
+// last page, because every page matches the pattern.
 
 import { mkdirSync, readdirSync, renameSync, rmSync } from "node:fs";
 import { join } from "node:path";

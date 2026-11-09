@@ -5,14 +5,18 @@
  * description: Checks that a new social post replaces only the files of the old post.
  */
 
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { replacePost } from "../scripts/social-output";
+
+const roots: string[] = [];
+afterAll(() => roots.forEach((root) => rmSync(root, { recursive: true, force: true })));
 
 function folders() {
   const root = mkdtempSync(join(tmpdir(), "bitpulse-social-"));
+  roots.push(root);
   const draft = join(root, ".new");
   const out = join(root, "story");
   mkdirSync(join(draft, "images"), { recursive: true });
@@ -30,14 +34,12 @@ describe("replacePost", () => {
     expect(existsSync(draft)).toBe(false);
   });
 
-  it("keeps a delivered reel", () => {
+  it("keeps a file it did not make", () => {
     const { draft, out } = folders();
     mkdirSync(out);
-    writeFileSync(join(out, "reel.mp4"), "the reel");
-    writeFileSync(join(out, "reel.txt"), "its caption");
+    writeFileSync(join(out, "notes.txt"), "the notes");
     replacePost(draft, out);
-    expect(readFileSync(join(out, "reel.mp4"), "utf8")).toBe("the reel");
-    expect(readFileSync(join(out, "reel.txt"), "utf8")).toBe("its caption");
+    expect(readFileSync(join(out, "notes.txt"), "utf8")).toBe("the notes");
   });
 
   it("does not keep a stale last page or old images", () => {

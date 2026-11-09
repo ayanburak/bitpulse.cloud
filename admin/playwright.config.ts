@@ -8,7 +8,7 @@
  * description: Browser test settings for the admin panel.
  */
 
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { defineConfig } from "@playwright/test";
@@ -17,8 +17,13 @@ const WEB_PORT = 4320;
 const API_PORT = 4321;
 // Passkeys need localhost or HTTPS, an address written as numbers is refused by the browser.
 const ORIGIN = `http://localhost:${WEB_PORT}`;
-const WORK = process.env.BITPULSE_TEST_DIR ?? mkdtempSync(join(tmpdir(), "bitpulse-admin-"));
-process.env.BITPULSE_TEST_DIR = WORK;
+// The workers inherit the variable, so only the first process makes the folder and removes it.
+if (!process.env.BITPULSE_TEST_DIR) {
+  const made = mkdtempSync(join(tmpdir(), "bitpulse-admin-"));
+  process.env.BITPULSE_TEST_DIR = made;
+  process.once("exit", () => rmSync(made, { recursive: true, force: true }));
+}
+const WORK = process.env.BITPULSE_TEST_DIR;
 
 export default defineConfig({
   testDir: "tests",

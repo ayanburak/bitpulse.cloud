@@ -14,6 +14,8 @@ The tests check the fields, the number of pages, an X post of at most 280 charac
 
 An Instagram page carries one short sentence of at most 120 characters, and the caption carries the rest of the story. A page is looked at for a moment while scrolling, so it gives one fact and a strong photo, and the reader who stops finds the details below it. Posts made before 7 November 2026 had one or two paragraphs of up to 300 characters on a page and keep them.
 
+What Instagram shows, the text of the page and the caption, is plain sentences. It has no dash of any kind, no bullet, no formatting and no emoji. A compound such as Houthi-run is written out as run by the Houthis, and a score such as 3-0 as 3 to 0. A dash stays only inside a name that can not be written another way, such as Jean-Noël or F-35. The tests apply this to posts from 10 November 2026, and older posts keep their text.
+
 Social text uses only facts that are in the finished English story. It adds no new claim, number, quote or name, so checking it means comparing it with the story. When a fact that would make a good post is not in the story, it is left out. How it sounds is defined in docs/style-guide.md, and which images it may use is defined in docs/editorial-policy.md.
 
 The page is the hook described under Social posts in docs/style-guide.md. Its image shows what the page says. Images are looked for in the story's sources and on the pages of the organizations in the story. Each image address is opened to confirm that it leads to the image file itself, and the largest version offered is preferred. The credit names the owner as the source names it.

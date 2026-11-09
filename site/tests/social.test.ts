@@ -68,7 +68,7 @@ pages:
 caption: A caption.
 `;
 
-it("refuses the old video field, reels are made apart from the post", () => {
+it("refuses the old video field", () => {
   expect(() => buildSocial(`${BASE}video:\n  source: https://example.com/clip.mp4\n`, HERA)).toThrow("unknown field: video");
 });
 
@@ -97,6 +97,31 @@ describe("pages from 7 November", () => {
     expect(() => buildSocial(two, later)).toThrow("more than 1 paragraph");
     expect(() => buildSocial(two, HERA)).not.toThrow();
     expect(() => buildSocial(page("word ".repeat(30).trim()), later)).toThrow("the limit is 120");
+  });
+});
+
+// The name sits in its own constant for the same reason as FOLDER above.
+const PLAIN_FOLDER = "2026-11-10-hera-dimorphos";
+
+describe("Instagram text from 10 November", () => {
+  const later = { ...HERA, key: PLAIN_FOLDER };
+  const post = (page: string, caption = "A caption.") => `x: A post.\npages:\n  - image: https://example.com/a.png\n    credit: ESA\n    text: "${page}"\ncaption: "${caption}"\n`;
+
+  it.each(["A Houthi-run ministry spoke.", "It ended 3-0.", "He spoke — then left.", "He spoke - then left."])("refuses the dash in: %s", (page) => {
+    expect(() => buildSocial(post(page), later)).toThrow("has a dash");
+    expect(() => buildSocial(post("A page.", page), later)).toThrow("has a dash");
+  });
+
+  it.each(["Jean-Noël Barrot spoke.", "Al-Asbahi spoke.", "Abdel Fattah al-Sisi spoke.", "An F-35 landed."])("keeps the dash of a name in: %s", (page) => {
+    expect(() => buildSocial(post(page), later)).not.toThrow();
+  });
+
+  it.each(["**Big** news.", "Big news 🔥", "Big #news."])("refuses formatting in: %s", (page) => {
+    expect(() => buildSocial(post(page), later)).toThrow("has formatting");
+  });
+
+  it("leaves older posts as they were shared", () => {
+    expect(() => buildSocial(post("A Houthi-run ministry spoke."), HERA)).not.toThrow();
   });
 });
 
