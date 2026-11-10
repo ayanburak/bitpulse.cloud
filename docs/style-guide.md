@@ -74,7 +74,7 @@ If two stories could swap their first paragraphs, one of them is rewritten.
 
 The X post and the caption tell the news, not the story around it. They have no headline and no list. Each is one or two short paragraphs that say plainly what happened, who did it and the one detail a reader would repeat. The first sentence alone is enough to know the news. They stand on their own, because many people read them without opening the story.
 
-The Instagram page is a hook. A person scrolling past sees it for a moment and decides whether to stop. A hook does not summarize the news. It gives the one fact from the story that makes someone stop and want the rest, the most surprising, unexpected or striking part, in at most two short sentences. It is understood by someone who knows nothing about the story, so it names what it is about in everyday words and uses no term that the story only explains later. It says nothing the story does not say and makes nothing bigger than the story does.
+The Instagram page is a hook. A person scrolling past sees it for a moment and decides whether to stop. A hook does not summarize the news. It gives the one fact from the story that makes someone stop and want the rest, the most surprising, unexpected or striking part, in one short sentence. It is understood by someone who knows nothing about the story, so it names what it is about in everyday words and uses no term that the story only explains later. It says nothing the story does not say and makes nothing bigger than the story does.
 
 A post never asks the reader to click and never sounds more dramatic than the story. Only a hook holds back part of the news, and the rest of the post gives it.
 

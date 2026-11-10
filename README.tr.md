@@ -146,7 +146,7 @@ GitHub Actions her push'ta tür kontrolünü, birim testlerini, build'i, tarayı
 
 <br>
 
-Bir haber bitpulse komutuyla, Git ve CI olmadan yayınlanır. API haberi kaydeder ve tek bir iş sıraya alır, sunucudaki işçi veritabanından yeni bir sürüm klasörü üretir. İşçi tek bir bağlantıyı değiştirerek sürümü yayına alır, böylece okur yarım kopyalanmış bir site görmez. Ardından canlı sayfaları kontrol eder ve biri hata verirse önceki sürüme döner. Son üç sürüm saklanır ve geri dönüş yalnızca bağlantıyı eski sürüme çevirir.
+Bir haber bitpulse komutuyla, Git ve CI olmadan yayınlanır. API haberi kaydeder ve tek bir iş sıraya alır, sunucudaki işçi veritabanından yeni bir sürüm klasörü üretir. İşçi tek bir bağlantıyı değiştirerek sürümü yayına alır, böylece okur yarım kopyalanmış bir site görmez. Ardından canlı sayfaları kontrol eder ve biri hata verirse önceki sürüme döner. Son üç sürüm saklanır. Panelden geri alma önceki sürümü yeniden yayınlar, böylece sonraki üretim hatayı geri getiremez.
 
 GitHub'ın sunucuya erişimi yoktur. Site kodu geliştiricinin cihazından yayınlanır ve yalnızca commit edilmiş kod çıkabilir.
 

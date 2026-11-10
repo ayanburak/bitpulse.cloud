@@ -52,4 +52,4 @@ Each part has its own release script, and each script runs from the maintainer's
 
 ## What stays out of this repository
 
-Stories and images, the real server configuration, keys and passwords, and the music and font files are kept outside. Sample stories in the tests stand in for the real ones.
+Stories and images, the real server configuration, keys and passwords, and the font files are kept outside. Sample stories in the tests stand in for the real ones.

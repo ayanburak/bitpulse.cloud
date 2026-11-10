@@ -22,7 +22,7 @@ The radar reads pages from the open web all day, which makes its key the likelie
 
 There is one account and no registration page. The password is stored with Argon2id, and the second factor is a passkey, which a fake site can not trick out of its owner. Paper backup codes exist for a lost passkey. After five wrong attempts the login locks for fifteen minutes, and the web server also limits how often it can be tried.
 
-A session lives on the server and ends after thirty minutes without use or twelve hours in any case. Its cookie is out of reach of scripts and is only sent to the panel itself. Every change needs a token and a matching origin, so another site can not submit a form on behalf of the signed in editor.
+A session lives on the server and ends after fourteen days without use or thirty days in any case. Its cookie is out of reach of scripts and is only sent to the panel itself. Every change needs a token and a matching origin, so another site can not submit a form on behalf of the signed in editor.
 
 Publishing, undoing, withdrawing and managing keys and passkeys ask for the second factor again, for that exact action on that exact target. Decisions on radar events and marking a post as shared do not change the site and need only a session.
 
@@ -49,5 +49,7 @@ Dependencies are locked to exact versions and updated by hand with tests. GitHub
 ## Accepted risks
 
 A writing session can publish, and it reads text from the web, so a hidden instruction in a source could in principle lead to an unwanted story. This was accepted to keep publishing to one approval. That is why the key of a session can publish but can not remove anything or change access, why every publish produces a notice and why the panel can undo it in one step.
+
+A panel session lasts for days, so a signed in laptop that falls into the wrong hands can read the panel and change drafts. Publishing, undoing, withdrawing and key changes still ask for the passkey. This was accepted because asking for the passkey at every visit was not practical.
 
 A story that reaches the site was approved by one person. There is no second reviewer by design, the site has one editor.

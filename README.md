@@ -146,7 +146,7 @@ GitHub Actions runs the type check, the unit tests, the build, the browser tests
 
 <br>
 
-A story is published with the bitpulse command, without Git or CI. The API stores it and queues one job, and a worker on the server builds a new release folder from the database. The worker makes it live by switching one link, so readers never see a half copied site. It checks the live pages afterwards and returns to the previous release when one of them fails. The last three releases are kept and a rollback only points the link back.
+A story is published with the bitpulse command, without Git or CI. The API stores it and queues one job, and a worker on the server builds a new release folder from the database. The worker makes it live by switching one link, so readers never see a half copied site. It checks the live pages afterwards and returns to the previous release when one of them fails. The last three releases are kept. Undoing a publish from the panel publishes the earlier version again, so the next build can not bring the mistake back.
 
 GitHub has no access to the server. Site code is released from the maintainer's machine, and only committed code can leave it. The whole system is described in [docs/architecture.md](docs/architecture.md) and the way it is protected in [docs/security.md](docs/security.md).
 
