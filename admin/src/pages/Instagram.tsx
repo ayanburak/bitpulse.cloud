@@ -48,15 +48,18 @@ function total(days: InstagramDay[], key: DayNumber): number | null {
 function Account({ days }: { days: InstagramDay[] }) {
   if (!days.length) return null;
   const week = days.filter((day) => day.day < days[0].day).slice(0, 7);
-  const reach = total(week, "reach");
-  const others = total(week, "reach_others");
+  // Meta counts the split apart from the total, and its parts can add up to a little more than the
+  // reach of the same day. The share is taken within the split, over the days that have one.
+  const split = week.filter((day) => day.reach_followers !== null && day.reach_others !== null);
+  const others = total(split, "reach_others");
+  const reached = others === null ? null : others + (total(split, "reach_followers") ?? 0);
   return (
     <section className="insta-section">
       <h2 className="head-4">Account, last seven days</h2>
       <dl className="insta-account">
         <div><dt>Followers now</dt><dd>{plain(days[0].followers)}</dd></div>
         {WEEK.map(([key, name]) => <div key={key}><dt>{name}</dt><dd>{plain(total(week, key))}</dd></div>)}
-        <div><dt>Reach from non-followers</dt><dd>{reach !== null && others !== null ? share(others, reach) : "–"}</dd></div>
+        <div><dt>Reach from non-followers</dt><dd>{reached !== null && others !== null ? share(others, reached) : "–"}</dd></div>
       </dl>
     </section>
   );
