@@ -3,7 +3,8 @@ file: insights/round.py
 importable: run, due, RECENT, DAILY
 
 run does one round: it lists every post, reads the numbers of the posts that are due, sends them
-to the API with the pictures it still lacks, then reads the account numbers of the last days.
+to the API with the pictures it still lacks, then reads the account numbers of the last days and,
+once a day, the audience.
 
 description: Runs one round of reading Instagram and writing to the Bitpulse API.
 """
@@ -66,7 +67,8 @@ def run(meta: Meta, api: Api, days: int = 2, now: Optional[datetime] = None) -> 
         How many posts were read, how many pictures were sent and how many posts failed.
     """
     now = now or datetime.now(timezone.utc)
-    fetched = api.fetched()
+    known = api.fetched()
+    fetched = known["posts"]
     posts = [post for post in meta.posts() if due(post, fetched.get(post["id"]), now)]
     rows, sources, failed = [], {}, 0
     for post in posts:
@@ -90,6 +92,7 @@ def run(meta: Meta, api: Api, days: int = 2, now: Optional[datetime] = None) -> 
             log.warning("picture of post %s could not be stored: %s", post_id, error)
 
     api.save_days(_days(meta, now, days))
+    _audience(meta, api, now, known.get("audience"))
     return {"posts": len(rows), "pictures": sent, "failed": failed}
 
 
@@ -118,3 +121,17 @@ def _days(meta: Meta, now: datetime, count: int) -> list[dict[str, Any]]:
             continue
         rows.append({"day": start.strftime("%Y-%m-%d"), **numbers})
     return rows
+
+
+# The audience changes slowly, so it is read until one day has it and then not again that day.
+def _audience(meta: Meta, api: Api, now: datetime, last: Optional[str]) -> None:
+    today = now.strftime("%Y-%m-%d")
+    if last == today:
+        return
+    try:
+        rows = meta.audience()
+    except http.HttpError as error:
+        log.warning("audience could not be read: %s", error)
+        return
+    if rows:
+        api.save_audience(today, rows)

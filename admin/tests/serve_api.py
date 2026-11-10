@@ -73,8 +73,14 @@ def seed(conn, settings: Settings) -> None:
     }
     with conn:
         radar_store.save_events(conn, rows)
-        instagram_store.save_posts(conn, [reel, image], "2026-11-11 09:00")
-        instagram_store.save_days(conn, [{"day": "2026-11-11", "followers": 410}, {"day": "2026-11-10", "profile_views": 33, "link_taps": 4}])
+        for hour, views in ((6, 210), (7, 640), (8, 1100), (9, 1520)):
+            reel["counts"]["views"] = views
+            instagram_store.save_posts(conn, [reel], f"2026-11-11 0{hour}:00")
+        instagram_store.save_posts(conn, [image], "2026-11-11 09:00")
+        instagram_store.save_days(conn, [
+            {"day": "2026-11-11", "followers": 410},
+            {"day": "2026-11-10", "profile_views": 33, "link_taps": 4, "reach": 3255, "reach_followers": 2, "reach_others": 3253},
+        ])
         thumbs.accept(settings.thumbs, "1790001", picture.getvalue())
         instagram_store.set_thumb(conn, "1790001")
 

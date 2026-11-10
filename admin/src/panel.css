@@ -184,6 +184,26 @@ button:disabled { opacity: .55; cursor: default; }
 .insta-post__caption { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 14.5px; line-height: 1.45; }
 .insta-numbers { display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .insta-numbers dd { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.insta-section { margin-bottom: 28px; }
+.insta-section > * + * { margin-top: 10px; }
+.insta-audience { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 28px; }
+.insta-audience ol { list-style: none; padding: 0; font-size: 14.5px; }
+.insta-audience li { display: flex; justify-content: space-between; gap: 12px; padding-block: 3px; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.insta-chart { margin-top: 14px; }
+.insta-chart > * + * { margin-top: 10px; }
+.insta-chart__plot { position: relative; max-width: 680px; }
+.insta-chart__plot svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.insta-chart__grid line { stroke: var(--line); stroke-width: 1; }
+.insta-chart__grid text, .insta-chart__axis { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.insta-chart__line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.insta-chart__cross { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 3; }
+.insta-chart__dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+.insta-chart__tip { position: absolute; top: 0; padding: 6px 9px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; line-height: 1.4; white-space: nowrap; pointer-events: none; }
+.insta-chart__table { font-size: 13.5px; }
+.insta-chart__table summary { cursor: pointer; color: var(--muted); }
+.insta-chart__table table { margin-top: 8px; border-collapse: collapse; font-variant-numeric: tabular-nums; display: block; overflow-x: auto; }
+.insta-chart__table th, .insta-chart__table td { padding: 4px 10px 4px 0; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.insta-chart__table th:first-child, .insta-chart__table td:first-child { text-align: left; }
 
 @media (max-width: 820px) {
   .radar-tools { grid-template-columns: 1fr 1fr; }

@@ -1,7 +1,8 @@
 /**
  * file: src/api.ts
  * importable: ApiError, call, setCsrf, onSignedOut, type Language, type StoryFields, type Job, type StoryRow,
- *             type EventRow, type EventDetail, type EventPage, type LinkRow, type InstagramPost, type InstagramDay
+ *             type EventRow, type EventDetail, type EventPage, type LinkRow, type InstagramPost, type InstagramDay,
+ *             type InstagramCounts, type InstagramAudience
  *
  * call talks to the panel routes and adds the token every change needs. When the session ends on
  * the server, the handler given to onSignedOut sends the user back to the login page.
@@ -97,6 +98,19 @@ export interface LinkRow {
   added_at: string;
 }
 
+export interface InstagramCounts {
+  views: number | null;
+  reach: number | null;
+  likes: number | null;
+  comments: number | null;
+  saves: number | null;
+  shares: number | null;
+  watch_ms: number | null;
+  interactions: number | null;
+  watch_total_ms: number | null;
+  reposts: number | null;
+}
+
 export interface InstagramPost {
   id: string;
   kind: "reel" | "image" | "carousel";
@@ -104,16 +118,7 @@ export interface InstagramPost {
   permalink: string;
   caption: string;
   thumb: boolean;
-  counts: {
-    at: string;
-    views: number | null;
-    reach: number | null;
-    likes: number | null;
-    comments: number | null;
-    saves: number | null;
-    shares: number | null;
-    watch_ms: number | null;
-  } | null;
+  counts: (InstagramCounts & { at: string }) | null;
 }
 
 export interface InstagramDay {
@@ -121,6 +126,26 @@ export interface InstagramDay {
   followers: number | null;
   profile_views: number | null;
   link_taps: number | null;
+  contact_taps: number | null;
+  reach: number | null;
+  reach_followers: number | null;
+  reach_others: number | null;
+  views: number | null;
+  views_followers: number | null;
+  views_others: number | null;
+  engaged: number | null;
+  interactions: number | null;
+  likes: number | null;
+  comments: number | null;
+  shares: number | null;
+  saves: number | null;
+  follows: number | null;
+  unfollows: number | null;
+}
+
+export interface InstagramAudience {
+  day: string | null;
+  rows: { audience: "followers" | "engaged" | "online"; breakdown: "age" | "gender" | "country" | "city" | "hour"; key: string; value: number }[];
 }
 
 // --- Client ---

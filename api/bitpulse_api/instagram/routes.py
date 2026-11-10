@@ -5,14 +5,14 @@ importable: build, POST_ID
 build returns the routes the insights service writes to. Every route needs an insights key, which
 opens nothing else. The service sends what Instagram reports and the API keeps it.
 
-description: Receives Instagram posts, their counts, their pictures and the daily account numbers.
+description: Receives Instagram posts, their counts, their pictures, the daily account numbers and the audience.
 """
 
 # NOTE: The sender is our own service, but every text here was written on Instagram, so lengths and
 # the link are checked before anything is stored. The permalink becomes a link in the panel.
 
 import sqlite3
-from typing import Annotated, Callable, Literal, Optional
+from typing import Annotated, Any, Callable, Literal, Optional
 from urllib.parse import urlsplit
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Request
@@ -43,6 +43,9 @@ class Counts(BaseModel):
     saves: Count = None
     shares: Count = None
     watch_ms: Count = None
+    interactions: Count = None
+    watch_total_ms: Count = None
+    reposts: Count = None
 
 
 class PostIn(BaseModel):
@@ -71,10 +74,38 @@ class DayIn(BaseModel):
     followers: Count = None
     profile_views: Count = None
     link_taps: Count = None
+    contact_taps: Count = None
+    reach: Count = None
+    reach_followers: Count = None
+    reach_others: Count = None
+    views: Count = None
+    views_followers: Count = None
+    views_others: Count = None
+    engaged: Count = None
+    interactions: Count = None
+    likes: Count = None
+    comments: Count = None
+    shares: Count = None
+    saves: Count = None
+    follows: Count = None
+    unfollows: Count = None
 
 
 class DaysBody(BaseModel):
     days: list[DayIn] = Field(max_length=100)
+
+
+# The key is an age band, a gender letter, a country code, a city name or an hour of the day.
+class AudienceIn(BaseModel):
+    audience: Literal["followers", "engaged", "online"]
+    breakdown: Literal["age", "gender", "country", "city", "hour"]
+    key: str = Field(min_length=1, max_length=120)
+    value: int = Field(ge=0)
+
+
+class AudienceBody(BaseModel):
+    day: str = Field(pattern=DAY)
+    rows: list[AudienceIn] = Field(max_length=500)
 
 # --- Routes ---
 
@@ -94,8 +125,8 @@ def build(settings: Settings, get_conn: Callable, get_insights: Callable) -> API
     Insights = Annotated[str, Depends(get_insights)]
 
     @router.get("/fetched")
-    def fetched(conn: Conn, _: Insights) -> dict[str, dict[str, str]]:
-        return {"posts": store.fetched(conn)}
+    def fetched(conn: Conn, _: Insights) -> dict[str, Any]:
+        return {"posts": store.fetched(conn), "audience": store.audience_day(conn)}
 
     # The answer names the posts that still have no picture, so the service downloads only those.
     @router.put("/posts")
@@ -126,5 +157,10 @@ def build(settings: Settings, get_conn: Callable, get_insights: Callable) -> API
     def save_days(body: DaysBody, conn: Conn, _: Insights) -> None:
         with conn:
             store.save_days(conn, [item.model_dump() for item in body.days])
+
+    @router.put("/audience", status_code=204)
+    def save_audience(body: AudienceBody, conn: Conn, _: Insights) -> None:
+        with conn:
+            store.save_audience(conn, body.day, [item.model_dump() for item in body.rows])
 
     return router

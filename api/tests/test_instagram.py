@@ -71,7 +71,7 @@ def test_an_insights_key_opens_no_story_route(service):
 
 def test_an_older_database_keeps_its_keys_and_accepts_the_new_scope(settings, monkeypatch):
     full = schema.MIGRATIONS
-    monkeypatch.setattr(schema, "MIGRATIONS", full[:-1])
+    monkeypatch.setattr(schema, "MIGRATIONS", full[:full.index(schema.INSTAGRAM)])
     old = connect(settings.db)
     radar_token = create_key(old, "radar-old", scope=RADAR)
     old.execute("INSERT INTO stories (handle, created_at) VALUES ('sample', '2026-11-01 09:00')")
@@ -97,7 +97,7 @@ def test_each_fetch_adds_a_counts_row_and_keeps_one_post(service, conn, minute):
     assert conn.execute("SELECT caption FROM instagram_posts").fetchone()[0] == "Edited on Instagram"
     views = [row[0] for row in conn.execute("SELECT views FROM instagram_counts ORDER BY at")]
     assert views == [100, 180]
-    assert service.get("/insights/fetched").json() == {"posts": {"1790001": "2026-11-11 10:00"}}
+    assert service.get("/insights/fetched").json() == {"posts": {"1790001": "2026-11-11 10:00"}, "audience": None}
 
 
 def test_a_count_instagram_does_not_give_stays_empty(service, conn, minute):
@@ -191,3 +191,39 @@ def test_the_panel_serves_a_stored_picture_only(panel_settings, db, browser, acc
         store.set_thumb(db, "1790001")
     response = browser.get("/panel-api/instagram/1790001/thumb")
     assert (response.status_code, response.headers["content-type"]) == (200, "image/jpeg")
+
+
+def test_the_panel_draws_a_post_from_every_reading(panel_settings, db, browser, account):
+    with db:
+        store.save_posts(db, [post(views=100)], "2026-11-11 09:00")
+        store.save_posts(db, [post(views=150)], "2026-11-11 10:00")
+    sign_in(browser, account[0])
+    history = browser.get("/panel-api/instagram/1790001/history").json()
+    assert [(row["at"], row["views"]) for row in history] == [("2026-11-11 09:00", 100), ("2026-11-11 10:00", 150)]
+    assert browser.get("/panel-api/instagram/1790009/history").status_code == 404
+
+# --- Audience ---
+
+def test_an_audience_day_is_replaced_whole_and_shown_once(service, conn, panel_settings):
+    first = [{"audience": "followers", "breakdown": "age", "key": "25-34", "value": 60}, {"audience": "followers", "breakdown": "country", "key": "TR", "value": 80}]
+    assert service.put("/insights/audience", json={"day": "2026-11-11", "rows": first}).status_code == 204
+    service.put("/insights/audience", json={"day": "2026-11-11", "rows": first[:1]})
+    assert conn.execute("SELECT COUNT(*) FROM instagram_audience").fetchone()[0] == 1
+    assert service.get("/insights/fetched").json()["audience"] == "2026-11-11"
+    assert store.audience(conn) == {"day": "2026-11-11", "rows": [{"audience": "followers", "breakdown": "age", "key": "25-34", "value": 60}]}
+
+
+@pytest.mark.parametrize("row", [
+    {"audience": "everyone", "breakdown": "age", "key": "25-34", "value": 1},
+    {"audience": "followers", "breakdown": "income", "key": "high", "value": 1},
+    {"audience": "followers", "breakdown": "city", "key": "x" * 121, "value": 1},
+    {"audience": "followers", "breakdown": "age", "key": "25-34", "value": -1},
+])
+def test_a_bad_audience_row_is_refused(service, row):
+    assert service.put("/insights/audience", json={"day": "2026-11-11", "rows": [row]}).status_code == 422
+
+
+def test_the_new_day_numbers_are_kept(service, conn):
+    service.put("/insights/days", json={"days": [{"day": "2026-11-10", "reach": 3255, "reach_followers": 2, "reach_others": 3253, "link_taps": 1}]})
+    row = conn.execute("SELECT reach, reach_followers, reach_others, link_taps FROM instagram_days").fetchone()
+    assert tuple(row) == (3255, 2, 3253, 1)

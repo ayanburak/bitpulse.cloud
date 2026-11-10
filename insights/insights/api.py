@@ -31,8 +31,9 @@ class Api:
         self.base = url.rstrip("/") + "/insights"
         self.headers = {"Authorization": f"Bearer {key}"}
 
-    def fetched(self) -> dict[str, str]:
-        return http.get_json(f"{self.base}/fetched", self.headers)["posts"]
+    # When each post was last read, and the last day an audience was stored for.
+    def fetched(self) -> dict[str, Any]:
+        return http.get_json(f"{self.base}/fetched", self.headers)
 
     # The API takes a limited number of posts per call, and answers which of them still need a picture.
     def save_posts(self, posts: list[dict[str, Any]]) -> list[str]:
@@ -47,3 +48,6 @@ class Api:
 
     def save_days(self, days: list[dict[str, Any]]) -> None:
         http.send_json("PUT", f"{self.base}/days", {"days": days}, self.headers)
+
+    def save_audience(self, day: str, rows: list[dict[str, Any]]) -> None:
+        http.send_json("PUT", f"{self.base}/audience", {"day": day, "rows": rows}, self.headers)

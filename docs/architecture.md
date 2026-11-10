@@ -20,7 +20,7 @@ The bitpulse command runs on the editor's device. It uploads drafts, publishes a
 
 The radar is a Python program with its own database. It reads news feeds, groups stories about one event, asks a small model to score the strongest events and sends the best to the editor on Telegram. It also copies each event, with its score and the stage it reached, to the API.
 
-The insights service reads the Bitpulse Instagram account every hour through the Meta Graph API: every post, its numbers and its picture, and the daily numbers of the account. It hands them to the API, which keeps them and shows them in the panel. It keeps nothing of its own.
+The insights service reads the Bitpulse Instagram account every hour through the Meta Graph API: every post, its numbers and its picture, the daily numbers of the account and, once a day, who its audience is. It hands them to the API, which keeps them and shows them in the panel. It keeps nothing of its own.
 
 The notice service sends important events from the audit log to Telegram with a bot of its own. It exists because the API is not allowed to open a connection to the internet.
 
@@ -48,7 +48,7 @@ Undoing a publish is an ordinary publish of the older version. Moving the link b
 
 The text of a post is part of the story. The finished files are made on the device and shared from there by hand, they never go to the server. A clip, a post for Instagram only made from someone else's footage, is made the same way without a story.
 
-What the panel shows about a post comes from Instagram itself. The insights service reads each post every hour during its first week, when its numbers move fastest, and once a day after that. Every reading is kept, so the growth of a post can be drawn later. A post is not tied to a story in the database. Which story a post belongs to is read from its caption when the numbers are studied.
+What the panel shows about a post comes from Instagram itself. The insights service reads each post every hour during its first week, when its numbers move fastest, and once a day after that. Every reading is kept, and the panel draws the growth of a post from them. Meta gives the age, gender, country and city of the audience only to accounts with more than a hundred followers, and those numbers appear by themselves once the account passes that line. A post is not tied to a story in the database. Which story a post belongs to is read from its caption when the numbers are studied.
 
 ## Releasing code
 

@@ -52,6 +52,11 @@ def check(meta: Meta) -> None:
         print(f"yesterday: {meta.day(int(start.timestamp()), int(midnight.timestamp())) or 'refused'}")
     except http.HttpError as error:
         print(f"yesterday: {error}")
+    try:
+        rows = meta.audience()
+        print(f"audience: {len(rows)} rows" if rows else "audience: none, Meta gives it above one hundred followers")
+    except http.HttpError as error:
+        print(f"audience: {error}")
 
 
 def main() -> None:

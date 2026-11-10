@@ -219,8 +219,23 @@ test("the Instagram page shows posts with their numbers and pictures", async () 
   const image = page.locator(".insta-post", { hasText: "A sample image" });
   await expect(image.getByText("Avg. watch")).toHaveCount(0);
   await expect(image.locator(".insta-post__thumb--empty")).toHaveCount(1);
+  await expect(page.getByText("once the account has one hundred followers")).toBeVisible();
+  await expect(page.locator(".insta-account").getByText("100%")).toBeVisible();
   await page.getByRole("button", { name: "Reels", exact: true }).click();
   await expect(page.locator(".insta-post")).toHaveCount(1);
+});
+
+test("a post opens a chart of its readings", async () => {
+  await page.goto("/#instagram");
+  const reel = page.locator(".insta-post", { hasText: "A sample reel" });
+  await reel.getByRole("button", { name: "Chart" }).click();
+  await expect(reel.getByText("4 readings.")).toBeVisible();
+  const plot = reel.locator(".insta-chart__plot svg");
+  const box = (await plot.boundingBox())!;
+  await page.mouse.move(box.x + box.width - 14, box.y + box.height / 2);
+  await expect(reel.locator(".insta-chart__tip")).toContainText("+420 since the reading before");
+  await reel.getByRole("button", { name: "Reach", exact: true }).click();
+  await expect(reel.locator(".insta-chart__line")).toHaveCount(1);
 });
 
 test("the new pages fit a phone", async () => {

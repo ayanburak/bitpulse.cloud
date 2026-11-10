@@ -309,7 +309,60 @@ CREATE TABLE instagram_days (
 );
 """
 
-MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS, INSTAGRAM)
+# Everything else Meta gives. link_taps changes meaning here: it held taps on the contact buttons and
+# from now on holds taps on the link in the bio, which contact_taps takes over. The audience numbers
+# Meta only gives above one hundred followers, one row per day, group and value, such as an age band
+# or a country. The online group keys its rows by the hour of the day.
+INSTAGRAM_MORE = """
+ALTER TABLE instagram_counts ADD COLUMN interactions INTEGER;
+
+ALTER TABLE instagram_counts ADD COLUMN watch_total_ms INTEGER;
+
+ALTER TABLE instagram_counts ADD COLUMN reposts INTEGER;
+
+UPDATE instagram_days SET link_taps = NULL;
+
+ALTER TABLE instagram_days ADD COLUMN contact_taps INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN reach INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN reach_followers INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN reach_others INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN views INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN views_followers INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN views_others INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN engaged INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN interactions INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN likes INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN comments INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN shares INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN saves INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN follows INTEGER;
+
+ALTER TABLE instagram_days ADD COLUMN unfollows INTEGER;
+
+CREATE TABLE instagram_audience (
+    day TEXT NOT NULL,
+    audience TEXT NOT NULL CHECK (audience IN ('followers', 'engaged', 'online')),
+    breakdown TEXT NOT NULL CHECK (breakdown IN ('age', 'gender', 'country', 'city', 'hour')),
+    key TEXT NOT NULL,
+    value INTEGER NOT NULL,
+    PRIMARY KEY (day, audience, breakdown, key)
+);
+"""
+
+MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS, INSTAGRAM, INSTAGRAM_MORE)
 
 WAL_TRIES = 100
 WAL_WAIT_SECONDS = 0.05
