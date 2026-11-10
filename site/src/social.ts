@@ -1,6 +1,6 @@
 /**
  * file: src/social.ts
- * importable: buildSocial, SocialPost, SITE
+ * importable: buildSocial, buildClip, SocialPost, ClipPost, SITE
  *
  * A news story can carry a social.yaml file next to en.md. It holds the English text for the
  * social accounts: one X post, one or more Instagram pages and an Instagram caption. Every page
@@ -10,6 +10,10 @@
  *
  * From 8 November 2026 a post has exactly one page. Older posts keep the pages they were shared
  * with.
+ *
+ * A clip is a post for Instagram only, made from someone else's video or picture and not tied to a
+ * story. Its clip.yaml holds a title for the panel, the source address and its owner, the sentence
+ * on the page, the caption and, for a video, the seconds to start and end at.
  *
  * description: Validates the social text of a story and completes it into ready to share posts.
  */
@@ -37,6 +41,15 @@ export interface SocialPost {
   x: string;
   pages: SocialPage[];
   caption: string;
+}
+
+export interface ClipPost {
+  title: string;
+  text: string;
+  caption: string;
+  position: string;
+  start: number;
+  end: number | null;
 }
 
 // --- Constants ---
@@ -172,4 +185,43 @@ export function buildSocial(raw: string, story: Story): SocialPost {
   const full = caption.join("\n\n");
   if (full.length > CAPTION_LIMIT) throw new Error(`${where}: caption is ${full.length} characters, the limit is ${CAPTION_LIMIT}`);
   return { x: `${x}\n\n${link}`, pages, caption: full };
+}
+
+const CLIP_FIELDS = ["title", "source", "credit", "text", "caption", "start", "end", "position"];
+
+function seconds(value: unknown, field: string, where: string): number | null {
+  if (value === undefined) return null;
+  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) throw new Error(`${where}: ${field} must be a number of seconds`);
+  return value;
+}
+
+/**
+ * Validates the clip.yaml of a clip and completes its caption with the source line.
+ *
+ * @param raw Contents of clip.yaml.
+ * @param where Name used in error messages, normally the clip folder.
+ * @returns The title, the page sentence, the full caption, the photo position and the cut.
+ * @throws Error if a field is missing or unknown, the source is not a web address, the page text
+ *   or the caption is over its limit or not plain, or the cut ends before it starts.
+ */
+export function buildClip(raw: string, where: string): ClipPost {
+  const data: unknown = parseYaml(raw);
+  if (!isRecord(data)) throw new Error(`${where}: invalid file`);
+  const unknown = Object.keys(data).find((field) => !CLIP_FIELDS.includes(field));
+  if (unknown) throw new Error(`${where}: unknown field: ${unknown}`);
+
+  const page = text(data.text, "text", where).replace(/\s+/g, " ");
+  if (page.length > SHORT_PAGE_LIMIT) throw new Error(`${where}: text is ${page.length} characters, the limit is ${SHORT_PAGE_LIMIT}`);
+  const body = text(data.caption, "caption", where);
+  requirePlain(page, "text", where);
+  requirePlain(body, "caption", where);
+
+  // The clip has no story to send readers to, so the source line is the only thing added.
+  const caption = `${body}\n\nSource: ${text(data.credit, "credit", where)}, ${httpUrl(data.source, "source", where)}`;
+  if (caption.length > CAPTION_LIMIT) throw new Error(`${where}: caption is ${caption.length} characters, the limit is ${CAPTION_LIMIT}`);
+
+  const start = seconds(data.start, "start", where) ?? 0;
+  const end = seconds(data.end, "end", where);
+  if (end !== null && end <= start) throw new Error(`${where}: end must come after start`);
+  return { title: text(data.title, "title", where), text: page, caption, position: readPosition(data.position, where), start, end };
 }

@@ -99,6 +99,7 @@ export interface LinkRow {
 
 export interface SocialRow {
   handle: string;
+  kind: "story" | "clip";
   title: string;
   uploaded_at: string;
   shared_at: string | null;

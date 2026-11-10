@@ -1,7 +1,7 @@
 """
 file: bitpulse_cli/__main__.py
 importable: main, push_draft, publish, pull, pull_all, handle_of, list_rows, days_left, number_of, save_brief,
-            candidate_rows, upload_social, link_skills, BRIEFS
+            candidate_rows, upload_social, upload_clip, link_skills, BRIEFS
 
     bitpulse setup                      stores the device key, checks the connection and links the skills
     bitpulse setup --skills             only links the skills of this repository
@@ -15,6 +15,8 @@ importable: main, push_draft, publish, pull, pull_all, handle_of, list_rows, day
     bitpulse draft <story folder>       stores the folder as a new draft version
     bitpulse publish <story folder>     stores it, publishes it and renames the folder to its key
     bitpulse social <post folder>       uploads the finished social files of a story
+    bitpulse fetch <link> <clip folder> saves the video or image of a link for a clip
+    bitpulse clip <clip folder>         uploads a finished clip, a post for Instagram only
     bitpulse pull <folder> <handle>     copies one story into folder
     bitpulse pull <folder> --all        copies every published story into folder
     bitpulse rebuild                    builds the site again, for example after a code release
@@ -45,6 +47,7 @@ from pathlib import Path
 from typing import Optional
 
 from .client import Api, ApiError, read_key, tunnel, write_key
+from .fetch import fetch_media
 
 # --- Constants ---
 
@@ -54,6 +57,7 @@ TIME_FORMAT = "%Y-%m-%d %H:%M"
 KEY_WARNING_DAYS = 14
 BRIEFS = Path.home() / ".cache" / "bitpulse-radar" / "briefs"
 SOCIAL_FILE = re.compile(r"^(x\.txt|caption\.txt|post\.mp4|page-\d+\.png)$")
+CLIP_FILES = ("caption.txt", "post.mp4", "page-1.png")
 
 # --- Stories ---
 
@@ -267,6 +271,24 @@ def upload_social(api: Api, folder: Path) -> list[str]:
     files = {path.name: base64.b64encode(path.read_bytes()).decode() for path in folder.iterdir() if SOCIAL_FILE.match(path.name)}
     return list(api.send_json("PUT", f"/stories/{handle_of(folder)}/social", {"files": files})["files"])
 
+# The folder name without its date is the name of the clip, and title.txt is what the panel shows.
+def upload_clip(api: Api, folder: Path) -> list[str]:
+    """Uploads a finished clip.
+
+    Args:
+        api: API client.
+        folder: Clip folder made by npm run clip. Its source files stay on the device.
+
+    Returns:
+        The file names the server stored.
+
+    Raises:
+        ApiError: If the API refuses them.
+    """
+    files = {name: base64.b64encode((folder / name).read_bytes()).decode() for name in CLIP_FILES}
+    title = (folder / "title.txt").read_text(encoding="utf-8").strip()
+    return list(api.send_json("PUT", f"/clips/{handle_of(folder)}", {"title": title, "files": files})["files"])
+
 # --- Skills ---
 
 def _repository() -> Optional[Path]:
@@ -382,6 +404,8 @@ def _run(args: argparse.Namespace) -> None:
             print("\n".join(candidate_rows(api.get("/candidates"))) or "nothing is waiting")
         elif args.command == "brief":
             print(save_brief(api, number_of(args.number)))
+        elif args.command == "clip":
+            print(f"uploaded: {', '.join(upload_clip(api, Path(args.folder).resolve()))}")
         elif args.command == "social":
             print(f"uploaded: {', '.join(upload_social(api, Path(args.folder).resolve()))}")
         elif args.command == "publish":
@@ -422,6 +446,10 @@ def main() -> None:
     commands.add_parser("candidates")
     commands.add_parser("brief").add_argument("number")
     commands.add_parser("social").add_argument("folder")
+    commands.add_parser("clip").add_argument("folder")
+    media = commands.add_parser("fetch")
+    media.add_argument("link")
+    media.add_argument("folder")
     for name in ("draft", "publish"):
         store = commands.add_parser(name)
         store.add_argument("folder")
@@ -433,7 +461,13 @@ def main() -> None:
     commands.add_parser("rebuild")
     args = parser.parse_args()
     try:
-        _setup(args.skills) if args.command == "setup" else _run(args)
+        if args.command == "setup":
+            _setup(args.skills)
+        elif args.command == "fetch":
+            for name, value in fetch_media(args.link, Path(args.folder)).items():
+                print(f"{name}: {value}")
+        else:
+            _run(args)
     except (ApiError, OSError, ValueError) as error:
         sys.exit(f"error: {error}")
 

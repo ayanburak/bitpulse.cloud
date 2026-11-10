@@ -178,6 +178,17 @@ def create_app(settings: Settings) -> FastAPI:
         files = social.decode(bytes(raw))
         return {"files": await run_in_threadpool(social.accept, conn, settings, handle, files, actor)}
 
+    # A clip goes to Instagram only, so it is uploaded under its own name and never touches a story.
+    @app.put("/clips/{handle}")
+    async def upload_clip(handle: str, request: Request, conn: Conn, actor: Actor) -> dict[str, list[str]]:
+        raw = bytearray()
+        async for chunk in request.stream():
+            raw.extend(chunk)
+            if len(raw) > social.MAX_CLIP_UPLOAD:
+                raise HTTPException(413, "upload is too large")
+        title, files = social.decode_clip(bytes(raw))
+        return {"files": await run_in_threadpool(social.accept_clip, conn, settings, handle, title, files, actor)}
+
     @app.post("/stories/{handle}/publish", status_code=202)
     def publish(handle: str, conn: Conn, actor: Actor) -> dict[str, int]:
         return {"job": service.request_publish(conn, handle, actor)}

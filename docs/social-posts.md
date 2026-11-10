@@ -1,6 +1,6 @@
 # Social posts
 
-Every news story is shared on the X and Instagram accounts of Bitpulse. Explainers are not shared. The posts are published by hand.
+Every news story is shared on the X and Instagram accounts of Bitpulse. Explainers are not shared. The posts are published by hand. A clip is a post for Instagram only that has no story, described at the end of this document.
 
 ## The file
 
@@ -19,3 +19,14 @@ What Instagram shows, the text of the page and the caption, is plain sentences. 
 Social text uses only facts that are in the finished English story. It adds no new claim, number, quote or name, so checking it means comparing it with the story. When a fact that would make a good post is not in the story, it is left out. How it sounds is defined in docs/style-guide.md, and which images it may use is defined in docs/editorial-policy.md.
 
 The page is the hook described under Social posts in docs/style-guide.md. Its image shows what the page says. Images are looked for in the story's sources and on the pages of the organizations in the story. Each image address is opened to confirm that it leads to the image file itself, and the largest version offered is preferred. The credit names the owner as the source names it.
+
+## Clips
+
+A clip shows footage or a picture of an event that someone else published, such as a video on YouTube or a post on X, and goes to Instagram only. It never becomes a story on the site, so it has no X post and no link to a story.
+
+Its file is clip.yaml in a folder under site/social-posts, outside this repository, next to the media that bitpulse fetch saved. title names the clip in the admin panel. source is the address of the footage and credit its owner as the site names them. text is the sentence on the page, one plain sentence of at most 120 characters. caption is the news in plain sentences. start and end give the seconds of the video to use, and position moves the cut like on a story page.
+
+npm run clip lays the page over the video, keeps its sound and saves post.mp4. A picture becomes a still video like a story post. The source line, Source: followed by the owner and the address, is added to the caption by the script. The same rules as for any post apply: the text reports what the footage shows and gives no message, the footage shows the event itself and the rules on graphic content come first.
+
+When the clip shows something that a social media account published about itself, such as work a person says they did or a claim they make, the sentence on the page starts with A user says or A user did: A user says she ran 100 km in Antarctica. The post shows what the account published and does not present it as a confirmed fact. The caption names the account and keeps the claim attributed to it.
+

@@ -4,7 +4,7 @@ importable: nothing, the browser tests start this file
 
 Starts the real API with an empty database in the given folder, with a stand-in for the render
 worker. It writes the one time registration token and a cover image into that folder, and fills in
-radar events and one social post for the pages that show them.
+radar events, one social post and one clip for the pages that show them.
 
 description: Runs the API for the browser tests of the admin panel.
 """
@@ -68,6 +68,8 @@ def seed(conn, settings: Settings, cover: Path) -> None:
         store.add_version(conn, "social-sample", {"en": fields, "tr": fields, "social": ""}, sha, "laptop")
     files = {"x.txt": b"The X post", "caption.txt": b"The caption", "post.mp4": b"\x00\x00\x00\x18ftypisom" + bytes(64), "page-1.png": page.getvalue()}
     social.accept(conn, settings, "social-sample", files, "laptop")
+    del files["x.txt"]
+    social.accept_clip(conn, settings, "clip-sample", "A Sample Clip", files, "laptop")
 
 
 def main() -> None:

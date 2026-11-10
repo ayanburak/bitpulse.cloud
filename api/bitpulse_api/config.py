@@ -52,6 +52,11 @@ class Settings:
     def social(self) -> Path:
         return self.data / "social"
 
+    # Clips are posts without a story. Their own folder keeps a clip name from ever meeting a story name.
+    @property
+    def clips(self) -> Path:
+        return self.data / "clips"
+
     @property
     def jobs(self) -> Path:
         return self.spool / "jobs"
@@ -73,7 +78,7 @@ class Settings:
     # test nothing has made them yet, so they are created here and existing ones are left alone.
     def prepare(self) -> None:
         """Creates every working folder that does not exist yet."""
-        for path in (self.data, self.images, self.social, self.jobs, self.queue, self.results, self.notify):
+        for path in (self.data, self.images, self.social, self.clips, self.jobs, self.queue, self.results, self.notify):
             path.mkdir(parents=True, exist_ok=True)
 
     @classmethod

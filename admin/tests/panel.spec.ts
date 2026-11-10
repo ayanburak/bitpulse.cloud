@@ -211,12 +211,23 @@ test("the social page shows a post ready to share", async () => {
   await page.goto("/#social");
   await expect(page.getByRole("heading", { name: "A Shared Sample" })).toBeVisible();
   await expect(page.getByText("The X post")).toBeVisible();
-  const image = page.locator(".social-post__page");
-  await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(1080);
-  await page.getByRole("button", { name: "Mark as shared" }).click();
-  await expect(page.getByText("Nothing here.")).toBeVisible();
+  const story = page.locator(".social-post", { has: page.getByRole("heading", { name: "A Shared Sample" }) });
+  await expect.poll(() => story.locator(".social-post__page").evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(1080);
+  await story.getByRole("button", { name: "Mark as shared" }).click();
+  await expect(story).toHaveCount(0);
   await page.getByRole("button", { name: "Shared", exact: true }).click();
   await expect(page.getByRole("heading", { name: "A Shared Sample" })).toBeVisible();
+});
+
+test("a clip shows without an X post and is marked on its own route", async () => {
+  await page.goto("/#social");
+  await page.getByRole("button", { name: "Waiting", exact: true }).click();
+  const clip = page.locator(".social-post", { has: page.getByRole("heading", { name: "A Sample Clip" }) });
+  await expect(clip.getByText("Instagram only")).toBeVisible();
+  await expect(clip.getByText("X", { exact: true })).toHaveCount(0);
+  await expect.poll(() => clip.locator(".social-post__page").evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(1080);
+  await clip.getByRole("button", { name: "Mark as shared" }).click();
+  await expect(page.getByText("Nothing here.")).toBeVisible();
 });
 
 test("the new pages fit a phone", async () => {

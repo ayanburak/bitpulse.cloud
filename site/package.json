@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "social": "node scripts/social.ts",
+    "clip": "node scripts/clip.ts",
     "new-story": "node scripts/new-story.ts"
   },
   "dependencies": {

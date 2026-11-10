@@ -169,3 +169,70 @@ def test_a_month_old_post_is_removed(panel_settings, db, uploaded):
 
 def test_every_file_is_refused_without_a_session(panel_settings):
     assert browser_for(panel_settings).get("/panel-api/social/sample/x.txt").status_code == 401
+
+
+# --- Clips ---
+
+def clip_files(**changes):
+    result = {"caption.txt": b"Clip caption", "post.mp4": VIDEO, "page-1.png": png()}
+    return {**result, **changes}
+
+
+def clip_body(content, title="A clip"):
+    return {"title": title, **body(content)}
+
+
+def test_a_clip_is_stored_without_a_story(client, settings):
+    assert client.put("/clips/sirens", json=clip_body(clip_files())).status_code == 200
+    assert (settings.clips / "sirens" / "caption.txt").read_bytes() == b"Clip caption"
+    assert not (settings.social / "sirens").exists()
+
+
+@pytest.mark.parametrize("handle,content,title", [
+    ("Bad_Name", clip_files(), "A clip"),
+    ("sirens", clip_files(), "  "),
+    ("sirens", clip_files(**{"x.txt": b"A post"}), "A clip"),
+    ("sirens", {"caption.txt": b"Clip caption", "post.mp4": VIDEO}, "A clip"),
+])
+def test_a_clip_that_breaks_a_rule_is_refused(client, settings, handle, content, title):
+    assert client.put(f"/clips/{handle}", json=clip_body(content, title)).status_code == 422
+    assert not (settings.clips / "sirens").exists()
+
+
+def test_a_clip_needs_a_device_key(settings):
+    from fastapi.testclient import TestClient
+    from bitpulse_api.app import create_app
+
+    assert TestClient(create_app(settings)).put("/clips/sirens", json=clip_body(clip_files())).status_code == 401
+
+
+@pytest.fixture
+def clipped(panel_settings, db):
+    social.accept_clip(db, panel_settings, "sirens", "Sirens at 9:05", clip_files(), "laptop")
+    return "sirens"
+
+
+def test_the_panel_lists_a_clip_next_to_story_posts(panel, uploaded, clipped):
+    rows = {row["handle"]: row for row in panel.get("/panel-api/social").json()["rows"]}
+    assert (rows["sirens"]["kind"], rows["sirens"]["title"], rows["sirens"]["x"]) == ("clip", "Sirens at 9:05", "")
+    assert rows["sample"]["kind"] == "story"
+
+
+def test_a_clip_is_served_and_marked_on_its_own_routes(panel, clipped):
+    assert panel.get("/panel-api/clips/sirens/post.mp4").headers["content-type"] == "video/mp4"
+    assert panel.get("/panel-api/social/sirens/post.mp4").status_code == 404
+    assert panel.post("/panel-api/clips/sirens/shared", json={"shared": True}).status_code == 204
+    assert panel.get("/panel-api/social", params={"shared": "true"}).json()["rows"][0]["handle"] == "sirens"
+
+
+def test_a_month_old_clip_is_removed(panel_settings, db, clipped):
+    with db:
+        db.execute("UPDATE social_clips SET uploaded_at = '2020-01-01 09:00'")
+    jobs.prune_old(db, panel_settings)
+    assert store.clip(db, "sirens") is None
+    assert not (panel_settings.clips / "sirens").exists()
+
+
+def test_a_clip_video_may_be_larger_than_a_story_video(client, settings):
+    big = VIDEO + b"\x00" * social.MAX_VIDEO
+    assert client.put("/clips/sirens", json=clip_body(clip_files(**{"post.mp4": big}))).status_code == 200

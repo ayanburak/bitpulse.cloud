@@ -44,7 +44,7 @@ Undoing a publish is an ordinary publish of the older version. Moving the link b
 
 ## Social posts
 
-The text of a post is part of the story. The finished files are made on the device and uploaded to the API, where the panel shows them for the editor to copy, download and mark as shared. They are removed after thirty days, because they can always be made again.
+The text of a post is part of the story. The finished files are made on the device and uploaded to the API, where the panel shows them for the editor to copy, download and mark as shared. They are removed after thirty days, because they can always be made again. A clip, a post for Instagram only made from someone else's footage, is made and uploaded the same way under its own name, without a story.
 
 ## Releasing code
 

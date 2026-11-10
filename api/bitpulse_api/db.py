@@ -240,7 +240,18 @@ CREATE TABLE social_posts (
 );
 """
 
-MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR)
+# A clip is shared on Instagram only and has no story, so it can not live in social_posts, whose
+# handle points to a story.
+CLIPS = """
+CREATE TABLE social_clips (
+    handle TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    uploaded_at TEXT NOT NULL,
+    shared_at TEXT
+);
+"""
+
+MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS)
 
 WAL_TRIES = 100
 WAL_WAIT_SECONDS = 0.05

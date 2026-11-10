@@ -145,17 +145,18 @@ def attach(router: APIRouter, settings: Settings, Conn: Any, Full: Any) -> None:
         rows = main_store.social_rows(conn, shared, SOCIAL_PAGE + 1, offset)
         result = []
         for row in rows[:SOCIAL_PAGE]:
-            result.append(
-                {
-                    "handle": row["handle"],
-                    "title": main_store.latest_version(conn, row["handle"])["content"]["en"]["title"],
-                    "uploaded_at": row["uploaded_at"],
-                    "shared_at": row["shared_at"],
-                    "x": social.read_text(settings, row["handle"], "x.txt"),
-                    "caption": social.read_text(settings, row["handle"], "caption.txt"),
-                    "pages": social.pages(settings, row["handle"]),
+            handle = row["handle"]
+            if row["kind"] == "clip":
+                post = {"title": row["title"], "x": "", "pages": ["page-1.png"],
+                        "caption": social.clip_path(settings, handle, "caption.txt").read_text(encoding="utf-8")}
+            else:
+                post = {
+                    "title": main_store.latest_version(conn, handle)["content"]["en"]["title"],
+                    "x": social.read_text(settings, handle, "x.txt"),
+                    "caption": social.read_text(settings, handle, "caption.txt"),
+                    "pages": social.pages(settings, handle),
                 }
-            )
+            result.append({"handle": handle, "kind": row["kind"], "uploaded_at": row["uploaded_at"], "shared_at": row["shared_at"], **post})
         return {"rows": result, "more": len(rows) > SOCIAL_PAGE}
 
     # The handle has to be a stored one, and only then does it become part of a file path.
@@ -165,6 +166,22 @@ def attach(router: APIRouter, settings: Settings, Conn: Any, Full: Any) -> None:
             raise main_service.NotFound(f"no social files for {handle}")
         path = social.path_of(settings, handle, name)
         return FileResponse(path, media_type=TYPES[path.suffix], filename=f"{handle}-{name}")
+
+    # The handle has to be a stored one, and only then does it become part of a file path.
+    @router.get("/clips/{handle}/{name}")
+    def clip_file(handle: str, name: str, conn: Conn, _: Full) -> FileResponse:
+        if main_store.clip(conn, handle) is None:
+            raise main_service.NotFound(f"no clip named {handle}")
+        path = social.clip_path(settings, handle, name)
+        return FileResponse(path, media_type=TYPES[path.suffix], filename=f"{handle}-{name}")
+
+    @router.post("/clips/{handle}/shared", status_code=204)
+    def clip_shared(handle: str, body: SharedBody, conn: Conn, _: Full) -> None:
+        if main_store.clip(conn, handle) is None:
+            raise main_service.NotFound(f"no clip named {handle}")
+        with conn:
+            main_store.set_clip_shared(conn, handle, body.shared)
+            main_store.add_audit(conn, ACTOR, "clip.shared", handle, "shared" if body.shared else "not shared")
 
     @router.post("/social/{handle}/shared", status_code=204)
     def shared(handle: str, body: SharedBody, conn: Conn, _: Full) -> None:

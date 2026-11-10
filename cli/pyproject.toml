@@ -3,7 +3,9 @@ name = "bitpulse-cli"
 version = "0.1.0"
 description = "Uploads story drafts, publishes them and copies published stories back to the device."
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "yt-dlp==2026.10.21",
+]
 
 [project.scripts]
 bitpulse = "bitpulse_cli.__main__:main"

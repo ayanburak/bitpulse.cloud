@@ -7,6 +7,8 @@
 
 // NOTE: The files are made on the device and uploaded with the story. This page only shows them, so
 // nothing here can change a post. The video is a download because the panel plays no media.
+//
+// NOTE: A clip goes to Instagram only and has no story. It has no X post and its own routes.
 
 import { useCallback, useEffect, useState } from "react";
 import { call, type SocialRow } from "../api";
@@ -14,7 +16,8 @@ import { call, type SocialRow } from "../api";
 const FILTERS = [["false", "Waiting"], ["true", "Shared"], ["", "All"]];
 const COPIED_MS = 1500;
 
-const fileUrl = (handle: string, name: string) => `/panel-api/social/${encodeURIComponent(handle)}/${name}`;
+const base = (post: SocialRow) => `/${post.kind === "clip" ? "clips" : "social"}/${encodeURIComponent(post.handle)}`;
+const fileUrl = (post: SocialRow, name: string) => `/panel-api${base(post)}/${name}`;
 
 function Copyable({ name, text }: { name: string; text: string }) {
   const [copied, setCopied] = useState(false);
@@ -35,23 +38,24 @@ function Copyable({ name, text }: { name: string; text: string }) {
 
 function Post({ post, changed }: { post: SocialRow; changed: () => void }) {
   async function toggle() {
-    await call("POST", `/social/${encodeURIComponent(post.handle)}/shared`, { shared: !post.shared_at });
+    await call("POST", `${base(post)}/shared`, { shared: !post.shared_at });
     changed();
   }
 
   return (
     <article className="social-post">
-      <img className="social-post__page" src={fileUrl(post.handle, post.pages[0])} alt="" loading="lazy" />
+      <img className="social-post__page" src={fileUrl(post, post.pages[0])} alt="" loading="lazy" />
       <div className="social-post__body">
         <div>
+          {post.kind === "clip" && <p className="status"><b>Clip</b> Instagram only</p>}
           <h2 className="head-4">{post.title}</h2>
           <p className="status">{post.shared_at ? <><b>Shared</b> {post.shared_at} UTC</> : <>Uploaded {post.uploaded_at} UTC</>}</p>
         </div>
-        <Copyable name="X" text={post.x} />
+        {post.x && <Copyable name="X" text={post.x} />}
         <Copyable name="Instagram caption" text={post.caption} />
         <div className="event-actions">
-          {post.pages.map((name) => <a key={name} className="text-button" href={fileUrl(post.handle, name)} download>{name}</a>)}
-          <a className="text-button" href={fileUrl(post.handle, "post.mp4")} download>post.mp4</a>
+          {post.pages.map((name) => <a key={name} className="text-button" href={fileUrl(post, name)} download>{name}</a>)}
+          <a className="text-button" href={fileUrl(post, "post.mp4")} download>post.mp4</a>
           <button className="button button--outline" type="button" onClick={() => void toggle()}>{post.shared_at ? "Mark as not shared" : "Mark as shared"}</button>
         </div>
       </div>

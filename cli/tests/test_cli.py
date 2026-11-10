@@ -24,6 +24,7 @@ from bitpulse_cli.__main__ import (
     pull_all,
     push_draft,
     save_brief,
+    upload_clip,
     upload_social,
 )
 from bitpulse_cli.client import ApiError, SSH_HOST, write_key
@@ -217,3 +218,25 @@ def test_linking_never_replaces_a_real_folder(tmp_path):
     with pytest.raises(OSError, match="already exists"):
         link_skills(root)
     assert (kept / "mine.md").read_text() == "mine"
+
+
+class ClipApi:
+    def __init__(self):
+        self.sent = None
+
+    def send_json(self, method, path, body):
+        self.sent = (method, path, body)
+        return {"files": sorted(body["files"])}
+
+
+def test_a_clip_is_uploaded_under_its_name_with_its_title(tmp_path):
+    clip = tmp_path / "2026-11-10-sirens"
+    clip.mkdir()
+    for name in ("caption.txt", "post.mp4", "page-1.png", "source.mp4"):
+        (clip / name).write_bytes(b"data")
+    (clip / "title.txt").write_text("Sirens at 9:05\n")
+    api = ClipApi()
+    assert upload_clip(api, clip) == ["caption.txt", "page-1.png", "post.mp4"]
+    method, path, body = api.sent
+    assert (method, path, body["title"]) == ("PUT", "/clips/sirens", "Sirens at 9:05")
+    assert "source.mp4" not in body["files"]
