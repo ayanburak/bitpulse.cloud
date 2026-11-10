@@ -29,7 +29,7 @@ The footage is looked at before anything is written. A contact sheet shows it in
 ffmpeg -v error -y -ss <start> -i <folder>/source.mp4 -vf "fps=1/5,scale=240:-1,tile=6x1" -frames:v 1 <folder>/frames.png
 ```
 
-The footage must show the event the post names, and the rules on graphic content and sensitive stories come first. The owner is the channel or the account that published it, as the site names it.
+The footage must show the event the post names, and the rules on graphic content and sensitive stories come first. Footage from another day may be used when it shows the people of the news. The caption then ends with one sentence that says what the footage shows and when it was filmed. The owner is the channel or the account that published it, as the site names it.
 
 ## 3. The text
 
