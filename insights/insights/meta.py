@@ -38,7 +38,13 @@ METRICS = {
     "total_interactions": "interactions",
     "reposts": "reposts",
 }
-REEL_METRICS = {"ig_reels_avg_watch_time": "watch_ms", "ig_reels_video_view_total_time": "watch_total_ms"}
+REEL_METRICS = {
+    "ig_reels_avg_watch_time": "watch_ms",
+    "ig_reels_video_view_total_time": "watch_total_ms",
+    "reels_skip_rate": "skip_rate",
+}
+# Numbers Meta gives with a decimal, kept as they are. Everything else is a count.
+RATES = {"skip_rate"}
 # website_clicks is the link in the bio. profile_links_taps sounds like it but counts the contact buttons.
 DAY_METRICS = {
     "profile_views": "profile_views",
@@ -106,7 +112,7 @@ class Meta:
                 return
             answer = http.get_json(following, {"Authorization": f"Bearer {self.token}"})
 
-    def counts(self, post: dict[str, Any]) -> dict[str, Optional[int]]:
+    def counts(self, post: dict[str, Any]) -> dict[str, Optional[float]]:
         """Reads the lifetime numbers of one post.
 
         Args:
@@ -119,7 +125,7 @@ class Meta:
         return self.metrics(post["id"], wanted)
 
     # The day runs from midnight to midnight UTC, the same day the counts table uses.
-    def day(self, since: int, until: int) -> dict[str, Optional[int]]:
+    def day(self, since: int, until: int) -> dict[str, Optional[float]]:
         """Reads the account numbers of one day.
 
         Args:
@@ -164,7 +170,7 @@ class Meta:
         return rows
 
     # Asked all together first, which is one call for a normal post.
-    def metrics(self, target: str, wanted: dict[str, str], **query: Any) -> dict[str, Optional[int]]:
+    def metrics(self, target: str, wanted: dict[str, str], **query: Any) -> dict[str, Optional[float]]:
         """Reads insights metrics of a post or of the account.
 
         Args:
@@ -183,7 +189,7 @@ class Meta:
         except http.HttpError as error:
             if error.status != REFUSED or len(wanted) == 1:
                 raise
-        result: dict[str, Optional[int]] = {}
+        result: dict[str, Optional[float]] = {}
         for name, ours in wanted.items():
             try:
                 result |= _values(self._get(f"{target}/insights", metric=name, **query), {name: ours})
@@ -212,8 +218,8 @@ def _parts(answer: dict[str, Any]) -> dict[str, int]:
 
 
 # A post metric carries its number in values, an account metric asked as total_value in total_value.
-def _values(answer: dict[str, Any], wanted: dict[str, str]) -> dict[str, Optional[int]]:
-    result: dict[str, Optional[int]] = {}
+def _values(answer: dict[str, Any], wanted: dict[str, str]) -> dict[str, Optional[float]]:
+    result: dict[str, Optional[float]] = {}
     for item in answer.get("data", []):
         ours = wanted.get(item.get("name"))
         if ours is None:
@@ -224,5 +230,5 @@ def _values(answer: dict[str, Any], wanted: dict[str, str]) -> dict[str, Optiona
             values = item.get("values") or [{}]
             value = values[-1].get("value")
         if isinstance(value, (int, float)):
-            result[ours] = int(value)
+            result[ours] = float(value) if ours in RATES else int(value)
     return result

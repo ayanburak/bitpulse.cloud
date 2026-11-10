@@ -18,7 +18,7 @@ from typing import Any, Optional
 
 # --- Constants ---
 
-COUNTS = ("views", "reach", "likes", "comments", "saves", "shares", "watch_ms", "interactions", "watch_total_ms", "reposts")
+COUNTS = ("views", "reach", "likes", "comments", "saves", "shares", "watch_ms", "interactions", "watch_total_ms", "reposts", "skip_rate")
 DAY_FIELDS = (
     "followers", "profile_views", "link_taps", "contact_taps", "reach", "reach_followers", "reach_others", "views",
     "views_followers", "views_others", "engaged", "interactions", "likes", "comments", "shares", "saves", "follows", "unfollows",

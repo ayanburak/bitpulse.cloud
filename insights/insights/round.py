@@ -96,7 +96,7 @@ def run(meta: Meta, api: Api, days: int = 2, now: Optional[datetime] = None) -> 
     return {"posts": len(rows), "pictures": sent, "failed": failed}
 
 
-def _row(post: dict[str, Any], counts: dict[str, Optional[int]]) -> dict[str, Any]:
+def _row(post: dict[str, Any], counts: dict[str, Optional[float]]) -> dict[str, Any]:
     return {
         "id": post["id"],
         "kind": kind_of(post),

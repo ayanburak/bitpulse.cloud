@@ -46,6 +46,7 @@ class Counts(BaseModel):
     interactions: Count = None
     watch_total_ms: Count = None
     reposts: Count = None
+    skip_rate: Optional[float] = Field(default=None, ge=0, le=100)
 
 
 class PostIn(BaseModel):

@@ -21,7 +21,7 @@ type DayNumber = Exclude<keyof InstagramDay, "day">;
 
 const FILTERS = [["", "All"], ["reel", "Reels"], ["image", "Images"], ["carousel", "Carousels"]];
 const KINDS: Record<InstagramPost["kind"], string> = { reel: "Reel", image: "Image", carousel: "Carousel" };
-const NUMBERS: [Exclude<keyof Counts, "at" | "watch_ms" | "watch_total_ms">, string][] = [
+const NUMBERS: [Exclude<keyof Counts, "at" | "watch_ms" | "watch_total_ms" | "skip_rate">, string][] = [
   ["views", "Views"], ["reach", "Reach"], ["likes", "Likes"], ["comments", "Comments"], ["saves", "Saves"], ["shares", "Shares"],
   ["reposts", "Reposts"], ["interactions", "Interactions"],
 ];
@@ -31,11 +31,16 @@ const WEEK: [DayNumber, string][] = [
 ];
 const GROUPS: [InstagramAudience["rows"][number]["breakdown"], string][] = [["age", "Age"], ["gender", "Gender"], ["country", "Country"], ["city", "City"]];
 const TOP = 5;
+// Instagram shows these as the count over the views of the post, so they are worked out the same way.
+const RATES: [keyof Counts, string][] = [["likes", "Like rate"], ["shares", "Share rate"], ["saves", "Save rate"]];
 
 const plain = (value: number | null | undefined) => (value === null || value === undefined ? "–" : value.toLocaleString("en-US"));
 const seconds = (ms: number | null | undefined) => (ms === null || ms === undefined ? "–" : `${(ms / 1000).toFixed(1)} s`);
 const hours = (ms: number | null | undefined) => (ms === null || ms === undefined ? "–" : `${(ms / 3_600_000).toFixed(1)} h`);
 const share = (part: number, whole: number) => (whole ? `${Math.round((part / whole) * 100)}%` : "–");
+const rate = (part: number | null | undefined, views: number | null | undefined) =>
+  part === null || part === undefined || !views ? "–" : `${((part / views) * 100).toFixed(1)}%`;
+const percent = (value: number | null | undefined) => (value === null || value === undefined ? "–" : `${value.toFixed(1)}%`);
 // Instagram gives times like 2026-11-05T14:02:11+0000, the panel shows them in the form it uses everywhere.
 const moment = (value: string) => value.slice(0, 16).replace("T", " ");
 
@@ -105,7 +110,9 @@ function Post({ post }: { post: InstagramPost }) {
           {post.kind === "reel" && <>
             <div><dt>Avg. watch</dt><dd>{seconds(counts?.watch_ms)}</dd></div>
             <div><dt>Total watch</dt><dd>{hours(counts?.watch_total_ms)}</dd></div>
+            <div><dt>Skip rate</dt><dd>{percent(counts?.skip_rate)}</dd></div>
           </>}
+          {RATES.map(([key, name]) => <div key={key}><dt>{name}</dt><dd>{rate(counts?.[key] as number | null | undefined, counts?.views)}</dd></div>)}
         </dl>
         <p className="status">
           {counts ? <>Read {counts.at} UTC</> : <>Not read yet</>}

@@ -64,7 +64,7 @@ def seed(conn, settings: Settings) -> None:
     reel = {
         "id": "1790001", "kind": "reel", "posted_at": "2026-11-05T14:02:11+0000",
         "permalink": "https://www.instagram.com/reel/1790001/", "caption": '<img src=x id="injected-caption"> A sample reel',
-        "counts": {"views": 1520, "reach": 1100, "likes": 40, "comments": 3, "saves": 9, "shares": 12, "watch_ms": 4300},
+        "counts": {"views": 1520, "reach": 1100, "likes": 40, "comments": 3, "saves": 9, "shares": 12, "watch_ms": 4300, "skip_rate": 12.8},
     }
     image = {
         "id": "1790002", "kind": "image", "posted_at": "2026-11-04T09:00:00+0000",

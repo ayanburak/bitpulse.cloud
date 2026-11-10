@@ -212,6 +212,8 @@ test("the Instagram page shows posts with their numbers and pictures", async () 
   const reel = page.locator(".insta-post", { hasText: "A sample reel" });
   await expect(reel.getByText("1,520")).toBeVisible();
   await expect(reel.getByText("4.3 s")).toBeVisible();
+  await expect(reel.getByText("12.8%")).toBeVisible();
+  await expect(reel.locator("dt", { hasText: "Like rate" }).locator("xpath=..").getByText("2.6%")).toBeVisible();
   await expect(page.locator("#injected-caption")).toHaveCount(0);
   await expect.poll(() => reel.locator("img").evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(360);
   await expect(reel.getByRole("link", { name: "Open on Instagram" })).toHaveAttribute("rel", "noopener noreferrer");

@@ -362,7 +362,12 @@ CREATE TABLE instagram_audience (
 );
 """
 
-MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS, INSTAGRAM, INSTAGRAM_MORE)
+# The share of views skipped in the first three seconds, a percentage with one decimal as Meta gives it.
+SKIP_RATE = """
+ALTER TABLE instagram_counts ADD COLUMN skip_rate REAL;
+"""
+
+MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS, INSTAGRAM, INSTAGRAM_MORE, SKIP_RATE)
 
 WAL_TRIES = 100
 WAL_WAIT_SECONDS = 0.05

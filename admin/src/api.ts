@@ -109,6 +109,7 @@ export interface InstagramCounts {
   interactions: number | null;
   watch_total_ms: number | null;
   reposts: number | null;
+  skip_rate: number | null;
 }
 
 export interface InstagramPost {

@@ -5,8 +5,9 @@
  * description: The numbers of one Instagram post over time, drawn from every reading the service stored.
  */
 
-// NOTE: Meta gives totals, not hourly numbers, so the line only ever rises or stays flat. The rise
-// between two readings is what the tooltip adds, that is the number of that hour.
+// NOTE: Meta gives totals, not hourly numbers, so a count only ever rises or stays flat. The rise
+// between two readings is what the tooltip adds, that is the number of that hour. The skip rate is a
+// share, not a total, and it can also fall.
 //
 // NOTE: The drawing is as wide as its box in real pixels, so the labels keep their size on a phone
 // instead of shrinking with the picture.
@@ -22,6 +23,7 @@ type Metric = keyof InstagramCounts;
 
 const METRICS: [Metric, string][] = [
   ["views", "Views"], ["reach", "Reach"], ["likes", "Likes"], ["saves", "Saves"], ["shares", "Shares"], ["interactions", "Interactions"],
+  ["skip_rate", "Skip rate"],
 ];
 const BASE_WIDTH = 640;
 const HEIGHT = 200;
@@ -102,7 +104,7 @@ function Plot({ rows, metric }: { rows: { at: string; value: number }[]; metric:
       {active && (
         <p className="insta-chart__tip" style={tip(x(active.at) / width)}>
           <b>{plain(active.value)}</b> {metric.toLowerCase()}<br />
-          {rise !== null && <>+{plain(rise)} since the reading before<br /></>}
+          {rise !== null && <>{rise < 0 ? "" : "+"}{plain(rise)} since the reading before<br /></>}
           {active.at} UTC
         </p>
       )}

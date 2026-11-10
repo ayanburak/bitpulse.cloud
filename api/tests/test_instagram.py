@@ -28,7 +28,7 @@ def post(post_id="1790001", kind="reel", views=120, **extra):
         "posted_at": "2026-11-05T14:02:11+0000",
         "permalink": f"https://www.instagram.com/reel/{post_id}/",
         "caption": "Digital sales were 60.7% of Nintendo's game software sales.",
-        "counts": {"views": views, "reach": 90, "likes": 7, "comments": 1, "saves": 2, "shares": 3, "watch_ms": 4100},
+        "counts": {"views": views, "reach": 90, "likes": 7, "comments": 1, "saves": 2, "shares": 3, "watch_ms": 4100, "skip_rate": 12.8},
         **extra,
     }
 
@@ -227,3 +227,11 @@ def test_the_new_day_numbers_are_kept(service, conn):
     service.put("/insights/days", json={"days": [{"day": "2026-11-10", "reach": 3255, "reach_followers": 2, "reach_others": 3253, "link_taps": 1}]})
     row = conn.execute("SELECT reach, reach_followers, reach_others, link_taps FROM instagram_days").fetchone()
     assert tuple(row) == (3255, 2, 3253, 1)
+
+
+def test_the_skip_rate_keeps_its_decimal_and_stays_a_percentage(service, conn, minute):
+    service.put("/insights/posts", json={"posts": [post()]})
+    assert conn.execute("SELECT skip_rate FROM instagram_counts").fetchone()[0] == 12.8
+    bad = post()
+    bad["counts"]["skip_rate"] = 140
+    assert service.put("/insights/posts", json={"posts": [bad]}).status_code == 422

@@ -167,7 +167,7 @@ def test_a_refused_metric_is_left_out_and_the_rest_kept(monkeypatch):
 
     monkeypatch.setattr(http, "get_json", answer)
     counts = Meta("secret", "178414").counts(post())
-    assert counts == {"views": 5, "reach": 5, "likes": 5, "comments": 5, "saves": 5, "interactions": 5, "reposts": 5, "watch_ms": 5, "watch_total_ms": 5}
+    assert counts == {"views": 5, "reach": 5, "likes": 5, "comments": 5, "saves": 5, "interactions": 5, "reposts": 5, "watch_ms": 5, "watch_total_ms": 5, "skip_rate": 5.0}
     assert "shares" in calls
 
 
@@ -248,3 +248,11 @@ def test_the_audience_rows_carry_group_breakdown_and_hour(monkeypatch):
         {"audience": "online", "breakdown": "hour", "key": "0", "value": 3},
         {"audience": "online", "breakdown": "hour", "key": "13", "value": 9},
     ]
+
+
+def test_the_skip_rate_keeps_its_decimal(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, headers: {"data": [
+        {"name": "reels_skip_rate", "values": [{"value": 12.8}]}, {"name": "views", "values": [{"value": 365.0}]},
+    ]})
+    counts = Meta("secret", "178414").counts(post())
+    assert counts["skip_rate"] == 12.8 and counts["views"] == 365 and isinstance(counts["views"], int)
