@@ -72,6 +72,7 @@ site/
 api/                     stores stories in a database and queues every release
 cli/                     the bitpulse command that drafts, publishes and copies stories
 radar/                   listens to world news feeds and scores the events worth covering
+insights/                reads the numbers of the Instagram posts for the admin panel
 workflows/               the written workflows that take a candidate to a published story
 docs/                    editorial policy, style guide, site decisions, architecture and security model
 ```

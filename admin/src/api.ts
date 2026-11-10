@@ -1,7 +1,7 @@
 /**
  * file: src/api.ts
  * importable: ApiError, call, setCsrf, onSignedOut, type Language, type StoryFields, type Job, type StoryRow,
- *             type EventRow, type EventDetail, type EventPage, type LinkRow, type SocialRow
+ *             type EventRow, type EventDetail, type EventPage, type LinkRow, type InstagramPost, type InstagramDay
  *
  * call talks to the panel routes and adds the token every change needs. When the session ends on
  * the server, the handler given to onSignedOut sends the user back to the login page.
@@ -97,15 +97,30 @@ export interface LinkRow {
   added_at: string;
 }
 
-export interface SocialRow {
-  handle: string;
-  kind: "story" | "clip";
-  title: string;
-  uploaded_at: string;
-  shared_at: string | null;
-  x: string;
+export interface InstagramPost {
+  id: string;
+  kind: "reel" | "image" | "carousel";
+  posted_at: string;
+  permalink: string;
   caption: string;
-  pages: string[];
+  thumb: boolean;
+  counts: {
+    at: string;
+    views: number | null;
+    reach: number | null;
+    likes: number | null;
+    comments: number | null;
+    saves: number | null;
+    shares: number | null;
+    watch_ms: number | null;
+  } | null;
+}
+
+export interface InstagramDay {
+  day: string;
+  followers: number | null;
+  profile_views: number | null;
+  link_taps: number | null;
 }
 
 // --- Client ---

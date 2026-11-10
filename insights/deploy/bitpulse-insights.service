@@ -1,0 +1,32 @@
+[Unit]
+Description=Bitpulse insights, read the Instagram numbers and hand them to the API
+After=network-online.target bitpulse-api.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=bitpulse-insights
+Group=bitpulse-insights
+# Read by systemd itself, so the file can stay root only and the service never sees the file.
+EnvironmentFile=/etc/bitpulse/insights/env
+WorkingDirectory=/opt/bitpulse/insights
+ExecStart=/opt/bitpulse/insights/.venv/bin/insights run
+TimeoutStartSec=600
+MemoryMax=150M
+UMask=0077
+
+# The service keeps nothing on disk. It reads Meta and writes to the API, and nothing else.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+# The server has no working IPv6 route out, so only IPv4 is allowed.
+RestrictAddressFamilies=AF_INET AF_UNIX
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=

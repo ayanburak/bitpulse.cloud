@@ -24,7 +24,7 @@ The page is the hook described under Social posts in docs/style-guide.md. Its im
 
 A clip shows footage or a picture of an event that someone else published, such as a video on YouTube or a post on X, and goes to Instagram only. It never becomes a story on the site, so it has no X post and no link to a story.
 
-Its file is clip.yaml in a folder under site/social-posts, outside this repository, next to the media that bitpulse fetch saved. title names the clip in the admin panel. source is the address of the footage and credit its owner as the site names them. text is the sentence on the page, one plain sentence of at most 120 characters. caption is the news in plain sentences. start and end give the seconds of the video to use, and position moves the cut like on a story page.
+Its file is clip.yaml in a folder under site/social-posts, outside this repository, next to the media that bitpulse fetch saved. source is the address of the footage and credit its owner as the site names them. text is the sentence on the page, one plain sentence of at most 120 characters. caption is the news in plain sentences. start and end give the seconds of the video to use, and position moves the cut like on a story page.
 
 npm run clip lays the page over the video, keeps its sound and saves post.mp4. A picture becomes a still video like a story post. The source line, Source: followed by the owner and the address, is added to the caption by the script. The same rules as for any post apply: the text reports what the footage shows and gives no message, the footage shows the event itself and the rules on graphic content come first. Footage from another day may be used when it shows the people of the news, and the caption then says what it shows and when it was filmed.
 

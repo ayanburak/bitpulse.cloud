@@ -9,7 +9,6 @@ import { describe, expect, it } from "vitest";
 import { buildClip } from "../src/social";
 
 const BASE = {
-  title: "Sirens at 9:05",
   source: "https://www.youtube.com/shorts/example",
   credit: "A Channel",
   text: "Turkey held a moment of silence at 9:05.",

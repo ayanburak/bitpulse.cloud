@@ -17,7 +17,7 @@ import { Audit } from "./pages/Audit";
 import { Editor } from "./pages/Editor";
 import { Enrol, Login } from "./pages/Login";
 import { Radar } from "./pages/Radar";
-import { Social } from "./pages/Social";
+import { Instagram } from "./pages/Instagram";
 import { Stories } from "./pages/Stories";
 
 type Me = { signed_in: boolean; csrf?: string };
@@ -65,11 +65,11 @@ export function App() {
   if (!signedIn) return <Login entered={entered} />;
 
   const [name, argument] = hash.split("/");
-  const section = ["audit", "access", "radar", "social"].includes(name) ? name : "stories";
+  const section = ["audit", "access", "radar", "instagram"].includes(name) ? name : "stories";
   return (
     <Shell section={section} signOut={signOut}>
       {name === "radar" && <Radar view={argument} />}
-      {name === "social" && <Social />}
+      {name === "instagram" && <Instagram />}
       {name === "audit" && <Audit />}
       {name === "access" && <Access ask={setConfirm} />}
       {name === "edit" && <Editor key={argument} handle={argument} ask={setConfirm} />}

@@ -9,8 +9,7 @@
  *
  * A video is cut to the seconds in clip.yaml, cut to fill the photo area of the page and laid under
  * the logo and the text, its sound kept. A picture becomes a page with a still video, like a story
- * post. The folder then also holds caption.txt, title.txt, page-1.png and post.mp4, ready for
- * bitpulse clip.
+ * post. The folder then also holds caption.txt, page-1.png and post.mp4, ready to share.
  *
  * description: Makes the page, the video and the caption of a clip.
  */
@@ -68,8 +67,7 @@ try {
     makeStill(out("page-1.png"), out("post.mp4"));
   }
   writeFileSync(out("caption.txt"), `${clip.caption}\n`);
-  writeFileSync(out("title.txt"), `${clip.title}\n`);
-  console.log(`${folder}: caption.txt, title.txt, page-1.png and post.mp4`);
+  console.log(`${folder}: caption.txt, page-1.png and post.mp4`);
 } finally {
   await browser.close();
 }

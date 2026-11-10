@@ -4,7 +4,7 @@ importable: nothing, the browser tests start this file
 
 Starts the real API with an empty database in the given folder, with a stand-in for the render
 worker. It writes the one time registration token and a cover image into that folder, and fills in
-radar events, one social post and one clip for the pages that show them.
+radar events and two Instagram posts, one with a picture, for the pages that show them.
 
 description: Runs the API for the browser tests of the admin panel.
 """
@@ -24,7 +24,9 @@ from bitpulse_api.app import create_app
 from bitpulse_api.config import Settings
 from bitpulse_api.db import connect
 from bitpulse_api.panel import accounts
-from bitpulse_api import images, social, store
+from bitpulse_api import images, store
+from bitpulse_api.instagram import store as instagram_store
+from bitpulse_api.instagram import thumbs
 from bitpulse_api.radar import store as radar_store
 
 PASSWORD = "a long enough password"
@@ -52,24 +54,29 @@ def event(number: int, stage: str, score: float, title: str) -> dict:
     }
 
 
-def seed(conn, settings: Settings, cover: Path) -> None:
+def seed(conn, settings: Settings) -> None:
     rows = [event(1, "sent", 7.5, "A candidate sent to Telegram")]
     rows.append(event(2, "reserve", 7.0, '<img src=x id="injected-title"> Waiting for a place'))
     rows += [event(number, "below", 5.0, f"Left out event {number}") for number in range(3, 123)]
     rows.append(event(123, "unseen", -1, "Never read by the model"))
-    page = io.BytesIO()
-    Image.new("RGB", (1080, 1350), (20, 30, 40)).save(page, "PNG")
-    sha, width, height = images.accept_upload(settings.images, cover.read_bytes())
-    fields = {"title": "A Shared Sample", "category": "world"}
+    picture = io.BytesIO()
+    Image.new("RGB", (1080, 1920), (20, 30, 40)).save(picture, "JPEG")
+    reel = {
+        "id": "1790001", "kind": "reel", "posted_at": "2026-11-05T14:02:11+0000",
+        "permalink": "https://www.instagram.com/reel/1790001/", "caption": '<img src=x id="injected-caption"> A sample reel',
+        "counts": {"views": 1520, "reach": 1100, "likes": 40, "comments": 3, "saves": 9, "shares": 12, "watch_ms": 4300},
+    }
+    image = {
+        "id": "1790002", "kind": "image", "posted_at": "2026-11-04T09:00:00+0000",
+        "permalink": "https://www.instagram.com/p/1790002/", "caption": "A sample image",
+        "counts": {"views": 300, "likes": 5},
+    }
     with conn:
         radar_store.save_events(conn, rows)
-        store.add_image(conn, sha, width, height)
-        store.ensure_story(conn, "social-sample")
-        store.add_version(conn, "social-sample", {"en": fields, "tr": fields, "social": ""}, sha, "laptop")
-    files = {"x.txt": b"The X post", "caption.txt": b"The caption", "post.mp4": b"\x00\x00\x00\x18ftypisom" + bytes(64), "page-1.png": page.getvalue()}
-    social.accept(conn, settings, "social-sample", files, "laptop")
-    del files["x.txt"]
-    social.accept_clip(conn, settings, "clip-sample", "A Sample Clip", files, "laptop")
+        instagram_store.save_posts(conn, [reel, image], "2026-11-11 09:00")
+        instagram_store.save_days(conn, [{"day": "2026-11-11", "followers": 410}, {"day": "2026-11-10", "profile_views": 33, "link_taps": 4}])
+        thumbs.accept(settings.thumbs, "1790001", picture.getvalue())
+        instagram_store.set_thumb(conn, "1790001")
 
 
 def main() -> None:
@@ -80,7 +87,7 @@ def main() -> None:
     (root / "enrol.txt").write_text(token, encoding="utf-8")
     (root / "code.txt").write_text(codes[0], encoding="utf-8")
     Image.new("RGB", (1400, 900), (40, 90, 140)).save(root / "cover.jpg", "JPEG")
-    seed(connect(settings.db), settings, root / "cover.jpg")
+    seed(connect(settings.db), settings)
     threading.Thread(target=fake_worker, args=(settings,), daemon=True).start()
     uvicorn.run(create_app(settings), host="127.0.0.1", port=port, log_level="warning")
 

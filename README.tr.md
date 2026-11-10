@@ -72,6 +72,7 @@ site/
 api/                     haberleri veritabanında tutar ve her yayını sıraya alır
 cli/                     taslak yükleyen, yayınlayan ve haberleri kopyalayan bitpulse komutu
 radar/                   dünya haber kaynaklarını dinler, ele alınmaya değer olayları puanlar
+insights/                yönetim paneli için Instagram paylaşımlarının rakamlarını okur
 workflows/               adayı yayınlanmış habere götüren yazılı iş akışları
 docs/                    yayın ilkeleri, üslup kılavuzu, site kararları, mimari ve güvenlik modeli
 ```

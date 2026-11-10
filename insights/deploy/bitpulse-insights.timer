@@ -1,0 +1,10 @@
+[Unit]
+Description=Bitpulse insights, read Instagram every hour
+
+[Timer]
+OnCalendar=*-*-* *:17:00 UTC
+RandomizedDelaySec=120
+Persistent=true
+
+[Install]
+WantedBy=timers.target

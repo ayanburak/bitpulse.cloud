@@ -2,10 +2,10 @@
 file: bitpulse_api/panel/radar.py
 importable: attach
 
-attach adds the radar and the social routes of the panel to its router. Nothing here changes the
+attach adds the radar routes of the panel to its router. Nothing here changes the
 site, so a session is enough and no second factor is asked.
 
-description: Exposes radar events, links and social files to the panel.
+description: Exposes radar events and links to the panel.
 """
 
 # NOTE: The list is cut into pages on the server. The radar reports thousands of events a day, and
@@ -21,11 +21,10 @@ from typing import Any, Literal, Optional
 from urllib.parse import urlsplit
 
 from fastapi import APIRouter, HTTPException, Query
-from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from .. import service as main_service
-from .. import social, store as main_store
+from .. import store as main_store
 from ..config import Settings
 from ..radar import service, store
 from ..radar.routes import DecisionBody
@@ -34,20 +33,14 @@ from ..radar.routes import DecisionBody
 
 ACTOR = "panel"
 PAGE_MAX = 100
-SOCIAL_PAGE = 30
 RECENT_LINKS = 10
 CURSOR = re.compile(r"^(-?\d+(?:\.\d+)?)_(\d+)$")
 DAY = r"^\d{4}-\d{2}-\d{2}$"
-TYPES = {".png": "image/png", ".mp4": "video/mp4", ".txt": "text/plain; charset=utf-8"}
 
 # --- Request Bodies ---
 
 class LinkBody(BaseModel):
     url: str = Field(max_length=2000)
-
-
-class SharedBody(BaseModel):
-    shared: bool
 
 # --- Helpers ---
 
@@ -66,7 +59,7 @@ def _listed(row: sqlite3.Row) -> dict[str, Any]:
 # --- Routes ---
 
 def attach(router: APIRouter, settings: Settings, Conn: Any, Full: Any) -> None:
-    """Adds the radar and social routes to a router.
+    """Adds the radar routes to a router.
 
     Args:
         router: Router of the panel.
@@ -137,56 +130,3 @@ def attach(router: APIRouter, settings: Settings, Conn: Any, Full: Any) -> None:
             link = store.add_link(conn, body.url.strip(), main_store.minute())
             main_store.add_audit(conn, ACTOR, "radar.link", f"link {link}", body.url.strip()[:200])
         return {"id": link}
-
-    # --- Social ---
-
-    @router.get("/social")
-    def posts(conn: Conn, _: Full, shared: Optional[bool] = None, offset: int = Query(0, ge=0)) -> dict[str, Any]:
-        rows = main_store.social_rows(conn, shared, SOCIAL_PAGE + 1, offset)
-        result = []
-        for row in rows[:SOCIAL_PAGE]:
-            handle = row["handle"]
-            if row["kind"] == "clip":
-                post = {"title": row["title"], "x": "", "pages": ["page-1.png"],
-                        "caption": social.clip_path(settings, handle, "caption.txt").read_text(encoding="utf-8")}
-            else:
-                post = {
-                    "title": main_store.latest_version(conn, handle)["content"]["en"]["title"],
-                    "x": social.read_text(settings, handle, "x.txt"),
-                    "caption": social.read_text(settings, handle, "caption.txt"),
-                    "pages": social.pages(settings, handle),
-                }
-            result.append({"handle": handle, "kind": row["kind"], "uploaded_at": row["uploaded_at"], "shared_at": row["shared_at"], **post})
-        return {"rows": result, "more": len(rows) > SOCIAL_PAGE}
-
-    # The handle has to be a stored one, and only then does it become part of a file path.
-    @router.get("/social/{handle}/{name}")
-    def social_file(handle: str, name: str, conn: Conn, _: Full) -> FileResponse:
-        if main_store.social_post(conn, handle) is None:
-            raise main_service.NotFound(f"no social files for {handle}")
-        path = social.path_of(settings, handle, name)
-        return FileResponse(path, media_type=TYPES[path.suffix], filename=f"{handle}-{name}")
-
-    # The handle has to be a stored one, and only then does it become part of a file path.
-    @router.get("/clips/{handle}/{name}")
-    def clip_file(handle: str, name: str, conn: Conn, _: Full) -> FileResponse:
-        if main_store.clip(conn, handle) is None:
-            raise main_service.NotFound(f"no clip named {handle}")
-        path = social.clip_path(settings, handle, name)
-        return FileResponse(path, media_type=TYPES[path.suffix], filename=f"{handle}-{name}")
-
-    @router.post("/clips/{handle}/shared", status_code=204)
-    def clip_shared(handle: str, body: SharedBody, conn: Conn, _: Full) -> None:
-        if main_store.clip(conn, handle) is None:
-            raise main_service.NotFound(f"no clip named {handle}")
-        with conn:
-            main_store.set_clip_shared(conn, handle, body.shared)
-            main_store.add_audit(conn, ACTOR, "clip.shared", handle, "shared" if body.shared else "not shared")
-
-    @router.post("/social/{handle}/shared", status_code=204)
-    def shared(handle: str, body: SharedBody, conn: Conn, _: Full) -> None:
-        if main_store.social_post(conn, handle) is None:
-            raise main_service.NotFound(f"no social files for {handle}")
-        with conn:
-            main_store.set_social_shared(conn, handle, body.shared)
-            main_store.add_audit(conn, ACTOR, "social.shared", handle, "shared" if body.shared else "not shared")

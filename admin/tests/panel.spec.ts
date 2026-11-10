@@ -207,32 +207,25 @@ test("a link waits for the radar", async () => {
   await expect(page.getByText("Waiting for the radar")).toBeVisible();
 });
 
-test("the social page shows a post ready to share", async () => {
-  await page.goto("/#social");
-  await expect(page.getByRole("heading", { name: "A Shared Sample" })).toBeVisible();
-  await expect(page.getByText("The X post")).toBeVisible();
-  const story = page.locator(".social-post", { has: page.getByRole("heading", { name: "A Shared Sample" }) });
-  await expect.poll(() => story.locator(".social-post__page").evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(1080);
-  await story.getByRole("button", { name: "Mark as shared" }).click();
-  await expect(story).toHaveCount(0);
-  await page.getByRole("button", { name: "Shared", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "A Shared Sample" })).toBeVisible();
-});
-
-test("a clip shows without an X post and is marked on its own route", async () => {
-  await page.goto("/#social");
-  await page.getByRole("button", { name: "Waiting", exact: true }).click();
-  const clip = page.locator(".social-post", { has: page.getByRole("heading", { name: "A Sample Clip" }) });
-  await expect(clip.getByText("Instagram only")).toBeVisible();
-  await expect(clip.getByText("X", { exact: true })).toHaveCount(0);
-  await expect.poll(() => clip.locator(".social-post__page").evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(1080);
-  await clip.getByRole("button", { name: "Mark as shared" }).click();
-  await expect(page.getByText("Nothing here.")).toBeVisible();
+test("the Instagram page shows posts with their numbers and pictures", async () => {
+  await page.goto("/#instagram");
+  const reel = page.locator(".insta-post", { hasText: "A sample reel" });
+  await expect(reel.getByText("1,520")).toBeVisible();
+  await expect(reel.getByText("4.3 s")).toBeVisible();
+  await expect(page.locator("#injected-caption")).toHaveCount(0);
+  await expect.poll(() => reel.locator("img").evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(360);
+  await expect(reel.getByRole("link", { name: "Open on Instagram" })).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(page.locator(".insta-account").getByText("410")).toBeVisible();
+  const image = page.locator(".insta-post", { hasText: "A sample image" });
+  await expect(image.getByText("Avg. watch")).toHaveCount(0);
+  await expect(image.locator(".insta-post__thumb--empty")).toHaveCount(1);
+  await page.getByRole("button", { name: "Reels", exact: true }).click();
+  await expect(page.locator(".insta-post")).toHaveCount(1);
 });
 
 test("the new pages fit a phone", async () => {
   await page.setViewportSize({ width: 390, height: 800 });
-  for (const address of ["/#radar/eliminated", "/#social"]) {
+  for (const address of ["/#radar/eliminated", "/#instagram"]) {
     await page.goto(address);
     await page.waitForTimeout(300);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

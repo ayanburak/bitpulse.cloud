@@ -8,7 +8,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { toggleTheme } from "./theme";
 
-const SECTIONS = [["stories", "Stories"], ["radar", "Radar"], ["social", "Social"], ["audit", "Audit log"], ["access", "Access"]];
+const SECTIONS = [["stories", "Stories"], ["radar", "Radar"], ["instagram", "Instagram"], ["audit", "Audit log"], ["access", "Access"]];
 const SITE = "https://bitpulse.cloud/";
 const TODAY = new Intl.DateTimeFormat("en-US", { dateStyle: "full" }).format(new Date());
 

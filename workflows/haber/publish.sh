@@ -4,13 +4,13 @@
 #
 #   bash workflows/haber/publish.sh <story folder> [R-number]             publishes and makes the social files
 #   bash workflows/haber/publish.sh --dry-run <story folder> [R-number]   checks and social files, the server does not change
-#   bash workflows/haber/publish.sh --social <story folder>               makes and uploads the social files of a published story
+#   bash workflows/haber/publish.sh --social <story folder>               makes the social files of a published story again
 #
 # The story does not enter Git. When the tests or the build fail nothing reaches the server. The
 # worker builds the pages and tries them inside the server, and stays on the previous release when
 # they do not open.
 #
-# description: Publishes one story from the device and makes and uploads its social files.
+# description: Publishes one story from the device and makes its social files.
 
 # NOTE: A session writing a story may run this file and nothing else that reaches the server. Every
 # publish is in the audit log of the API, so nothing has to be written down here.
@@ -81,22 +81,22 @@ make_social() {
   fi
 }
 
-# Posts stay on the device as long as they stay on the server, thirty days.
+# Posts are shared from this folder. After thirty days they are gone, they can always be made again.
 prune_social() {
   find site/social-posts -mindepth 1 -maxdepth 1 -type d -name '20[0-9][0-9]-*' -mtime +30 -exec rm -rf {} +
 }
 
-upload_social() {
-  if make_social && bitpulse social "$PWD/site/social-posts/$story"; then
+social() {
+  if make_social; then
     prune_social
     return 0
   fi
-  echo "SOCIAL FILES NOT UPLOADED, they are missing from the panel. To try again: bash workflows/haber/publish.sh --social $story"
+  echo "SOCIAL FILES NOT MADE, the story is not affected. To try again: bash workflows/haber/publish.sh --social $story"
   return 1
 }
 
 if [ "$mode" = social ]; then
-  upload_social
+  social
   exit $?
 fi
 
@@ -120,7 +120,7 @@ if bitpulse pull "$work/server" "$handle" > /dev/null 2>&1 && [ -d "$work/server
   cmp -s "$work/server/$story/social.yaml" "$dir/social.yaml" && fail "Nothing to publish: $story"
   bitpulse draft "$PWD/$dir" "${link[@]}"
   echo "Only the social post changed, the site was not built again."
-  upload_social || true
+  social || true
   return 0
 fi
 
@@ -140,7 +140,7 @@ for path in "/en/stories/$slug_en/" "/tr/stories/$slug_tr/"; do
   curl -fsS --retry 3 --retry-delay 2 -o /dev/null "https://bitpulse.cloud$path" || echo "WARNING: the page did not open from outside, it did open inside the server: $path"
 done
 
-upload_social || true
+social || true
 echo "English: https://bitpulse.cloud/en/stories/$slug_en/"
 echo "Turkish: https://bitpulse.cloud/tr/stories/$slug_tr/"
 }

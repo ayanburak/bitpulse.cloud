@@ -251,7 +251,65 @@ CREATE TABLE social_clips (
 );
 """
 
-MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS)
+# The panel shows what Instagram reports instead of the files that were once uploaded for sharing,
+# so the social tables go. The key table is copied because a new scope needs a new CHECK rule, and
+# nothing references it. A post keeps one counts row per fetch, which is what draws its curve.
+# Counts that Instagram does not give for a kind of post, such as watch time on an image, stay NULL.
+INSTAGRAM = """
+CREATE TABLE api_keys_next (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    digest TEXT NOT NULL UNIQUE,
+    created_at TEXT NOT NULL,
+    expires_at TEXT NOT NULL,
+    revoked_at TEXT,
+    scope TEXT NOT NULL DEFAULT 'device' CHECK (scope IN ('device', 'radar', 'insights'))
+);
+
+INSERT INTO api_keys_next (id, name, digest, created_at, expires_at, revoked_at, scope)
+SELECT id, name, digest, created_at, expires_at, revoked_at, scope FROM api_keys;
+
+DROP TABLE api_keys;
+
+ALTER TABLE api_keys_next RENAME TO api_keys;
+
+DROP TABLE social_posts;
+
+DROP TABLE social_clips;
+
+CREATE TABLE instagram_posts (
+    id TEXT PRIMARY KEY,
+    kind TEXT NOT NULL CHECK (kind IN ('reel', 'image', 'carousel')),
+    posted_at TEXT NOT NULL,
+    permalink TEXT NOT NULL,
+    caption TEXT NOT NULL DEFAULT '',
+    thumb INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX instagram_posts_posted ON instagram_posts (posted_at DESC);
+
+CREATE TABLE instagram_counts (
+    post TEXT NOT NULL REFERENCES instagram_posts (id),
+    at TEXT NOT NULL,
+    views INTEGER,
+    reach INTEGER,
+    likes INTEGER,
+    comments INTEGER,
+    saves INTEGER,
+    shares INTEGER,
+    watch_ms INTEGER,
+    PRIMARY KEY (post, at)
+);
+
+CREATE TABLE instagram_days (
+    day TEXT PRIMARY KEY,
+    followers INTEGER,
+    profile_views INTEGER,
+    link_taps INTEGER
+);
+"""
+
+MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS, INSTAGRAM)
 
 WAL_TRIES = 100
 WAL_WAIT_SECONDS = 0.05

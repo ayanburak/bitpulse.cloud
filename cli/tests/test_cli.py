@@ -5,7 +5,6 @@ importable: nothing, pytest loads it
 description: Checks the command against a small stand-in for the API.
 """
 
-import base64
 import hashlib
 import stat
 from datetime import datetime, timezone
@@ -24,8 +23,6 @@ from bitpulse_cli.__main__ import (
     pull_all,
     push_draft,
     save_brief,
-    upload_clip,
-    upload_social,
 )
 from bitpulse_cli.client import ApiError, SSH_HOST, write_key
 
@@ -51,9 +48,6 @@ class FakeApi:
         if path.endswith("/draft"):
             self.drafts.append((path, body))
             return {"version": 1}
-        if path.endswith("/social"):
-            self.social = (path, body)
-            return {"files": sorted(body["files"])}
         return {"job": 7}
 
     def get(self, path):
@@ -184,18 +178,6 @@ def test_candidates_show_whether_the_brief_is_ready():
     assert rows[0].startswith("R-0007  brief ready") and "no brief" in rows[1]
 
 
-def test_only_finished_social_files_are_uploaded(tmp_path):
-    post = tmp_path / "2026-11-09-a-story"
-    (post / "images").mkdir(parents=True)
-    (post / "x.txt").write_bytes(b"post")
-    (post / "page-1.png").write_bytes(b"png")
-    (post / "notes.mp4").write_bytes(b"not this one")
-    api = FakeApi()
-    assert upload_social(api, post) == ["page-1.png", "x.txt"]
-    assert api.social[0] == "/stories/a-story/social"
-    assert base64.b64decode(api.social[1]["files"]["x.txt"]) == b"post"
-
-
 def repository(tmp_path):
     (tmp_path / "workflows" / "haber").mkdir(parents=True)
     (tmp_path / "workflows" / "haber" / "SKILL.md").write_text("skill")
@@ -218,25 +200,3 @@ def test_linking_never_replaces_a_real_folder(tmp_path):
     with pytest.raises(OSError, match="already exists"):
         link_skills(root)
     assert (kept / "mine.md").read_text() == "mine"
-
-
-class ClipApi:
-    def __init__(self):
-        self.sent = None
-
-    def send_json(self, method, path, body):
-        self.sent = (method, path, body)
-        return {"files": sorted(body["files"])}
-
-
-def test_a_clip_is_uploaded_under_its_name_with_its_title(tmp_path):
-    clip = tmp_path / "2026-11-10-sirens"
-    clip.mkdir()
-    for name in ("caption.txt", "post.mp4", "page-1.png", "source.mp4"):
-        (clip / name).write_bytes(b"data")
-    (clip / "title.txt").write_text("Sirens at 9:05\n")
-    api = ClipApi()
-    assert upload_clip(api, clip) == ["caption.txt", "page-1.png", "post.mp4"]
-    method, path, body = api.sent
-    assert (method, path, body["title"]) == ("PUT", "/clips/sirens", "Sirens at 9:05")
-    assert "source.mp4" not in body["files"]

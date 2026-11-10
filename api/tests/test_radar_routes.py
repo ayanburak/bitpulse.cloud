@@ -197,7 +197,7 @@ def listed(panel, **query):
 def test_the_panel_routes_need_a_session(panel_settings):
     stranger = browser_for(panel_settings)
     assert stranger.get("/panel-api/radar/events").status_code == 401
-    assert stranger.get("/panel-api/social").status_code == 401
+    assert stranger.get("/panel-api/instagram").status_code == 401
     assert stranger.post("/panel-api/radar/links", json={"url": "https://a.example"}).status_code == 401
 
 

@@ -48,14 +48,10 @@ class Settings:
     def images(self) -> Path:
         return self.data / "images"
 
+    # Small pictures of Instagram posts, each named after its post, drawn again by the API.
     @property
-    def social(self) -> Path:
-        return self.data / "social"
-
-    # Clips are posts without a story. Their own folder keeps a clip name from ever meeting a story name.
-    @property
-    def clips(self) -> Path:
-        return self.data / "clips"
+    def thumbs(self) -> Path:
+        return self.data / "thumbs"
 
     @property
     def jobs(self) -> Path:
@@ -78,7 +74,7 @@ class Settings:
     # test nothing has made them yet, so they are created here and existing ones are left alone.
     def prepare(self) -> None:
         """Creates every working folder that does not exist yet."""
-        for path in (self.data, self.images, self.social, self.clips, self.jobs, self.queue, self.results, self.notify):
+        for path in (self.data, self.images, self.thumbs, self.jobs, self.queue, self.results, self.notify):
             path.mkdir(parents=True, exist_ok=True)
 
     @classmethod

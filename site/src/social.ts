@@ -12,7 +12,7 @@
  * with.
  *
  * A clip is a post for Instagram only, made from someone else's video or picture and not tied to a
- * story. Its clip.yaml holds a title for the panel, the source address and its owner, the sentence
+ * story. Its clip.yaml holds the source address and its owner, the sentence
  * on the page, the caption and, for a video, the seconds to start and end at.
  *
  * description: Validates the social text of a story and completes it into ready to share posts.
@@ -44,7 +44,6 @@ export interface SocialPost {
 }
 
 export interface ClipPost {
-  title: string;
   text: string;
   caption: string;
   position: string;
@@ -187,7 +186,7 @@ export function buildSocial(raw: string, story: Story): SocialPost {
   return { x: `${x}\n\n${link}`, pages, caption: full };
 }
 
-const CLIP_FIELDS = ["title", "source", "credit", "text", "caption", "start", "end", "position"];
+const CLIP_FIELDS = ["source", "credit", "text", "caption", "start", "end", "position"];
 
 function seconds(value: unknown, field: string, where: string): number | null {
   if (value === undefined) return null;
@@ -200,7 +199,7 @@ function seconds(value: unknown, field: string, where: string): number | null {
  *
  * @param raw Contents of clip.yaml.
  * @param where Name used in error messages, normally the clip folder.
- * @returns The title, the page sentence, the full caption, the photo position and the cut.
+ * @returns The page sentence, the full caption, the photo position and the cut.
  * @throws Error if a field is missing or unknown, the source is not a web address, the page text
  *   or the caption is over its limit or not plain, or the cut ends before it starts.
  */
@@ -223,5 +222,5 @@ export function buildClip(raw: string, where: string): ClipPost {
   const start = seconds(data.start, "start", where) ?? 0;
   const end = seconds(data.end, "end", where);
   if (end !== null && end <= start) throw new Error(`${where}: end must come after start`);
-  return { title: text(data.title, "title", where), text: page, caption, position: readPosition(data.position, where), start, end };
+  return { text: page, caption, position: readPosition(data.position, where), start, end };
 }

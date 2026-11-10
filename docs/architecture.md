@@ -10,15 +10,17 @@ Stories do not live in Git. A story changes when it is corrected or updated, and
 
 ## The parts
 
-The API is a Python program built on FastAPI. It holds stories, images, publishing jobs, radar events and the audit log in one SQLite file, and it is the only part that opens that file. It listens only inside the server.
+The API is a Python program built on FastAPI. It holds stories, images, publishing jobs, radar events, the numbers of the Instagram posts and the audit log in one SQLite file, and it is the only part that opens that file. It listens only inside the server.
 
 The render worker is the existing TypeScript site code. It receives a folder with the stories to build and answers with one result file. It never opens the database, and the API never writes pages. The two meet in a shared folder, so neither can reach into the other.
 
 The admin panel is a React application on its own address. It is the one part of the API that can be reached from the internet, and it is limited to the routes under the panel path.
 
-The bitpulse command runs on the editor's device. It uploads drafts, publishes, fetches briefs and uploads social files. It reaches the API through an SSH tunnel, using an account that can do nothing but open that tunnel.
+The bitpulse command runs on the editor's device. It uploads drafts, publishes and fetches briefs. It reaches the API through an SSH tunnel, using an account that can do nothing but open that tunnel.
 
 The radar is a Python program with its own database. It reads news feeds, groups stories about one event, asks a small model to score the strongest events and sends the best to the editor on Telegram. It also copies each event, with its score and the stage it reached, to the API.
+
+The insights service reads the Bitpulse Instagram account every hour through the Meta Graph API: every post, its numbers and its picture, and the daily numbers of the account. It hands them to the API, which keeps them and shows them in the panel. It keeps nothing of its own.
 
 The notice service sends important events from the audit log to Telegram with a bot of its own. It exists because the API is not allowed to open a connection to the internet.
 
@@ -44,7 +46,9 @@ Undoing a publish is an ordinary publish of the older version. Moving the link b
 
 ## Social posts
 
-The text of a post is part of the story. The finished files are made on the device and uploaded to the API, where the panel shows them for the editor to copy, download and mark as shared. They are removed after thirty days, because they can always be made again. A clip, a post for Instagram only made from someone else's footage, is made and uploaded the same way under its own name, without a story.
+The text of a post is part of the story. The finished files are made on the device and shared from there by hand, they never go to the server. A clip, a post for Instagram only made from someone else's footage, is made the same way without a story.
+
+What the panel shows about a post comes from Instagram itself. The insights service reads each post every hour during its first week, when its numbers move fastest, and once a day after that. Every reading is kept, so the growth of a post can be drawn later. A post is not tied to a story in the database. Which story a post belongs to is read from its caption when the numbers are studied.
 
 ## Releasing code
 

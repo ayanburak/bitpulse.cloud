@@ -36,7 +36,6 @@ The footage must show the event the post names, and the rules on graphic content
 `clip.yaml` is written in the folder:
 
 ```yaml
-title: What the panel shows above the clip
 source: https://the.link/the/editor/gave
 credit: Owner as the site names it
 text: One plain sentence of at most 120 characters for the page.
@@ -58,14 +57,8 @@ Content that a social media account published about itself, such as something a 
 npm run -s clip --prefix site -- social-posts/<today>-<key>
 ```
 
-The script refuses a broken `clip.yaml`. Before anything is uploaded, the editor is told what was cut: the start and end, how much of the frame the page leaves out, and that the sound is kept. `page-1.png` is shown as the first frame, and the editor gets the text of the page and the full caption.
+The script refuses a broken `clip.yaml`. When it is done, the editor is told what was cut: the start and end, how much of the frame the page leaves out, and that the sound is kept. `page-1.png` is shown as the first frame, and the editor gets the text of the page and the full caption.
 
-## 5. Uploading
+## 5. Sharing
 
-The editor says upload. Then only this runs:
-
-```bash
-bitpulse clip site/social-posts/<today>-<key>
-```
-
-The clip appears in the Social screen of the panel, marked as a clip, and leaves after thirty days like every post. The editor gets the path of `post.mp4` and `caption.txt`.
+The editor shares the post on Instagram from the folder. The editor gets the path of `post.mp4` and `caption.txt`. Nothing is uploaded to the server, and the Instagram screen of the panel shows the post with its numbers once it is live.

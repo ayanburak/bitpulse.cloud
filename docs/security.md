@@ -4,19 +4,21 @@ The whole code of Bitpulse is public, so an attacker is assumed to have read all
 
 ## Separation
 
-Every service on the server runs as its own user and can write only to its own folders. The API and the render worker are not allowed to open a connection to the internet, which is enforced by the operating system and not by their code. An attacker who takes over the API can not send data out or write a page, and one who takes over the worker has no way to reach the database.
+Every service on the server runs as its own user and can write only to its own folders. The API and the render worker are not allowed to open a connection to the internet, which is enforced by the operating system and not by their code. An attacker who takes over the API can not send data out or write a page, and one who takes over the worker has no way to reach the database. The services that do need the internet, the radar, the notice service and the insights service, each run as their own user and reach the API only through the routes of their own key.
 
-The API listens only inside the server. From the internet, only the panel files and the panel routes can be reached. The routes for devices and for the radar never pass through the public web server.
+The API listens only inside the server. From the internet, only the panel files and the panel routes can be reached. The routes for devices, for the radar and for the insights service never pass through the public web server.
 
 GitHub has no access to the server. Code is released only from the maintainer's machine, so a stolen GitHub account can change the repository but can not change the live site.
 
 ## Keys
 
-There are two kinds of key and each opens only its own routes. Only a hash of a key is stored, so a leaked database or backup holds nothing that works. A key lasts ninety days and can be revoked at once from the panel.
+There are three kinds of key and each opens only its own routes. Only a hash of a key is stored, so a leaked database or backup holds nothing that works. A key lasts ninety days and can be revoked at once from the panel.
 
 A device key can upload drafts and publish. It can not withdraw a story, undo a publish or create a key, because those routes exist only in the panel behind a second factor.
 
 The radar reads pages from the open web all day, which makes its key the likeliest to leak. A radar key can write radar events and nothing else, it can not read a story or publish one. A radar key can only be made on the server.
+
+An insights key can write Instagram posts, their numbers and their pictures, and nothing else. It is also made only on the server. The Meta key that the insights service uses to read Instagram is a separate key of the Meta business account. It is allowed to read posts and their numbers and nothing more, it can not post, delete or send messages. It does not expire, so it is kept in a file that only the system can read, and it can be revoked at once in the Meta business settings.
 
 ## The panel
 
@@ -34,7 +36,7 @@ The API never fetches an address it is given. An image or a page is downloaded b
 
 ## Uploaded files
 
-Cover images and social pages are decoded and drawn again, so what reaches the disk is pixels the API produced, without metadata and without any byte of the upload. Sizes and pixel counts are limited before decoding. The server has no tool to rebuild a video, so a video is checked by its signature and leaves only as a download, the panel never plays it.
+Cover images and the pictures of Instagram posts are decoded and drawn again, so what reaches the disk is pixels the API produced, without metadata and without any byte of the upload. Sizes and pixel counts are limited before decoding. The insights service downloads a picture only from the picture servers of Instagram. No video and no social file is uploaded to the server.
 
 ## Knowing what happened
 

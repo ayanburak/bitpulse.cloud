@@ -4,8 +4,7 @@ importable: minute, add_audit, add_image, has_image, story, ensure_story, storie
             version, add_version, live_versions, add_job, job, next_queued, dispatched, mark_dispatched,
             finish_job, set_live, clear_live, add_key, find_key, revoke_key, keys, audit_page, version_by_number,
             versions_of, published_versions, story_rows, active_job, last_finished_job, key_by_name,
-            notify_cursor, set_notify_cursor, audit_after, save_social, social_post, social_rows, set_social_shared,
-            old_social, remove_social, save_clip, clip, set_clip_shared, old_clips, remove_clip
+            notify_cursor, set_notify_cursor, audit_after
 
 Every function takes an open connection. None of them commits, the caller groups writes that must
 happen together inside one with conn block.
@@ -241,67 +240,3 @@ def audit_page(conn: sqlite3.Connection, before: Optional[int], limit: int) -> l
     if before is None:
         return conn.execute("SELECT * FROM audit_log ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
     return conn.execute("SELECT * FROM audit_log WHERE id < ? ORDER BY id DESC LIMIT ?", (before, limit)).fetchall()
-
-# --- Social ---
-
-# A new upload keeps shared_at, a corrected text does not mean the post went out a second time.
-def save_social(conn: sqlite3.Connection, handle: str) -> None:
-    conn.execute(
-        "INSERT INTO social_posts (handle, uploaded_at) VALUES (?, ?) "
-        "ON CONFLICT (handle) DO UPDATE SET uploaded_at = excluded.uploaded_at",
-        (handle, minute()),
-    )
-
-
-def social_post(conn: sqlite3.Connection, handle: str) -> Optional[sqlite3.Row]:
-    return conn.execute("SELECT * FROM social_posts WHERE handle = ?", (handle,)).fetchone()
-
-
-# Story posts and clips share one list in the panel, kind tells them apart.
-def social_rows(conn: sqlite3.Connection, shared: Optional[bool], limit: int, offset: int) -> list[sqlite3.Row]:
-    condition = "" if shared is None else ("WHERE shared_at IS NOT NULL" if shared else "WHERE shared_at IS NULL")
-    both = (
-        "SELECT handle, uploaded_at, shared_at, 'story' AS kind, NULL AS title FROM social_posts "
-        "UNION ALL SELECT handle, uploaded_at, shared_at, 'clip' AS kind, title FROM social_clips"
-    )
-    return conn.execute(
-        f"SELECT * FROM ({both}) {condition} ORDER BY uploaded_at DESC, kind, handle LIMIT ? OFFSET ?", (limit, offset)
-    ).fetchall()
-
-
-def set_social_shared(conn: sqlite3.Connection, handle: str, shared: bool) -> None:
-    conn.execute("UPDATE social_posts SET shared_at = ? WHERE handle = ?", (minute() if shared else None, handle))
-
-
-def old_social(conn: sqlite3.Connection, before: str) -> list[str]:
-    return [row["handle"] for row in conn.execute("SELECT handle FROM social_posts WHERE uploaded_at < ?", (before,))]
-
-
-def remove_social(conn: sqlite3.Connection, handle: str) -> None:
-    conn.execute("DELETE FROM social_posts WHERE handle = ?", (handle,))
-
-
-# --- Clips ---
-
-def save_clip(conn: sqlite3.Connection, handle: str, title: str) -> None:
-    conn.execute(
-        "INSERT INTO social_clips (handle, title, uploaded_at) VALUES (?, ?, ?) "
-        "ON CONFLICT (handle) DO UPDATE SET title = excluded.title, uploaded_at = excluded.uploaded_at",
-        (handle, title, minute()),
-    )
-
-
-def clip(conn: sqlite3.Connection, handle: str) -> Optional[sqlite3.Row]:
-    return conn.execute("SELECT * FROM social_clips WHERE handle = ?", (handle,)).fetchone()
-
-
-def set_clip_shared(conn: sqlite3.Connection, handle: str, shared: bool) -> None:
-    conn.execute("UPDATE social_clips SET shared_at = ? WHERE handle = ?", (minute() if shared else None, handle))
-
-
-def old_clips(conn: sqlite3.Connection, before: str) -> list[str]:
-    return [row["handle"] for row in conn.execute("SELECT handle FROM social_clips WHERE uploaded_at < ?", (before,))]
-
-
-def remove_clip(conn: sqlite3.Connection, handle: str) -> None:
-    conn.execute("DELETE FROM social_clips WHERE handle = ?", (handle,))

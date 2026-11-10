@@ -1,6 +1,6 @@
 """
 file: bitpulse_api/keys.py
-importable: create_key, actor_for, LIFETIME_DAYS, DEVICE, RADAR
+importable: create_key, actor_for, LIFETIME_DAYS, DEVICE, RADAR, INSIGHTS
 
 create_key makes a new device key and shows it once. actor_for turns a presented key into the name
 of its device, or None when the key can not be used. A key belongs to one scope and works only on
@@ -26,6 +26,7 @@ from . import store
 LIFETIME_DAYS = 90
 DEVICE = "device"
 RADAR = "radar"
+INSIGHTS = "insights"
 FORMAT = "%Y-%m-%d %H:%M"
 
 # --- Keys ---

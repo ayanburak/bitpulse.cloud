@@ -3,10 +3,11 @@ file: bitpulse_api/app.py
 importable: create_app
 
 create_app builds the HTTP application for the given folders. Every route except health and the
-panel routes needs a key: a device key for the story routes and a radar key for the radar routes.
+panel routes needs a key: a device key for the story routes, a radar key for the radar routes and an
+insights key for the routes the Instagram service writes to.
 The panel routes use a browser session and live under /panel-api.
 
-description: Exposes stories, images and publishing jobs over HTTP.
+description: Exposes stories, images, publishing jobs and the Instagram numbers over HTTP.
 """
 
 # NOTE: The automatic API docs are off. Nothing needs them, and each extra page is more surface.
@@ -21,10 +22,11 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 
-from . import images, jobs, keys, service, social, store
+from . import images, jobs, keys, service, store
 from .config import Settings
 from .content import InvalidDraft
 from .db import connect
+from .instagram import routes as instagram_routes
 from .panel import routes as panel_routes
 from .radar import routes as radar_routes
 from .radar import service as radar_service
@@ -91,6 +93,9 @@ def create_app(settings: Settings) -> FastAPI:
     def get_radar(request: Request, conn: Conn) -> str:
         return _key_owner(request, conn, keys.RADAR)
 
+    def get_insights(request: Request, conn: Conn) -> str:
+        return _key_owner(request, conn, keys.INSIGHTS)
+
     Actor = Annotated[str, Depends(get_actor)]
 
     @app.exception_handler(InvalidDraft)
@@ -99,10 +104,6 @@ def create_app(settings: Settings) -> FastAPI:
 
     @app.exception_handler(images.InvalidImage)
     async def _invalid_image(_: Request, error: images.InvalidImage) -> JSONResponse:
-        return JSONResponse({"detail": str(error)}, status_code=422)
-
-    @app.exception_handler(social.InvalidSocial)
-    async def _invalid_social(_: Request, error: social.InvalidSocial) -> JSONResponse:
         return JSONResponse({"detail": str(error)}, status_code=422)
 
     @app.exception_handler(service.NotFound)
@@ -167,28 +168,6 @@ def create_app(settings: Settings) -> FastAPI:
             radar_service.link_story(conn, body.candidate, handle, actor)
         return {"version": version}
 
-    # The whole set arrives in one body, and it is cut off at the limit like an image upload.
-    @app.put("/stories/{handle}/social")
-    async def upload_social(handle: str, request: Request, conn: Conn, actor: Actor) -> dict[str, list[str]]:
-        raw = bytearray()
-        async for chunk in request.stream():
-            raw.extend(chunk)
-            if len(raw) > social.MAX_UPLOAD:
-                raise HTTPException(413, "upload is too large")
-        files = social.decode(bytes(raw))
-        return {"files": await run_in_threadpool(social.accept, conn, settings, handle, files, actor)}
-
-    # A clip goes to Instagram only, so it is uploaded under its own name and never touches a story.
-    @app.put("/clips/{handle}")
-    async def upload_clip(handle: str, request: Request, conn: Conn, actor: Actor) -> dict[str, list[str]]:
-        raw = bytearray()
-        async for chunk in request.stream():
-            raw.extend(chunk)
-            if len(raw) > social.MAX_CLIP_UPLOAD:
-                raise HTTPException(413, "upload is too large")
-        title, files = social.decode_clip(bytes(raw))
-        return {"files": await run_in_threadpool(social.accept_clip, conn, settings, handle, title, files, actor)}
-
     @app.post("/stories/{handle}/publish", status_code=202)
     def publish(handle: str, conn: Conn, actor: Actor) -> dict[str, int]:
         return {"job": service.request_publish(conn, handle, actor)}
@@ -205,6 +184,7 @@ def create_app(settings: Settings) -> FastAPI:
         return {key: row[key] for key in ("id", "kind", "handle", "status", "release", "error", "duration_ms")}
 
     app.include_router(radar_routes.build(get_conn, get_actor, get_radar))
+    app.include_router(instagram_routes.build(settings, get_conn, get_insights))
     app.include_router(panel_routes.build(settings, get_conn))
 
     return app

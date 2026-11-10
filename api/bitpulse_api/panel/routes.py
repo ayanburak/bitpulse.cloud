@@ -20,7 +20,7 @@ from pydantic import BaseModel
 
 from .. import store as main_store
 from ..config import Settings
-from . import accounts, actions, passkeys, radar, sessions
+from . import accounts, actions, instagram, passkeys, radar, sessions
 
 # --- Request Bodies ---
 
@@ -203,5 +203,6 @@ def build(settings: Settings, get_conn: Callable) -> APIRouter:
 
     actions.attach(router, settings, Conn, Full)
     radar.attach(router, settings, Conn, Full)
+    instagram.attach(router, settings, Conn, Full)
 
     return router

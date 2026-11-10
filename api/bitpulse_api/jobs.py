@@ -26,7 +26,7 @@ from pathlib import Path
 from typing import Any
 
 from . import content as story_text
-from . import notify, social, store
+from . import notify, store
 from .config import Settings
 from .db import connect
 from .radar import store as radar_store
@@ -135,9 +135,9 @@ def tick(conn: sqlite3.Connection, settings: Settings) -> None:
         _dispatch(conn, settings, queued)
 
 
-# Old radar events and social files are thrown away so neither the table nor the disk keeps growing.
+# Old radar events are thrown away so the table does not keep growing.
 def prune_old(conn: sqlite3.Connection, settings: Settings) -> None:
-    """Removes radar events and social files older than a month.
+    """Removes radar events older than a month.
 
     Args:
         conn: Open connection.
@@ -146,7 +146,6 @@ def prune_old(conn: sqlite3.Connection, settings: Settings) -> None:
     moment = datetime.now(timezone.utc) - KEEP
     with conn:
         radar_store.prune(conn, moment.isoformat(timespec="seconds"))
-    social.prune(conn, settings, moment.strftime("%Y-%m-%d %H:%M"))
 
 
 # A failing round is logged and the loop goes on, one bad job must not stop every later publish.
