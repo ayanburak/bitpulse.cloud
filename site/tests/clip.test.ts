@@ -28,7 +28,7 @@ describe("buildClip", () => {
   });
 
   it.each([
-    [{ ...BASE, text: "x".repeat(121) }, "limit is 120"],
+    [{ ...BASE, text: "x".repeat(71) }, "limit is 70"],
     [{ ...BASE, caption: "A caption — with a dash." }, "dash"],
     [{ ...BASE, source: "not an address" }, "invalid source"],
     [{ ...BASE, end: 10 }, "end must come after start"],

@@ -37,7 +37,7 @@ const TEXT_TOP = 680;
 
 // The page sits 285 pixels below the top of the still video, half of the 570 left over.
 export const FRAME_PAD = "pad=1080:1920:0:285:color=0x141513,format=yuv420p";
-const STILL_SECONDS = 6;
+const STILL_SECONDS = 3;
 
 // --- Browser ---
 
@@ -109,7 +109,7 @@ export function runFfmpeg(args: string[]): void {
 }
 
 /**
- * Saves a page as a silent vertical video of six seconds in which nothing moves.
+ * Saves a page as a silent vertical video of three seconds in which nothing moves.
  *
  * @param png The page.
  * @param out Where the mp4 is written.

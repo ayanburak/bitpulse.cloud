@@ -55,8 +55,8 @@ def test_old_stories_never_reach_the_ranking(tmp_path):
     assert db.execute("select count(*) from clusters where sent is null").fetchone()[0] == 0
 
 
-def score(cluster: int, value: int = 8, category: str = "world", duplicate: int | None = None) -> Score:
-    return Score(id=cluster, importance=value, shareable=value, visual=value, category=category, duplicate_of=duplicate, reason="Why")
+def score(cluster: int, value: int = 8, category: str = "world", duplicate: int | None = None, in_scope: bool = True) -> Score:
+    return Score(id=cluster, in_scope=in_scope, impact=value, tension=value, visual=value, category=category, duplicate_of=duplicate)
 
 
 def fake_model(*events: Score) -> SimpleNamespace:
@@ -98,15 +98,6 @@ def four_events(db) -> list[int]:
     return [add_item(db, Source(name, "", ""), entry(title, f"https://{name}.com/1"), NOW) for name, title in zip("WSTU", titles)]
 
 
-def test_subject_feeds_keep_their_seats_beyond_the_shortlist(tmp_path, monkeypatch):
-    db = connect(str(tmp_path / "r.db"))
-    four_events(db)
-    monkeypatch.setattr(ranking, "SHORTLIST", 1)
-    monkeypatch.setattr(ranking, "TOPIC_SEATS", 1)
-    rows = shortlist(db, {"W": "Europe", "S": "Science", "T": "Science", "U": "Europe"}, NOW)
-    assert len(rows) == 2 and "Parliament" not in rows[1]["title"]
-
-
 def test_the_long_request_carries_its_own_timeout(tmp_path):
     db = connect(str(tmp_path / "r.db"))
     cluster = four_events(db)[0]
@@ -120,51 +111,63 @@ def test_the_long_request_carries_its_own_timeout(tmp_path):
     assert asked[0]["timeout"] == ranking.REQUEST_SECONDS
 
 
-EVENING = NOW.replace(hour=18)
-
-
-def test_the_evening_round_fills_every_empty_category(tmp_path):
-    db = connect(str(tmp_path / "r.db"))
-    first, second, third, _ = four_events(db)
-    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 2, "science"), score(second, 4, "science"), score(third, 3, "technology")))
-    sent = []
-    ranking.rank(db, collect(sent), now=EVENING, client=None)
-    assert sent == [second, third]
-
-
-def test_a_category_with_a_story_today_is_not_filled(tmp_path):
-    db = connect(str(tmp_path / "r.db"))
-    first, second, _, _ = four_events(db)
-    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 8, "science"), score(second, 4, "science")))
-    db.execute("update clusters set sent = ? where id = ?", (NOW.replace(hour=13).isoformat(timespec="seconds"), first))
-    db.commit()
-    sent = []
-    ranking.rank(db, collect(sent), now=EVENING, client=None)
-    assert sent == []
-
-
-def test_other_rounds_never_fill_a_category(tmp_path):
-    db = connect(str(tmp_path / "r.db"))
-    first = four_events(db)[0]
-    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first, 2, "science")))
-    sent = []
-    ranking.rank(db, collect(sent), now=NOW.replace(hour=17), client=None)
-    assert sent == []
-
-
-def test_an_event_is_scored_again_only_after_it_grows(tmp_path):
+def test_an_event_is_scored_once_even_when_it_grows(tmp_path):
     db = connect(str(tmp_path / "r.db"))
     cluster = add_item(db, Source("A", "", ""), entry("Giant pandas debut at Atlanta zoo", "https://a.com/1"), NOW)
     ranking.rank(db, collect([]), now=NOW, client=fake_model(score(cluster, value=4)))
-    assert shortlist(db, {}, NOW) == []
     add_item(db, Source("B", "", ""), entry("China giant pandas debut in Atlanta zoo", "https://b.com/2"), NOW)
-    assert [row["id"] for row in shortlist(db, {}, NOW)] == [cluster]
+    assert shortlist(db, NOW) == []
+
+
+def test_an_event_the_model_left_out_is_not_asked_again(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    one = add_item(db, Source("A", "", ""), entry("Giant pandas debut at Atlanta zoo", "https://a.com/1"), NOW)
+    ranking.rank(db, collect([]), now=NOW, client=fake_model())
+    assert shortlist(db, NOW) == [] and ranking.reserve(db, set(), NOW) == []
+
+
+def test_an_event_outside_the_covered_countries_is_never_sent(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    cluster = add_item(db, Source("A", "", ""), entry("Giant pandas debut at Atlanta zoo", "https://a.com/1"), NOW)
+    sent = []
+    ranking.rank(db, collect(sent), now=NOW, client=fake_model(score(cluster, value=10, in_scope=False)))
+    assert sent == [] and db.execute("select importance from clusters").fetchone()[0] == 0
+
+
+def test_a_big_round_goes_in_parts_that_see_each_other(tmp_path, monkeypatch):
+    monkeypatch.setattr(ranking, "PART_EVENTS", 2)
+    db = connect(str(tmp_path / "r.db"))
+    ids = four_events(db)
+    asked = []
+
+    def parse(**kwargs):
+        content = kwargs["messages"][0]["content"]
+        asked.append(content)
+        listed = [number for number in ids if f"[{number}] " in content.split("Events to score:")[1]]
+        return SimpleNamespace(stop_reason="end_turn", parsed_output=Scores(events=[score(number, 4) for number in listed]),
+                               usage=SimpleNamespace(input_tokens=1, output_tokens=1))
+
+    ranking.rank(db, collect([]), now=NOW, client=SimpleNamespace(messages=SimpleNamespace(parse=parse)))
+    assert len(asked) == 2 and "Giant pandas" in asked[1].split("Events to score:")[0]
+
+
+def test_a_part_stays_below_the_budget_but_never_comes_out_empty():
+    assert ranking.take(["x" * 60, "x" * 60, "x" * 60], 0, 130) == 2
+    assert ranking.take(["x" * 200], 0, 130) == 1
+
+
+def test_a_busy_day_keeps_only_the_newest_titles(tmp_path, monkeypatch):
+    monkeypatch.setattr(ranking, "KNOWN_CHARACTERS", 60)
+    db = connect(str(tmp_path / "r.db"))
+    ids = four_events(db)
+    db.execute("update clusters set scored_at = ?", (NOW.isoformat(timespec="seconds"),))
+    assert [row["id"] for row in ranking.seen_today(db, NOW)] == ids[-1:]
 
 
 def test_live_blogs_never_reach_the_model(tmp_path):
     db = connect(str(tmp_path / "r.db"))
     add_item(db, Source("A", "", ""), entry("Live: Piastri starts tenth in Brazil", "https://a.com/1"), NOW)
-    assert shortlist(db, {}, NOW) == []
+    assert shortlist(db, NOW) == []
 
 
 def test_duplicates_move_their_stories_to_the_surviving_event(tmp_path):
@@ -516,7 +519,7 @@ def test_a_panel_decision_updates_the_post_and_leaves_the_running(tmp_path, fake
     telegram.run_work(db)
     assert telegram_calls[0][1]["reply_markup"]["inline_keyboard"][0][0]["text"] == "Skip ✓"
     assert ("POST", f"/radar/events/{number}/seen", None) in fake_api.calls
-    assert db.execute("select sent from clusters").fetchone()[0] and shortlist(db, {}, NOW) == []
+    assert db.execute("select sent from clusters").fetchone()[0] and shortlist(db, NOW) == []
 
 
 def test_an_event_that_never_had_a_post_is_just_acknowledged(tmp_path, fake_api, telegram_calls):
@@ -576,3 +579,15 @@ def test_one_failing_item_does_not_stop_the_others(tmp_path, fake_api, telegram_
 def test_without_a_key_the_poll_does_no_panel_work(tmp_path, monkeypatch):
     monkeypatch.delenv("RADAR_API_KEY", raising=False)
     telegram.run_work(connect(str(tmp_path / "r.db")))
+
+
+def test_a_follow_up_merges_into_a_story_sent_days_ago(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    first = add_item(db, Source("A", "", ""), entry("House opens impeachment of defence secretary", "https://a.com/1"), NOW)
+    ranking.rank(db, collect([]), now=NOW, client=fake_model(score(first)))
+    later = NOW + timedelta(days=2)
+    second = add_item(db, Source("B", "", ""), entry("Pentagon chief faces floor vote", "https://b.com/2", hours_ago=-47), later)
+    sent = []
+    ranking.rank(db, collect(sent), now=later, client=fake_model(score(second, duplicate=first)))
+    assert sent == []
+    assert db.execute("select merged_into from clusters where id = ?", (second,)).fetchone()[0] == first

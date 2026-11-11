@@ -69,6 +69,11 @@ const PAGE_LIMIT = 300;
 const SHORT_PAGES_SINCE = "2026-11-07";
 const SHORT_PAGE_LIMIT = 120;
 
+// From 2026-11-12 the sentence is cut to what a scrolling reader takes in at a glance, because the
+// longer limit let dates, numbers and second causes crowd out the fact that makes a reader stop.
+const TIGHT_PAGES_SINCE = "2026-11-12";
+const TIGHT_PAGE_LIMIT = 70;
+
 // Instagram allows twenty pages in one post and cuts captions at 2,200 characters.
 const MAX_PAGES = 20;
 const CAPTION_LIMIT = 2200;
@@ -120,7 +125,7 @@ function readPosition(value: unknown, where: string): string {
 }
 
 // The text of a page is written as one block, with an empty line between its paragraphs.
-function readPages(value: unknown, where: string, short: boolean, most: number): SocialPage[] {
+function readPages(value: unknown, where: string, short: boolean, limit: number, most: number): SocialPage[] {
   if (!Array.isArray(value) || value.length === 0) throw new Error(`${where}: missing pages`);
   if (value.length > most) throw new Error(`${where}: more than ${most} page${most > 1 ? "s" : ""}`);
   return value.map((page, index) => {
@@ -132,7 +137,6 @@ function readPages(value: unknown, where: string, short: boolean, most: number):
     const parts = short ? 1 : MAX_PARAGRAPHS;
     if (paragraphs.length > parts) throw new Error(`${at}: more than ${parts} paragraph${parts > 1 ? "s" : ""}`);
     const length = paragraphs.join(" ").length;
-    const limit = short ? SHORT_PAGE_LIMIT : PAGE_LIMIT;
     if (length > limit) throw new Error(`${at}: text is ${length} characters, the limit is ${limit}`);
     return { image: httpUrl(page.image, "image", at), credit: text(page.credit, "credit", at), position: readPosition(page.position, at), paragraphs };
   });
@@ -175,7 +179,8 @@ export function buildSocial(raw: string, story: Story): SocialPost {
   if (length > X_LIMIT) throw new Error(`${where}: X post is ${length} characters with the link, the limit is ${X_LIMIT}`);
 
   const day = story.key.slice(0, 10);
-  const pages = readPages(data.pages, where, day >= SHORT_PAGES_SINCE, day >= ONE_PAGE_SINCE ? 1 : MAX_PAGES);
+  const limit = day >= TIGHT_PAGES_SINCE ? TIGHT_PAGE_LIMIT : day >= SHORT_PAGES_SINCE ? SHORT_PAGE_LIMIT : PAGE_LIMIT;
+  const pages = readPages(data.pages, where, day >= SHORT_PAGES_SINCE, limit, day >= ONE_PAGE_SINCE ? 1 : MAX_PAGES);
   if (day >= PLAIN_SINCE) {
     pages.forEach((page, index) => requirePlain(page.paragraphs.join(" "), `page ${index + 1}`, where));
     requirePlain(text(data.caption, "caption", where), "caption", where);
@@ -210,7 +215,7 @@ export function buildClip(raw: string, where: string): ClipPost {
   if (unknown) throw new Error(`${where}: unknown field: ${unknown}`);
 
   const page = text(data.text, "text", where).replace(/\s+/g, " ");
-  if (page.length > SHORT_PAGE_LIMIT) throw new Error(`${where}: text is ${page.length} characters, the limit is ${SHORT_PAGE_LIMIT}`);
+  if (page.length > TIGHT_PAGE_LIMIT) throw new Error(`${where}: text is ${page.length} characters, the limit is ${TIGHT_PAGE_LIMIT}`);
   const body = text(data.caption, "caption", where);
   requirePlain(page, "text", where);
   requirePlain(body, "caption", where);

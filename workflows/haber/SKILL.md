@@ -23,7 +23,7 @@ The file is read once. The topic, the number of sources, the sources that could 
 
 ## 2. The folder
 
-A short English key is chosen. The image is the largest of the `Image:` lines in the brief that best shows the event. When no image fits, the editor is asked.
+A short English key is chosen. The image is the largest of the `Image:` lines in the brief that best shows the event. When no image fits, the editor is asked. Its caption is read when the page can be opened, to rule out an archive photo of another event. When the caption cannot be read, the image is credited to the outlet that published it and the work goes on. Image rights are never a reason to stop, the rule is in docs/editorial-policy.md Images.
 
 ```bash
 npm run -s new-story --prefix site -- <key> <image address> ~/.cache/bitpulse-radar/briefs/R-0493.md
@@ -62,9 +62,9 @@ Principles of verification:
 
 No video is searched for or suggested.
 
-The Instagram post is one page: one short sentence of at most 120 characters, and the rest of the information goes to the caption. `npm run social` also saves this page as a silent `post.mp4`. The rule is in `docs/social-posts.md` and the tests check it too.
+The Instagram post is one page: one short sentence of at most 70 characters, and the rest of the information goes to the caption. `npm run social` also saves this page as a silent `post.mp4`. The rule is in `docs/social-posts.md` and the tests check it too.
 
-The page image is never guessed from its address. The images in the brief and on the source pages are downloaded and looked at, and the one that shows what the page says is chosen. Its date, place and owner are confirmed from the caption on the source page, the name of the publisher alone is not a credit. A file name or caption that points to another event, such as an archive photo, rules it out. A larger version of the same photo is looked for by trying a bigger size in the address, such as `1200x675`. The page is 1080 by 1350, so at least 1350 pixels of height is good.
+The page image is never guessed from its address. The images in the brief and on the source pages are downloaded and looked at, and the one that shows what the page says is chosen. Its caption is read when the page can be opened, to rule out an archive photo of another event. A file name or caption that points to another event rules it out. When the caption cannot be read, the image is credited to the outlet that published it and the work goes on. Image rights are never a reason to stop, the rule is in docs/editorial-policy.md Images. A larger version of the same photo is looked for by trying a bigger size in the address, such as `1200x675`. The page is 1080 by 1350, so at least 1350 pixels of height is good.
 
 The `Agent` call uses `model: haiku`:
 
@@ -78,7 +78,7 @@ Nobody is asked before this check. The workflow runs without a stop up to the tr
 
 The `Agent` call uses `model: opus`:
 
-> Read <folder>/en.md, <folder>/tr.md, <folder>/social.yaml and the brief at <brief path>. Check only the short texts: title and summary in both language files, and the x, page text and caption fields of social.yaml. Compare every sentence of them with the story body and the brief. Report each statement that the body or the brief does not support, that is stronger or weaker than its source, that gives a claim to the wrong speaker, or that a reader could misread without the body. Quote the sentence and the source passage it should match. If everything holds, answer in one line: No problems found. Do not edit any file.
+> Read <folder>/en.md, <folder>/tr.md, <folder>/social.yaml and the brief at <brief path>. Check only the short texts: title and summary in both language files, and the x, page text and caption fields of social.yaml. Compare every sentence of them with the story body and the brief. Report each statement that the body or the brief does not support, that is stronger or weaker than its source, that gives a claim to the wrong speaker, or that a reader could misread without the body. A fact left out of a short text is not a finding, the short texts hold back on purpose and the body gives the rest. Quote the sentence and the source passage it should match. If everything holds, answer in one line: No problems found. Do not edit any file.
 
 Each problem found is fixed in both languages together, and the check in step 4 runs again.
 

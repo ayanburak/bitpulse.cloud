@@ -6,7 +6,9 @@ The radar listens to world news feeds for Bitpulse and sends the editor a few go
 
 Every few minutes `radar listen` reads the feeds in `sources.toml`. A new story is stored once and joins a cluster with the other stories about the same event, matched by the words of their titles. When five separate outlets report the same event within ninety minutes, it is sent at once as a big event.
 
-Every hour inside the editor's hours, `radar rank` collects the clusters of the last day that have not been sent yet and asks Claude Haiku to score them. A cluster that more outlets picked up since its last score is scored again. Only events above a fixed bar are sent, so a weak hour sends nothing, and each round sends at most two events per category. The round at 18:00 UTC also sends the best waiting event of every category that had nothing that day, whatever its score, so no subject goes missing for a day. An event that passes the bar but loses its place waits and competes again in the following rounds, without another call to the model. The first round of the day covers the night and may send a few more. Subject feeds such as science and technology keep twenty seats each on top of the hundred strongest events, because a story from a single outlet would otherwise never be read. The model reads only titles, outlet names and short summaries, and the editor's earlier Do and Skip answers are not sent to it.
+Every hour, day and night, `radar rank` sends each new event of the last day to Claude Haiku once. The events go in parts small enough to keep every request cheap. For each event the model answers four questions. Is it about the countries the site covers, or does it touch them directly? Does something change? Is there a clash, a surprise or a known name? Can a picture tell it? An event outside the covered countries is dropped. The others get a score in which change counts most, tension nearly as much and the picture least. The number of outlets is not part of the score and only breaks a tie. The model also gets the titles of every event it scored that day and of the events sent in the last three days, so pieces of one story that the title matching split apart are merged and a follow-up of a story already sent is not sent again.
+
+Only events above a fixed bar are sent, so a weak hour sends nothing, and each round sends at most two events per category. An event that passes the bar but loses its place waits and competes again in the following rounds, without another call to the model. The model reads only titles, outlet names and short summaries, and the editor's earlier Do and Skip answers are not sent to it.
 
 `radar poll` runs all the time and records each Do and Skip on the Bitpulse API, which is the only place a decision is kept. Each ranking round also copies its events, with their scores and the stage they reached, to the API, so the admin panel can show what was sent and what was left out. The same loop does what the panel asks for: it updates the Telegram post of a decision made there, opens a link added there and writes briefs. A Do answer gives the cluster number, such as R-0142, and `radar show R-0142` prints every story of that cluster with its link, which is where the writing starts.
 
@@ -26,7 +28,7 @@ uv run radar show R-0142
 uv run pytest
 ```
 
-Sending needs the values below in the environment, `RADAR_HOURS` is optional. They are never written into this repository.
+Sending needs the values below in the environment. They are never written into this repository.
 
 | Variable | Meaning |
 |---|---|
@@ -34,6 +36,5 @@ Sending needs the values below in the environment, `RADAR_HOURS` is optional. Th
 | `TELEGRAM_CHAT_ID` | The editor's chat, found once with `radar chat-id` after writing to the bot |
 | `ANTHROPIC_API_KEY` | API key used by the ranking |
 | `RADAR_API_KEY` | Key of the Bitpulse API, limited to the radar routes |
-| `RADAR_HOURS` | Editor's hours in UTC, `06-22` by default |
 
 Without `TELEGRAM_TOKEN`, big events are only printed, which keeps a development machine quiet.

@@ -76,6 +76,14 @@ The X post and the caption tell the news, not the story around it. They have no 
 
 The Instagram page is a hook. A person scrolling past sees it for a moment and decides whether to stop. A hook does not summarize the news. It gives the one fact from the story that makes someone stop and want the rest, the most surprising, unexpected or striking part, in one short sentence. It is understood by someone who knows nothing about the story, so it names what it is about in everyday words and uses no term that the story only explains later. It says nothing the story does not say and makes nothing bigger than the story does.
 
+The hook is written for a stranger, not for someone who has read the story. The person scrolling has never heard of the event, so the sentence starts with the event or the person who acted, never with a source such as The Wall Street Journal reports or officials say. It opens with the name that catches the eye most, such as a war, a famous person, a country or a company. It gives one fact, and dates, numbers, firsts and second causes go to the caption. Doubt is kept in one word, such as could or may. It uses simple everyday words and no term from inside the story, such as memo or articles of impeachment. Leaving a fact out of the hook is never a mistake, only saying something the story does not say is. Its aim is to make the reader open the caption, where the news is told. The caption gives the news in one or two short paragraphs and leaves the rest to the story on the site.
+
+| Weak | Strong |
+|---|---|
+| The Wall Street Journal reports that US aircraft left RAF Mildenhall. | The US military is moving its planes out of a British base. |
+| Trump says he does not recall reading a memo from Rubio. | Trump says he never read Rubio's warning. |
+| Fossil fuel emissions are set to fall for the first time since 2020, partly because of the Iran war. | The Iran war could help cut fossil fuel emissions. |
+
 A post never asks the reader to click and never sounds more dramatic than the story. Only a hook holds back part of the news, and the rest of the post gives it.
 
 ## Before publishing

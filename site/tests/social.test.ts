@@ -83,6 +83,7 @@ it("takes a position for a photo whose subject is off center", () => {
 // The same story under a later folder name, so the rule for pages from 7 November applies to it.
 // The name sits in its own constant for the same reason as FOLDER above.
 const LATER_FOLDER = "2026-11-07-hera-dimorphos";
+const TIGHT_FOLDER = "2026-11-12-hera-dimorphos";
 
 describe("pages from 7 November", () => {
   const later = { ...HERA, key: LATER_FOLDER };
@@ -97,6 +98,13 @@ describe("pages from 7 November", () => {
     expect(() => buildSocial(two, later)).toThrow("more than 1 paragraph");
     expect(() => buildSocial(two, HERA)).not.toThrow();
     expect(() => buildSocial(page("word ".repeat(30).trim()), later)).toThrow("the limit is 120");
+  });
+
+  it("from 12 November take at most 70 characters", () => {
+    const tight = { ...HERA, key: TIGHT_FOLDER };
+    expect(() => buildSocial(page("The Iran war could help cut fossil fuel emissions."), tight)).not.toThrow();
+    expect(() => buildSocial(page("Fossil fuel emissions are set to fall for the first time since 2020, partly due to war."), tight)).toThrow("the limit is 70");
+    expect(() => buildSocial(page("Fossil fuel emissions are set to fall for the first time since 2020, partly due to war."), later)).not.toThrow();
   });
 });
 

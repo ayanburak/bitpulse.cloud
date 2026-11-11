@@ -16,7 +16,7 @@ importable: main, run as radar <command> or python -m radar <command>
     radar sources         print the state of every feed
     radar chat-id         list the chats that wrote to the bot, used once during setup
 
-On the server, listen runs every few minutes, rank every hour inside the editor's hours,
+On the server, listen runs every few minutes, rank every hour of the day and night,
 and poll runs all the time.
 
 description: Command line entry of the radar.
@@ -42,15 +42,6 @@ from radar.store import connect, meta, set_meta
 def regions(path: str) -> dict[str, str]:
     return {source.name: source.region for source in listening.load_sources(path)}
 
-# --- Hours ---
-
-# The editor's waking hours in UTC, written as 06-22. Big events outside them wait for the
-# morning round, which ranks everything that came in during the night.
-def awake(now: datetime) -> bool:
-    start, end = (int(part) for part in os.environ.get("RADAR_HOURS", "06-22").split("-"))
-    return start <= now.hour < end
-
-
 # --- Commands ---
 
 def cmd_listen(args) -> None:
@@ -62,8 +53,6 @@ def cmd_listen(args) -> None:
     if "TELEGRAM_TOKEN" not in os.environ:
         for cluster in big:
             print(f"big event R-{cluster['id']:04d} {cluster['title']}")
-        return
-    if not awake(now):
         return
     for cluster in big:
         telegram.send_cluster(db, cluster, label="BIG EVENT")

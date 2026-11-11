@@ -72,7 +72,7 @@ def send_cluster(db: sqlite3.Connection, cluster: sqlite3.Row, reason: str = "",
     Args:
         db: Open radar database.
         cluster: Row from the clusters table.
-        reason: One line from the ranking on why this story is worth a look.
+        reason: The scores the ranking gave the story.
         label: Short tag in front of the title, such as BIG EVENT.
     """
     items = db.execute(

@@ -50,7 +50,7 @@ def advance(source: sqlite3.Connection, db: sqlite3.Connection, moment: str, day
     db.commit()
 
 
-def replay(path: str, day: str, regions: dict[str, str], start: int = 6, end: int = 22, client=None) -> list[tuple[str, sqlite3.Row, str]]:
+def replay(path: str, day: str, regions: dict[str, str], start: int = 0, end: int = 23, client=None) -> list[tuple[str, sqlite3.Row, str]]:
     """
     Runs one round for every hour of a day.
 

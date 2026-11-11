@@ -38,7 +38,7 @@ The footage must show the event the post names, and the rules on graphic content
 ```yaml
 source: https://the.link/the/editor/gave
 credit: Owner as the site names it
-text: One plain sentence of at most 120 characters for the page.
+text: One plain sentence of at most 70 characters for the page.
 caption: The news in plain sentences.
 start: 22
 end: 58
