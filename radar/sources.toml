@@ -1,6 +1,8 @@
-# Every feed the radar listens to. Each one was opened and checked on 2026-11-07.
-# The list spans regions and sides on purpose, because a story seen from one place only is not
-# a neutral starting point. State media are marked so the editor knows what they are.
+# Every feed the radar listens to. Each one was opened and checked on 2026-11-11.
+# The share of each region is measured by the number of stories, not the number of feeds.
+# Inside every region, outlets known on the left and on the right are listed together,
+# because a story seen from one side only is not a neutral starting point.
+# State media are marked so the editor knows what they are.
 
 [[source]]
 name = "BBC World"
@@ -13,24 +15,229 @@ url = "https://feeds.bbci.co.uk/news/business/rss.xml"
 region = "Europe"
 
 [[source]]
-name = "BBC Technology"
-url = "https://feeds.bbci.co.uk/news/technology/rss.xml"
+name = "Sky News"
+url = "https://feeds.skynews.com/feeds/rss/home.xml"
 region = "Europe"
 
 [[source]]
-name = "BBC Science"
-url = "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml"
+name = "The Guardian World"
+url = "https://www.theguardian.com/world/rss"
 region = "Europe"
 
 [[source]]
-name = "BBC Health"
-url = "https://feeds.bbci.co.uk/news/health/rss.xml"
+name = "GB News"
+url = "https://www.gbnews.com/feeds/news.rss"
 region = "Europe"
 
 [[source]]
-name = "BBC Sport"
-url = "https://feeds.bbci.co.uk/sport/rss.xml"
+name = "Daily Express World"
+url = "https://www.express.co.uk/posts/rss/78/world"
 region = "Europe"
+
+[[source]]
+name = "The Irish Times"
+url = "https://www.irishtimes.com/arc/outboundfeeds/feed-irish-news/"
+region = "Europe"
+
+[[source]]
+name = "DW"
+url = "https://rss.dw.com/rdf/rss-en-all"
+region = "Europe"
+
+[[source]]
+name = "France 24"
+url = "https://www.france24.com/en/rss"
+region = "Europe"
+
+[[source]]
+name = "Le Monde in English"
+url = "https://www.lemonde.fr/en/rss/une.xml"
+region = "Europe"
+
+[[source]]
+name = "Euronews"
+url = "https://www.euronews.com/rss"
+region = "Europe"
+
+[[source]]
+name = "Politico Europe"
+url = "https://www.politico.eu/feed/"
+region = "Europe"
+
+[[source]]
+name = "ANSA English"
+url = "https://www.ansa.it/english/news/english_nr_rss.xml"
+region = "Europe"
+
+[[source]]
+name = "Notes from Poland"
+url = "https://notesfrompoland.com/feed/"
+region = "Europe"
+
+[[source]]
+name = "Kyiv Independent"
+url = "https://kyivindependent.com/news-archive/rss/"
+region = "Europe"
+
+[[source]]
+name = "The New York Times"
+url = "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+region = "North America"
+
+[[source]]
+name = "The New York Times World"
+url = "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+region = "North America"
+
+[[source]]
+name = "The Washington Post National"
+url = "https://feeds.washingtonpost.com/rss/national"
+region = "North America"
+
+[[source]]
+name = "The Washington Post World"
+url = "https://feeds.washingtonpost.com/rss/world"
+region = "North America"
+
+[[source]]
+name = "NPR"
+url = "https://feeds.npr.org/1001/rss.xml"
+region = "North America"
+
+[[source]]
+name = "The Guardian US"
+url = "https://www.theguardian.com/us-news/rss"
+region = "North America"
+
+[[source]]
+name = "The Hill"
+url = "https://thehill.com/feed/"
+region = "North America"
+
+[[source]]
+name = "Axios"
+url = "https://api.axios.com/feed/"
+region = "North America"
+
+[[source]]
+name = "CNBC World"
+url = "https://www.cnbc.com/id/100727362/device/rss/rss.html"
+region = "North America"
+
+[[source]]
+name = "ABC News"
+url = "https://abcnews.go.com/abcnews/topstories"
+region = "North America"
+
+[[source]]
+name = "Fox News US"
+url = "https://moxie.foxnews.com/google-publisher/us.xml"
+region = "North America"
+
+[[source]]
+name = "Fox News Politics"
+url = "https://moxie.foxnews.com/google-publisher/politics.xml"
+region = "North America"
+
+[[source]]
+name = "Fox News World"
+url = "https://moxie.foxnews.com/google-publisher/world.xml"
+region = "North America"
+
+[[source]]
+name = "The Daily Wire"
+url = "https://www.dailywire.com/feeds/rss.xml"
+region = "North America"
+
+[[source]]
+name = "National Review"
+url = "https://www.nationalreview.com/feed/"
+region = "North America"
+
+[[source]]
+name = "Reason"
+url = "https://reason.com/feed/"
+region = "North America"
+
+[[source]]
+name = "CBC World"
+url = "https://www.cbc.ca/webfeed/rss/rss-world"
+region = "North America"
+
+[[source]]
+name = "The Globe and Mail World"
+url = "https://www.theglobeandmail.com/arc/outboundfeeds/rss/category/world/"
+region = "North America"
+
+[[source]]
+name = "The Korea Herald"
+url = "https://www.koreaherald.com/rss/newsAll"
+region = "East Asia"
+
+[[source]]
+name = "The Japan Times"
+url = "https://www.japantimes.co.jp/feed/"
+region = "East Asia"
+
+[[source]]
+name = "The Mainichi"
+url = "https://mainichi.jp/rss/etc/english_latest.rss"
+region = "East Asia"
+
+[[source]]
+name = "South China Morning Post"
+url = "https://www.scmp.com/rss/91/feed"
+region = "China"
+
+[[source]]
+name = "South China Morning Post China"
+url = "https://www.scmp.com/rss/4/feed"
+region = "China"
+
+[[source]]
+name = "South China Morning Post Asia"
+url = "https://www.scmp.com/rss/3/feed"
+region = "China"
+
+[[source]]
+name = "CGTN, Chinese state media"
+url = "https://www.cgtn.com/subscribe/rss/section/world.xml"
+region = "China"
+
+[[source]]
+name = "Hong Kong Free Press"
+url = "https://hongkongfp.com/feed/"
+region = "China"
+
+[[source]]
+name = "The Diplomat"
+url = "https://thediplomat.com/feed/"
+region = "China"
+
+[[source]]
+name = "Al Jazeera, Qatari state media"
+url = "https://www.aljazeera.com/xml/rss/all.xml"
+region = "Middle East"
+
+[[source]]
+name = "Haaretz"
+url = "https://www.haaretz.com/srv/haaretz-latest-headlines"
+region = "Middle East"
+
+[[source]]
+name = "The Jerusalem Post"
+url = "https://www.jpost.com/rss/rssfeedsfrontpage.aspx"
+region = "Middle East"
+
+[[source]]
+name = "Iran International"
+url = "https://www.iranintl.com/en/feed"
+region = "Middle East"
+
+[[source]]
+name = "ABC Australia"
+url = "https://www.abc.net.au/news/feed/51120/rss.xml"
+region = "Oceania"
 
 [[source]]
 name = "BBC Africa"
@@ -46,233 +253,3 @@ region = "Latin America"
 name = "BBC Asia"
 url = "https://feeds.bbci.co.uk/news/world/asia/rss.xml"
 region = "Asia"
-
-[[source]]
-name = "The Guardian World"
-url = "https://www.theguardian.com/world/rss"
-region = "Europe"
-
-[[source]]
-name = "The Guardian Science"
-url = "https://www.theguardian.com/science/rss"
-region = "Europe"
-
-[[source]]
-name = "The Guardian Technology"
-url = "https://www.theguardian.com/technology/rss"
-region = "Europe"
-
-[[source]]
-name = "The Guardian Culture"
-url = "https://www.theguardian.com/culture/rss"
-region = "Europe"
-
-[[source]]
-name = "The Guardian Sport"
-url = "https://www.theguardian.com/sport/rss"
-region = "Europe"
-
-[[source]]
-name = "DW"
-url = "https://rss.dw.com/rdf/rss-en-all"
-region = "Europe"
-
-[[source]]
-name = "France 24"
-url = "https://www.france24.com/en/rss"
-region = "Europe"
-
-[[source]]
-name = "Euronews"
-url = "https://www.euronews.com/rss"
-region = "Europe"
-
-[[source]]
-name = "Politico Europe"
-url = "https://www.politico.eu/feed/"
-region = "Europe"
-
-[[source]]
-name = "Ukrinform"
-url = "https://www.ukrinform.net/rss/block-lastnews"
-region = "Europe"
-
-[[source]]
-name = "Kyiv Independent"
-url = "https://kyivindependent.com/news-archive/rss/"
-region = "Europe"
-
-[[source]]
-name = "The Moscow Times"
-url = "https://www.themoscowtimes.com/rss/news"
-region = "Europe"
-
-[[source]]
-name = "TASS, Russian state media"
-url = "https://tass.com/rss/v2.xml"
-region = "Europe"
-
-[[source]]
-name = "NPR"
-url = "https://feeds.npr.org/1001/rss.xml"
-region = "North America"
-
-[[source]]
-name = "CNBC World"
-url = "https://www.cnbc.com/id/100727362/device/rss/rss.html"
-region = "North America"
-
-[[source]]
-name = "Google News"
-url = "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"
-region = "North America"
-
-[[source]]
-name = "Al Jazeera"
-url = "https://www.aljazeera.com/xml/rss/all.xml"
-region = "Middle East"
-
-[[source]]
-name = "Haaretz"
-url = "https://www.haaretz.com/srv/haaretz-latest-headlines"
-region = "Middle East"
-
-[[source]]
-name = "The Jerusalem Post"
-url = "https://www.jpost.com/rss/rssfeedsfrontpage.aspx"
-region = "Middle East"
-
-[[source]]
-name = "Africanews"
-url = "https://www.africanews.com/feed/rss"
-region = "Africa"
-
-[[source]]
-name = "AllAfrica"
-url = "https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf"
-region = "Africa"
-
-[[source]]
-name = "MercoPress"
-url = "https://en.mercopress.com/rss"
-region = "Latin America"
-
-[[source]]
-name = "The Rio Times"
-url = "https://www.riotimesonline.com/feed/"
-region = "Latin America"
-
-[[source]]
-name = "Times of India World"
-url = "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms"
-region = "Asia"
-
-[[source]]
-name = "The Hindu International"
-url = "https://www.thehindu.com/news/international/feeder/default.rss"
-region = "Asia"
-
-[[source]]
-name = "South China Morning Post"
-url = "https://www.scmp.com/rss/91/feed"
-region = "Asia"
-
-[[source]]
-name = "CGTN, Chinese state media"
-url = "https://www.cgtn.com/subscribe/rss/section/world.xml"
-region = "Asia"
-
-[[source]]
-name = "The Japan Times"
-url = "https://www.japantimes.co.jp/feed/"
-region = "Asia"
-
-[[source]]
-name = "The Korea Herald"
-url = "https://www.koreaherald.com/rss/newsAll"
-region = "Asia"
-
-[[source]]
-name = "The Straits Times"
-url = "https://www.straitstimes.com/news/world/rss.xml"
-region = "Asia"
-
-[[source]]
-name = "ABC Australia"
-url = "https://www.abc.net.au/news/feed/51120/rss.xml"
-region = "Oceania"
-
-[[source]]
-name = "The Verge"
-url = "https://www.theverge.com/rss/index.xml"
-region = "Technology"
-
-[[source]]
-name = "Ars Technica"
-url = "https://feeds.arstechnica.com/arstechnica/index"
-region = "Technology"
-
-[[source]]
-name = "TechCrunch"
-url = "https://techcrunch.com/feed/"
-region = "Technology"
-
-[[source]]
-name = "Engadget"
-url = "https://www.engadget.com/rss.xml"
-region = "Technology"
-
-[[source]]
-name = "Space.com"
-url = "https://www.space.com/feeds/all"
-region = "Science"
-
-[[source]]
-name = "NASA"
-url = "https://www.nasa.gov/news-release/feed/"
-region = "Science"
-
-[[source]]
-name = "New Scientist"
-url = "https://www.newscientist.com/feed/home/"
-region = "Science"
-
-[[source]]
-name = "Phys.org"
-url = "https://phys.org/rss-feed/"
-region = "Science"
-
-[[source]]
-name = "ScienceDaily"
-url = "https://www.sciencedaily.com/rss/all.xml"
-region = "Science"
-
-[[source]]
-name = "STAT"
-url = "https://www.statnews.com/feed/"
-region = "Health"
-
-[[source]]
-name = "ESPN"
-url = "https://www.espn.com/espn/rss/news"
-region = "Sports"
-
-[[source]]
-name = "Variety"
-url = "https://variety.com/feed/"
-region = "Culture"
-
-[[source]]
-name = "The Hollywood Reporter"
-url = "https://www.hollywoodreporter.com/feed/"
-region = "Culture"
-
-[[source]]
-name = "IGN"
-url = "https://feeds.feedburner.com/ign/all"
-region = "Culture"
-
-[[source]]
-name = "PR Newswire"
-url = "https://www.prnewswire.com/rss/news-releases-list.rss"
-region = "Press releases"
