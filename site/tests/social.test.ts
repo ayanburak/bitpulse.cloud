@@ -151,8 +151,7 @@ describe("posts from 8 November", () => {
 
 describe("post folder", () => {
   it("puts the publishing time after the day so a day's posts sort in order", () => {
-    const story = buildStories(readStoryFiles()).find((item) => item.key === FOLDER)!;
-    const time = story.published.slice(11, 16).replace(":", "");
-    expect(postFolder(story)).toBe(`2026-11-04-${time}-hera-dimorphos`);
+    const story = { ...HERA, published: "2026-11-04T10:37:00Z" };
+    expect(postFolder(story)).toBe("2026-11-04-1037-hera-dimorphos");
   });
 });
