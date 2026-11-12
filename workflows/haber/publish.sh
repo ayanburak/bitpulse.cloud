@@ -72,8 +72,11 @@ make_social() {
   mkdir "$work/social"
   cp -r "$dir" "$work/social/$story"
   if BITPULSE_STORIES="$work/social" npm run -s social --prefix site -- "$story" > "$work/social.log" 2>&1; then
-    echo "Social files: $PWD/site/social-posts/$story/"
-    find "site/social-posts/$story" -type f -not -path "*/images/*" | sort | sed "s#^site/social-posts/$story/#  #"
+    # The post folder carries the publishing time after the day, see postFolder in site/src/social.ts.
+    local post
+    post="$(basename "$(ls -d "site/social-posts/${story:0:10}"-[0-9][0-9][0-9][0-9]"${story:10}" | head -1)")"
+    echo "Social files: $PWD/site/social-posts/$post/"
+    find "site/social-posts/$post" -type f -not -path "*/images/*" | sort | sed "s#^site/social-posts/$post/#  #"
   else
     tail -15 "$work/social.log"
     echo "WARNING: the social files could not be made, the story is not affected."

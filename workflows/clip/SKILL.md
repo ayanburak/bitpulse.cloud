@@ -15,10 +15,10 @@ The editor gives a link, or a radar number when the link was sent to the bot or 
 
 ## 2. The folder
 
-A short English key is chosen. The folder is `site/social-posts/<today>-<key>`, outside Git.
+A short English key is chosen. The folder is `site/social-posts/<today>-<time>-<key>`, outside Git, where the time is the current hour and minute written as 1758, so the posts of a day sort in the order they were made.
 
 ```bash
-bitpulse fetch <link> site/social-posts/<today>-<key>
+bitpulse fetch <link> site/social-posts/<today>-<time>-<key>
 ```
 
 The command saves `source.mp4`, or the picture as `source.jpg`, `.png` or `.webp`, and prints the owner, the title and the length. A post on X that holds only pictures has no video, so the picture address is taken from the post and given to the command instead.
@@ -54,7 +54,7 @@ Content that a social media account published about itself, such as something a 
 ## 4. Making it
 
 ```bash
-npm run -s clip --prefix site -- social-posts/<today>-<key>
+npm run -s clip --prefix site -- social-posts/<today>-<time>-<key>
 ```
 
 The script refuses a broken `clip.yaml`. When it is done, the editor is told what was cut: the start and end, how much of the frame the page leaves out, and that the sound is kept. `page-1.png` is shown as the first frame, and the editor gets the text of the page and the full caption.

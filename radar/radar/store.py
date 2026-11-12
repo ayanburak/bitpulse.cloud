@@ -68,13 +68,15 @@ ADDED = {
     "merged_into": "integer",
     "clip": "integer not null default 0",
     "message_id": "integer",
-    "importance": "integer",
-    "shareable": "integer",
+    "impact": "integer",
+    "tension": "integer",
     "visual": "integer",
     "category": "text",
     "reason": "text",
     "scored_at": "text",
 }
+
+RENAMED = {"importance": "impact", "shareable": "tension"}
 
 
 # --- Connection ---
@@ -96,6 +98,11 @@ def connect(path: str | None = None) -> sqlite3.Connection:
     db.execute("pragma journal_mode=wal")
     db.executescript(SCHEMA)
     present = {row["name"] for row in db.execute("pragma table_info(clusters)")}
+    # The first scores were named importance and shareable. They hold impact and tension now.
+    for old, new in RENAMED.items():
+        if old in present and new not in present:
+            db.execute(f"alter table clusters rename column {old} to {new}")
+            present = (present - {old}) | {new}
     for name, kind in ADDED.items():
         if name not in present:
             db.execute(f"alter table clusters add column {name} {kind}")

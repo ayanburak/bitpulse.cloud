@@ -80,7 +80,7 @@ Social posts use images the same way. An image on a social post shows the event,
 
 ## Disclosure and bylines
 
-This repository states openly that the stories are chosen by the project owner and researched with the help of AI. The live website and the social posts do not state this. The footer links to this repository. Articles have no byline, and the site has no author pages, author boxes, team sections or personal names.
+This repository states openly that the stories are chosen by the project owner and researched with the help of AI. The live website and the social posts do not state this. Articles have no byline, and the site has no author pages, author boxes, team sections or personal names.
 
 ## Languages
 

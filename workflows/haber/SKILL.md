@@ -90,7 +90,7 @@ When social text or an image changes after publishing, this check runs again for
 bash workflows/haber/publish.sh --dry-run <folder> R-0493
 ```
 
-The script runs the tests and the build and makes the social files in `site/social-posts/<folder>/`, outside Git. It changes nothing on the server. The Bash call uses `timeout: 600000`. The editor gets the output of the script, the path of the social files and the full Turkish text of the story. The last message before the editor says publish holds `tr.md` word for word: headline, summary and the whole body, nothing shortened or summed up. The editor reads the story there and does not have to open a file. When the text changes afterwards, the same message is sent again. `npm run preview` is available on request.
+The script runs the tests and the build and makes the social files in `site/social-posts/<day>-<time>-<name>/`, outside Git. It changes nothing on the server. The Bash call uses `timeout: 600000`. The editor gets the output of the script, the path of the social files and the full Turkish text of the story. The last message before the editor says publish holds `tr.md` word for word: headline, summary and the whole body, nothing shortened or summed up. The editor reads the story there and does not have to open a file. When the text changes afterwards, the same message is sent again. `npm run preview` is available on request.
 
 ## 8. Publishing
 

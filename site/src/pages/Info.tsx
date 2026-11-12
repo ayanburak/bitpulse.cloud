@@ -9,7 +9,7 @@
 // follow the server log settings. The advertising section is written to stay true both before
 // and after ads start, so turning them on does not need a new text.
 
-import { CONTACT_EMAIL, PUBLISHER_URL, REPO_URL } from "../config";
+import { CONTACT_EMAIL, PUBLISHER_URL } from "../config";
 import { Layout, useLang } from "../components/Layout";
 import { formatDate, ui } from "../i18n";
 
@@ -25,8 +25,6 @@ const ABOUT = {
     intro: "Bitpulse is a world news site published in English and Turkish. It is a PaktLabs venture.",
     body: [
     ],
-    open: "The code and the editorial rules are public.",
-    openLink: "Read them on GitHub",
     principlesTitle: "Editorial principles",
     principles: [
       ["Accuracy", "Every factual claim has to trace back to a named source."],
@@ -41,8 +39,6 @@ const ABOUT = {
     intro: "Bitpulse, İngilizce ve Türkçe yayımlanan bir dünya haberleri sitesidir. Bir PaktLabs girişimidir.",
     body: [
     ],
-    open: "Kod ve yayın ilkeleri herkese açıktır.",
-    openLink: "GitHub'da inceleyin",
     principlesTitle: "Yayın ilkeleri",
     principles: [
       ["Doğruluk", "Her bilginin adı belli bir kaynağa dayanması gerekir."],
@@ -80,7 +76,6 @@ export function About() {
             <section id="about" className="prose">
               <p className="summary-large">{copy.intro}</p>
               {copy.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              <p>{copy.open} <a href={REPO_URL}>{copy.openLink}</a></p>
               <p>{copy.publisher}: <a href={PUBLISHER_URL}>PaktLabs</a></p>
             </section>
             <section id="principles" className="section">

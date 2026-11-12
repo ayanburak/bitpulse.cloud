@@ -73,7 +73,7 @@ def test_a_device_key_can_not_write_radar_events(client):
         {"reason": "x" * 501},
         {"first_seen": "yesterday"},
         {"stage": "invented"},
-        {"importance": 11},
+        {"impact": 11},
         {"links": [{"source": "A", "title": "T", "url": "https://a.example"}] * 9},
     ],
 )

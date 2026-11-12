@@ -3,7 +3,7 @@
  * importable: nothing, run with npm run social
  *
  * Turns the social.yaml of a news story into files that are ready to share, in
- * social-posts/<story folder>. Without arguments it takes the newest news story, story folder
+ * social-posts/<day>-<time>-<name>. Without arguments it takes the newest news story, story folder
  * names as arguments pick other stories:
  *
  *   npm run social
@@ -30,7 +30,7 @@ import { setDefaultAutoSelectFamilyAttemptTimeout } from "node:net";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import type { Page } from "@playwright/test";
-import { buildSocial, type SocialPost } from "../src/social.ts";
+import { buildSocial, postFolder, type SocialPost } from "../src/social.ts";
 import { buildStories, type Story } from "../src/stories.ts";
 import { replacePost } from "./social-output.ts";
 import { drawPage, makeStill, openBrowser } from "./social-render.ts";
@@ -150,12 +150,13 @@ const { browser, page } = await openBrowser();
 try {
   for (const story of stories) {
     const post = buildSocial(readFileSync(join(ROOT, story.key, "social.yaml"), "utf8"), story);
-    const out = join(OUT, story.key);
+    const folder = postFolder(story);
+    const out = join(OUT, folder);
 
     // The post is built in a side folder and takes the place of the old one only when every
     // file is made, so a run that stops halfway, for example on an image address that moved,
     // leaves the last good post untouched.
-    const draft = join(OUT, `.${story.key}.new`);
+    const draft = join(OUT, `.${folder}.new`);
     rmSync(draft, { recursive: true, force: true });
     mkdirSync(draft, { recursive: true });
     try {

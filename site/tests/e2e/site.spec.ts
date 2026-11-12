@@ -135,6 +135,19 @@ test("search finds a story in the page language", async ({ page }) => {
   await expect(page.locator(".search-empty")).toBeVisible();
 });
 
+test("a word typed while the search index loads is still searched", async ({ page }) => {
+  let release = () => {};
+  const held = new Promise<void>((done) => { release = done; });
+  await page.route("**/pagefind/pagefind.js", async (route) => {
+    await held;
+    await route.continue();
+  });
+  await page.goto("/tr/search/");
+  await page.fill("#search-input", longestTitleWord("tr"));
+  release();
+  await expect(page.locator(".search-list article").first()).toBeVisible();
+});
+
 test("the menu pulse rises under the active link", async ({ page }) => {
   await page.goto("/en/category/science/");
   const rail = page.locator(".menu .rail");

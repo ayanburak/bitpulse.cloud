@@ -75,13 +75,16 @@ export async function startSearch(): Promise<void> {
   const empty = document.querySelector<HTMLElement>(".search-empty");
   if (!form || !input || !list || !count || !empty) return;
 
-  const pagefind = (await import(/* @vite-ignore */ INDEX).catch(() => null)) as Pagefind | null;
-  if (!pagefind) return;
+  // The listeners start before the index has loaded, so a word typed while it loads is searched
+  // as soon as the index is there.
+  const loading = import(/* @vite-ignore */ INDEX).catch(() => null) as Promise<Pagefind | null>;
 
   // A newer search can finish before an older one, so only the latest may draw its results.
   let latest = 0;
   const run = async (query: string) => {
     const id = ++latest;
+    const pagefind = await loading;
+    if (!pagefind || id !== latest) return;
     const hits = query.trim() ? (await pagefind.search(query)).results : [];
     const results = await Promise.all(hits.slice(0, 20).map((hit) => hit.data()));
     if (id !== latest) return;
@@ -91,12 +94,12 @@ export async function startSearch(): Promise<void> {
     empty.hidden = !query.trim() || results.length > 0;
   };
 
-  const query = new URLSearchParams(location.search).get("q") ?? "";
-  input.value = query;
+  // A word the reader already typed wins over the one in the address.
+  if (!input.value) input.value = new URLSearchParams(location.search).get("q") ?? "";
   input.addEventListener("input", () => void run(input.value));
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     void run(input.value);
   });
-  await run(query);
+  await run(input.value);
 }

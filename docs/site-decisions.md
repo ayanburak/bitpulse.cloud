@@ -4,9 +4,9 @@ This document records the product, design and language decisions behind Bitpulse
 
 ## Publisher
 
-Bitpulse is presented as a PaktLabs venture. The footer, the About page and the Contact page say so. The public contact address is info@paktlabs.com.
+Bitpulse is presented as a PaktLabs venture. The site does not link to or mention its source code. The footer, the About page and the Contact page say so. The public contact address is info@paktlabs.com.
 
-The editorial policy and the corrections have their own pages in both languages, linked from the footer. They are at /en/editorial-policy/ and /en/corrections/, and Turkish uses the same path names under /tr/ so the language switch keeps working. The policy page summarizes docs/editorial-policy.md and the writer, fact checker, editor and final checker steps, names PaktLabs as the publisher that approves changes, with no bylines and no personal names. It does not say who or what writes the stories. How the site is run is explained in this repository, which the footer links to. The corrections page says how to report a mistake and lists the stories that carry an updated date, newest first. Until a story has one, it shows an empty statement and no entries.
+The editorial policy and the corrections have their own pages in both languages, linked from the footer. They are at /en/editorial-policy/ and /en/corrections/, and Turkish uses the same path names under /tr/ so the language switch keeps working. The policy page summarizes docs/editorial-policy.md and the writer, fact checker, editor and final checker steps, names PaktLabs as the publisher that approves changes, with no bylines and no personal names. It does not say who or what writes the stories. The corrections page says how to report a mistake and lists the stories that carry an updated date, newest first. Until a story has one, it shows an empty statement and no entries.
 
 ## Technology
 

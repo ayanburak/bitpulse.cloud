@@ -8,7 +8,7 @@
 import type { ReactNode } from "react";
 import { useLocation, useParams } from "react-router";
 import { counterpart, feedPath, longStories } from "../catalog";
-import { PUBLISHER_URL, REPO_URL, SITE_URL, SOCIAL_URLS, X_HANDLE } from "../config";
+import { PUBLISHER_URL, SITE_URL, SOCIAL_URLS, X_HANDLE } from "../config";
 import { categoryNames, formatDate, isLang, otherLang, ui, type Lang } from "../i18n";
 import { categories } from "../stories";
 
@@ -175,7 +175,6 @@ function Footer({ lang }: { lang: Lang }) {
         </div>
         <div className="site-footer__bottom">
           <span>© {new Date().getUTCFullYear()} <a href={PUBLISHER_URL}>PaktLabs</a></span>
-          <a href={REPO_URL}>{t.sourceCode}</a>
         </div>
       </div>
     </footer>

@@ -48,7 +48,7 @@ def event(number: int, stage: str, score: float, title: str) -> dict:
     return {
         "number": number, "title": title, "summary": "A short summary.", "first_seen": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "last_seen": datetime.now(timezone.utc).isoformat(timespec="seconds"), "sources": 2, "stage": stage, "score": score,
-        "importance": None if score < 0 else 6, "shareable": None if score < 0 else 6, "visual": None if score < 0 else 6,
+        "impact": None if score < 0 else 6, "tension": None if score < 0 else 6, "visual": None if score < 0 else 6,
         "category": "world", "reason": "A reason to look at it.", "merged_into": None, "clip": 0, "decision": None, "decided_by": None,
         "links": json.dumps([{"source": "Outlet", "title": "The article", "url": "https://example.com/a"}]),
     }

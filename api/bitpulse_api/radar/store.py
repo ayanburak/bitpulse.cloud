@@ -137,7 +137,7 @@ def counts(conn: sqlite3.Connection, filters: Filters) -> dict[str, int]:
 
 def event(conn: sqlite3.Connection, number: int) -> Optional[dict[str, Any]]:
     row = conn.execute(
-        f"SELECT {LISTED}, e.summary, e.last_seen, e.importance, e.shareable, e.visual, e.merged_into, e.links, "
+        f"SELECT {LISTED}, e.summary, e.last_seen, e.impact, e.tension, e.visual, e.merged_into, e.links, "
         f"e.decided_by, e.decided_at, e.brief_error, e.brief_at {JOIN} WHERE e.number = ?",
         (number,),
     ).fetchone()
@@ -160,13 +160,13 @@ def candidates(conn: sqlite3.Connection, limit: int) -> list[sqlite3.Row]:
 # move across once. After that the column belongs to this side.
 def save_events(conn: sqlite3.Connection, events: list[dict[str, Any]]) -> None:
     conn.executemany(
-        "INSERT INTO radar_events (number, title, summary, first_seen, last_seen, sources, stage, score, importance, "
-        "shareable, visual, category, reason, merged_into, clip, links, decision, decided_by) "
-        "VALUES (:number, :title, :summary, :first_seen, :last_seen, :sources, :stage, :score, :importance, "
-        ":shareable, :visual, :category, :reason, :merged_into, :clip, :links, :decision, :decided_by) "
+        "INSERT INTO radar_events (number, title, summary, first_seen, last_seen, sources, stage, score, impact, "
+        "tension, visual, category, reason, merged_into, clip, links, decision, decided_by) "
+        "VALUES (:number, :title, :summary, :first_seen, :last_seen, :sources, :stage, :score, :impact, "
+        ":tension, :visual, :category, :reason, :merged_into, :clip, :links, :decision, :decided_by) "
         "ON CONFLICT (number) DO UPDATE SET title = excluded.title, summary = excluded.summary, "
         "last_seen = excluded.last_seen, sources = excluded.sources, stage = excluded.stage, score = excluded.score, "
-        "importance = excluded.importance, shareable = excluded.shareable, visual = excluded.visual, "
+        "impact = excluded.impact, tension = excluded.tension, visual = excluded.visual, "
         "category = excluded.category, reason = excluded.reason, merged_into = excluded.merged_into, "
         "clip = excluded.clip, links = excluded.links, decision = COALESCE(decision, excluded.decision), "
         "decided_by = COALESCE(decided_by, excluded.decided_by)",

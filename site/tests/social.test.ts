@@ -13,7 +13,7 @@ import { execSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { buildSocial } from "../src/social";
+import { buildSocial, postFolder } from "../src/social";
 import { buildStories } from "../src/stories";
 
 const ROOT = process.env.BITPULSE_STORIES ?? "src/content/stories";
@@ -144,5 +144,15 @@ describe("posts from 8 November", () => {
     expect(buildSocial(BASE, later).pages).toHaveLength(1);
     expect(() => buildSocial(two, later)).toThrow("more than 1 page");
     expect(buildSocial(two, HERA).pages).toHaveLength(2);
+  });
+});
+
+// --- Folder ---
+
+describe("post folder", () => {
+  it("puts the publishing time after the day so a day's posts sort in order", () => {
+    const story = buildStories(readStoryFiles()).find((item) => item.key === FOLDER)!;
+    const time = story.published.slice(11, 16).replace(":", "");
+    expect(postFolder(story)).toBe(`2026-11-04-${time}-hera-dimorphos`);
   });
 });

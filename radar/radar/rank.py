@@ -22,9 +22,6 @@ description: Scores the new events of the last day with Claude Haiku and picks t
 # NOTE: Earlier Do and Skip answers are not sent to the model on purpose. The editor said those
 # answers carried no real meaning, and a model learns the wrong taste from them.
 #
-# NOTE: The stored columns keep their first names. importance holds the impact and shareable holds
-# the tension, because the API and the panel read those names.
-#
 # XXX: The bar and the weights are starting values. They are set by replaying a real day with the
 # replay command, a change here should be checked the same way.
 
@@ -146,10 +143,11 @@ def shortlist(db: sqlite3.Connection, now: datetime) -> list[sqlite3.Row]:
         now: Time of the round.
 
     Returns:
-        The unsent and unscored events of the last day that are not noise, oldest first.
+        The events of the last day that were neither sent, alerted nor scored and are not noise, oldest first.
     """
     rows = db.execute(
-        "select * from clusters where last_seen >= ? and sent is null and merged_into is null and scored_at is null order by first_seen",
+        "select * from clusters where last_seen >= ? and sent is null and alerted is null and merged_into is null and scored_at is null "
+        "order by first_seen",
         (stamp(now - POOL),),
     ).fetchall()
     return [row for row in rows if not NOISE.search(row["title"])]
@@ -184,9 +182,11 @@ def seen_today(db: sqlite3.Connection, now: datetime) -> list[sqlite3.Row]:
 
 def sent_recently(db: sqlite3.Connection, now: datetime) -> list[sqlite3.Row]:
     # Old stories stored at first sight are marked sent without a score, so only scored ones count.
+    # A big event reached the editor at once without a score, so it counts from its alert.
+    since = stamp(now - SENT_WINDOW)
     return db.execute(
-        "select id, title from clusters where sent >= ? and scored_at is not null and merged_into is null order by id",
-        (stamp(now - SENT_WINDOW),),
+        "select id, title from clusters where merged_into is null and ((sent >= ? and scored_at is not null) or alerted >= ?) order by id",
+        (since, since),
     ).fetchall()
 
 
@@ -281,8 +281,8 @@ def score_of(row: sqlite3.Row) -> Score:
     return Score(
         id=row["id"],
         in_scope=True,
-        impact=row["importance"],
-        tension=row["shareable"],
+        impact=row["impact"],
+        tension=row["tension"],
         visual=row["visual"],
         category=row["category"],
         duplicate_of=None,
@@ -294,7 +294,7 @@ def remember(db: sqlite3.Connection, scores: list[Score], ids: list[int], now: d
         return (item.impact, item.tension, item.visual) if item.in_scope else (0, 0, 0)
 
     db.executemany(
-        "update clusters set importance = ?, shareable = ?, visual = ?, category = ?, reason = ?, scored_at = ? where id = ?",
+        "update clusters set impact = ?, tension = ?, visual = ?, category = ?, reason = ?, scored_at = ? where id = ?",
         [(*values(item), item.category, item.reason, stamp(now), item.id) for item in scores],
     )
     # An event the model left out is not asked about again, the next round would only repeat it.
@@ -316,7 +316,7 @@ def reserve(db: sqlite3.Connection, skip: set[int], now: datetime) -> list[sqlit
         The waiting events, best first.
     """
     rows = db.execute(
-        "select * from clusters where sent is null and merged_into is null and scored_at >= ? and importance is not null",
+        "select * from clusters where sent is null and merged_into is null and scored_at >= ? and impact is not null",
         (stamp(now - RESERVE_FOR),),
     ).fetchall()
     waiting = [row for row in rows if row["id"] not in skip and score_of(row).total >= BAR]

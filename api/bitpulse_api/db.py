@@ -367,7 +367,14 @@ SKIP_RATE = """
 ALTER TABLE instagram_counts ADD COLUMN skip_rate REAL;
 """
 
-MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS, INSTAGRAM, INSTAGRAM_MORE, SKIP_RATE)
+# The radar scores impact and tension now, and the columns carry those names.
+RADAR_SCORE_NAMES = """
+ALTER TABLE radar_events RENAME COLUMN importance TO impact;
+
+ALTER TABLE radar_events RENAME COLUMN shareable TO tension;
+"""
+
+MIGRATIONS = (BASE, WITHDRAW_JOBS, PANEL, NOTIFY, RADAR, CLIPS, INSTAGRAM, INSTAGRAM_MORE, SKIP_RATE, RADAR_SCORE_NAMES)
 
 WAL_TRIES = 100
 WAL_WAIT_SECONDS = 0.05

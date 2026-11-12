@@ -131,7 +131,7 @@ def test_an_event_outside_the_covered_countries_is_never_sent(tmp_path):
     cluster = add_item(db, Source("A", "", ""), entry("Giant pandas debut at Atlanta zoo", "https://a.com/1"), NOW)
     sent = []
     ranking.rank(db, collect(sent), now=NOW, client=fake_model(score(cluster, value=10, in_scope=False)))
-    assert sent == [] and db.execute("select importance from clusters").fetchone()[0] == 0
+    assert sent == [] and db.execute("select impact from clusters").fetchone()[0] == 0
 
 
 def test_a_big_round_goes_in_parts_that_see_each_other(tmp_path, monkeypatch):
@@ -424,7 +424,7 @@ def row_with(db, **columns):
     return db.execute("select * from clusters where id = ?", (number,)).fetchone()
 
 
-SCORED = {"importance": 8, "shareable": 8, "visual": 8, "category": "world", "reason": "Why", "scored_at": NOW.isoformat()}
+SCORED = {"impact": 8, "tension": 8, "visual": 8, "category": "world", "reason": "Why", "scored_at": NOW.isoformat()}
 
 
 @pytest.mark.parametrize(
@@ -432,7 +432,7 @@ SCORED = {"importance": 8, "shareable": 8, "visual": 8, "category": "world", "re
     [
         ({}, "unseen"),
         (SCORED, "reserve"),
-        ({**SCORED, "importance": 2, "shareable": 2, "visual": 2}, "below"),
+        ({**SCORED, "impact": 2, "tension": 2, "visual": 2}, "below"),
         ({"sent": "2026-11-07T12:30:00+00:00"}, "sent"),
         ({"merged_into": 9, "sent": "2026-11-07T12:30:00+00:00"}, "merged"),
         ({"title": "Live: a final"}, "noise"),
@@ -481,7 +481,7 @@ def test_a_bad_link_and_long_text_do_not_block_a_round(tmp_path, fake_api):
 def test_a_stored_score_goes_across(tmp_path):
     db = connect(str(tmp_path / "r.db"))
     event = sync.payload(db, row_with(db, **SCORED), "reserve")
-    assert (event["score"], event["importance"], event["reason"], event["category"]) == (8.0, 8, "Why", "world")
+    assert (event["score"], event["impact"], event["reason"], event["category"]) == (8.0, 8, "Why", "world")
 
 
 def test_history_copies_only_what_reached_the_editor(tmp_path, fake_api, monkeypatch):
@@ -591,3 +591,27 @@ def test_a_follow_up_merges_into_a_story_sent_days_ago(tmp_path):
     ranking.rank(db, collect(sent), now=later, client=fake_model(score(second, duplicate=first)))
     assert sent == []
     assert db.execute("select merged_into from clusters where id = ?", (second,)).fetchone()[0] == first
+
+
+def test_an_old_database_gets_the_new_score_names(tmp_path):
+    import sqlite3
+    path = str(tmp_path / "r.db")
+    old = sqlite3.connect(path)
+    old.execute("create table clusters (id integer primary key, title text, tokens text, first_seen text, last_seen text, sources integer, sent text, alerted text, decision text, importance integer, shareable integer)")
+    old.execute("insert into clusters values (1, 'T', '', '', '', 1, null, null, null, 7, 5)")
+    old.commit()
+    old.close()
+    row = connect(path).execute("select impact, tension from clusters").fetchone()
+    assert (row["impact"], row["tension"]) == (7, 5)
+
+
+def test_a_follow_up_of_a_big_event_merges_into_it(tmp_path):
+    db = connect(str(tmp_path / "r.db"))
+    big = add_item(db, Source("A", "", ""), entry("Colom wins Mississippi Senate race", "https://a.com/1"), NOW)
+    db.execute("update clusters set alerted = ? where id = ?", (NOW.isoformat(timespec="seconds"), big))
+    follow = add_item(db, Source("B", "", ""), entry("First Black senator since Reconstruction elected", "https://b.com/2"), NOW)
+    assert [row["id"] for row in shortlist(db, NOW)] == [follow]
+    sent = []
+    ranking.rank(db, collect(sent), now=NOW, client=fake_model(score(follow, duplicate=big)))
+    assert sent == []
+    assert db.execute("select merged_into from clusters where id = ?", (follow,)).fetchone()[0] == big

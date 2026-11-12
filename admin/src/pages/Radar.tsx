@@ -79,7 +79,7 @@ function Details({ number, changed }: { number: number; changed: (decision: "do"
       {item.summary && <p className="event-detail__meta">{item.summary}</p>}
       <p className="event-detail__meta">
         First seen {item.first_seen.slice(0, 16).replace("T", " ")} UTC, {item.sources} outlets
-        {item.importance !== null && `, importance ${item.importance}, shareable ${item.shareable}, visual ${item.visual}`}
+        {item.impact !== null && `, impact ${item.impact}, tension ${item.tension}, visual ${item.visual}`}
         {item.merged_into !== null && `, merged into ${label(item.merged_into)}`}
         {item.decided_at && `, decided ${item.decided_at} in ${item.decided_by}`}
         {item.handle && `, story ${item.handle}`}

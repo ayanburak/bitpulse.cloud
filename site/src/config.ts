@@ -1,13 +1,12 @@
 /**
  * file: src/config.ts
- * importable: SITE_URL, CONTACT_EMAIL, REPO_URL, PUBLISHER_URL, X_HANDLE, SOCIAL_URLS, ADS_ENABLED, IMAGE_WIDTHS
+ * importable: SITE_URL, CONTACT_EMAIL, PUBLISHER_URL, X_HANDLE, SOCIAL_URLS, ADS_ENABLED, IMAGE_WIDTHS
  *
  * description: Fixed site settings shared by pages, the build and tests.
  */
 
 export const SITE_URL = "https://bitpulse.cloud";
 export const CONTACT_EMAIL = "info@paktlabs.com";
-export const REPO_URL = "https://github.com/ayanburak/bitpulse.cloud";
 export const PUBLISHER_URL = "https://paktlabs.com";
 
 // The owner posts every news story on these accounts. The footer links to them and the home page

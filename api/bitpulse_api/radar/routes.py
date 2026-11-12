@@ -54,8 +54,8 @@ class EventIn(BaseModel):
     sources: int = Field(ge=0)
     stage: Literal["sent", "reserve", "below", "unseen", "noise", "merged"]
     score: float = Field(default=-1, ge=-1, le=10)
-    importance: Optional[int] = Field(default=None, ge=0, le=10)
-    shareable: Optional[int] = Field(default=None, ge=0, le=10)
+    impact: Optional[int] = Field(default=None, ge=0, le=10)
+    tension: Optional[int] = Field(default=None, ge=0, le=10)
     visual: Optional[int] = Field(default=None, ge=0, le=10)
     category: Optional[str] = Field(default=None, max_length=20)
     reason: str = Field(default="", max_length=500)

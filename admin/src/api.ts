@@ -72,8 +72,8 @@ export interface EventRow {
 export interface EventDetail extends EventRow {
   summary: string;
   last_seen: string;
-  importance: number | null;
-  shareable: number | null;
+  impact: number | null;
+  tension: number | null;
   visual: number | null;
   merged_into: number | null;
   links: { source: string; title: string; url: string }[];

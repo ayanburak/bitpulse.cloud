@@ -165,6 +165,17 @@ function credits(pages: SocialPage[]): string {
  *   than its date allows, the X post, a page or the caption is over its limit, or the Instagram
  *   text of a newer post is not plain.
  */
+/**
+ * Names the folder of a story's social post after its day and publishing time, so the posts of
+ * one day sort in the order they went out.
+ *
+ * @param story The story.
+ * @returns The folder name, such as 2026-11-11-1758-wenger-fifa-bid.
+ */
+export function postFolder(story: Story): string {
+  return `${story.key.slice(0, 10)}-${story.published.slice(11, 16).replace(":", "")}${story.key.slice(10)}`;
+}
+
 export function buildSocial(raw: string, story: Story): SocialPost {
   const where = `${story.key}/social.yaml`;
   if (story.kind !== "news") throw new Error(`${where}: only news stories are shared`);
