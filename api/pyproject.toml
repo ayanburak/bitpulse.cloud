@@ -2,12 +2,12 @@
 name = "bitpulse-api"
 version = "0.1.0"
 description = "Keeps every story version in SQLite and queues publishing jobs for the render worker."
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 dependencies = [
     "fastapi>=0.115",
     "uvicorn>=0.32",
     "pyyaml>=6.0",
-    "pillow>=11.0",
+    "pillow>=13.0",
     "webauthn>=2.5",
     "argon2-cffi>=23.1",
 ]

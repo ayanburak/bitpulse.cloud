@@ -3,7 +3,7 @@ Description=Bitpulse, encrypted daily backup
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/python3 /opt/bitpulse/api/deploy/backup.py
+ExecStart=/opt/bitpulse/python/current/bin/python3 /opt/bitpulse/api/deploy/backup.py
 Nice=10
 UMask=0077
 PrivateTmp=yes

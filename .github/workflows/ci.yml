@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: pipx install uv==0.13.1
-      - run: uv run --locked --python 3.10 pytest
+      - run: uv run --locked --python 3.14 pytest
 
   insights:
     name: Test the insights service

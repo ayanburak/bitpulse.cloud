@@ -24,7 +24,7 @@ main() {
   work="$(mktemp -d)"
   trap 'rm -rf "$work"' EXIT
 
-  uv run --isolated --locked --python 3.10 pytest > "$work/test.log" 2>&1 ||
+  uv run --isolated --locked --python 3.14 pytest > "$work/test.log" 2>&1 ||
     { tail -30 "$work/test.log"; echo "Tests failed, nothing was sent." >&2; exit 1; }
   uv build --quiet --wheel --out-dir "$work/release"
   uv export --quiet --locked --no-dev --no-emit-project --format requirements-txt -o "$work/release/requirements.txt"
@@ -50,7 +50,7 @@ data=/var/lib/bitpulse/api
 target="$root/releases/$id"
 
 install -d -m 755 "$root/releases"
-python3 -m venv --copies "$target"
+/opt/bitpulse/python/current/bin/python3 -m venv --copies "$target"
 "$target/bin/pip" install --quiet --disable-pip-version-check --require-hashes -r "$src/requirements.txt"
 "$target/bin/pip" install --quiet --disable-pip-version-check --no-deps "$src"/bitpulse_api-*.whl
 chmod -R a+rX "$target"
