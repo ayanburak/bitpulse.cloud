@@ -6,7 +6,7 @@
  */
 
 export const SITE_URL = "https://bitpulse.cloud";
-export const CONTACT_EMAIL = "info@paktlabs.com";
+export const CONTACT_EMAIL = "info@bitpulse.cloud";
 export const PUBLISHER_URL = "https://paktlabs.com";
 
 // The owner posts every news story on these accounts. The footer links to them and the home page

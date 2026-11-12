@@ -249,7 +249,7 @@ test("the editorial policy states who is behind the site", async ({ page }) => {
   expect(text).not.toContain("Claude");
   expect(text).not.toContain("written by artificial intelligence");
   expect(text).toContain("Impartiality");
-  await expect(page.locator("main")).toContainText("info@paktlabs.com");
+  await expect(page.locator("main")).toContainText("info@bitpulse.cloud");
   await page.locator('.lang-switch a[hreflang="tr"]').click();
   await expect(page).toHaveURL(/\/tr\/editorial-policy\/$/);
   await expect(page.locator("h1")).toHaveText("Yayın ilkeleri");
@@ -262,6 +262,6 @@ test("the corrections page lists only real corrections", async ({ page }) => {
     const empty = await page.locator("[data-corrections-empty]").count();
     expect(entries > 0 || empty === 1).toBe(true);
     expect(entries > 0 && empty > 0).toBe(false);
-    await expect(page.locator('a[href="mailto:info@paktlabs.com"]')).toBeVisible();
+    await expect(page.locator('a[href="mailto:info@bitpulse.cloud"]')).toBeVisible();
   }
 });

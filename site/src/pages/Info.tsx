@@ -97,7 +97,6 @@ export function About() {
 
 const CONTACT = {
   en: {
-    intro: "News tips, corrections and any other messages reach PaktLabs at the address below.",
     body: [
       "If an article contains a mistake, please name the article and say what is wrong. Confirmed mistakes are fixed with correction notes.",
       "Messages you send may be reviewed and assessed by artificial intelligence tools. Please do not send personal data that is not needed for your message.",
@@ -105,7 +104,6 @@ const CONTACT = {
     email: "Email",
   },
   tr: {
-    intro: "Haber ihbarları, düzeltme talepleri ve diğer mesajlar aşağıdaki adresten PaktLabs'e ulaşır.",
     body: [
       "Bir haberde hata varsa lütfen haberin adını ve neyin yanlış olduğunu yazın. Doğrulanan hatalar düzeltme notlarıyla giderilir.",
       "Gönderdiğiniz mesajlar yapay zeka araçları tarafından incelenebilir, değerlendirilebilir. Lütfen mesajınız için gerekli olmayan kişisel bilgileri göndermeyin.",
@@ -119,12 +117,11 @@ export function Contact() {
   const t = ui[lang];
   const copy = CONTACT[lang];
   return (
-    <Layout title={t.contact} description={copy.intro}>
+    <Layout title={t.contact} description={copy.body[0]}>
       <div className="container">
         <div className="page-head">
           <p className="meta"><b>Bitpulse</b></p>
           <h1 className="head-1">{t.contact}</h1>
-          <p className="summary">{copy.intro}</p>
         </div>
         <div className="grid info-page">
           <div className="info-page__main--form prose prose--narrow">
